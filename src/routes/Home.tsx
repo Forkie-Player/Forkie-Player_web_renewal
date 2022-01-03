@@ -1,8 +1,8 @@
 import React from 'react'
-import HomeIndex from '../components/home'
+import HomeComponent from '../components/home'
 
 function Home() {
-  return <HomeIndex />
+  return <HomeComponent />
 }
 
 export default Home

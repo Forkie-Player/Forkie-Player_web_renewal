@@ -17,6 +17,13 @@
   --blackberry-lightest: #acabaf;
   --background-light: #f9f9f9;
   --background-dark: #555555;
+
   font-family: 'Noto Sans KR', sans-serif;
   background-color: var(--primary-redrose);
+}
+
+:root {
+  --swiper-navigation-color: var(--blackberry);
+  --swiper-pagination-color: var(--blackberry);
+  --swiper-scrollbar-color: var(--primary-redrose);
 }

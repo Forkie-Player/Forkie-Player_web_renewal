@@ -9,7 +9,7 @@ function ProfileView() {
         className="h-full w-auto object-cover rounded-full aspect-square outline outline-2 outline-redrose"
         alt="profile"
       />
-      <div className="text-sm">
+      <div className="text-sm align-middle py-1">
         <p>User1</p>
         <p className="text-blackberry-lightest">has 3 lists</p>
       </div>

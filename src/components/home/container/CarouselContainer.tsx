@@ -1,8 +1,8 @@
 import React from 'react'
-import HomeView from '../view/HomeView'
+import CarouselView from '../view/CarouselView'
 
 function HomeContainer() {
-  return <HomeView />
+  return <CarouselView />
 }
 
 export default HomeContainer

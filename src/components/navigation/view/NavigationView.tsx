@@ -46,7 +46,7 @@ function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
           {navExpanded && Strings.AppName}
         </Link>
       </div>
-      <div className="h-10" />
+      <div className="h-12" />
       {navExpanded && <div className="text-white/50 pl-7">Menus</div>}
       {lists.map(({ to, label, icon }, index) => {
         const isActive = index === 0 ? curPath === to : curPath.startsWith(to)

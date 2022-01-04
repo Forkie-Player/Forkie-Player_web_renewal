@@ -23,7 +23,7 @@ function App() {
         <div className={'min-w-fit max-w-fit w-full h-full'}>
           <Navigation />
         </div>
-        <div className={'w-full h-full bg-background-light rounded-l-3xl px-6 pt-5'}>
+        <div className={'w-full h-full bg-background-light rounded-l-3xl px-6 pt-6'}>
           <Header />
           <Routes>
             <Route path={Constants.NavPathItems.HOME} element={<Home />} />

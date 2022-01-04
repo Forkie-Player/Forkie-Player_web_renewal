@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
 .html {
   font-size: 10px;
 }
@@ -15,6 +17,6 @@
   --blackberry-lightest: #acabaf;
   --background-light: #f9f9f9;
   --background-dark: #555555;
-
+  font-family: 'Noto Sans KR', sans-serif;
   background-color: var(--primary-redrose);
 }

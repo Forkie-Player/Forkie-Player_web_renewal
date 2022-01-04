@@ -1,10 +1,11 @@
+import ProfileContainer from './container/ProfileContainer'
 import SearchbarContainer from './container/SearchbarContainer'
 
 function Header() {
   return (
-    <div className="w-full">
+    <div className="flex justify-between pl-[5%] pr-[5%] h-12 ">
       <SearchbarContainer />
-      <div className="w-20 h-10 bg-redrose"></div>
+      <ProfileContainer />
     </div>
   )
 }

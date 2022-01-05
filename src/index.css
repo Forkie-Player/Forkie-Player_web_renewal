@@ -27,12 +27,13 @@
   --swiper-pagination-color: var(--blackberry);
   --swiper-scrollbar-color: var(--primary-redrose);
 }
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--blackberry-light);
+  background: var(--blackberry-lightest);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--primary-redrose-light);

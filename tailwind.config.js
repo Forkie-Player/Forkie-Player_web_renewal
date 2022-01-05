@@ -22,8 +22,10 @@ module.exports = {
         inner: 'inset -1px -1px 1px #FFFFFF, inset 1px 1px 2px rgba(174, 174, 192, 0.2)',
         outer: '-1px -1px 3px #FFFFFF, 1.5px 1.5px 3px rgba(174, 174, 192, 0.4)',
       },
+      minWidth: {
+        96: '24rem',
+      },
     },
   },
   plugins: [],
-  important: true,
 }

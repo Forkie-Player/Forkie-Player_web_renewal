@@ -4,15 +4,15 @@ import { FaSearch } from 'react-icons/fa'
 interface IProps {
   search: string
   onChangeSearchText: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onSubmitSearch: (e: React.FormEvent<HTMLFormElement>) => void
+  onSearch: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
 }
 
-function SearchbarView({ search, onChangeSearchText, onSubmitSearch }: IProps) {
+function SearchbarView({ search, onChangeSearchText, onSearch }: IProps) {
   return (
     <div className="h-full basis-5/12 bg-white rounded-2xl shadow-outer p-1">
       <form
         className="relative flex w-full h-full bg-background-light rounded-2xl focus-outline-redrose"
-        onSubmit={onSubmitSearch}
+        onSubmit={onSearch}
       >
         <input
           id="search"

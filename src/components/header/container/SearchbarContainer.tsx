@@ -1,18 +1,47 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { CrawlAddress } from '../../../lib/api/constants'
+import { setLoading, setUnloading } from '../../../modules/loading'
+import { setSearchResult } from '../../../modules/searchResult'
+import { ICrawlResultItem, ISearchResult } from '../../../types'
 import SearchbarView from '../view/SearchbarView'
 
 function SearchbarContainer() {
-  const [search, setSearch] = React.useState('')
+  const [search, setSearch] = useState('')
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
-  const onSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const onSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(e.target)
+    try {
+      dispatch(setLoading())
+      const res = await axios.get(`${CrawlAddress}${decodeURIComponent(search)}`)
+      let result: ISearchResult[] = res.data.data.items.map((item: ICrawlResultItem) => ({
+        videoId: item.id,
+        title: item.title,
+        thumbnail: (item.thumbnails && item.thumbnails[0].url) || item.bestThumbnail.url,
+        channelTitle: item.author.name,
+        channelAvatar: item.author.bestAvatar.url,
+        duration: item.duration,
+        views: item.views,
+        uploadedAt: item.uploadedAt,
+      }))
+      dispatch(setSearchResult(result))
+      navigate('/search')
+      dispatch(setUnloading())
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  return <SearchbarView search={search} onChangeSearchText={onChangeSearchText} onSubmitSearch={onSubmitSearch} />
+  return <SearchbarView search={search} onChangeSearchText={onChangeSearchText} onSearch={onSearch} />
 }
 
 export default SearchbarContainer

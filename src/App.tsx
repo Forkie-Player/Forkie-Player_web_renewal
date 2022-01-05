@@ -31,7 +31,7 @@ function App() {
           <Navigation />
         </div>
         <div
-          className={'w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl px-6 pt-6'}
+          className={'w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl pl-6 pt-6'}
         >
           <Header />
           <div className={'w-full h-full pt-8'}>

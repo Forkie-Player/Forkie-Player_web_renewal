@@ -22,6 +22,7 @@ function SearchbarContainer() {
     e.preventDefault()
     try {
       dispatch(setLoading())
+      navigate('/search')
       const res = await axios.get(`${CrawlAddress}${decodeURIComponent(search)}`)
       let result: ISearchResult[] = res.data.data.items.map((item: ICrawlResultItem) => ({
         videoId: item.id,
@@ -34,7 +35,6 @@ function SearchbarContainer() {
         uploadedAt: item.uploadedAt,
       }))
       dispatch(setSearchResult(result))
-      navigate('/search')
       dispatch(setUnloading())
     } catch (err) {
       console.log(err)

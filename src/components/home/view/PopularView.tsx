@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react'
-import { Scrollbar } from 'swiper'
+import React from 'react'
+import { Scrollbar, Mousewheel } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css/scrollbar'
+import 'swiper/css/mousewheel'
 
 const popularList = [
   {
@@ -24,18 +25,25 @@ interface IProps {
 
 function PopularView({ screenSize, slidesPerView }: IProps) {
   return (
-    <div className="w-full h-3/6 px-[5%]">
-      <div className="py-8">Popular</div>
+    <div className="w-full h-100 px-[5%]">
+      <div className="py-8 text-xl">Popular</div>
       <Swiper
         // install Swiper modules
-        modules={[Scrollbar]}
+        modules={[Scrollbar, Mousewheel]}
         slidesPerView={slidesPerView}
-        scrollbar
-        className="h-2/3 w-full"
+        scrollbar={{ dragClass: 'swiper-scrollbar-drag bg-blackberry-lightest' }}
+        mousewheel
+        className="h-[17rem] w-full"
       >
         {popularList.map((item, index) => (
-          <SwiperSlide key={index} className="h-60 w-60 drop-shadow-md">
-            <div className={`h-60 w-60 rounded-3xl drop-shadow-xl ${item.color}`}></div>
+          <SwiperSlide key={index} className="p-4">
+            <div
+              className={`h-60 w-60 rounded-3xl drop-shadow-xl ${item.color}
+            hover:drop-shadow-2xl
+            hover:ring-4
+            hover:ring-redrose
+            `}
+            ></div>
           </SwiperSlide>
         ))}
       </Swiper>

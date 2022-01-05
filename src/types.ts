@@ -1,3 +1,12 @@
+// 재생목록 타입
+export interface IPlaylistItem {
+  id: number
+  title: string
+  thumbnail: string
+  createdAt: Date
+  category: string
+}
+
 // 크롤러 타입
 export interface ICrawlAuthor {
   name: string

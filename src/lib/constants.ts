@@ -2,6 +2,8 @@ export const NavPathItems = {
   HOME: '/',
   SEARCH: '/search',
   LIST: '/list',
+  EDIT: '/edit',
+  VIDEO_ADD: '/video-add',
 }
 
 export const screenSizeString = {
@@ -23,3 +25,5 @@ export const screenSizeWidth = {
   LG: 1920,
   XL: 2560,
 }
+
+export const youtubeVideoPrefixURL = 'https://www.youtube.com/watch?v='

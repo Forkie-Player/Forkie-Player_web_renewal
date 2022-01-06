@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { CrawlAddress } from '../../../lib/api/constants'
 import { setLoading, setUnloading } from '../../../modules/loading'
 import { setSearchResult } from '../../../modules/searchResult'
-import { ICrawlResultItem, ISearchResult } from '../../../types'
+import { ICrawlResultItem, IVideo } from '../../../types'
 import SearchbarView from '../view/SearchbarView'
 
 function SearchbarContainer() {
@@ -24,7 +24,7 @@ function SearchbarContainer() {
       dispatch(setLoading())
       navigate('/search')
       const res = await axios.get(`${CrawlAddress}${decodeURIComponent(search)}`)
-      let result: ISearchResult[] = res.data.data.items.map((item: ICrawlResultItem) => ({
+      let result: IVideo[] = res.data.data.items.map((item: ICrawlResultItem) => ({
         videoId: item.id,
         title: item.title,
         thumbnail: (item.thumbnails && item.thumbnails[0].url) || item.bestThumbnail.url,

@@ -41,3 +41,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-redrose);
 }
+
+.rc-slider-handle-dragging {
+  box-shadow: 0 0 5px var(--primary-redrose-light) !important;
+}
+.rc-slider-handle:active {
+  box-shadow: 0 0 5px var(--primary-redrose-light) !important;
+}

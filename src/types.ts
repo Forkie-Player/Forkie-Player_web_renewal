@@ -50,3 +50,21 @@ export interface IVideoInPlaylist extends IVideoHasRange {
   id: number
   sequence: number
 }
+
+// JWT 토큰 타입
+export interface IToken {
+  accessToken: string
+  refreshToken: string
+}
+
+// 유저 정보 타입
+export interface IUserInfo {
+  id: number
+  createdAt: Date
+  updatedAt: Date
+  loginId: string
+  profileImg: string
+  authority: string
+  pc: boolean
+  member: boolean
+}

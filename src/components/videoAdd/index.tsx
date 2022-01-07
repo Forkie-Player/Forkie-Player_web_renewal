@@ -1,10 +1,10 @@
 // 검색 화면에서 넘어온 비디오 추가 화면
 
-import { IVideo, IVideoHasRange } from '../../types'
+import { IVideo } from '../../types'
 import * as Strings from '../../lib/strings'
 import { useNavigate } from 'react-router-dom'
 import VideoEdit from '../videoEdit'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 interface IProps {
   video: IVideo
@@ -19,22 +19,32 @@ function VideoAdd({ video }: IProps) {
   }
 
   const onPlayerReady = (endTime: number) => {
-    setSelectedRange([0, endTime])
+    if (endTime) setSelectedRange([0, endTime])
   }
 
-  const onChangeSelectedRange = (range: number[]) => {
+  const onClickApply = useCallback((range: number[]) => {
     setSelectedRange(range)
-  }
+  }, [])
+
+  const onClickAdd = useCallback(() => {
+    console.log('add')
+  }, [])
 
   return (
     <div className="w-full h-full px-[5%]">
       <div
-        className="w-fit p-1 rounded-xl text-md cursor-pointer hover:shadow-outer hover:bg-background-light-hover"
+        className="unselectable w-fit p-1 rounded-xl text-md cursor-pointer hover:shadow-outer hover:bg-background-light-hover"
         onClick={goback}
       >
         {Strings.GoBack}
       </div>
-      <VideoEdit video={{ ...video, start: 0, end: 0 }} selectedRange={selectedRange} onReadyCallback={onPlayerReady} />
+      <VideoEdit
+        video={{ ...video, start: 0, end: 0 }}
+        selectedRange={selectedRange}
+        onReadyCallback={onPlayerReady}
+        onClickApplyCallback={onClickApply}
+        onClickAddCallback={onClickAdd}
+      />
     </div>
   )
 }

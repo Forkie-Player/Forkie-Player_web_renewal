@@ -1,18 +1,25 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { IVideoHasRange } from '../../types'
 import LoadingElement from '../elements/loading'
 import VideoContainer from './container/VideoContainer'
 import { Range } from 'rc-slider'
 
 import 'rc-slider/assets/index.css'
-import ReactPlayer from 'react-player'
+import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import palette from '../../lib/style/palette'
+import secondsToHHMMSS from '../../lib/utils/secondsToHHMMSS'
+import AdjustSeconds from './elements/AdjustSeconds'
+import CustomButton from './elements/CustomButton'
 
+// refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {
   video: IVideoHasRange
   selectedRange: number[]
+  playerProps?: ReactPlayerProps
   onReadyCallback?: (endtime: number) => void
   onRangeChangeCallback?: (range: number[]) => void
+  onClickApplyCallback: (range: number[]) => void
+  onClickAddCallback: () => void
 }
 
 const handleStyle = {
@@ -24,24 +31,38 @@ const handleStyle = {
   },
 }
 
-function VideoEdit({ video, selectedRange, onReadyCallback, onRangeChangeCallback }: IProps) {
+function VideoEdit({
+  video,
+  selectedRange,
+  playerProps,
+  onReadyCallback,
+  onRangeChangeCallback,
+  onClickApplyCallback,
+  onClickAddCallback,
+}: IProps) {
   const [videoReady, setVideoReady] = useState(false)
   const [videoDuration, setVideoDuration] = useState(0)
   const [range, setRange] = useState([-100, -100])
   const playerRef = useRef<ReactPlayer>(null)
 
-  const onReady = () => {
+  const onReady = useCallback(() => {
     if (playerRef !== null && playerRef.current !== null) {
       const endTime = playerRef.current.getDuration()
       setVideoDuration(endTime)
-      // 이부분 나중에 고치기
+
+      /* refactor : end가 0이 아니면 정해진 end로 range의 끝을 정함
+        end가 0이면 영상의 끝으로 range의 끝을 정함
+      */
       setRange([video.start, video.end !== 0 ? video.end : endTime])
+      // 다음에 고치자.
+
       if (onReadyCallback !== undefined) {
         onReadyCallback(endTime)
       }
     }
     setVideoReady(true)
-  }
+  }, [playerRef, video, onReadyCallback])
+
   const onChangeRange = (range: number[]) => {
     setRange(prev => {
       if (range[0] === prev[0]) {
@@ -56,11 +77,41 @@ function VideoEdit({ video, selectedRange, onReadyCallback, onRangeChangeCallbac
     }
   }
 
+  const onClickAdjustSeconds = useCallback(
+    (right: boolean, offset: number) => {
+      if (right) {
+        setRange(prev => {
+          if (prev[1] + offset <= videoDuration) {
+            playerRef.current?.seekTo(prev[1] + offset)
+            return [prev[0], prev[1] + offset]
+          }
+          return prev
+        })
+      } else {
+        setRange(prev => {
+          if (prev[0] + offset >= 0) {
+            playerRef.current?.seekTo(prev[0] + offset)
+            return [prev[0] + offset, prev[1]]
+          }
+          return prev
+        })
+      }
+    },
+    [videoDuration],
+  )
+
+  const onClickApply = useCallback(() => {
+    setRange(prev => {
+      onClickApplyCallback(prev)
+      return prev
+    })
+  }, [onClickApplyCallback])
+
   return (
     <div className="w-full h-full py-5">
-      <VideoContainer reference={playerRef} video={video} onReady={onReady} />
+      <VideoContainer playerRef={playerRef} playerProps={{ ...playerProps, onReady }} video={video} />
       {videoReady ? (
-        <div className="py-8 space-y-2 px-40">
+        <div className="py-8 space-y-1 px-40">
           <Range
             value={range}
             max={videoDuration}
@@ -69,6 +120,17 @@ function VideoEdit({ video, selectedRange, onReadyCallback, onRangeChangeCallbac
             handleStyle={[handleStyle, handleStyle]}
             railStyle={{ backgroundColor: palette['blackberry-lightest'] }}
           />
+          <div className="w-full flex justify-between">
+            <AdjustSeconds onClickAdjustSeconds={onClickAdjustSeconds} />
+            <AdjustSeconds right onClickAdjustSeconds={onClickAdjustSeconds} />
+          </div>
+          <div className="unselectable w-full flex text-3xl justify-center gap-x-8">
+            <div>{secondsToHHMMSS(range[0])}</div>~<div>{secondsToHHMMSS(range[1])}</div>
+          </div>
+          <div className="w-full pt-4 flex text-3xl justify-center gap-x-8">
+            <CustomButton text="적용" textColor={palette['info']} onClick={onClickApply} />
+            <CustomButton text="추가" textColor={palette['redrose']} onClick={onClickAddCallback} />
+          </div>
         </div>
       ) : (
         <div className="py-10">

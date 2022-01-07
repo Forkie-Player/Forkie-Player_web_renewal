@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import ReactPlayer from 'react-player'
+import React, { useEffect, useRef, useState } from 'react'
+import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import { IVideoHasRange } from '../../../types'
 import VideoView from '../view/VideoView'
 
 interface IProps {
-  reference: React.RefObject<ReactPlayer>
+  playerRef: React.RefObject<ReactPlayer>
   video: IVideoHasRange
-  onReady: () => void
+  playerProps?: ReactPlayerProps
 }
 
-function VideoContainer({ reference, video, onReady }: IProps) {
+// 비디오 렌더 컴포넌트
+// 나중에 따로 폴더로 파기
+function VideoContainer({ playerRef, video, playerProps }: IProps) {
   const [wrapper, setWrapper] = useState({ height: 360, width: 640 })
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const getWrapper = () => {
-      const wrapper = document.getElementById('player_wrapper')?.getBoundingClientRect()
+      const wrapper = wrapperRef.current?.getBoundingClientRect()
       if (wrapper !== null && wrapper !== undefined) {
         setWrapper({ width: wrapper.width, height: wrapper.height })
       }
@@ -25,9 +28,17 @@ function VideoContainer({ reference, video, onReady }: IProps) {
     return () => {
       window.removeEventListener('resize', getWrapper)
     }
-  }, [])
+  }, [wrapperRef])
 
-  return <VideoView reference={reference} video={video} onReady={onReady} wrapper={wrapper} />
+  return (
+    <VideoView
+      playerRef={playerRef}
+      wrapperRef={wrapperRef}
+      playerProps={playerProps}
+      video={video}
+      wrapper={wrapper}
+    />
+  )
 }
 
 export default VideoContainer

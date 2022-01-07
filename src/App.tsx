@@ -11,6 +11,7 @@ import * as Constants from './lib/constants'
 import Header from './components/header'
 import useScreenSize from './lib/hooks/useScreenSize'
 import { setScreenSize } from './modules/screenSize'
+import VideoAdd from './routes/VideoAdd'
 
 function App() {
   const dispatch = useDispatch()
@@ -37,8 +38,9 @@ function App() {
           <div className={'w-full h-full pt-8'}>
             <Routes>
               <Route path={Constants.NavPathItems.HOME} element={<Home />} />
-              <Route path={Constants.NavPathItems.SEARCH} element={<Search />} />
+              <Route path={Constants.NavPathItems.SEARCH} element={<Search />}></Route>
               <Route path={Constants.NavPathItems.LIST} element={<List />} />
+              <Route path={Constants.NavPathItems.VIDEO_ADD} element={<VideoAdd />} />
             </Routes>
           </div>
         </div>

@@ -28,8 +28,8 @@ export interface ICrawlResultItem {
   uploadedAt: string
 }
 
-// 검색 결과 아이템
-export interface ISearchResult {
+// 비디오 아이템
+export interface IVideo {
   videoId: string
   title: string
   thumbnail: string
@@ -38,4 +38,15 @@ export interface ISearchResult {
   duration: string
   views: number
   uploadedAt: string
+}
+
+// 시작과 끝이 정해진 비디오 타입
+export interface IVideoHasRange extends IVideo {
+  start: number
+  end: number
+}
+
+export interface IVideoInPlaylist extends IVideoHasRange {
+  id: number
+  sequence: number
 }

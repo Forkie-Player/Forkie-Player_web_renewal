@@ -1,13 +1,11 @@
 import React from 'react'
-import { IPlaylistItem } from '../../../types'
+import { useSelector } from 'react-redux'
+import { RootModuleType } from '../../../modules/moduleTypes'
 import ListView from '../view/ListView'
 
-interface IProps {
-  items: IPlaylistItem[]
-}
-
-function ListContainer({ items }: IProps) {
-  return <ListView items={items} />
+function ListContainer() {
+  const playlist = useSelector(({ playlist }: RootModuleType) => playlist.items)
+  return <ListView items={playlist} />
 }
 
 export default ListContainer

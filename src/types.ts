@@ -1,12 +1,3 @@
-// 재생목록 타입
-export interface IPlaylistItem {
-  id: number
-  title: string
-  thumbnail: string
-  createdAt: Date
-  category: string
-}
-
 // 크롤러 타입
 export interface ICrawlAuthor {
   name: string
@@ -49,4 +40,27 @@ export interface IVideoHasRange extends IVideo {
 export interface IVideoInPlaylist extends IVideoHasRange {
   id: number
   sequence: number
+}
+
+// JWT 토큰 타입
+export interface IToken {
+  accessToken: string
+  refreshToken: string
+}
+
+// 유저 정보 타입
+export interface IUserInfo {
+  id: number
+  loginId: string
+  profileImg: string
+  authority: string
+  pc: boolean
+  member: boolean
+}
+
+// 플레이 리스트
+export interface IPlaylist {
+  id: number
+  title: string
+  thumbnail: string
 }

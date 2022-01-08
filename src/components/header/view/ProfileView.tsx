@@ -1,20 +1,34 @@
+import clsx from 'clsx'
 import React from 'react'
-import { MdLogout } from 'react-icons/md'
+import { MdLogin, MdLogout } from 'react-icons/md'
+import { IUserInfo } from '../../../types'
+import * as Strings from '../../../lib/strings'
 
-function ProfileView() {
+interface IProps {
+  userInfo: IUserInfo
+  playlistsLength: number
+  onClickLogout: () => Promise<void>
+}
+
+function ProfileView({ userInfo, playlistsLength, onClickLogout }: IProps) {
   return (
     <div className="flex gap-x-5 w-4/12 h-full justify-end">
       <img
-        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-        className="h-full w-auto object-cover rounded-full aspect-square outline outline-2 outline-redrose"
+        src={
+          userInfo.profileImg !== null ? userInfo.profileImg : 'https://isumstore.co.kr/common/img/default_profile.png'
+        }
+        className={clsx(
+          userInfo.member && 'outline outline-2 outline-redrose',
+          'h-full w-auto object-cover rounded-full aspect-square',
+        )}
         alt="profile"
       />
       <div className="text-sm align-middle py-1">
-        <p>User1</p>
-        <p className="text-blackberry-lightest">has 3 lists</p>
+        <p>{userInfo.member !== false ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
+        <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
       </div>
       <button className="text-2xl h-full align-bottom py-2">
-        <MdLogout />
+        {userInfo.member === false ? <MdLogin /> : <MdLogout onClick={onClickLogout} />}
       </button>
     </div>
   )

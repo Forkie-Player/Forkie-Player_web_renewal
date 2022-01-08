@@ -6,19 +6,19 @@ import { SearchStrings } from '../../../lib/strings'
 import LoadingElement from '../../elements/loading'
 
 interface IProps {
-  searchResult: IVideo[]
+  searchResultItems: IVideo[]
   loading: boolean
   onClickItem: (item: IVideo) => void
 }
 
-function SearchView({ searchResult, loading, onClickItem }: IProps) {
+function SearchView({ searchResultItems, loading, onClickItem }: IProps) {
   return (
     <div className="h-full w-full">
       <div className="h-full overflow-y-auto space-y-4 pr-[5%] pb-16 ">
         <div className="w-full text-xl">{SearchStrings.SEARCH_RESULT}</div>
         {!loading ? (
-          searchResult.length > 0 ? (
-            searchResult.map((item, index) => (
+          searchResultItems.length > 0 ? (
+            searchResultItems.map((item, index) => (
               <SearchItem data={item} index={index} key={`searchResult_${index}`} onClickItem={onClickItem} />
             ))
           ) : (

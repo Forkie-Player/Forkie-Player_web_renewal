@@ -27,3 +27,10 @@ export const screenSizeWidth = {
 }
 
 export const youtubeVideoPrefixURL = 'https://www.youtube.com/watch?v='
+
+export const isFirstConstants = {
+  FIRST: 'FIRST' as const,
+  NOTFIRST: 'NOT_FIRST' as const,
+  P_FIRST: 'p_first' as const,
+  V_FIRST: 'v_first' as const,
+}

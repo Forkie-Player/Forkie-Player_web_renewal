@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { RootModuleType } from '../../../modules/moduleTypes'
-import { setNavClose, setNavOpen } from '../../../modules/navExpansion'
+import { setNavClose, setNavOpen } from '../../../modules/navExpansion/actions'
 import NavigationView from '../view/NavigationView'
 
 function NavigationConatainer() {

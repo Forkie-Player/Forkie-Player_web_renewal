@@ -1,12 +1,3 @@
-// 재생목록 타입
-export interface IPlaylistItem {
-  id: number
-  title: string
-  thumbnail: string
-  createdAt: Date
-  category: string
-}
-
 // 크롤러 타입
 export interface ICrawlAuthor {
   name: string
@@ -60,11 +51,16 @@ export interface IToken {
 // 유저 정보 타입
 export interface IUserInfo {
   id: number
-  createdAt: Date
-  updatedAt: Date
   loginId: string
   profileImg: string
   authority: string
   pc: boolean
   member: boolean
+}
+
+// 플레이 리스트
+export interface IPlaylist {
+  id: number
+  title: string
+  thumbnail: string
 }

@@ -1,9 +1,9 @@
 import React from 'react'
-import { IPlaylistItem } from '../../../types'
+import { IPlaylist } from '../../../types'
 import ListItem from '../elements/ListItem'
 
 interface IProps {
-  items: IPlaylistItem[]
+  items: IPlaylist[]
 }
 
 function ListView({ items }: IProps) {

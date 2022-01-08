@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 import LoadingElement from './components/elements/loading'
 import { appInit, reissue } from './lib/api/auth'
 import { getCookie, removeCookie, setCookie } from './lib/utils/cookie'
-import { signin } from './modules/userInfo'
-import { setIsFirst } from './modules/isFirst'
-import { getPlaylist } from './modules/playlist'
+import { getUserInfo } from './modules/userInfo/actions'
+import { setIsFirst } from './modules/isFirst/actions'
+import { getPlaylistAsync } from './modules/playlist/actions'
 
 export default function AppInit({ children }: { children: React.ReactNode }) {
   const [preLoading, setPreLoading] = useState(true)
@@ -37,11 +37,9 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
     const init = async () => {
       try {
         const res = await appInit()
-        dispatch(setIsFirst({ first: res.first }))
-        if (res.userInfo !== undefined) {
-          dispatch(signin(res.userInfo))
-        }
-        dispatch(getPlaylist())
+        dispatch(setIsFirst(res.first))
+        dispatch(getUserInfo.request())
+        dispatch(getPlaylistAsync.request())
 
         setCookie('@restart', 'false')
       } catch (err) {

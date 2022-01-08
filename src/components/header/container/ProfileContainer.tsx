@@ -1,15 +1,26 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../../lib/api/auth'
 import { RootModuleType } from '../../../modules/moduleTypes'
+import { getPlaylistAsync } from '../../../modules/playlist/actions'
+import { getUserInfo } from '../../../modules/userInfo/actions'
 import ProfileView from '../view/ProfileView'
 
 function ProfileContainer() {
   const { userInfo, playlistsLength } = useSelector(({ userInfo, playlist }: RootModuleType) => ({
     userInfo,
-    playlistsLength: playlist.length,
+    playlistsLength: playlist.items.length,
   }))
 
-  return <ProfileView userInfo={userInfo} playlistsLength={playlistsLength} />
+  const dispatch = useDispatch()
+
+  const onClickLogout = async () => {
+    await logout()
+    dispatch(getUserInfo.request())
+    dispatch(getPlaylistAsync.request())
+  }
+
+  return <ProfileView userInfo={userInfo.userInfo} playlistsLength={playlistsLength} onClickLogout={onClickLogout} />
 }
 
 export default ProfileContainer

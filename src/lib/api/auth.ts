@@ -1,9 +1,8 @@
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
-import { IToken, IUserInfo } from '../../types'
+import { IToken } from '../../types'
 import { getCookie, removeCookie, setCookie } from '../utils/cookie'
 import { Address } from './constants'
-import { FIRST, P_FIRST, V_FIRST } from '../../modules/isFirst'
 import {
   IChangeToMemberSuccess,
   IGetUserInfoSuccess,
@@ -12,6 +11,7 @@ import {
   ISignUpSuccess,
   IUpdateUserSuccess,
 } from './types'
+import { isFirstConstants } from '../constants'
 
 /*
    모든 api는 token으로 이루어짐.
@@ -43,8 +43,6 @@ export const login = async (id: string, pw: string) => {
       isPC: true,
     })
     await setTokens(res.data.response)
-    const userInfo = await getUserInfo()
-    return userInfo
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       throw err.response.data
@@ -93,31 +91,26 @@ export const appInit = async () => {
   try {
     const tokensJson = getCookie('@tokens')
 
-    let userInfo: IUserInfo | undefined
-
     if (tokensJson !== undefined) {
       //reissue
       try {
         await reissue(tokensJson)
-        const res = await getUserInfo()
-        userInfo = res
       } catch (err) {
         // 리프레시 토큰 만료시 비회원 재로그인
         // 회원은 기존에 비회원으로 있던 기록이 나오고, 로그인은 자신이 해야함
-        userInfo = await nonMemberLogin()
+        await nonMemberLogin()
       }
     } else {
-      userInfo = await nonMemberLogin()
+      await nonMemberLogin()
     }
 
-    const p_first = getCookie(`@${P_FIRST}`)
-    const v_first = getCookie(`@${V_FIRST}`)
+    const p_first = getCookie(`@${isFirstConstants.P_FIRST}`)
+    const v_first = getCookie(`@${isFirstConstants.V_FIRST}`)
 
     return {
-      userInfo: userInfo,
       first: {
-        [P_FIRST]: p_first === null ? FIRST : p_first,
-        [V_FIRST]: v_first === null ? FIRST : v_first,
+        [isFirstConstants.P_FIRST]: p_first === undefined ? isFirstConstants.FIRST : p_first,
+        [isFirstConstants.V_FIRST]: v_first === undefined ? isFirstConstants.FIRST : v_first,
       },
     }
   } catch (err) {
@@ -126,7 +119,7 @@ export const appInit = async () => {
   }
 }
 
-export const getUserInfo = async () => {
+export const getUserInfoApi = async () => {
   try {
     const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/member`)
     return res.data.response
@@ -146,7 +139,6 @@ export const nonSignUp = async (newId: string) => {
     return res.data.response
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      console.log(err.response)
       throw err
     }
   }

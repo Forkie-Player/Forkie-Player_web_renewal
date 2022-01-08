@@ -14,3 +14,8 @@ export const SearchStrings = {
 }
 
 export const VideoEdit = {}
+
+export const Profile = {
+  NOTMEMBER: '비회원',
+  MEMBER: '회원',
+}

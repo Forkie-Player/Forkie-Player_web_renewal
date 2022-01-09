@@ -32,10 +32,12 @@ function App() {
           <Navigation />
         </div>
         <div
-          className={'w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl pl-6 pt-6'}
+          className={
+            'flex flex-col w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl pl-6 pt-6'
+          }
         >
           <Header />
-          <div className={'w-full h-full pt-8'}>
+          <div className={'flex-[1] max-h-full  w-full pt-8'}>
             <Routes>
               <Route path={Constants.NavPathItems.HOME} element={<Home />} />
               <Route path={Constants.NavPathItems.SEARCH} element={<Search />}></Route>

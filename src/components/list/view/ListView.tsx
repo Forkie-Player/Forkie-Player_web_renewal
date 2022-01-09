@@ -1,6 +1,6 @@
 import React from 'react'
 import { IPlaylist } from '../../../types'
-import ListItem from '../elements/ListItem'
+import PlaylistItem from '../../elements/PlaylistItem'
 
 interface IProps {
   items: IPlaylist[]
@@ -21,7 +21,7 @@ function ListView({ items }: IProps) {
       </div>
       <div className="w-full overflow-y-scroll flex gap-8 flex-wrap pr-[10%] py-4 px-2">
         {items.map((item, index) => (
-          <ListItem item={item} index={index} key={`listitem_${index}`} />
+          <PlaylistItem item={item} index={index} key={`listitem_${index}`} onClick={() => console.log('click')} />
         ))}
       </div>
     </div>

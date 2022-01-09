@@ -1,50 +1,77 @@
 // 검색 화면에서 넘어온 비디오 추가 화면
 
-import { IVideo } from '../../types'
-import * as Strings from '../../lib/strings'
-import { useNavigate } from 'react-router-dom'
+import { IPlaylist, IVideo, IVideoHasRange } from '../../types'
 import VideoEdit from '../videoEdit'
 import { useCallback, useState } from 'react'
+import GobackLine from '../elements/GobackLine'
+import clsx from 'clsx'
+import './index.css'
+import VerticalLine from '../elements/VerticalLine'
+import SelectPlaylistContainer from './container/SelectPlaylistContainer'
+import { addVideo } from '../../lib/api/videos'
+import { useDispatch } from 'react-redux'
+import { getPlaylistAsync } from '../../modules/playlist/actions'
 
 interface IProps {
   video: IVideo
 }
 
 function VideoAdd({ video }: IProps) {
-  const [selectedRange, setSelectedRange] = useState([0, 0])
-  const navigate = useNavigate()
-
-  const goback = () => {
-    navigate(-1)
-  }
+  const [videoState, setVideoState] = useState<IVideoHasRange>({ ...video, start: 0, end: 0 })
+  const [showPlaylists, setShowPlaylists] = useState(false)
+  const dispatch = useDispatch()
 
   const onPlayerReady = (endTime: number) => {
-    if (endTime) setSelectedRange([0, endTime])
+    if (endTime) {
+      setVideoState(prev => ({ ...prev, end: endTime }))
+    }
   }
 
   const onClickApply = useCallback((range: number[]) => {
-    setSelectedRange(range)
+    setVideoState(prev => ({ ...prev, start: range[0], end: range[1] }))
   }, [])
 
   const onClickAdd = useCallback(() => {
-    console.log('add')
+    setShowPlaylists(true)
   }, [])
 
+  const onClickClosePlaylist = useCallback(() => {
+    setShowPlaylists(false)
+  }, [])
+
+  const onClickPlaylist = async (item: IPlaylist) => {
+    try {
+      await addVideo({
+        playlistId: item.id,
+        video: videoState,
+      })
+      dispatch(getPlaylistAsync.request())
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
-    <div className="w-full h-full px-[5%]">
-      <div
-        className="unselectable w-fit p-1 rounded-xl text-md cursor-pointer hover:shadow-outer hover:bg-background-light-hover"
-        onClick={goback}
-      >
-        {Strings.GoBack}
+    <div className="w-full h-full px-[5%] flex flex-col">
+      <GobackLine />
+      <div className="relative flex flex-1 max-h-full w-full">
+        <div className={clsx(showPlaylists ? 'videoEditWrapperShrinked' : 'videoEditWrapperExpand', 'h-full')}>
+          <VideoEdit
+            video={videoState}
+            onReadyCallback={onPlayerReady}
+            onClickApplyCallback={onClickApply}
+            onClickAddCallback={onClickAdd}
+          />
+        </div>
+        <div className={clsx(showPlaylists ? 'playlistWrapperShowUp' : '-z-50', 'w-[30%] h-full absolute flex')}>
+          {showPlaylists && (
+            <>
+              <VerticalLine />
+              <SelectPlaylistContainer onClickCancle={onClickClosePlaylist} onClickPlaylist={onClickPlaylist} />
+            </>
+          )}
+        </div>
       </div>
-      <VideoEdit
-        video={{ ...video, start: 0, end: 0 }}
-        selectedRange={selectedRange}
-        onReadyCallback={onPlayerReady}
-        onClickApplyCallback={onClickApply}
-        onClickAddCallback={onClickAdd}
-      />
     </div>
   )
 }

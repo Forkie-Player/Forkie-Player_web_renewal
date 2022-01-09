@@ -19,3 +19,5 @@ export const Profile = {
   NOTMEMBER: '비회원',
   MEMBER: '회원',
 }
+
+export const SelectPlaylist = '추가하고 싶은 플레이리스트를 선택하세요'

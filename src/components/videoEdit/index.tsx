@@ -9,7 +9,7 @@ import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import palette from '../../lib/style/palette'
 import secondsToHHMMSS from '../../lib/utils/secondsToHHMMSS'
 import AdjustSeconds from './elements/AdjustSeconds'
-import CustomButton from '../elements/CustomButton'
+import { CustomButton } from '../elements/CustomButton'
 
 // refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {

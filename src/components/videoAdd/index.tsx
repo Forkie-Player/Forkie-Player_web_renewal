@@ -63,7 +63,9 @@ function VideoAdd({ video }: IProps) {
             onClickAddCallback={onClickAdd}
           />
         </div>
-        <div className={clsx(showPlaylists ? 'playlistWrapperShowUp' : '-z-50', 'w-[30%] h-full absolute flex')}>
+        <div
+          className={clsx(showPlaylists ? 'playlistWrapperShowUp' : '-right-[100%]', 'w-[30%] h-full absolute flex')}
+        >
           {showPlaylists && (
             <>
               <VerticalLine />

@@ -1,14 +1,16 @@
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
+import palette from '../../lib/style/palette'
 
 interface IProps {
+  buttonRef?: React.RefObject<HTMLDivElement> | ((instance: HTMLDivElement | null) => void)
   text: string
   textColor?: string
   size?: 'small' | 'medium' | 'large' | 'fit'
   onClick: () => void
 }
 
-function CustomButton({ text, textColor, size = 'fit', onClick }: IProps) {
+export function CustomButton({ buttonRef, text, textColor = palette.blackberry, size = 'fit', onClick }: IProps) {
   const [elementsSize, setElementsSize] = useState({
     wrapper: '',
     inner: '',
@@ -40,6 +42,7 @@ function CustomButton({ text, textColor, size = 'fit', onClick }: IProps) {
 
   return (
     <div
+      ref={buttonRef}
       className={clsx(
         elementsSize.wrapper,
         'p-1 bg-white shadow-outer text-center hover:drop-shadow-md active:shadow-inner cursor-pointer',
@@ -53,4 +56,17 @@ function CustomButton({ text, textColor, size = 'fit', onClick }: IProps) {
   )
 }
 
-export default React.memo(CustomButton)
+export function CustomClearButton({ buttonRef, text, textColor, onClick }: IProps) {
+  return (
+    <div
+      ref={buttonRef}
+      className={clsx(
+        'max-w-fit max-h-fit px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+      )}
+      onClick={onClick}
+      style={{ color: textColor }}
+    >
+      {text}
+    </div>
+  )
+}

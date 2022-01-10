@@ -9,11 +9,13 @@ const initialState: TPlaylistType = {
 }
 
 const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialState, {
-  [playlistActionTypes.ADD_PLAYLIST]: (state, action) => ({
+  [playlistActionTypes.ADD_PLAYLIST]: (state, action) => ({ ...state, pending: true }),
+  [playlistActionTypes.ADD_PLAYLIST_SUCCESS]: (state, action) => ({
+    ...state,
     pending: false,
-    error: null,
-    items: [...state.items, { id: action.payload.id, title: action.payload.title, thumbnail: '' }],
+    items: [...state.items, action.payload],
   }),
+  [playlistActionTypes.ADD_PLAYLIST_ERROR]: (state, action) => ({ ...state, pending: false, error: action.payload }),
   [playlistActionTypes.GET_PLAYLIST]: state => ({ ...state, pending: true }),
   [playlistActionTypes.GET_PLAYLIST_SUCESS]: (state, action) => ({
     pending: false,

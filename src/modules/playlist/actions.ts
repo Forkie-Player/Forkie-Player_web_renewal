@@ -1,7 +1,8 @@
 import { AxiosError } from 'axios'
 import { createAction, createAsyncAction } from 'typesafe-actions'
-import { ICreatePlaylistRequest } from '../../lib/api/types'
+import { IAddVideoToPlaylistRequest, ICreatePlaylistRequest } from '../../lib/api/types'
 import { IPlaylist } from '../../types'
+import { IAddVideoReturn } from './types'
 
 //액션 타입
 const ADD_PLAYLIST = 'playlist/ADD_PLAYLIST' as const
@@ -13,6 +14,10 @@ const GET_PLAYLIST_ERROR = 'playlist/GET_PLAYLIST_ERROR' as const
 const CLEAR_THUMBNAIL = 'playlist/CLEAR_THUMBNAIL' as const
 const SET_THUMBNAIL = 'playlist/SET_THUMBNAIL' as const
 
+const ADD_VIDEO = 'playlist/ADD_VIDEO' as const
+const ADD_VIDEO_SUCCESS = 'playlist/ADD_VIDEO_SUCCESS' as const
+const ADD_VIDEO_ERROR = 'playlist/ADD_VIDEO_ERROR' as const
+
 export const playlistActionTypes = {
   ADD_PLAYLIST,
   ADD_PLAYLIST_SUCCESS,
@@ -22,6 +27,9 @@ export const playlistActionTypes = {
   GET_PLAYLIST_ERROR,
   CLEAR_THUMBNAIL,
   SET_THUMBNAIL,
+  ADD_VIDEO,
+  ADD_VIDEO_SUCCESS,
+  ADD_VIDEO_ERROR,
 }
 
 //액션 생성 함수
@@ -37,10 +45,16 @@ export const getPlaylistAsync = createAsyncAction(GET_PLAYLIST, GET_PLAYLIST_SUC
   IPlaylist[],
   AxiosError
 >()
+export const addVideoAsync = createAsyncAction(ADD_VIDEO, ADD_VIDEO_SUCCESS, ADD_VIDEO_ERROR)<
+  IAddVideoToPlaylistRequest,
+  IAddVideoReturn,
+  string
+>()
 
 export const playlistActions = {
   addPlaylistAsync,
   clearThumbnail,
   setThumbnail,
   getPlaylistAsync,
+  addVideoAsync,
 }

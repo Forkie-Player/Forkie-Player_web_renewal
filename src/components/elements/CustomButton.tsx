@@ -61,7 +61,7 @@ export function CustomClearButton({ buttonRef, text, textColor, onClick }: IProp
     <div
       ref={buttonRef}
       className={clsx(
-        'max-w-fit max-h-fit px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+        'max-w-fit max-h-9 px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
       )}
       onClick={onClick}
       style={{ color: textColor }}

@@ -11,6 +11,9 @@ import secondsToHHMMSS from '../../lib/utils/secondsToHHMMSS'
 import AdjustSeconds from './elements/AdjustSeconds'
 import { CustomButton } from '../elements/CustomButton'
 
+import * as Strings from '../../lib/strings'
+import toast from 'react-hot-toast'
+
 // refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {
   video: IVideoHasRange
@@ -101,6 +104,7 @@ function VideoEdit({
   const onClickApply = useCallback(() => {
     setRange(prev => {
       onClickApplyCallback(prev)
+      toast.success(Strings.applyTimeLapseSuccess(prev[0], prev[1]))
       return prev
     })
   }, [onClickApplyCallback])

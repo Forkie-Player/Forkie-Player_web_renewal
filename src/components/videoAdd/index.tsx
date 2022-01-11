@@ -8,9 +8,8 @@ import clsx from 'clsx'
 import './index.css'
 import VerticalLine from '../elements/VerticalLine'
 import SelectPlaylistContainer from './container/SelectPlaylistContainer'
-import { addVideo } from '../../lib/api/videos'
 import { useDispatch } from 'react-redux'
-import { getPlaylistAsync } from '../../modules/playlist/actions'
+import { addVideoAsync } from '../../modules/playlist/actions'
 
 interface IProps {
   video: IVideo
@@ -40,15 +39,7 @@ function VideoAdd({ video }: IProps) {
   }, [])
 
   const onClickPlaylist = async (item: IPlaylist) => {
-    try {
-      await addVideo({
-        playlistId: item.id,
-        video: videoState,
-      })
-      dispatch(getPlaylistAsync.request())
-    } catch (err) {
-      console.log(err)
-    }
+    dispatch(addVideoAsync.request({ playlistId: item.id, video: videoState }))
   }
 
   return (

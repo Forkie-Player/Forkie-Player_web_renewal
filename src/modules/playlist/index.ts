@@ -15,7 +15,11 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     pending: false,
     items: [...state.items, action.payload],
   }),
-  [playlistActionTypes.ADD_PLAYLIST_ERROR]: (state, action) => ({ ...state, pending: false, error: action.payload }),
+  [playlistActionTypes.ADD_PLAYLIST_ERROR]: (state, action) => ({
+    ...state,
+    pending: false,
+    error: action.payload,
+  }),
   [playlistActionTypes.GET_PLAYLIST]: state => ({ ...state, pending: true }),
   [playlistActionTypes.GET_PLAYLIST_SUCESS]: (state, action) => ({
     pending: false,
@@ -33,6 +37,17 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
       playlist.id === action.payload.id ? { ...playlist, thumbnail: action.payload.thumbnail } : playlist,
     ),
   }),
+  [playlistActionTypes.ADD_VIDEO]: (state, action) => ({ ...state, pending: true }),
+  [playlistActionTypes.ADD_VIDEO_SUCCESS]: (state, action) => ({
+    ...state,
+    pending: false,
+    items: state.items.map(playlist =>
+      playlist.id === action.payload.id && playlist.thumbnail === null
+        ? { ...playlist, thumbnail: action.payload.thumbnail }
+        : playlist,
+    ),
+  }),
+  [playlistActionTypes.ADD_VIDEO_ERROR]: state => ({ ...state, pending: false, error: 'error' }),
 })
 
 export default playlistReducer

@@ -12,6 +12,7 @@ import Header from './components/header'
 import useScreenSize from './lib/hooks/useScreenSize'
 import { setScreenSize } from './modules/screenSize/actions'
 import VideoAdd from './routes/VideoAdd'
+import { CustomToast } from './components/elements/CustomToast'
 
 function App() {
   const dispatch = useDispatch()
@@ -45,6 +46,7 @@ function App() {
               <Route path={Constants.NavPathItems.VIDEO_ADD} element={<VideoAdd />} />
             </Routes>
           </div>
+          <CustomToast />
         </div>
       </div>
     </BrowserRouter>

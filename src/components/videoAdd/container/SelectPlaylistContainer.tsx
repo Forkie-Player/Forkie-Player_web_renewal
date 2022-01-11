@@ -10,9 +10,10 @@ interface IProps {
 }
 
 function SelectPlaylistContainer({ onClickCancle, onClickPlaylist }: IProps) {
-  const playlists = useSelector(({ playlist }: RootModuleType) => playlist.items)
-
-  return <SelectPlaylistView playlists={playlists} onClickCancle={onClickCancle} onClickPlaylist={onClickPlaylist} />
+  const playlists = useSelector(({ playlist }: RootModuleType) => playlist)
+  return (
+    <SelectPlaylistView playlists={playlists.items} onClickCancle={onClickCancle} onClickPlaylist={onClickPlaylist} />
+  )
 }
 
 export default SelectPlaylistContainer

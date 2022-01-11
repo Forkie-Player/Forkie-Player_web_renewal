@@ -1,9 +1,10 @@
 import React from 'react'
 import palette from '../../../lib/style/palette'
 import { IPlaylist } from '../../../types'
-import { CustomButton } from '../../elements/CustomButton'
+import { CustomClearButton } from '../../elements/CustomButton'
 import PlaylistItem from '../../elements/PlaylistItem'
 import * as Strings from '../../../lib/strings'
+import AddPlaylistButton from '../../elements/AddPlaylistButton'
 
 interface IProps {
   playlists: IPlaylist[]
@@ -23,8 +24,8 @@ function SelectPlaylistView({ playlists, onClickCancle, onClickPlaylist }: IProp
         </div>
       </div>
       <div className="basis-1/12 p-2 flex justify-center gap-x-4 w-full">
-        <CustomButton text="취소" textColor={palette.cancel} onClick={onClickCancle} />
-        <CustomButton text="새 플레이리스트" textColor={palette.redrose} onClick={() => console.log('cancle')} />
+        <CustomClearButton text="취소" textColor={palette.cancel} onClick={onClickCancle} />
+        <AddPlaylistButton text="새 플레이리스트" place="top" />
       </div>
     </div>
   )

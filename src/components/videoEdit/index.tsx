@@ -9,12 +9,14 @@ import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import palette from '../../lib/style/palette'
 import secondsToHHMMSS from '../../lib/utils/secondsToHHMMSS'
 import AdjustSeconds from './elements/AdjustSeconds'
-import CustomButton from './elements/CustomButton'
+import { CustomButton } from '../elements/CustomButton'
+
+import * as Strings from '../../lib/strings'
+import toast from 'react-hot-toast'
 
 // refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {
   video: IVideoHasRange
-  selectedRange: number[]
   playerProps?: ReactPlayerProps
   onReadyCallback?: (endtime: number) => void
   onRangeChangeCallback?: (range: number[]) => void
@@ -33,7 +35,6 @@ const handleStyle = {
 
 function VideoEdit({
   video,
-  selectedRange,
   playerProps,
   onReadyCallback,
   onRangeChangeCallback,
@@ -103,6 +104,7 @@ function VideoEdit({
   const onClickApply = useCallback(() => {
     setRange(prev => {
       onClickApplyCallback(prev)
+      toast.success(Strings.applyTimeLapseSuccess(prev[0], prev[1]))
       return prev
     })
   }, [onClickApplyCallback])
@@ -128,8 +130,8 @@ function VideoEdit({
             <div>{secondsToHHMMSS(range[0])}</div>~<div>{secondsToHHMMSS(range[1])}</div>
           </div>
           <div className="w-full pt-4 flex text-3xl justify-center gap-x-8">
-            <CustomButton text="적용" textColor={palette['info']} onClick={onClickApply} />
-            <CustomButton text="추가" textColor={palette['redrose']} onClick={onClickAddCallback} />
+            <CustomButton text="적용" size="large" textColor={palette['info']} onClick={onClickApply} />
+            <CustomButton text="추가" size="large" textColor={palette['redrose']} onClick={onClickAddCallback} />
           </div>
         </div>
       ) : (

@@ -12,14 +12,11 @@ export const getVideoList = async (id: number) => {
 }
 
 export const addVideo = async (request: IAddVideoToPlaylistRequest) => {
-  try {
-    await axios.post(`${Address}/api/play/create`, {
-      playlistId: request.playlistId,
-      ...request.video,
-    })
-  } catch (err) {
-    throw err
-  }
+  await axios.post(`${Address}/api/play/create`, {
+    playlistId: request.playlistId,
+    ...request.video,
+  })
+  return { id: request.playlistId, thumbnail: request.video.thumbnail }
 }
 
 export const deleteVideo = async (id: number) => {

@@ -20,6 +20,7 @@
 
   font-family: 'Noto Sans KR', sans-serif;
   background-color: var(--primary-redrose);
+  word-break: keep-all;
 }
 
 :root {
@@ -40,6 +41,10 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-redrose);
+}
+
+input:focus {
+  outline: none;
 }
 
 .rc-slider-handle-dragging {

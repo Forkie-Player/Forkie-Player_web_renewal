@@ -8,7 +8,7 @@ interface IProps {
 
 function AdjustSeconds({ right, onClickAdjustSeconds }: IProps) {
   return (
-    <div className={`flex gap-x-2 ${right === undefined ? '-' : ''}translate-x-6`}>
+    <div className={`flex gap-x-2 ${right === undefined ? '-translate-x-6' : 'translate-x-6'}`}>
       <FiMinusCircle
         className="text-2xl rounded-2xl text-blackberry 
       cursor-pointer hover:shadow-outer hover:drop-shadow-md active:drop-shadow-none active:shadow-inner"

@@ -19,13 +19,8 @@ export const deletePlaylist = async (id: number) => {
 }
 
 export const addPlaylist = async (obj: ICreatePlaylistRequest) => {
-  try {
-    await axios.post(`${Address}/api/playlist/create`, obj)
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response !== undefined) {
-      throw err.response.data
-    }
-  }
+  const res = await axios.post(`${Address}/api/playlist/create`, obj)
+  return res.data.response
 }
 
 export const editPlaylist = async (obj: IUpdatePlaylistTitleRequest) => {

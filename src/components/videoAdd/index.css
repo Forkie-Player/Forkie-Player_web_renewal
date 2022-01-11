@@ -1,0 +1,43 @@
+.videoEditWrapperShrinked {
+  animation-duration: 0.3s;
+  animation-name: videoEditWrapperShrinked;
+  flex-basis: 70%;
+}
+@keyframes videoEditWrapperShrinked {
+  from {
+    flex-basis: 100%;
+  }
+  to {
+    flex-basis: 70%;
+  }
+}
+
+.videoEditWrapperExpand {
+  animation-duration: 0.3s;
+  animation-name: videoEditWrapperExpand;
+  flex-basis: 100%;
+}
+@keyframes videoEditWrapperExpand {
+  from {
+    flex-basis: 70%;
+  }
+  to {
+    flex-basis: 100%;
+  }
+}
+
+.playlistWrapperShowUp {
+  animation-duration: 0.3s;
+  animation-name: playlistWrapperShowUp;
+  animation-timing-function: ease-out;
+  right: 0%;
+}
+
+@keyframes playlistWrapperShowUp {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0%;
+  }
+}

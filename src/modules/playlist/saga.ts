@@ -52,7 +52,7 @@ function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) {
   }
 }
 
-export function* playlistSaga() {
+export default function* playlistSaga() {
   yield takeLatest(playlistActionTypes.GET_PLAYLIST, getPlaylistSaga)
   yield takeLatest(playlistActionTypes.ADD_PLAYLIST, addPlaylistSaga)
   yield takeLatest(playlistActionTypes.ADD_VIDEO, addVideoSaga)

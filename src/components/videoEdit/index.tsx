@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { IVideoHasRange } from '../../types'
 import LoadingElement from '../elements/loading'
-import VideoContainer from './container/VideoContainer'
+import VideoContainer from '../video'
 import { Range } from 'rc-slider'
 
 import 'rc-slider/assets/index.css'

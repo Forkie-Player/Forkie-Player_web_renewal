@@ -4,6 +4,7 @@ export const NavPathItems = {
   LIST: '/list',
   EDIT: '/edit',
   VIDEO_ADD: '/video-add',
+  PLAY: '/play',
 }
 
 export const screenSizeString = {

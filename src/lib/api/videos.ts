@@ -1,14 +1,10 @@
 import axios from 'axios'
 import { Address } from './constants'
-import { IAddVideoToPlaylistRequest, IChangeVideoOrderInPlaylistRequest } from './types'
+import { IAddVideoToPlaylistRequest, IChangeVideoOrderInPlaylistRequest, IGetVideoListSuccess } from './types'
 
 export const getVideoList = async (id: number) => {
-  try {
-    const res = await axios.get(`${Address}/api/play/list/${id}`)
-    return res.data.response
-  } catch (err) {
-    throw err
-  }
+  const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play/list/${id}`)
+  return res.data.response
 }
 
 export const addVideo = async (request: IAddVideoToPlaylistRequest) => {

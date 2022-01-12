@@ -85,3 +85,10 @@ export interface IAddVideoToPlaylistRequest {
   playlistId: number
   video: IVideoHasRange
 }
+
+// 비디오 조회 반환타입
+export interface IGetVideoListSuccess {
+  success: boolean
+  error: null
+  response: IVideoHasRange[]
+}

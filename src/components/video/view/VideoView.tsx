@@ -8,10 +8,9 @@ interface IProps {
   playerRef: React.RefObject<ReactPlayer>
   video: IVideoHasRange
   playerProps?: ReactPlayerProps
-  onReady: (e: ReactPlayer) => void
 }
 
-function VideoView({ playerRef, playerProps, video, onReady }: IProps) {
+function VideoView({ playerRef, playerProps, video }: IProps) {
   const resizeDetector = useResizeDetector()
   const [wrapper, setWrapper] = useState({ width: 640, height: 360 })
 
@@ -30,7 +29,6 @@ function VideoView({ playerRef, playerProps, video, onReady }: IProps) {
     <div id="player_wrapper" ref={resizeDetector.ref} className={`w-full h-3/5 bg-blackberry`}>
       <ReactPlayer
         {...playerProps}
-        onReady={onReady}
         ref={playerRef}
         playing
         controls

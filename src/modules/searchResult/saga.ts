@@ -25,6 +25,6 @@ function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>
   }
 }
 
-export function* searchResultSaga() {
+export default function* searchResultSaga() {
   yield takeLatest(searchResultActionTypes.GET_SEARCH_RESULT, getSearchResultSaga)
 }

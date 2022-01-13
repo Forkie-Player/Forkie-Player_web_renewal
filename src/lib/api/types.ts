@@ -1,4 +1,4 @@
-import { IPlaylist, IToken, IUserInfo, IVideoHasRange } from '../../types'
+import { IPlaylist, IToken, IUserInfo, IVideoHasRange, IVideoInPlaylist } from '../../types'
 
 // 요청 실패
 export interface IRequestFail {
@@ -84,4 +84,32 @@ export interface IChangeVideoOrderInPlaylistRequest {
 export interface IAddVideoToPlaylistRequest {
   playlistId: number
   video: IVideoHasRange
+}
+
+// 비디오 조회 반환타입
+export interface IGetVideoListSuccess {
+  success: boolean
+  error: null
+  response: IVideoInPlaylist[]
+}
+
+// 비디오 삭제 성공 반환 타입
+export interface IDeleteVideoSuccess {
+  success: boolean
+  error: null
+  id: number
+  deleted: boolean
+}
+
+// 비디오 timelapse 변경 타입
+export interface IEditVideoTimeRangeRequest {
+  id: number
+  start: number
+  end: number
+}
+export interface IEditVideoTimeRangeSuccess {
+  success: boolean
+  error: null
+  id: number
+  edited: boolean
 }

@@ -4,10 +4,10 @@ import { IPlaylist } from '../../types'
 interface IProps {
   item: IPlaylist
   index: number
-  onClick: (item: IPlaylist) => void
+  onClick: (item: IPlaylist) => any
 }
 
-function PlaylistItem({ item, index, onClick }: IProps) {
+function PlaylistItem({ item, onClick }: IProps) {
   return (
     <div
       className="w-60 h-60 bg-white rounded-3xl shadow-outer overflow-hidden hover:drop-shadow-md active:shadow-inner cursor-pointer"

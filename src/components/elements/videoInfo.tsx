@@ -10,7 +10,9 @@ export default function VideoInfo({ data }: IProps) {
     <div className="space-y-1">
       <div className="text-lg">{data.title}</div>
       <div className="flex gap-4">
-        <div className="text-base text-blackberry-lightest leading-8">조회수 {parseViews(data.views)}회</div>
+        {data.views && (
+          <div className="text-base text-blackberry-lightest leading-8">조회수 {parseViews(data?.views)}회</div>
+        )}
         <div className="text-base text-blackberry-lightest leading-8">{data.uploadedAt}</div>
       </div>
       <div className="flex gap-2">

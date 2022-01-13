@@ -13,6 +13,8 @@ import useScreenSize from './lib/hooks/useScreenSize'
 import { setScreenSize } from './modules/screenSize/actions'
 import VideoAdd from './routes/VideoAdd'
 import { CustomToast } from './components/elements/CustomToast'
+import Play from './routes/Play'
+import VideoTimeChange from './routes/VideoTimeChange'
 
 function App() {
   const dispatch = useDispatch()
@@ -34,16 +36,18 @@ function App() {
         </div>
         <div
           className={
-            'flex flex-col w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl pl-6 pt-6'
+            'grid grid-cols-1 grid-rows-[4rem_minmax(100px,_auto)] w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl pl-6 pt-6'
           }
         >
           <Header />
-          <div className={'flex-[1] max-h-full  w-full pt-8'}>
+          <div className={'w-full pt-8'}>
             <Routes>
               <Route path={Constants.NavPathItems.HOME} element={<Home />} />
-              <Route path={Constants.NavPathItems.SEARCH} element={<Search />}></Route>
+              <Route path={Constants.NavPathItems.SEARCH} element={<Search />} />
               <Route path={Constants.NavPathItems.LIST} element={<List />} />
               <Route path={Constants.NavPathItems.VIDEO_ADD} element={<VideoAdd />} />
+              <Route path={Constants.NavPathItems.PLAY} element={<Play />} />
+              <Route path={Constants.NavPathItems.VIDEO_TIMECHANGE} element={<VideoTimeChange />} />
             </Routes>
           </div>
           <CustomToast />

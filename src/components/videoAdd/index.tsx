@@ -20,11 +20,11 @@ function VideoAdd({ video }: IProps) {
   const [showPlaylists, setShowPlaylists] = useState(false)
   const dispatch = useDispatch()
 
-  const onPlayerReady = (endTime: number) => {
+  const onPlayerReady = useCallback((endTime: number) => {
     if (endTime) {
       setVideoState(prev => ({ ...prev, end: endTime }))
     }
-  }
+  }, [])
 
   const onClickApply = useCallback((range: number[]) => {
     setVideoState(prev => ({ ...prev, start: range[0], end: range[1] }))
@@ -50,8 +50,8 @@ function VideoAdd({ video }: IProps) {
           <VideoEdit
             video={videoState}
             onReadyCallback={onPlayerReady}
-            onClickApplyCallback={onClickApply}
-            onClickAddCallback={onClickAdd}
+            leftButtonProps={{ onClick: onClickApply }}
+            rightButtonProps={{ onClick: onClickAdd }}
           />
         </div>
         <div

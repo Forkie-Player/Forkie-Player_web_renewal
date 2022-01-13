@@ -1,14 +1,17 @@
 import axios from 'axios'
 import { Address } from './constants'
-import { IAddVideoToPlaylistRequest, IChangeVideoOrderInPlaylistRequest } from './types'
+import {
+  IAddVideoToPlaylistRequest,
+  IChangeVideoOrderInPlaylistRequest,
+  IDeleteVideoSuccess,
+  IEditVideoTimeRangeRequest,
+  IEditVideoTimeRangeSuccess,
+  IGetVideoListSuccess,
+} from './types'
 
 export const getVideoList = async (id: number) => {
-  try {
-    const res = await axios.get(`${Address}/api/play/list/${id}`)
-    return res.data.response
-  } catch (err) {
-    throw err
-  }
+  const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play/list/${id}`)
+  return res.data
 }
 
 export const addVideo = async (request: IAddVideoToPlaylistRequest) => {
@@ -20,11 +23,8 @@ export const addVideo = async (request: IAddVideoToPlaylistRequest) => {
 }
 
 export const deleteVideo = async (id: number) => {
-  try {
-    await axios.delete(`${Address}/api/play/delete/${id}`)
-  } catch (err) {
-    throw err
-  }
+  const res = await axios.delete<IDeleteVideoSuccess>(`${Address}/api/play/delete/${id}`)
+  return res.data
 }
 
 export const changeOrder = async (request: IChangeVideoOrderInPlaylistRequest) => {
@@ -35,14 +35,7 @@ export const changeOrder = async (request: IChangeVideoOrderInPlaylistRequest) =
   }
 }
 
-export const changeLapse = async (id: number, start: number, end: number) => {
-  try {
-    await axios.put(`${Address}/api/play/edit/time`, {
-      id: id,
-      start: start,
-      end: end,
-    })
-  } catch (err) {
-    throw err
-  }
+export const editVideoTimeRange = async (request: IEditVideoTimeRangeRequest) => {
+  const res = await axios.put<IEditVideoTimeRangeSuccess>(`${Address}/api/play/edit/time`, request)
+  return res.data
 }

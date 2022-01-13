@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import PlayIndex from '../components/play'
@@ -9,11 +9,10 @@ function Play() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(videoList.length)
     if (videoList.length === 0) {
       navigate('/')
     }
-  }, [navigate, videoList.length])
+  }, [navigate, videoList])
 
   return <PlayIndex videoList={videoList} />
 }

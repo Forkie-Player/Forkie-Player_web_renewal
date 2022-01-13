@@ -6,12 +6,11 @@ import VideoView from './view/VideoView'
 interface IProps {
   playerRef: React.RefObject<ReactPlayer>
   video: IVideoHasRange
-  onVideoEnd?: () => void | Promise<void>
   playerProps?: ReactPlayerProps
 }
 
 // 비디오 렌더 컴포넌트
-function VideoRender({ playerRef, video, playerProps, onVideoEnd }: IProps) {
+function VideoRender({ playerRef, video, playerProps }: IProps) {
   const [prevVideo, setPrevVideo] = useState<string | null>(null)
   const [videoReady, setVideoReady] = useState(false)
 
@@ -24,8 +23,8 @@ function VideoRender({ playerRef, video, playerProps, onVideoEnd }: IProps) {
         const curTime = playerRef.current?.getCurrentTime()
         if (curTime !== undefined && curTime >= video.end && playerRef.current !== null) {
           playerRef.current.seekTo(video.start)
-          if (onVideoEnd !== undefined) {
-            onVideoEnd()
+          if (playerProps !== undefined && playerProps.onEnded !== undefined) {
+            playerProps.onEnded()
           }
         }
       }, 700)
@@ -37,7 +36,11 @@ function VideoRender({ playerRef, video, playerProps, onVideoEnd }: IProps) {
         }
       }
     }
-  }, [playerRef, videoReady, video, onVideoEnd])
+  }, [playerRef, videoReady, video, playerProps])
+
+  useEffect(() => {
+    console.log('playerProps')
+  }, [playerProps])
 
   // 이전 이후 영상이 다를 경우 reReady
   useEffect(() => {
@@ -48,7 +51,7 @@ function VideoRender({ playerRef, video, playerProps, onVideoEnd }: IProps) {
 
   const onVideoReady = useCallback(
     e => {
-      if (playerProps !== undefined && playerProps.onReady) {
+      if (playerProps !== undefined && playerProps.onReady !== undefined) {
         playerProps.onReady(e)
       }
       setVideoReady(true)
@@ -56,12 +59,23 @@ function VideoRender({ playerRef, video, playerProps, onVideoEnd }: IProps) {
     [playerProps],
   )
 
+  const onVideoEnded = useCallback(() => {
+    if (playerRef.current !== null) {
+      playerRef.current.seekTo(video.start)
+      if (playerProps !== undefined && playerProps.onEnded !== undefined) {
+        playerProps.onEnded()
+      }
+      console.log('ended')
+    }
+  }, [playerRef, playerProps, video.start])
+
   return (
     <VideoView
       playerRef={playerRef}
       playerProps={{
         ...playerProps,
         onReady: onVideoReady,
+        onEnded: onVideoEnded,
       }}
       video={video}
     />

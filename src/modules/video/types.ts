@@ -1,7 +1,7 @@
 import { videoActions } from './actions'
 import { ActionType } from 'typesafe-actions'
 import { IAsyncState } from '../moduleTypes'
-import { IVideoHasRange } from '../../types'
+import { IVideoInPlaylist } from '../../types'
 
 export type TVideo_Action = ActionType<typeof videoActions>
-export type TVideoStoreType = IAsyncState & { items: IVideoHasRange[] }
+export type TVideoStoreType = IAsyncState & { items: IVideoInPlaylist[] }

@@ -1,16 +1,30 @@
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
+import { MdEdit } from 'react-icons/md'
 import palette from '../../lib/style/palette'
 
 interface IProps {
   buttonRef?: React.RefObject<HTMLDivElement> | ((instance: HTMLDivElement | null) => void)
-  text: string
   textColor?: string
   size?: 'small' | 'medium' | 'large' | 'fit'
-  onClick: () => void
+  onClick?: (any: any) => void | Promise<void>
 }
 
-export function CustomButton({ buttonRef, text, textColor = palette.blackberry, size = 'fit', onClick }: IProps) {
+export interface ITextButtonProps extends IProps {
+  text?: string
+}
+
+export interface IIconButtonProps extends IProps {
+  icon?: JSX.Element
+}
+
+export function CustomButton({
+  buttonRef,
+  text = '버튼',
+  textColor = palette.blackberry,
+  size = 'fit',
+  onClick,
+}: ITextButtonProps) {
   const [elementsSize, setElementsSize] = useState({
     wrapper: '',
     inner: '',
@@ -56,7 +70,12 @@ export function CustomButton({ buttonRef, text, textColor = palette.blackberry, 
   )
 }
 
-export function CustomClearButton({ buttonRef, text, textColor, onClick }: IProps) {
+export function CustomClearButton({
+  buttonRef,
+  text = '버튼',
+  textColor = palette.blackberry,
+  onClick,
+}: ITextButtonProps) {
   return (
     <div
       ref={buttonRef}
@@ -67,6 +86,26 @@ export function CustomClearButton({ buttonRef, text, textColor, onClick }: IProp
       style={{ color: textColor }}
     >
       {text}
+    </div>
+  )
+}
+
+export function CustomIcomButton({
+  buttonRef,
+  icon = <MdEdit />,
+  textColor = palette.blackberry,
+  onClick,
+}: IIconButtonProps) {
+  return (
+    <div
+      ref={buttonRef}
+      className={clsx(
+        'max-w-fit max-h-8 p-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+      )}
+      onClick={onClick}
+      style={{ color: textColor }}
+    >
+      {icon}
     </div>
   )
 }

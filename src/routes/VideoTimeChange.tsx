@@ -17,8 +17,7 @@ function VideoTimeChange() {
     }
   }, [state, navigate])
 
-  console.log(state)
-  return <VideoTimeChangeIndex />
+  return <VideoTimeChangeIndex video={state} />
 }
 
 export default VideoTimeChange

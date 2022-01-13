@@ -14,6 +14,7 @@ import { setScreenSize } from './modules/screenSize/actions'
 import VideoAdd from './routes/VideoAdd'
 import { CustomToast } from './components/elements/CustomToast'
 import Play from './routes/Play'
+import VideoTimeChange from './routes/VideoTimeChange'
 
 function App() {
   const dispatch = useDispatch()
@@ -46,6 +47,7 @@ function App() {
               <Route path={Constants.NavPathItems.LIST} element={<List />} />
               <Route path={Constants.NavPathItems.VIDEO_ADD} element={<VideoAdd />} />
               <Route path={Constants.NavPathItems.PLAY} element={<Play />} />
+              <Route path={Constants.NavPathItems.VIDEO_TIMECHANGE} element={<VideoTimeChange />} />
             </Routes>
           </div>
           <CustomToast />

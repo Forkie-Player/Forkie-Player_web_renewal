@@ -48,12 +48,6 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
     }
   }, [playlist.items, userInfo.userInfo])
 
-  const getCustomButtonRef = useCallback((instance: HTMLDivElement | null) => {
-    if (instance !== null) {
-      setReferenceElement(instance)
-    }
-  }, [])
-
   const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }, [])
@@ -65,7 +59,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
   return (
     <>
       <CustomClearButton
-        buttonRef={getCustomButtonRef}
+        ref={setReferenceElement}
         text={text}
         textColor={palette.redrose}
         onClick={onClickToggleShowPopper}

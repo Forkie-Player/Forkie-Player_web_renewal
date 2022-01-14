@@ -16,7 +16,7 @@ interface IProps {
 }
 
 function VideoRender({ playerRef, video, playerProps }: IProps) {
-  const [prevVideo, setPrevVideo] = useState<string | null>(null)
+  const [prevVideo, setPrevVideo] = useState<string>(video.videoId)
   const [videoReady, setVideoReady] = useState(false)
 
   const seekToStart = useCallback(() => {
@@ -26,7 +26,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
   }, [playerRef, videoReady, video])
 
   useEffect(() => {
-    if (prevVideo !== null && prevVideo !== video.videoId) {
+    if (prevVideo !== video.videoId) {
       setVideoReady(false)
       setPrevVideo(video.videoId)
       return

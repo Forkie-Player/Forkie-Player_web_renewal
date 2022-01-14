@@ -17,7 +17,7 @@ function RightVideoListContainer({
   onClickEdit,
   onClickDelete,
 }: IProps) {
-  const itemRef = React.useRef<HTMLDivElement>(null)
+  const itemRef = React.useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (itemRef.current !== null) {
@@ -26,14 +26,16 @@ function RightVideoListContainer({
   }, [itemRef, currentVideoIndex])
 
   return (
-    <RightVideoListView
-      itemRef={itemRef}
-      videoList={videoList}
-      currentVideoIndex={currentVideoIndex}
-      onClickVideoListItem={onClickVideoListItem}
-      onClickDelete={onClickDelete}
-      onClickEdit={onClickEdit}
-    />
+    <>
+      <RightVideoListView
+        itemRef={itemRef}
+        videoList={videoList}
+        currentVideoIndex={currentVideoIndex}
+        onClickVideoListItem={onClickVideoListItem}
+        onClickDelete={onClickDelete}
+        onClickEdit={onClickEdit}
+      />
+    </>
   )
 }
 

@@ -32,3 +32,6 @@ export const addVideoSuccess = '영상이 잘 추가되었어요'
 
 export const applyTimeLapseSuccess = (start: number, end: number) =>
   `제대로 적용되었어요\n${secondsToHHMMSS(start)} ~ ${secondsToHHMMSS(end)}`
+
+export const CheckVideoEdit = '정말로 수정하시나요?'
+export const CheckVideoDelete = '정말로 삭제하시나요?'

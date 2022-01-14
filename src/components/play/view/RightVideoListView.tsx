@@ -22,7 +22,7 @@ function RightVideoListView({
     <div className="w-full h-full space-y-2 overflow-y-auto pb-4">
       {videoList.map((video, index) => (
         <VideoListItem
-          itemRef={index === currentVideoIndex ? itemRef : undefined}
+          ref={index === currentVideoIndex ? itemRef : undefined}
           video={video}
           itemIndex={index}
           currentVideoIndex={currentVideoIndex}

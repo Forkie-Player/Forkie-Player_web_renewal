@@ -1,3 +1,9 @@
+/**
+ * 비디오 렌더 컴포넌트
+ * 넘어온 비디오의 start, end에 맞추어 재생해줌
+ * 정해진 end 에 도달하면, playerProps의 onEnded 이벤트를 발생시킴
+ */
+
 import React, { useCallback, useEffect, useState } from 'react'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import { IVideoHasRange } from '../../types'
@@ -9,26 +15,35 @@ interface IProps {
   playerProps?: ReactPlayerProps
 }
 
-// 비디오 렌더 컴포넌트
 function VideoRender({ playerRef, video, playerProps }: IProps) {
   const [prevVideo, setPrevVideo] = useState<string | null>(null)
   const [videoReady, setVideoReady] = useState(false)
 
+  const seekToStart = useCallback(() => {
+    if (videoReady && playerRef.current !== null && video.start < video.end) {
+      playerRef.current.seekTo(video.start, 'seconds')
+    }
+  }, [playerRef, videoReady, video])
+
   useEffect(() => {
+    if (prevVideo !== null && prevVideo !== video.videoId) {
+      setVideoReady(false)
+      setPrevVideo(video.videoId)
+      return
+    }
+
     if (videoReady && playerRef.current !== null) {
-      if (playerRef?.current?.seekTo !== undefined && playerRef.current.seekTo !== null) {
-        playerRef.current.seekTo(video.start)
-      }
+      seekToStart()
+
       const intervalId = setInterval(() => {
         const curTime = playerRef.current?.getCurrentTime()
-        if (curTime !== undefined && curTime >= video.end && playerRef.current !== null) {
-          playerRef.current.seekTo(video.start)
+        if (curTime !== undefined && curTime >= video.end) {
+          seekToStart()
           if (playerProps !== undefined && playerProps.onEnded !== undefined) {
             playerProps.onEnded()
           }
         }
       }, 700)
-      setPrevVideo(video.videoId)
 
       return () => {
         if (intervalId !== undefined) {
@@ -36,18 +51,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
         }
       }
     }
-  }, [playerRef, videoReady, video, playerProps])
-
-  useEffect(() => {
-    console.log('playerProps')
-  }, [playerProps])
-
-  // 이전 이후 영상이 다를 경우 reReady
-  useEffect(() => {
-    if (prevVideo !== null && prevVideo !== video.videoId) {
-      setVideoReady(false)
-    }
-  }, [video.videoId, prevVideo])
+  }, [playerRef, videoReady, prevVideo, video, playerProps, seekToStart])
 
   const onVideoReady = useCallback(
     e => {
@@ -60,14 +64,11 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
   )
 
   const onVideoEnded = useCallback(() => {
-    if (playerRef.current !== null) {
-      playerRef.current.seekTo(video.start)
-      if (playerProps !== undefined && playerProps.onEnded !== undefined) {
-        playerProps.onEnded()
-      }
-      console.log('ended')
+    if (playerProps !== undefined && playerProps.onEnded !== undefined) {
+      playerProps.onEnded()
     }
-  }, [playerRef, playerProps, video.start])
+    seekToStart()
+  }, [playerProps, seekToStart])
 
   return (
     <VideoView

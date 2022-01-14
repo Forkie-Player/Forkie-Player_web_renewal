@@ -21,6 +21,7 @@ export default function Play({ videoList }: IProps) {
   const playerRef = useRef<ReactPlayer>(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const onVideoEnd = useCallback(() => {
     setCurrentVideoIndex(prev => {
       if (prev + 1 < videoList.length) {

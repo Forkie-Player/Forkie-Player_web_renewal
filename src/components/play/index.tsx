@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { deleteVideoAsync } from '../../modules/video/actions'
 import GobackLine from '../elements/GobackLine'
 import VerticalLine from '../elements/VerticalLine'
-import VideoInfo from '../elements/videoInfo'
-import VideoRender from '../video'
 import RightVideoListContainer from './container/RightVideoListContainer'
 
 import * as Constants from '../../lib/constants'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
 import { TVideoStoreType } from '../../modules/video/types'
 import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
+import LeftVideoRenderView from './view/LeftVideoRenderView'
 
 interface IProps {
   video: TVideoStoreType
@@ -63,7 +62,9 @@ export default function Play({ video }: IProps) {
       switch (status) {
         case 'SUCCESS':
           setInProgressingDeleteIdx(null)
-          if (currentVideoIndex === inProgressingDeleteIdx) {
+          if (currentVideoIndex > inProgressingDeleteIdx) {
+            setCurrentVideoIndex(currentVideoIndex - 1)
+          } else if (currentVideoIndex === inProgressingDeleteIdx) {
             if (currentVideoIndex >= videoList.length) {
               setCurrentVideoIndex(0)
             }
@@ -97,16 +98,7 @@ export default function Play({ video }: IProps) {
         <GobackLine />
       </div>
       <div className="col-span-9 pt-4 space-y-4">
-        {videoList[currentVideoIndex] && (
-          <>
-            <VideoRender
-              playerRef={playerRef}
-              video={videoList[currentVideoIndex]}
-              playerProps={{ onEnded: onVideoEnd }}
-            />
-            <VideoInfo data={videoList[currentVideoIndex]} />
-          </>
-        )}
+        <LeftVideoRenderView playerRef={playerRef} video={videoList[currentVideoIndex]} onVideoEnd={onVideoEnd} />
       </div>
       <div className="h-full max-h-full col-span-3 flex">
         <VerticalLine />

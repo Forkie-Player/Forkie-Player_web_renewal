@@ -63,7 +63,8 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IProps>(
 
     const onClickDeleteButton = useCallback(() => {
       onClickDelete(itemIndex)
-    }, [onClickDelete, itemIndex])
+      onToggleShowPopper()
+    }, [onClickDelete, onToggleShowPopper, itemIndex])
 
     return (
       <div ref={setReferenceElement} className={clsx('w-full h-28  cursor-pointer')}>

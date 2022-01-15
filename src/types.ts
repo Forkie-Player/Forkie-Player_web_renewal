@@ -62,5 +62,5 @@ export interface IUserInfo {
 export interface IPlaylist {
   id: number
   title: string
-  thumbnail: string
+  thumbnail: string | null
 }

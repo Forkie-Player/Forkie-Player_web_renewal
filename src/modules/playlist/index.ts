@@ -33,7 +33,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
   [playlistActionTypes.GET_PLAYLIST_ERROR]: state => ({ ...state, success: false, pending: false, error: 'error' }),
   [playlistActionTypes.CLEAR_THUMBNAIL]: (state, action) => ({
     ...state,
-    items: state.items.map(playlist => (playlist.id === action.payload ? { ...playlist, thumbnail: '' } : playlist)),
+    items: state.items.map(playlist => (playlist.id === action.payload ? { ...playlist, thumbnail: null } : playlist)),
   }),
   [playlistActionTypes.SET_THUMBNAIL]: (state, action) => ({
     ...state,
@@ -44,6 +44,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
   [playlistActionTypes.ADD_VIDEO]: (state, action) => ({ ...state, error: null, pending: true }),
   [playlistActionTypes.ADD_VIDEO_SUCCESS]: (state, action) => ({
     ...state,
+    success: true,
     pending: false,
     items: state.items.map(playlist =>
       playlist.id === action.payload.id && playlist.thumbnail === null
@@ -51,7 +52,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
         : playlist,
     ),
   }),
-  [playlistActionTypes.ADD_VIDEO_ERROR]: state => ({ ...state, pending: false, error: 'error' }),
+  [playlistActionTypes.ADD_VIDEO_ERROR]: state => ({ ...state, success: false, pending: false, error: 'error' }),
 })
 
 export default playlistReducer

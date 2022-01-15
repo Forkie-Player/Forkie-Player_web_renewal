@@ -8,7 +8,7 @@ import handleSagaError from '../handleSagaError'
 function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
   try {
     const response: IGetVideoListSuccess = yield call(getVideoList, action.payload)
-    yield put(getVideoAsync.success(response.response))
+    yield put(getVideoAsync.success({ playlistId: action.payload, items: response.response }))
   } catch (err) {
     handleSagaError(err, deleteVideoAsync.failure)
   }

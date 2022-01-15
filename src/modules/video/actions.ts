@@ -28,7 +28,7 @@ export const videoActionTypes = {
 // 액션 생성 함수
 export const getVideoAsync = createAsyncAction(GET_VIDEO, GET_VIDEO_SUCCESS, GET_VIDEO_ERROR)<
   number,
-  IVideoInPlaylist[],
+  { items: IVideoInPlaylist[]; playlistId: number },
   string
 >()
 

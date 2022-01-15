@@ -1,9 +1,8 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { deleteVideoAsync } from '../../modules/video/actions'
-import { IVideoInPlaylist } from '../../types'
 import GobackLine from '../elements/GobackLine'
 import VerticalLine from '../elements/VerticalLine'
 import VideoInfo from '../elements/videoInfo'
@@ -11,13 +10,20 @@ import VideoRender from '../video'
 import RightVideoListContainer from './container/RightVideoListContainer'
 
 import * as Constants from '../../lib/constants'
+import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
+import { TVideoStoreType } from '../../modules/video/types'
+import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
 
 interface IProps {
-  videoList: IVideoInPlaylist[]
+  video: TVideoStoreType
 }
 
-export default function Play({ videoList }: IProps) {
+export default function Play({ video }: IProps) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
+  const [inProgressingDeleteIdx, setInProgressingDeleteIdx] = useState<number | null>(null)
+
+  const { items: videoList } = video
+  const status = useDispatchInteraction(video)
   const playerRef = useRef<ReactPlayer>(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -47,9 +53,36 @@ export default function Play({ videoList }: IProps) {
   const onClickDelete = useCallback(
     (index: number) => {
       dispatch(deleteVideoAsync.request(videoList[index].id))
+      setInProgressingDeleteIdx(index)
     },
     [dispatch, videoList],
   )
+
+  useEffect(() => {
+    if (inProgressingDeleteIdx !== null) {
+      switch (status) {
+        case 'SUCCESS':
+          setInProgressingDeleteIdx(null)
+          if (currentVideoIndex === inProgressingDeleteIdx) {
+            if (currentVideoIndex >= videoList.length) {
+              setCurrentVideoIndex(0)
+            }
+          }
+          if (inProgressingDeleteIdx === 0) {
+            if (videoList.length === 0) {
+              if (video.playlistId !== null) {
+                dispatch(clearThumbnail(video.playlistId))
+              }
+              navigate(-1)
+            } else {
+              if (video.playlistId !== null) {
+                dispatch(setThumbnail(video.playlistId, videoList[0].thumbnail))
+              }
+            }
+          }
+      }
+    }
+  }, [navigate, status, inProgressingDeleteIdx, currentVideoIndex, video.playlistId, videoList, dispatch])
 
   const onClickEdit = useCallback(
     (index: number) => {
@@ -64,8 +97,16 @@ export default function Play({ videoList }: IProps) {
         <GobackLine />
       </div>
       <div className="col-span-9 pt-4 space-y-4">
-        <VideoRender playerRef={playerRef} video={videoList[currentVideoIndex]} playerProps={{ onEnded: onVideoEnd }} />
-        <VideoInfo data={videoList[currentVideoIndex]} />
+        {videoList[currentVideoIndex] && (
+          <>
+            <VideoRender
+              playerRef={playerRef}
+              video={videoList[currentVideoIndex]}
+              playerProps={{ onEnded: onVideoEnd }}
+            />
+            <VideoInfo data={videoList[currentVideoIndex]} />
+          </>
+        )}
       </div>
       <div className="h-full max-h-full col-span-3 flex">
         <VerticalLine />

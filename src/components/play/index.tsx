@@ -12,7 +12,7 @@ import { TVideoStoreType } from '../../modules/video/types'
 import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
 import LeftVideoRenderView from './view/LeftVideoRenderView'
 import { IVideoInPlaylist } from '../../types'
-import RightVideoListView from './view/RightVideoListView'
+import RightVideoListContainer from './container/RightVideoListContainer'
 
 interface IProps {
   video: TVideoStoreType
@@ -34,6 +34,7 @@ export default function Play({ video }: IProps) {
     },
     [videoList],
   )
+
   const onVideoEnd = useCallback(() => {
     setCurrentVideo(prev => {
       const curIndex = getVideoIndex(prev)
@@ -65,9 +66,6 @@ export default function Play({ video }: IProps) {
     [dispatch, getVideoIndex],
   )
 
-  // 현재 다음꺼 삭제시 -> ㄱㅊ
-  // 현재 꺼 삭제시 -> ㄱㅍ
-  // 현재 이전꺼 삭제시 ->
   useEffect(() => {
     if (inProgressingDeleteIdx !== null) {
       switch (status) {
@@ -116,7 +114,7 @@ export default function Play({ video }: IProps) {
       </div>
       <div className="h-full max-h-full col-span-3 flex">
         <VerticalLine />
-        <RightVideoListView
+        <RightVideoListContainer
           videoList={videoList}
           currentVideo={currentVideo}
           onClickVideoListItem={onClickVideoListItem}

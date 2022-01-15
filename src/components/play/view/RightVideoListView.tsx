@@ -6,8 +6,8 @@ interface IProps {
   videoList: IVideoInPlaylist[]
   currentVideo: IVideoInPlaylist
   onClickVideoListItem: (item: IVideoInPlaylist) => void
-  onClickEdit: (video: IVideoInPlaylist) => void | Promise<void>
-  onClickDelete: (video: IVideoInPlaylist) => void | Promise<void>
+  onClickEdit: (video: IVideoInPlaylist, reference: HTMLDivElement) => void | Promise<void>
+  onClickDelete: (video: IVideoInPlaylist, reference: HTMLDivElement) => void | Promise<void>
 }
 function RightVideoListView({ videoList, currentVideo, onClickVideoListItem, onClickEdit, onClickDelete }: IProps) {
   const itemRef = React.useRef<HTMLDivElement | null>(null)
@@ -23,6 +23,7 @@ function RightVideoListView({ videoList, currentVideo, onClickVideoListItem, onC
       {videoList.map((video, index) => (
         <VideoListItem
           ref={video.id === currentVideo.id ? itemRef : undefined}
+          key={`videolist_${index}`}
           video={video}
           currentVideo={currentVideo}
           onClickItem={onClickVideoListItem}

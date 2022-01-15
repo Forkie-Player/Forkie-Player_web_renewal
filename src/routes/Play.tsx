@@ -6,18 +6,20 @@ import PlayIndex from '../components/play'
 import { RootModuleType } from '../modules/moduleTypes'
 
 function Play() {
-  const videoList = useSelector(({ video }: RootModuleType) => video.items)
+  const video = useSelector(({ video }: RootModuleType) => video)
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (videoList.length === 0) {
-      navigate('/')
+    if (loading) {
+      if (video.items.length === 0) {
+        navigate('/')
+      }
+      setLoading(false)
     }
-    setLoading(false)
-  }, [navigate, videoList])
+  }, [navigate, video, loading])
 
-  return <>{loading ? <LoadingElement /> : <PlayIndex videoList={videoList} />}</>
+  return <>{loading ? <LoadingElement /> : <PlayIndex video={video} />}</>
 }
 
 export default Play

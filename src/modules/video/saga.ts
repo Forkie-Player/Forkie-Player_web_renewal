@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
 import { deleteVideo, editVideoTimeRange, getVideoList } from '../../lib/api/videos'
 import { deleteVideoAsync, editTimeRangeAsync, getVideoAsync } from './actions'
 
@@ -8,7 +8,7 @@ import handleSagaError from '../handleSagaError'
 function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
   try {
     const response: IGetVideoListSuccess = yield call(getVideoList, action.payload)
-    yield put(getVideoAsync.success(response.response))
+    yield put(getVideoAsync.success({ playlistId: action.payload, items: response.response }))
   } catch (err) {
     handleSagaError(err, deleteVideoAsync.failure)
   }
@@ -17,6 +17,7 @@ function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
 function* deleteVideoSaga(action: ReturnType<typeof deleteVideoAsync.request>) {
   try {
     const res: IDeleteVideoSuccess = yield call(deleteVideo, action.payload)
+    yield delay(1000)
     yield put(deleteVideoAsync.success(res.id))
   } catch (err) {
     handleSagaError(err, deleteVideoAsync.failure)

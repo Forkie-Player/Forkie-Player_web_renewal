@@ -1,8 +1,10 @@
 //재생화면에서 넘어온 이미 등록된 비디오를 수정하는 화면
 
-import { useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
+import { RootModuleType } from '../../modules/moduleTypes'
 import { editTimeRangeAsync } from '../../modules/video/actions'
 import { IVideoInPlaylist } from '../../types'
 import GobackLine from '../elements/GobackLine'
@@ -13,8 +15,19 @@ interface IProps {
 }
 function VideoTimeChange({ video }: IProps) {
   const [videoState, setVideoState] = useState<IVideoInPlaylist>(video)
-  const dispatch = useDispatch()
+
+  const videoModule = useSelector(({ video }: RootModuleType) => video)
+  const status = useDispatchInteraction(videoModule)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    switch (status) {
+      case 'SUCCESS':
+        navigate(-1)
+        break
+    }
+  }, [status, navigate])
 
   const onClickApply = useCallback((range: number[]) => {
     setVideoState(prev => ({ ...prev, start: range[0], end: range[1] }))
@@ -22,8 +35,7 @@ function VideoTimeChange({ video }: IProps) {
 
   const onClickEdit = useCallback(() => {
     dispatch(editTimeRangeAsync.request({ id: videoState.id, start: videoState.start, end: videoState.end }))
-    navigate(-1)
-  }, [navigate, videoState, dispatch])
+  }, [videoState, dispatch])
 
   return (
     <div className="w-full h-full px-[5%] flex flex-col">

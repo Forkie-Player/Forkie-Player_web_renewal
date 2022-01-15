@@ -6,6 +6,7 @@ const initialState: TVideoStoreType = {
   success: false,
   pending: false,
   error: null,
+  playlistId: null,
   items: [],
 }
 
@@ -15,7 +16,8 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     ...state,
     success: true,
     pending: false,
-    items: action.payload,
+    playlistId: action.payload.playlistId,
+    items: action.payload.items,
   }),
   [videoActionTypes.GET_VIDEO_ERROR]: (state, action) => ({
     ...state,

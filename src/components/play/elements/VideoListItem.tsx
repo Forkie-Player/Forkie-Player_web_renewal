@@ -11,15 +11,14 @@ import * as Strings from '../../../lib/strings'
 
 interface IProps {
   video: IVideoInPlaylist
-  itemIndex: number
-  currentVideoIndex: number
-  onClickItem: (itemIndex: number) => void
-  onClickEdit: (video: number) => void | Promise<void>
-  onClickDelete: (video: number) => void | Promise<void>
+  currentVideo: IVideoInPlaylist
+  onClickItem: (itemIndex: IVideoInPlaylist) => void
+  onClickEdit: (video: IVideoInPlaylist) => void | Promise<void>
+  onClickDelete: (video: IVideoInPlaylist) => void | Promise<void>
 }
 
 const VideoListItem = forwardRef<HTMLDivElement | null, IProps>(
-  ({ video, itemIndex, currentVideoIndex, onClickItem, onClickEdit, onClickDelete }, ref) => {
+  ({ video, currentVideo, onClickItem, onClickEdit, onClickDelete }, ref) => {
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
     const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
     const [showPopper, setShowPopper] = useState(false)
@@ -58,22 +57,22 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IProps>(
     )
 
     const onClickEditButton = useCallback(() => {
-      onClickEdit(itemIndex)
-    }, [onClickEdit, itemIndex])
+      onClickEdit(video)
+    }, [onClickEdit, video])
 
     const onClickDeleteButton = useCallback(() => {
-      onClickDelete(itemIndex)
+      onClickDelete(video)
       onToggleShowPopper()
-    }, [onClickDelete, onToggleShowPopper, itemIndex])
+    }, [onClickDelete, onToggleShowPopper, video])
 
     return (
       <div ref={setReferenceElement} className={clsx('w-full h-28  cursor-pointer')}>
         <div
           className={clsx(
-            itemIndex === currentVideoIndex ? 'border-2 border-redrose' : 'opacity-50',
+            video.id === currentVideo.id ? 'border-2 border-redrose' : 'opacity-50',
             'w-full h-full flex gap-2 rounded-2xl overflow-hidden hover:bg-background-light-hover hover:shadow-outer',
           )}
-          onClick={() => onClickItem(itemIndex)}
+          onClick={() => onClickItem(video)}
         >
           <img src={video.thumbnail} alt="thumbnail" className="w-1/3 aspect-video" />
           <div className="flex flex-col justify-between py-1">

@@ -1,31 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IVideoInPlaylist } from '../../../types'
 import VideoListItem from '../elements/VideoListItem'
 
 interface IProps {
-  itemRef: React.RefObject<HTMLDivElement>
   videoList: IVideoInPlaylist[]
-  currentVideoIndex: number
-  onClickVideoListItem: (itemIndex: number) => void
-  onClickEdit: (video: number) => void | Promise<void>
-  onClickDelete: (video: number) => void | Promise<void>
+  currentVideo: IVideoInPlaylist
+  onClickVideoListItem: (item: IVideoInPlaylist) => void
+  onClickEdit: (video: IVideoInPlaylist) => void | Promise<void>
+  onClickDelete: (video: IVideoInPlaylist) => void | Promise<void>
 }
-function RightVideoListView({
-  itemRef,
-  videoList,
-  currentVideoIndex,
-  onClickVideoListItem,
-  onClickEdit,
-  onClickDelete,
-}: IProps) {
+function RightVideoListView({ videoList, currentVideo, onClickVideoListItem, onClickEdit, onClickDelete }: IProps) {
+  const itemRef = React.useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (itemRef.current !== null) {
+      itemRef.current.scrollIntoView()
+    }
+  }, [itemRef, currentVideo])
+
   return (
     <div className="w-full h-full space-y-2 overflow-y-auto pb-4">
       {videoList.map((video, index) => (
         <VideoListItem
-          ref={index === currentVideoIndex ? itemRef : undefined}
+          ref={video.id === currentVideo.id ? itemRef : undefined}
           video={video}
-          itemIndex={index}
-          currentVideoIndex={currentVideoIndex}
+          currentVideo={currentVideo}
           onClickItem={onClickVideoListItem}
           onClickDelete={onClickDelete}
           onClickEdit={onClickEdit}

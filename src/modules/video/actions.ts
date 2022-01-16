@@ -1,5 +1,5 @@
 import { createAction, createAsyncAction } from 'typesafe-actions'
-import { IEditVideoTimeRangeRequest } from '../../lib/api/types'
+import { IChangeVideoOrderInPlaylistRequest, IEditVideoTimeRangeRequest, ISeqListItem } from '../../lib/api/types'
 import { IVideoInPlaylist } from '../../types'
 
 // 액션 타입
@@ -14,6 +14,10 @@ const EDIT_TIMERANGE_VIDEO_SUCCESS = 'video/EDIT_TIMERANGE_VIDEO_SUCCESS' as con
 const EDIT_TIMERANGE_VIDEO_ERROR = 'video/EDIT_TIMERANGE_VIDEO_ERROR' as const
 const UPDATE_CURRENT_VIDEO = 'video/UPDATE_CURRENT_VIDEO' as const
 
+const CHANGE_VIDEO_ORDER = 'video/CHANGE_VIDEO_ORDER' as const
+const CHANGE_VIDEO_ORDER_SUCCESS = 'video/CHANGE_VIDEO_ORDER_SUCCESS' as const
+const CHANGE_VIDEO_ORDER_ERROR = 'video/CHANGE_VIDEO_ORDER_ERROR' as const
+
 export const videoActionTypes = {
   GET_VIDEO,
   GET_VIDEO_SUCCESS,
@@ -25,6 +29,9 @@ export const videoActionTypes = {
   EDIT_TIMERANGE_VIDEO_SUCCESS,
   EDIT_TIMERANGE_VIDEO_ERROR,
   UPDATE_CURRENT_VIDEO,
+  CHANGE_VIDEO_ORDER,
+  CHANGE_VIDEO_ORDER_SUCCESS,
+  CHANGE_VIDEO_ORDER_ERROR,
 }
 
 // 액션 생성 함수
@@ -48,9 +55,16 @@ export const editTimeRangeAsync = createAsyncAction(
 
 export const updateCurrentVideo = createAction(UPDATE_CURRENT_VIDEO)<IVideoInPlaylist>()
 
+export const changeVideoOrderAsync = createAsyncAction(
+  CHANGE_VIDEO_ORDER,
+  CHANGE_VIDEO_ORDER_SUCCESS,
+  CHANGE_VIDEO_ORDER_ERROR,
+)<IChangeVideoOrderInPlaylistRequest, ISeqListItem[], string>()
+
 export const videoActions = {
   getVideoAsync,
   deleteVideoAsync,
   editTimeRangeAsync,
   updateCurrentVideo,
+  changeVideoOrderAsync,
 }

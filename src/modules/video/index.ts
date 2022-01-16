@@ -1,4 +1,5 @@
 import { createReducer } from 'typesafe-actions'
+import sortPlaylistBySequence from '../../lib/utils/sortPlaylist'
 import { IVideoInPlaylist } from '../../types'
 import { videoActionTypes } from './actions'
 import { TVideoStoreType, TVideo_Action } from './types'
@@ -20,7 +21,7 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     pending: false,
     playlistId: action.payload.playlistId,
     currentVideo: action.payload.items[0],
-    items: action.payload.items,
+    items: action.payload.items.sort(sortPlaylistBySequence),
   }),
   [videoActionTypes.GET_VIDEO_ERROR]: (state, action) => ({
     ...state,
@@ -67,6 +68,26 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
   [videoActionTypes.UPDATE_CURRENT_VIDEO]: (state, action) => ({
     ...state,
     currentVideo: action.payload,
+  }),
+  [videoActionTypes.CHANGE_VIDEO_ORDER]: (state, action) => ({
+    ...state,
+    pending: true,
+    success: false,
+    error: null,
+  }),
+  [videoActionTypes.CHANGE_VIDEO_ORDER_SUCCESS]: (state, action) => ({
+    ...state,
+    pending: false,
+    success: true,
+    items: state.items
+      .map(item => ({ ...item, sequence: action.payload.find(s => s.id === item.id)?.sequence || item.sequence }))
+      .sort(sortPlaylistBySequence),
+  }),
+  [videoActionTypes.CHANGE_VIDEO_ORDER_ERROR]: (state, action) => ({
+    ...state,
+    pending: false,
+    success: false,
+    error: action.payload,
   }),
 })
 

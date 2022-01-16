@@ -79,6 +79,11 @@ export interface IChangeVideoOrderInPlaylistRequest {
   playlistId: number
   seqList: ISeqListItem[]
 }
+export interface IChangeVIdeoOrderInPlaylistSuccess {
+  success: boolean
+  error: null
+  response: ISeqListItem[]
+}
 
 // 비디오를 플레이리스트에 추가하는 api 타입
 export interface IAddVideoToPlaylistRequest {

@@ -10,6 +10,7 @@ module.exports = {
         'blackberry-light': '#555555',
         'blackberry-lightest': '#acabaf',
         'background-light': '#f9f9f9',
+        'background-lightest': '#ffffff',
         'background-light-hover': '#f3f3f3',
         'background-dark': '#555555',
       },

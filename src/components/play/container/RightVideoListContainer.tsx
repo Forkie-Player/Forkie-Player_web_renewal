@@ -4,7 +4,7 @@ import palette from '../../../lib/style/palette'
 import { IVideoInPlaylist } from '../../../types'
 import { CustomClearButton } from '../../elements/CustomButton'
 import RightVideoListView from '../view/RightVideoListView'
-
+import { DropResult } from 'react-beautiful-dnd'
 import * as Strings from '../../../lib/strings'
 
 interface IProps {
@@ -13,6 +13,7 @@ interface IProps {
   onClickVideoListItem: (item: IVideoInPlaylist) => void
   onClickEdit: (video: IVideoInPlaylist) => void | Promise<void>
   onClickDelete: (video: IVideoInPlaylist) => void | Promise<void>
+  onVideoListDragEnd: (result: DropResult) => void
 }
 
 function RightVideoListContainer({
@@ -21,6 +22,7 @@ function RightVideoListContainer({
   onClickVideoListItem,
   onClickEdit,
   onClickDelete,
+  onVideoListDragEnd,
 }: IProps) {
   const [showPopper, setShowPopper] = useState(false)
 
@@ -81,6 +83,7 @@ function RightVideoListContainer({
         onClickVideoListItem={onClickVideoListItem}
         onClickEdit={onClickEditButtonCheck}
         onClickDelete={onClickDeleteButtonCheck}
+        onVideoListDragEnd={onVideoListDragEnd}
       />
       {showPopper && (
         <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">

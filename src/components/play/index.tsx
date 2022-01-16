@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { deleteVideoAsync, updateCurrentVideo } from '../../modules/video/actions'
+import { changeVideoOrderAsync, deleteVideoAsync, updateCurrentVideo } from '../../modules/video/actions'
 import GobackLine from '../elements/GobackLine'
 import VerticalLine from '../elements/VerticalLine'
 
@@ -13,6 +13,9 @@ import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
 import LeftVideoRenderView from './view/LeftVideoRenderView'
 import { IVideoInPlaylist } from '../../types'
 import RightVideoListContainer from './container/RightVideoListContainer'
+import { DropResult } from 'react-beautiful-dnd'
+import { IChangeVideoOrderInPlaylistRequest } from '../../lib/api/types'
+import LoadingElement from '../elements/loading'
 
 interface IProps {
   video: TVideoStoreType
@@ -20,6 +23,7 @@ interface IProps {
 
 export default function Play({ video }: IProps) {
   const [inProgressingDeleteIdx, setInProgressingDeleteIdx] = useState<number | null>(null)
+  const [isPendingChangeVideoOrder, setIsPendingChangeVideoOrder] = useState(false)
 
   const { items: videoList, currentVideo } = video
   const status = useDispatchInteraction(video)
@@ -104,6 +108,36 @@ export default function Play({ video }: IProps) {
     [navigate],
   )
 
+  const onVideoListDragEnd = useCallback(
+    (result: DropResult) => {
+      const from = result.source.index,
+        to = result?.destination?.index
+      if (to !== undefined) {
+        const request: IChangeVideoOrderInPlaylistRequest = {
+          playlistId: video.playlistId as number,
+          seqList: video.items.map((item, index) => {
+            return {
+              id: item.id,
+              sequence: from !== index ? (to !== index ? item.sequence : from + 1) : to + 1,
+            }
+          }),
+        }
+        setIsPendingChangeVideoOrder(true)
+        dispatch(changeVideoOrderAsync.request(request))
+      }
+    },
+    [dispatch, video],
+  )
+
+  useEffect(() => {
+    if (isPendingChangeVideoOrder) {
+      switch (status) {
+        case 'SUCCESS':
+          setIsPendingChangeVideoOrder(false)
+      }
+    }
+  }, [isPendingChangeVideoOrder, status])
+
   return (
     <div className="w-full h-full max-h-full pr-[5%] grid grid-cols-12 grid-rows-[2rem_minmax(100px,_auto)]">
       <div className="col-span-12">
@@ -114,13 +148,18 @@ export default function Play({ video }: IProps) {
       </div>
       <div className="h-full max-h-full col-span-3 flex">
         <VerticalLine />
-        <RightVideoListContainer
-          videoList={videoList}
-          currentVideo={currentVideo}
-          onClickVideoListItem={onClickVideoListItem}
-          onClickDelete={onClickDelete}
-          onClickEdit={onClickEdit}
-        />
+        {isPendingChangeVideoOrder ? (
+          <LoadingElement />
+        ) : (
+          <RightVideoListContainer
+            videoList={videoList}
+            currentVideo={currentVideo}
+            onVideoListDragEnd={onVideoListDragEnd}
+            onClickVideoListItem={onClickVideoListItem}
+            onClickDelete={onClickDelete}
+            onClickEdit={onClickEdit}
+          />
+        )}
       </div>
     </div>
   )

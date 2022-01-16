@@ -1,4 +1,5 @@
 import { createReducer } from 'typesafe-actions'
+import { IVideoInPlaylist } from '../../types'
 import { videoActionTypes } from './actions'
 import { TVideoStoreType, TVideo_Action } from './types'
 
@@ -7,6 +8,7 @@ const initialState: TVideoStoreType = {
   pending: false,
   error: null,
   playlistId: null,
+  currentVideo: {} as IVideoInPlaylist,
   items: [],
 }
 
@@ -17,6 +19,7 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     success: true,
     pending: false,
     playlistId: action.payload.playlistId,
+    currentVideo: action.payload.items[0],
     items: action.payload.items,
   }),
   [videoActionTypes.GET_VIDEO_ERROR]: (state, action) => ({
@@ -60,6 +63,10 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     success: false,
     pending: false,
     error: action.payload,
+  }),
+  [videoActionTypes.UPDATE_CURRENT_VIDEO]: (state, action) => ({
+    ...state,
+    currentVideo: action.payload,
   }),
 })
 

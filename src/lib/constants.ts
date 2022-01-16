@@ -1,11 +1,10 @@
-export const NavPathItems = {
+export const NavAbsolutePathItems = {
   HOME: '/',
   SEARCH: '/search',
   LIST: '/list',
-  EDIT: '/edit',
-  VIDEO_ADD: '/video-add',
-  PLAY: '/play',
-  VIDEO_TIMECHANGE: '/video-timechange',
+  VIDEO_ADD: '/search/add',
+  PLAY: '/list/play',
+  VIDEO_EDIT: '/list/play/edit',
 }
 
 export const screenSizeString = {

@@ -73,6 +73,7 @@ export const nonMemberLogin = async () => {
     let id = getCookie('@nomMemberId')
     if (!id) {
       // 가입 신청 후 받아오기
+      setCookie('@remakeNonMember', 'true')
       let newId = uuidv4()
       const res = await nonSignUp(newId)
       if (res !== undefined) {

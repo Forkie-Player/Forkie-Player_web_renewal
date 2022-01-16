@@ -21,17 +21,17 @@ interface INavItem {
 
 const lists: INavItem[] = [
   {
-    to: Constants.NavPathItems.HOME,
+    to: Constants.NavAbsolutePathItems.HOME,
     label: Strings.NavLabelItems.HOME,
     icon: <MdHome />,
   },
   {
-    to: Constants.NavPathItems.SEARCH,
+    to: Constants.NavAbsolutePathItems.SEARCH,
     label: Strings.NavLabelItems.SEARCH,
     icon: <MdSearch />,
   },
   {
-    to: Constants.NavPathItems.LIST,
+    to: Constants.NavAbsolutePathItems.LIST,
     label: Strings.NavLabelItems.LIST,
     icon: <MdList />,
   },

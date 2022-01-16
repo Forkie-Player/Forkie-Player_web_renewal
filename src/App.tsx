@@ -42,12 +42,18 @@ function App() {
           <Header />
           <div className={'w-full pt-8'}>
             <Routes>
-              <Route path={Constants.NavPathItems.HOME} element={<Home />} />
-              <Route path={Constants.NavPathItems.SEARCH} element={<Search />} />
-              <Route path={Constants.NavPathItems.LIST} element={<List />} />
-              <Route path={Constants.NavPathItems.VIDEO_ADD} element={<VideoAdd />} />
-              <Route path={Constants.NavPathItems.PLAY} element={<Play />} />
-              <Route path={Constants.NavPathItems.VIDEO_TIMECHANGE} element={<VideoTimeChange />} />
+              <Route path={Constants.NavAbsolutePathItems.HOME} element={<Home />} />
+              <Route path={Constants.NavAbsolutePathItems.SEARCH}>
+                <Route path={''} element={<Search />} />
+                <Route path={Constants.NavAbsolutePathItems.VIDEO_ADD} element={<VideoAdd />} />
+              </Route>
+              <Route path={Constants.NavAbsolutePathItems.LIST}>
+                <Route path={''} element={<List />} />
+                <Route path={Constants.NavAbsolutePathItems.PLAY}>
+                  <Route path={''} element={<Play />} />
+                  <Route path={Constants.NavAbsolutePathItems.VIDEO_EDIT} element={<VideoTimeChange />} />
+                </Route>
+              </Route>
             </Routes>
           </div>
           <CustomToast />

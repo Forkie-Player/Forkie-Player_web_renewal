@@ -1,4 +1,3 @@
-import parseViews from '../../../lib/utils/parseViews'
 import { IVideo } from '../../../types'
 import VideoInfo from '../../elements/videoInfo'
 

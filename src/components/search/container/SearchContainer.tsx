@@ -14,7 +14,7 @@ function SearchContainer({ searchResult }: IProps) {
   const navigate = useNavigate()
 
   const onClickItem = (item: IVideo) => {
-    navigate(Constants.NavPathItems.VIDEO_ADD, { state: item })
+    navigate(Constants.NavAbsolutePathItems.VIDEO_ADD, { state: item })
   }
 
   return <SearchView searchResultItems={searchResult.items} loading={searchResult.pending} onClickItem={onClickItem} />

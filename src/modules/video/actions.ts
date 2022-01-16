@@ -1,4 +1,4 @@
-import { createAsyncAction } from 'typesafe-actions'
+import { createAction, createAsyncAction } from 'typesafe-actions'
 import { IEditVideoTimeRangeRequest } from '../../lib/api/types'
 import { IVideoInPlaylist } from '../../types'
 
@@ -12,6 +12,7 @@ const DELETE_VIDEO_ERROR = 'video/DELETE_VIDEO_ERROR' as const
 const EDIT_TIMERANGE_VIDEO = 'video/EDIT_TIMERANGE_VIDEO' as const
 const EDIT_TIMERANGE_VIDEO_SUCCESS = 'video/EDIT_TIMERANGE_VIDEO_SUCCESS' as const
 const EDIT_TIMERANGE_VIDEO_ERROR = 'video/EDIT_TIMERANGE_VIDEO_ERROR' as const
+const UPDATE_CURRENT_VIDEO = 'video/UPDATE_CURRENT_VIDEO' as const
 
 export const videoActionTypes = {
   GET_VIDEO,
@@ -23,6 +24,7 @@ export const videoActionTypes = {
   EDIT_TIMERANGE_VIDEO,
   EDIT_TIMERANGE_VIDEO_SUCCESS,
   EDIT_TIMERANGE_VIDEO_ERROR,
+  UPDATE_CURRENT_VIDEO,
 }
 
 // 액션 생성 함수
@@ -44,8 +46,11 @@ export const editTimeRangeAsync = createAsyncAction(
   EDIT_TIMERANGE_VIDEO_ERROR,
 )<IEditVideoTimeRangeRequest, IEditVideoTimeRangeRequest, string>()
 
+export const updateCurrentVideo = createAction(UPDATE_CURRENT_VIDEO)<IVideoInPlaylist>()
+
 export const videoActions = {
   getVideoAsync,
   deleteVideoAsync,
   editTimeRangeAsync,
+  updateCurrentVideo,
 }

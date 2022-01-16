@@ -1,8 +1,8 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
-import { deleteVideo, editVideoTimeRange, getVideoList } from '../../lib/api/videos'
-import { deleteVideoAsync, editTimeRangeAsync, getVideoAsync } from './actions'
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
+import { changeVideoOrder, deleteVideo, editVideoTimeRange, getVideoList } from '../../lib/api/videos'
+import { changeVideoOrderAsync, deleteVideoAsync, editTimeRangeAsync, getVideoAsync } from './actions'
 
-import { IDeleteVideoSuccess, IGetVideoListSuccess } from '../../lib/api/types'
+import { IChangeVIdeoOrderInPlaylistSuccess, IDeleteVideoSuccess, IGetVideoListSuccess } from '../../lib/api/types'
 import handleSagaError from '../handleSagaError'
 
 function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
@@ -32,8 +32,18 @@ function* editTimeRangeSaga(action: ReturnType<typeof editTimeRangeAsync.request
   }
 }
 
+function* changeVideoOrderSaga(action: ReturnType<typeof changeVideoOrderAsync.request>) {
+  try {
+    const res: IChangeVIdeoOrderInPlaylistSuccess = yield call(changeVideoOrder, action.payload)
+    yield put(changeVideoOrderAsync.success(res.response))
+  } catch (err) {
+    handleSagaError(err, changeVideoOrderAsync.failure)
+  }
+}
+
 export default function* videoSage() {
   yield takeLatest(getVideoAsync.request, getVideoSaga)
   yield takeLatest(deleteVideoAsync.request, deleteVideoSaga)
   yield takeLatest(editTimeRangeAsync.request, editTimeRangeSaga)
+  yield takeLatest(changeVideoOrderAsync.request, changeVideoOrderSaga)
 }

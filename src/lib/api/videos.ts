@@ -3,6 +3,7 @@ import { Address } from './constants'
 import {
   IAddVideoToPlaylistRequest,
   IChangeVideoOrderInPlaylistRequest,
+  IChangeVIdeoOrderInPlaylistSuccess,
   IDeleteVideoSuccess,
   IEditVideoTimeRangeRequest,
   IEditVideoTimeRangeSuccess,
@@ -27,12 +28,9 @@ export const deleteVideo = async (id: number) => {
   return res.data
 }
 
-export const changeOrder = async (request: IChangeVideoOrderInPlaylistRequest) => {
-  try {
-    await axios.put(`${Address}/api/play/edit/seq`, request)
-  } catch (err) {
-    throw err
-  }
+export const changeVideoOrder = async (request: IChangeVideoOrderInPlaylistRequest) => {
+  const res = await axios.put<IChangeVIdeoOrderInPlaylistSuccess>(`${Address}/api/play/edit/seq`, request)
+  return res.data
 }
 
 export const editVideoTimeRange = async (request: IEditVideoTimeRangeRequest) => {

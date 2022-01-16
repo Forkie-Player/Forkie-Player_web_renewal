@@ -28,7 +28,7 @@ function ListContainer() {
     if (videoStore.success === true && doesUserClickPlaylist === true) {
       setDoesUserClickPlaylist(false)
       if (videoStore.items.length !== 0) {
-        navigate(Constants.NavPathItems.PLAY)
+        navigate(Constants.NavAbsolutePathItems.PLAY)
       } else {
         toast.error('영상이 없습니다.')
       }

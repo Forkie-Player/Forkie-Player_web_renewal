@@ -20,6 +20,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null)
   const [showPopper, setShowPopper] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const [title, setTitle] = useState('')
 
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
   const onClickToggleShowPopper = useCallback(() => {
     if (playlist.items.length < 5 || userInfo.userInfo.member === true) {
       setShowPopper(prev => !prev)
+      setErrorMsg('')
     } else {
       toast.error(Strings.NonMemberCouldMakeOnlyFive)
     }
@@ -50,11 +52,23 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
 
   const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
+    setErrorMsg('')
   }, [])
 
   const onClickApplyButton = useCallback(() => {
+    setErrorMsg('')
+    if (title.length === 0) {
+      setErrorMsg(Strings.EnterName)
+      return
+    } else {
+      const checkSameTitle = playlist.items.some(item => item.title === title)
+      if (checkSameTitle) {
+        setErrorMsg(Strings.SameTitleInPlaylist)
+        return
+      }
+    }
     dispatch(addPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
-  }, [title, dispatch])
+  }, [title, playlist, dispatch])
 
   return (
     <>
@@ -88,6 +102,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
                   className="w-full bg-background-light border-b-[1px] border-blackberry focus:none"
                   onChange={onChangeTitle}
                 ></input>
+                <div className="text-redrose text-sm">{errorMsg}</div>
                 <div className="flex gap-x-4 justify-center">
                   <CustomClearButton text="취소" textColor={palette.blackberry} onClick={onClickToggleShowPopper} />
                   <CustomClearButton text="완료" textColor={palette.redrose} onClick={onClickApplyButton} />

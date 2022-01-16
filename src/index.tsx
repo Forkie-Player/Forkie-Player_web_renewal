@@ -8,17 +8,23 @@ import { Provider } from 'react-redux'
 import logger from 'redux-logger'
 import AppInit from './AppInit'
 import createSagaMiddleware from 'redux-saga'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const sagaMiddleware = createSagaMiddleware()
+
 const store = createStore(rootReducer, applyMiddleware(logger, sagaMiddleware))
+const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AppInit>
-        <App />
-      </AppInit>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppInit>
+          <App />
+        </AppInit>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

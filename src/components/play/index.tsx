@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { deleteVideoAsync } from '../../modules/video/actions'
+import { deleteVideoAsync, updateCurrentVideo } from '../../modules/video/actions'
 import GobackLine from '../elements/GobackLine'
 import VerticalLine from '../elements/VerticalLine'
 
@@ -19,10 +19,9 @@ interface IProps {
 }
 
 export default function Play({ video }: IProps) {
-  const [currentVideo, setCurrentVideo] = useState<IVideoInPlaylist>(video.items[0])
   const [inProgressingDeleteIdx, setInProgressingDeleteIdx] = useState<number | null>(null)
 
-  const { items: videoList } = video
+  const { items: videoList, currentVideo } = video
   const status = useDispatchInteraction(video)
   const playerRef = useRef<ReactPlayer>(null)
   const dispatch = useDispatch()
@@ -36,19 +35,20 @@ export default function Play({ video }: IProps) {
   )
 
   const onVideoEnd = useCallback(() => {
-    setCurrentVideo(prev => {
-      const curIndex = getVideoIndex(prev)
-      if (curIndex < videoList.length) {
-        return videoList[curIndex + 1]
-      } else {
-        return videoList[0]
-      }
-    })
-  }, [videoList, getVideoIndex])
+    const curIndex = getVideoIndex(currentVideo)
+    if (curIndex < videoList.length) {
+      return dispatch(updateCurrentVideo(videoList[curIndex + 1]))
+    } else {
+      return dispatch(updateCurrentVideo(videoList[0]))
+    }
+  }, [videoList, currentVideo, dispatch, getVideoIndex])
 
-  const onClickVideoListItem = useCallback((item: IVideoInPlaylist) => {
-    setCurrentVideo(item)
-  }, [])
+  const onClickVideoListItem = useCallback(
+    (item: IVideoInPlaylist) => {
+      dispatch(updateCurrentVideo(item))
+    },
+    [dispatch],
+  )
 
   /**
    * 비디오 삭제
@@ -74,9 +74,9 @@ export default function Play({ video }: IProps) {
           const currentVideoIndex = getVideoIndex(currentVideo)
           if (currentVideoIndex === -1) {
             if (inProgressingDeleteIdx >= videoList.length) {
-              setCurrentVideo(videoList[0])
+              dispatch(updateCurrentVideo(videoList[0]))
             } else {
-              setCurrentVideo(videoList[inProgressingDeleteIdx])
+              dispatch(updateCurrentVideo(videoList[inProgressingDeleteIdx]))
             }
           }
 
@@ -99,7 +99,7 @@ export default function Play({ video }: IProps) {
 
   const onClickEdit = useCallback(
     (item: IVideoInPlaylist) => {
-      navigate(Constants.NavPathItems.VIDEO_TIMECHANGE, { state: item })
+      navigate(Constants.NavAbsolutePathItems.VIDEO_EDIT, { state: item })
     },
     [navigate],
   )

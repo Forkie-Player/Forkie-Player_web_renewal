@@ -5,20 +5,21 @@ import { useNavigate } from 'react-router-dom'
 import { deleteVideoAsync } from '../../modules/video/actions'
 import GobackLine from '../elements/GobackLine'
 import VerticalLine from '../elements/VerticalLine'
-import RightVideoListContainer from './container/RightVideoListContainer'
 
 import * as Constants from '../../lib/constants'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
 import { TVideoStoreType } from '../../modules/video/types'
 import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
 import LeftVideoRenderView from './view/LeftVideoRenderView'
+import { IVideoInPlaylist } from '../../types'
+import RightVideoListContainer from './container/RightVideoListContainer'
 
 interface IProps {
   video: TVideoStoreType
 }
 
 export default function Play({ video }: IProps) {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
+  const [currentVideo, setCurrentVideo] = useState<IVideoInPlaylist>(video.items[0])
   const [inProgressingDeleteIdx, setInProgressingDeleteIdx] = useState<number | null>(null)
 
   const { items: videoList } = video
@@ -27,18 +28,26 @@ export default function Play({ video }: IProps) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const getVideoIndex = useCallback(
+    (curVideo: IVideoInPlaylist) => {
+      return videoList.findIndex(v => v.id === curVideo.id)
+    },
+    [videoList],
+  )
+
   const onVideoEnd = useCallback(() => {
-    setCurrentVideoIndex(prev => {
-      if (prev + 1 < videoList.length) {
-        return prev + 1
+    setCurrentVideo(prev => {
+      const curIndex = getVideoIndex(prev)
+      if (curIndex < videoList.length) {
+        return videoList[curIndex + 1]
       } else {
-        return 0
+        return videoList[0]
       }
     })
-  }, [videoList.length])
+  }, [videoList, getVideoIndex])
 
-  const onClickVideoListItem = useCallback((itemIndex: number) => {
-    setCurrentVideoIndex(itemIndex)
+  const onClickVideoListItem = useCallback((item: IVideoInPlaylist) => {
+    setCurrentVideo(item)
   }, [])
 
   /**
@@ -50,25 +59,27 @@ export default function Play({ video }: IProps) {
    *  남은 영상이 없으면, 재생목록으로 이동
    */
   const onClickDelete = useCallback(
-    (index: number) => {
-      dispatch(deleteVideoAsync.request(videoList[index].id))
-      setInProgressingDeleteIdx(index)
+    (item: IVideoInPlaylist) => {
+      dispatch(deleteVideoAsync.request(item.id))
+      setInProgressingDeleteIdx(getVideoIndex(item))
     },
-    [dispatch, videoList],
+    [dispatch, getVideoIndex],
   )
 
   useEffect(() => {
     if (inProgressingDeleteIdx !== null) {
       switch (status) {
         case 'SUCCESS':
-          setInProgressingDeleteIdx(null)
-          if (currentVideoIndex > inProgressingDeleteIdx) {
-            setCurrentVideoIndex(currentVideoIndex - 1)
-          } else if (currentVideoIndex === inProgressingDeleteIdx) {
-            if (currentVideoIndex >= videoList.length) {
-              setCurrentVideoIndex(0)
+          // 이미 삭제 된 후의 index
+          const currentVideoIndex = getVideoIndex(currentVideo)
+          if (currentVideoIndex === -1) {
+            if (inProgressingDeleteIdx >= videoList.length) {
+              setCurrentVideo(videoList[0])
+            } else {
+              setCurrentVideo(videoList[inProgressingDeleteIdx])
             }
           }
+
           if (inProgressingDeleteIdx === 0) {
             if (videoList.length === 0) {
               if (video.playlistId !== null) {
@@ -81,15 +92,16 @@ export default function Play({ video }: IProps) {
               }
             }
           }
+          setInProgressingDeleteIdx(null)
       }
     }
-  }, [navigate, status, inProgressingDeleteIdx, currentVideoIndex, video.playlistId, videoList, dispatch])
+  }, [navigate, status, inProgressingDeleteIdx, currentVideo, getVideoIndex, video.playlistId, videoList, dispatch])
 
   const onClickEdit = useCallback(
-    (index: number) => {
-      navigate(Constants.NavPathItems.VIDEO_TIMECHANGE, { state: videoList[index] })
+    (item: IVideoInPlaylist) => {
+      navigate(Constants.NavPathItems.VIDEO_TIMECHANGE, { state: item })
     },
-    [navigate, videoList],
+    [navigate],
   )
 
   return (
@@ -98,13 +110,13 @@ export default function Play({ video }: IProps) {
         <GobackLine />
       </div>
       <div className="col-span-9 pt-4 space-y-4">
-        <LeftVideoRenderView playerRef={playerRef} video={videoList[currentVideoIndex]} onVideoEnd={onVideoEnd} />
+        <LeftVideoRenderView playerRef={playerRef} video={currentVideo} onVideoEnd={onVideoEnd} />
       </div>
       <div className="h-full max-h-full col-span-3 flex">
         <VerticalLine />
         <RightVideoListContainer
           videoList={videoList}
-          currentVideoIndex={currentVideoIndex}
+          currentVideo={currentVideo}
           onClickVideoListItem={onClickVideoListItem}
           onClickDelete={onClickDelete}
           onClickEdit={onClickEdit}

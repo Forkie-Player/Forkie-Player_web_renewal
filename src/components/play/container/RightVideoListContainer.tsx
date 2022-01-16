@@ -1,42 +1,106 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { usePopper } from 'react-popper'
+import palette from '../../../lib/style/palette'
 import { IVideoInPlaylist } from '../../../types'
+import { CustomClearButton } from '../../elements/CustomButton'
 import RightVideoListView from '../view/RightVideoListView'
+
+import * as Strings from '../../../lib/strings'
 
 interface IProps {
   videoList: IVideoInPlaylist[]
-  currentVideoIndex: number
-  onClickVideoListItem: (itemIndex: number) => void
-  onClickEdit: (video: number) => void | Promise<void>
-  onClickDelete: (video: number) => void | Promise<void>
+  currentVideo: IVideoInPlaylist
+  onClickVideoListItem: (item: IVideoInPlaylist) => void
+  onClickEdit: (video: IVideoInPlaylist) => void | Promise<void>
+  onClickDelete: (video: IVideoInPlaylist) => void | Promise<void>
 }
 
 function RightVideoListContainer({
   videoList,
-  currentVideoIndex,
+  currentVideo,
   onClickVideoListItem,
   onClickEdit,
   onClickDelete,
 }: IProps) {
-  const itemRef = React.useRef<HTMLDivElement | null>(null)
+  const [showPopper, setShowPopper] = useState(false)
+
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
+  const [popperMode, setPopperMode] = useState<'edit' | 'delete'>('edit')
+  const [selectedVideo, setSelectedVideo] = useState<IVideoInPlaylist | null>(null)
+
+  const { styles, attributes } = usePopper(referenceElement, popperElement)
 
   useEffect(() => {
-    if (itemRef.current !== null) {
-      itemRef.current.scrollIntoView()
+    function handleClickOutside(event: MouseEvent) {
+      const eventTarget = event.target as HTMLElement
+      if (popperElement !== null && eventTarget !== null && popperElement.contains(eventTarget) === false) {
+        setShowPopper(false)
+      }
     }
-  }, [itemRef, currentVideoIndex])
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [popperElement])
+
+  const onClickEditButton = useCallback(() => {
+    if (selectedVideo !== null) {
+      onClickEdit(selectedVideo)
+    }
+  }, [onClickEdit, selectedVideo])
+
+  const onClickDeleteButton = useCallback(() => {
+    if (selectedVideo !== null) {
+      onClickDelete(selectedVideo)
+    }
+    setShowPopper(false)
+  }, [onClickDelete, selectedVideo])
+
+  const onClickEditButtonCheck = useCallback((video: IVideoInPlaylist, reference: HTMLDivElement) => {
+    setPopperMode('edit')
+    setSelectedVideo(video)
+    setReferenceElement(reference)
+    console.log('asdasd')
+    setShowPopper(true)
+  }, [])
+
+  const onClickDeleteButtonCheck = useCallback((video: IVideoInPlaylist, reference: HTMLDivElement) => {
+    setPopperMode('delete')
+    setSelectedVideo(video)
+    setReferenceElement(reference)
+    setShowPopper(true)
+  }, [])
 
   return (
     <>
       <RightVideoListView
-        itemRef={itemRef}
         videoList={videoList}
-        currentVideoIndex={currentVideoIndex}
+        currentVideo={currentVideo}
         onClickVideoListItem={onClickVideoListItem}
-        onClickDelete={onClickDelete}
-        onClickEdit={onClickEdit}
+        onClickEdit={onClickEditButtonCheck}
+        onClickDelete={onClickDeleteButtonCheck}
       />
+      {showPopper && (
+        <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
+          <div className={'border-2 relative p-4 bg-background-light rounded-2xl space-y-4 shadow-outer'}>
+            <div className="text-blackberry">
+              {popperMode === 'edit' ? Strings.CheckVideoEdit : Strings.CheckVideoDelete}
+            </div>
+            <div className="flex gap-x-4 justify-center">
+              <CustomClearButton text="아니요" textColor={palette.blackberry} onClick={() => setShowPopper(false)} />
+              <CustomClearButton
+                text="네"
+                textColor={palette.redrose}
+                onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
 
-export default RightVideoListContainer
+export default React.memo(RightVideoListContainer)

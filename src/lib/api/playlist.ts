@@ -1,21 +1,23 @@
 import axios, { AxiosError } from 'axios'
 import { IPlaylist } from '../../types'
 import { Address } from './constants'
-import { ICreatePlaylistRequest, IGetPlaylistSuccess, IUpdatePlaylistTitleRequest } from './types'
+import {
+  ICreatePlaylistRequest,
+  TDeletePlaylistRequest,
+  IDeletePlaylistSuccess,
+  IGetPlaylistSuccess,
+  IEditPlaylistTitleRequest,
+  IEditPlaylistTitleSuccess,
+} from './types'
 
 export const getPlaylistApi = async (): Promise<IPlaylist[] | AxiosError> => {
   const res = await axios.get<IGetPlaylistSuccess>(`${Address}/api/playlist`)
   return res.data.response
 }
 
-export const deletePlaylist = async (id: number) => {
-  try {
-    await axios.delete(`${Address}/api/playlist/delete/${id}`)
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response !== undefined) {
-      throw err.response.data
-    }
-  }
+export const deletePlaylist = async (request: TDeletePlaylistRequest) => {
+  const res = await axios.delete<IDeletePlaylistSuccess>(`${Address}/api/playlist/delete/${request}`)
+  return res.data
 }
 
 export const addPlaylist = async (obj: ICreatePlaylistRequest) => {
@@ -23,12 +25,7 @@ export const addPlaylist = async (obj: ICreatePlaylistRequest) => {
   return res.data.response
 }
 
-export const editPlaylist = async (obj: IUpdatePlaylistTitleRequest) => {
-  try {
-    await axios.put(`${Address}/api/playlist/edit`, obj)
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response !== undefined) {
-      throw err.response.data
-    }
-  }
+export const editPlaylistTitle = async (obj: IEditPlaylistTitleRequest) => {
+  const res = await axios.put<IEditPlaylistTitleSuccess>(`${Address}/api/playlist/edit`, obj)
+  return res.data
 }

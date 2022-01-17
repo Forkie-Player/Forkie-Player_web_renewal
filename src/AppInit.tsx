@@ -45,6 +45,7 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
       } catch (err) {
         const res = getCookie('@restart')
         if (res !== 'resetNonId' && axios.isAxiosError(err) && err.message === '존재하지 않는 회원입니다.') {
+          setCookie('@remakeNonmemberId', 'true')
           removeCookie('@nomMemberId')
           setCookie('@restart', 'resetNonId')
           window.location.reload()

@@ -15,8 +15,6 @@
   --background-dark: #555555;
 
   font-family: 'Noto Sans KR', sans-serif;
-  background-color: var(--primary-redrose);
-  color: var(--blackberry);
   word-break: keep-all;
   scroll-behavior: smooth;
 }
@@ -43,6 +41,11 @@
 
 input:focus {
   outline: none;
+}
+
+.app {
+  background-color: var(--primary-redrose);
+  color: var(--blackberry);
 }
 
 .rc-slider-handle-dragging {

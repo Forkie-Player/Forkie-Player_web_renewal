@@ -6,6 +6,6 @@ import { IVideoInPlaylist } from '../../types'
 export type TVideo_Action = ActionType<typeof videoActions>
 export type TVideoStoreType = IAsyncState & {
   playlistId: number | null
-  currentVideo: IVideoInPlaylist
   items: IVideoInPlaylist[]
+  currentVideo: IVideoInPlaylist
 }

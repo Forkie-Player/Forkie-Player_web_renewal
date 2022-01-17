@@ -30,13 +30,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="flex w-screen h-screen">
+      <div className="app flex w-screen h-screen">
         <div className={'min-w-fit max-w-fit w-full h-full'}>
           <Navigation />
         </div>
         <div
           className={
-            'grid grid-cols-1 grid-rows-[4rem_minmax(100px,_auto)] w-full h-full max-w-full max-h-full overflow-hidden bg-background-light rounded-l-3xl pl-6 pt-6'
+            'grid grid-cols-1 grid-rows-[4rem_minmax(100px,_auto)] w-full h-full max-w-full max-h-full overflow-auto bg-background-light rounded-l-3xl pl-6 pt-6'
           }
         >
           <Header />

@@ -112,6 +112,9 @@ export default function Play({ video }: IProps) {
     (result: DropResult) => {
       const from = result.source.index,
         to = result?.destination?.index
+      if (from === to) {
+        return
+      }
       if (to !== undefined) {
         const request: IChangeVideoOrderInPlaylistRequest = {
           playlistId: video.playlistId as number,

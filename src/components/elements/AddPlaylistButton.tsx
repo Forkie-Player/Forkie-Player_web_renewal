@@ -9,6 +9,7 @@ import { CustomClearButton } from './CustomButton'
 import LoadingElement from './loading'
 import * as Strings from '../../lib/strings'
 import toast from 'react-hot-toast'
+import SimpleTextInput from './SimpleTextInput'
 
 interface IProps {
   text?: string
@@ -18,17 +19,12 @@ interface IProps {
 export default function AddPlaylistButton({ text = '추가', place = 'bottom' }: IProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
-  const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null)
   const [showPopper, setShowPopper] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
-  const [title, setTitle] = useState('')
 
   const dispatch = useDispatch()
   const { playlist, userInfo } = useSelector(({ playlist, userInfo }: RootModuleType) => ({ playlist, userInfo }))
 
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
-  })
+  const { styles, attributes } = usePopper(referenceElement, popperElement)
 
   useEffect(() => {
     if (playlist.pending === true) {
@@ -44,31 +40,21 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
   const onClickToggleShowPopper = useCallback(() => {
     if (playlist.items.length < 5 || userInfo.userInfo.member === true) {
       setShowPopper(prev => !prev)
-      setErrorMsg('')
     } else {
       toast.error(Strings.NonMemberCouldMakeOnlyFive)
     }
   }, [playlist.items, userInfo.userInfo])
 
-  const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value)
-    setErrorMsg('')
-  }, [])
-
-  const onClickApplyButton = useCallback(() => {
-    setErrorMsg('')
-    if (title.length === 0) {
-      setErrorMsg(Strings.EnterName)
-      return
-    } else {
+  const onClickApplyButton = useCallback(
+    (title: string) => {
       const checkSameTitle = playlist.items.some(item => item.title === title)
       if (checkSameTitle) {
-        setErrorMsg(Strings.SameTitleInPlaylist)
-        return
+        return Strings.SameTitleInPlaylist
       }
-    }
-    dispatch(addPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
-  }, [title, playlist, dispatch])
+      dispatch(addPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
+    },
+    [playlist, dispatch],
+  )
 
   return (
     <>
@@ -80,44 +66,17 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
       />
       {showPopper && (
         <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
-          {place === 'bottom' && (
-            <div
-              ref={setArrowElement}
-              style={styles.arrow}
-              className={'min-h-fit min-w-fit border-[0.25rem] border-transparent border-b-gray-300'}
-            />
-          )}
-          <div
-            className={clsx(
-              place === 'bottom' && 'top-2',
-              'border-2 relative p-4 bg-background-light rounded-2xl space-y-4 shadow-outer',
-            )}
-          >
+          <div className={clsx('border-2 relative p-4 bg-background-light rounded-2xl shadow-outer')}>
             {playlist.pending ? (
               <LoadingElement />
             ) : (
-              <>
-                <div className="text-blackberry">{Strings.TypeNewPlaylistName}</div>
-                <input
-                  className="w-full bg-background-light border-b-[1px] border-blackberry focus:none"
-                  onChange={onChangeTitle}
-                ></input>
-                <div className="text-redrose text-sm">{errorMsg}</div>
-                <div className="flex gap-x-4 justify-center">
-                  <CustomClearButton text="취소" textColor={palette.blackberry} onClick={onClickToggleShowPopper} />
-                  <CustomClearButton text="완료" textColor={palette.redrose} onClick={onClickApplyButton} />
-                </div>
-              </>
+              <SimpleTextInput
+                title={Strings.TypeNewPlaylistName}
+                onClickCancle={onClickToggleShowPopper}
+                onClickComplete={onClickApplyButton}
+              />
             )}
           </div>
-
-          {place === 'top' && (
-            <div
-              ref={setArrowElement}
-              style={styles.arrow}
-              className={'min-h-fit min-w-fit border-[0.25rem] border-transparent border-t-gray-300'}
-            />
-          )}
         </div>
       )}
     </>

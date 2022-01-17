@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useImperativeHandle, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import palette from '../../../lib/style/palette'
 import { IVideoInPlaylist } from '../../../types'
-import { CustomIcomButton } from '../../elements/CustomButton'
+import { CustomIconButton } from '../../elements/CustomButton'
 import { TimeLapse } from '../../elements/TimeLapse'
 import { Draggable } from 'react-beautiful-dnd'
 
@@ -73,8 +73,8 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
                 <TimeLapse range={[video.start, video.end]} gap={2} />
               </div>
               <div className="flex gap-x-2 text-lg">
-                <CustomIcomButton icon={<MdEdit />} onClick={onClickEditCallback} />
-                <CustomIcomButton icon={<MdDelete />} onClick={onClickDeleteCallback} textColor={palette.redrose} />
+                <CustomIconButton icon={<MdEdit />} onClick={onClickEditCallback} />
+                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} textColor={palette.redrose} />
               </div>
             </div>
           </div>

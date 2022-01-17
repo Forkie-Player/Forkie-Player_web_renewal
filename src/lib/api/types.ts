@@ -64,10 +64,25 @@ export interface ICreatePlaylistRequest {
   category: string
 }
 
-// 플레이리스트 제목 update 요청 타입
-export interface IUpdatePlaylistTitleRequest {
+// 플레이리스트 제목 edit 요청 타입
+export interface IEditPlaylistTitleRequest {
   id: number
   title: string
+}
+export interface IEditPlaylistTitleSuccess {
+  success: boolean
+  error: null
+  id: number
+  editted: boolean
+}
+
+// 플레이리스트 삭제 타입
+export type TDeletePlaylistRequest = number
+export interface IDeletePlaylistSuccess {
+  success: boolean
+  error: null
+  id: number
+  deleted: boolean
 }
 
 // 플레이리스트 안의 비디오 순서 변경 api 타입

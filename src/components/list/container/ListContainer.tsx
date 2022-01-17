@@ -12,6 +12,8 @@ import PlaylistPopper from '../elements/PlaylistPopper'
 import { deletePlaylistAsync, editPlaylistTitleAsync } from '../../../modules/playlist/actions'
 import useDispatchInteraction from '../../../lib/hooks/useDispatchInteraction'
 
+import * as Strings from '../../../lib/strings'
+
 function ListContainer() {
   const [showPopper, setShowPopper] = useState(false)
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
@@ -64,12 +66,19 @@ function ListContainer() {
   }, [itemOnPopper, dispatch])
 
   const onClickTitleEdit = useCallback(
-    (title: string) => {
+    (titleInput: string) => {
+      const title = titleInput.trim()
       if (itemOnPopper !== null) {
+        if (itemOnPopper.title === title) {
+          return Strings.SameTitleCurrent
+        }
+        if (playlist.items.some(item => item.title === title)) {
+          return Strings.SameTitleInPlaylist
+        }
         dispatch(editPlaylistTitleAsync.request({ id: itemOnPopper.id, title }))
       }
     },
-    [itemOnPopper, dispatch],
+    [itemOnPopper, playlist, dispatch],
   )
 
   const onClickEditButton = useCallback(

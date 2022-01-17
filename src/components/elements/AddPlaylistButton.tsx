@@ -66,7 +66,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
       />
       {showPopper && (
         <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
-          <div className={clsx('border-2 relative p-4 bg-background-light rounded-2xl shadow-outer')}>
+          <div className={clsx('border-2 relative p-4 bg-white rounded-2xl shadow-outer')}>
             {playlist.pending ? (
               <LoadingElement />
             ) : (

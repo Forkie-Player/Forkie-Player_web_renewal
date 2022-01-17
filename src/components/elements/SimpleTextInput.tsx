@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import palette from '../../lib/style/palette'
 import { CustomClearButton } from './CustomButton'
 
-import * as Strings from '../../lib/strings'
-
 interface IProps {
   title: string
   initialText?: string
@@ -33,9 +31,10 @@ const SimpleTextInput = ({
     setText('')
   }
 
-  const onClickComplete = () => {
-    if (title.length === 0) {
-      setErrorMsg(Strings.EnterName)
+  const onClickComplete = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (text.length === 0) {
+      setErrorMsg('내용을 입력해주세요')
       return
     }
     const res = onClickCompleteCallback(text)
@@ -45,17 +44,23 @@ const SimpleTextInput = ({
   }
 
   return (
-    <div className="space-y-4">
+    <form className="space-y-4" onSubmit={onClickComplete}>
       <div className="text-blackberry">{title}</div>
-      <input className="w-full bg-inherit border-b-[1px] border-blackberry focus:none" onChange={onChangeText}></input>
+      <input
+        type="text"
+        className="w-full bg-inherit border-b-[1px] border-blackberry focus:none"
+        onChange={onChangeText}
+      />
       <div className="text-redrose text-sm">{errorMsg}</div>
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (
           <CustomClearButton text="취소" textColor={palette.blackberry} onClick={onClickCancle} />
         )}
-        <CustomClearButton text="완료" textColor={palette.redrose} onClick={onClickComplete} />
+        <button type="submit">
+          <CustomClearButton text="완료" textColor={palette.redrose} />
+        </button>
       </div>
-    </div>
+    </form>
   )
 }
 

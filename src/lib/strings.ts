@@ -26,6 +26,7 @@ export const SelectPlaylist = '추가하실 플레이리스트를 선택하세�
 export const TypeNewPlaylistName = '새 플레이리스트 이름을 입력하세요'
 export const NonMemberCouldMakeOnlyFive = '비회원은 최대 5개까지만 만들 수 있어요'
 export const SameTitleInPlaylist = '이미 존재하는 제목이에요'
+export const SameTitleCurrent = '같은 제목이에요'
 export const EnterName = '제목을 입력해주세요.'
 
 export const UnknownError = '알수없는 에러가 발생했어요'

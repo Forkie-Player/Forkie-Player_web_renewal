@@ -17,7 +17,7 @@ const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
     const onClickListItem = useCallback(() => onClick(item), [item, onClick])
 
     const onClickEditButton = useCallback(
-      (e: React.MouseEvent<SVGElement>) => {
+      (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation()
         if (onClickEdit !== undefined) {
           onClickEdit(item, referenceElement)
@@ -40,9 +40,13 @@ const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
         <div className="relative w-full flex text-center leading-10">
           <div className="flex-auto">{item?.title}</div>
           {showEditButton && (
-            <div ref={setReferenceElement} className="absolute h-full right-2 py-2 cursor-pointer">
+            <div
+              ref={setReferenceElement}
+              className="absolute w-12 h-full -right-2 py-2 cursor-pointer"
+              onClick={onClickEditButton}
+            >
               <CustomButtonWrapper>
-                <MdMoreVert className="text-xl" onClick={onClickEditButton} />
+                <MdMoreVert className="text-xl" />
               </CustomButtonWrapper>
             </div>
           )}

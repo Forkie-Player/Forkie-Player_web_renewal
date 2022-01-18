@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaGreaterThan, FaLessThan } from 'react-icons/fa'
+import { FaLessThan } from 'react-icons/fa'
 import { MdHome, MdList, MdSearch } from 'react-icons/md'
 import logoImage from '../../../assets/images/logo.png'
 import * as Strings from '../../../lib/strings'
@@ -39,13 +39,16 @@ const lists: INavItem[] = [
 
 function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
   return (
-    <div className={'container unselectable relative h-full'}>
-      <div className={'pt-8 px-3'}>
-        <Link to={'/'} className="flex gap-x-2 item-center w-full text-3xl text-white">
-          <img src={logoImage} alt="logo" className="w-10 h-10 rounded-full" />
-          {navExpanded && Strings.AppName}
-        </Link>
-      </div>
+    <div
+      className={clsx(
+        navExpanded ? 'w-48' : 'w-16',
+        'transition-[width] duration-500 unselectable relative h-full pt-8',
+      )}
+    >
+      <Link to={'/'} className="pl-3 flex gap-x-2 w-full text-3xl text-white">
+        <img src={logoImage} alt="logo" className="w-10 h-10 rounded-full" />
+        {navExpanded && Strings.AppName}
+      </Link>
       <div className="h-12" />
       {navExpanded && <div className="text-white/50 pl-7">Menus</div>}
       {lists.map(({ to, label, icon }, index) => {
@@ -54,7 +57,7 @@ function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
           <Link
             to={to}
             className={clsx(
-              'block h-10 text-white transition',
+              'block h-10 text-white transition-all',
               isActive ? 'opacity-100' : 'opacity-50',
               navExpanded ? 'flex gap-x-4 py-2 leading-6' : 'my-3 px-3 text-center',
             )}
@@ -67,8 +70,14 @@ function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
         )
       })}
 
-      <div className="absolute w-min bottom-3 right-3 text-white hover:cursor-pointer" onClick={onToggleNav}>
-        {navExpanded ? <FaLessThan /> : <FaGreaterThan />}
+      <div
+        className={clsx(
+          navExpanded ? 'navCloseButton' : 'navExpandButton',
+          'absolute w-min bottom-3 right-3 text-white cursor-pointer',
+        )}
+        onClick={onToggleNav}
+      >
+        <FaLessThan />
       </div>
     </div>
   )

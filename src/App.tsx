@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="app flex w-screen h-screen">
       <BrowserRouter>
-        <div className={'min-w-fit max-w-fit h-full'}>
+        <div className={'w-fit h-full'}>
           <Navigation />
         </div>
         <div

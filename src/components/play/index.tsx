@@ -146,9 +146,7 @@ export default function Play({ video }: IProps) {
       <div className="col-span-12">
         <GobackLine />
       </div>
-      <div className="col-span-9 pt-4 space-y-4">
-        <LeftVideoRenderView playerRef={playerRef} video={currentVideo} onVideoEnd={onVideoEnd} />
-      </div>
+      <LeftVideoRenderView playerRef={playerRef} video={currentVideo} onVideoEnd={onVideoEnd} />
       <div className="h-full max-h-full col-span-3 flex">
         <VerticalLine />
         {isPendingChangeVideoOrder ? (

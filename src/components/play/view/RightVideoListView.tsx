@@ -21,9 +21,10 @@ function RightVideoListView({
 }: IProps) {
   const itemRef = React.useRef<HTMLDivElement | null>(null)
   const containerRef = React.useRef<HTMLDivElement | null>(null)
+
   useEffect(() => {
     if (itemRef.current !== null) {
-      itemRef.current.scrollIntoView()
+      itemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }, [itemRef, currentVideo])
 

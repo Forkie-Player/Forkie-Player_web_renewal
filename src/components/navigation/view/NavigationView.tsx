@@ -42,7 +42,7 @@ function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
     <div
       className={clsx(
         navExpanded ? 'w-48' : 'w-16',
-        'transition-[width] duration-500 unselectable relative h-full pt-8',
+        'transition-[width] duration-300 unselectable relative h-full pt-8',
       )}
     >
       <Link to={'/'} className="pl-3 flex gap-x-2 w-full text-3xl text-white">

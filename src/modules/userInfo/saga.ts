@@ -1,17 +1,15 @@
-import axios from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { getUserInfoApi } from '../../lib/api/auth'
-import { IUserInfo } from '../../types'
+import { IGetUserInfoSuccess } from '../../lib/api/types'
+import handleSagaError from '../handleSagaError'
 import { getUserInfo } from './actions'
 
 function* getUserInfoSaga() {
   try {
-    const res: IUserInfo = yield call(getUserInfoApi)
-    yield put(getUserInfo.success(res))
+    const res: IGetUserInfoSuccess = yield call(getUserInfoApi)
+    yield put(getUserInfo.success(res.response))
   } catch (err) {
-    if (axios.isAxiosError(err)) {
-      yield put(getUserInfo.failure(err))
-    }
+    handleSagaError(err, getUserInfo.failure)
   }
 }
 

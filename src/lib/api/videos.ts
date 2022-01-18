@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Address } from './constants'
 import {
   IAddVideoToPlaylistRequest,
+  IAddVideoToPlaylistSuccess,
   IChangeVideoOrderInPlaylistRequest,
   IChangeVIdeoOrderInPlaylistSuccess,
   IDeleteVideoSuccess,
@@ -16,7 +17,7 @@ export const getVideoList = async (id: number) => {
 }
 
 export const addVideo = async (request: IAddVideoToPlaylistRequest) => {
-  await axios.post(`${Address}/api/play/create`, {
+  await axios.post<IAddVideoToPlaylistSuccess>(`${Address}/api/play/create`, {
     playlistId: request.playlistId,
     ...request.video,
   })

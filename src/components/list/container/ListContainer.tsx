@@ -8,7 +8,6 @@ import ListView from '../view/ListView'
 
 import * as Constants from '../../../lib/constants'
 import { IPlaylist } from '../../../types'
-import PlaylistPopper from '../elements/PlaylistPopper'
 import { deletePlaylistAsync, editPlaylistTitleAsync } from '../../../modules/playlist/actions'
 import useDispatchInteraction from '../../../lib/hooks/useDispatchInteraction'
 
@@ -66,7 +65,7 @@ function ListContainer() {
   }, [itemOnPopper, dispatch])
 
   const onClickTitleEdit = useCallback(
-    (titleInput: string) => {
+    (titleInput: string): string => {
       const title = titleInput.trim()
       if (itemOnPopper !== null) {
         if (itemOnPopper.title === title) {
@@ -77,6 +76,7 @@ function ListContainer() {
         }
         dispatch(editPlaylistTitleAsync.request({ id: itemOnPopper.id, title }))
       }
+      return ''
     },
     [itemOnPopper, playlist, dispatch],
   )
@@ -96,22 +96,16 @@ function ListContainer() {
   )
 
   return (
-    <>
-      <ListView
-        items={playlist.items}
-        onClickPlaylistItem={onClickPlaylistItem}
-        onClickEditButton={onClickEditButton}
-      />
-
-      {showPopper && (
-        <PlaylistPopper
-          referenceElement={referenceElement}
-          onToggleShowPopper={onToggleShowPopper}
-          onClickDelete={onClickDeleteListItem}
-          onClickTitleEdit={onClickTitleEdit}
-        />
-      )}
-    </>
+    <ListView
+      items={playlist.items}
+      showPopper={showPopper}
+      referenceElement={referenceElement}
+      onClickPlaylistItem={onClickPlaylistItem}
+      onClickEditButton={onClickEditButton}
+      onToggleShowPopper={onToggleShowPopper}
+      onClickDeleteListItem={onClickDeleteListItem}
+      onClickTitleEdit={onClickTitleEdit}
+    />
   )
 }
 

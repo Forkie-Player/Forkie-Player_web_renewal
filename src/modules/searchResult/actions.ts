@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { createAction, createAsyncAction } from 'typesafe-actions'
 import { IVideo } from '../../types'
 
@@ -20,7 +19,7 @@ export const getSearchResult = createAsyncAction(
   GET_SEARCH_RESULT,
   GET_SEARCH_RESULT_SUCCESS,
   GET_SEARCH_RESULT_FAILURE,
-)<string, IVideo[], AxiosError>()
+)<string, IVideo[], string>()
 export const clearSearchResult = createAction(CLEAR_SEARCH_RESULT)()
 
 export const searchResultActions = {

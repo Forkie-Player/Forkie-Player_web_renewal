@@ -4,7 +4,7 @@ import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
 import palette from '../../lib/style/palette'
 import { RootModuleType } from '../../modules/moduleTypes'
-import { addPlaylistAsync } from '../../modules/playlist/actions'
+import { createPlaylistAsync } from '../../modules/playlist/actions'
 import { CustomClearButton } from './CustomButton'
 import LoadingElement from './loading'
 import * as Strings from '../../lib/strings'
@@ -51,7 +51,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
       if (checkSameTitle) {
         return Strings.SameTitleInPlaylist
       }
-      dispatch(addPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
+      dispatch(createPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
     },
     [playlist, dispatch],
   )

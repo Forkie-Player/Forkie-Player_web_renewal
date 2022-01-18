@@ -1,4 +1,4 @@
-import { IPlaylist, IToken, IUserInfo, IVideoHasRange, IVideoInPlaylist } from '../../types'
+import { ICrawlResultItem, IPlaylist, IToken, IUserInfo, IVideoHasRange, IVideoInPlaylist } from '../../types'
 
 // 요청 실패
 export interface IRequestFail {
@@ -50,6 +50,13 @@ export interface IUpdateUserSuccess {
   response: IUserInfo
 }
 
+// search 타입
+export interface ISearchSuccess {
+  data: {
+    items: ICrawlResultItem[]
+  }
+}
+
 // 플레이리스트 get 반환 타입
 export interface IGetPlaylistSuccess {
   success: boolean
@@ -57,11 +64,16 @@ export interface IGetPlaylistSuccess {
   response: IPlaylist[]
 }
 
-// 플레이리스트 create 요청 타입
+// 플레이리스트 create 타입
 export interface ICreatePlaylistRequest {
   title: string
   isPublic: boolean
   category: string
+}
+export interface ICreatePlaylistSuccess {
+  success: boolean
+  error: null
+  response: IPlaylist
 }
 
 // 플레이리스트 제목 edit 요청 타입
@@ -104,6 +116,11 @@ export interface IChangeVIdeoOrderInPlaylistSuccess {
 export interface IAddVideoToPlaylistRequest {
   playlistId: number
   video: IVideoHasRange
+}
+export interface IAddVideoToPlaylistSuccess {
+  success: boolean
+  error: null
+  response: IVideoInPlaylist
 }
 
 // 비디오 조회 반환타입

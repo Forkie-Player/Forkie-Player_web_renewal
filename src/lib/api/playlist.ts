@@ -1,5 +1,4 @@
-import axios, { AxiosError } from 'axios'
-import { IPlaylist } from '../../types'
+import axios from 'axios'
 import { Address } from './constants'
 import {
   ICreatePlaylistRequest,
@@ -8,11 +7,12 @@ import {
   IGetPlaylistSuccess,
   IEditPlaylistTitleRequest,
   IEditPlaylistTitleSuccess,
+  ICreatePlaylistSuccess,
 } from './types'
 
-export const getPlaylistApi = async (): Promise<IPlaylist[] | AxiosError> => {
+export const getPlaylistApi = async () => {
   const res = await axios.get<IGetPlaylistSuccess>(`${Address}/api/playlist`)
-  return res.data.response
+  return res.data
 }
 
 export const deletePlaylist = async (request: TDeletePlaylistRequest) => {
@@ -20,9 +20,9 @@ export const deletePlaylist = async (request: TDeletePlaylistRequest) => {
   return res.data
 }
 
-export const addPlaylist = async (obj: ICreatePlaylistRequest) => {
-  const res = await axios.post(`${Address}/api/playlist/create`, obj)
-  return res.data.response
+export const createPlaylist = async (obj: ICreatePlaylistRequest) => {
+  const res = await axios.post<ICreatePlaylistSuccess>(`${Address}/api/playlist/create`, obj)
+  return res.data
 }
 
 export const editPlaylistTitle = async (obj: IEditPlaylistTitleRequest) => {

@@ -9,7 +9,7 @@ import SimpleTextInput from '../../elements/SimpleTextInput'
 interface IProps {
   referenceElement: HTMLDivElement | null
   onToggleShowPopper: () => void
-  onClickTitleEdit: (title: string) => void
+  onClickTitleEdit: (title: string) => string
   onClickDelete: () => void
 }
 

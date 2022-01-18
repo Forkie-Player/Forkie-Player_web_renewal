@@ -17,11 +17,11 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
     pending: false,
     items: action.payload,
   }),
-  [searchResultActionTypes.GET_SEARCH_RESULT_FAILURE]: state => ({
+  [searchResultActionTypes.GET_SEARCH_RESULT_FAILURE]: (state, action) => ({
     ...state,
     success: false,
     pending: false,
-    error: 'error',
+    error: action.payload,
   }),
   [searchResultActionTypes.CLEAR_SEARCH_RESULT]: () => ({ ...initialState }),
 })

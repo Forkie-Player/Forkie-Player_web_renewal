@@ -1,13 +1,15 @@
-import axios from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { getSearchResultApi } from '../../lib/api/search'
+import { ISearchSuccess } from '../../lib/api/types'
 import { ICrawlResultItem, IVideo } from '../../types'
+import handleSagaError from '../handleSagaError'
 import { getSearchResult, searchResultActionTypes } from './actions'
 
 function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>) {
   try {
-    const res: ICrawlResultItem[] = yield call(getSearchResultApi, action.payload)
-    let result: IVideo[] = res.map((item: ICrawlResultItem) => ({
+    const res: ISearchSuccess = yield call(getSearchResultApi, action.payload)
+
+    let result: IVideo[] = res.data.items.map((item: ICrawlResultItem) => ({
       videoId: item.id,
       title: item.title,
       thumbnail: (item.thumbnails && item.thumbnails[0].url) || item.bestThumbnail.url,
@@ -17,11 +19,10 @@ function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>
       views: item.views,
       uploadedAt: item.uploadedAt,
     }))
+
     yield put(getSearchResult.success(result))
   } catch (err) {
-    if (axios.isAxiosError(err)) {
-      yield put(getSearchResult.failure(err))
-    }
+    handleSagaError(err, getSearchResult.failure)
   }
 }
 

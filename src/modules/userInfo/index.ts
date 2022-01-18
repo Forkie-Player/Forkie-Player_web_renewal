@@ -24,7 +24,12 @@ const userInfoReducer = createReducer<TUserInfoType, TUserInfo_Action>(initialSt
     pending: false,
     userInfo: { signedin: true, ...action.payload },
   }),
-  [userInfoActionTypes.GET_USERINFO_FAILURE]: state => ({ ...state, success: false, pending: false, error: 'error' }),
+  [userInfoActionTypes.GET_USERINFO_FAILURE]: (state, action) => ({
+    ...state,
+    success: false,
+    pending: false,
+    error: action.payload,
+  }),
   [userInfoActionTypes.CLEAR_USER_INFO]: () => ({ ...initialState }),
 })
 

@@ -87,7 +87,7 @@ function RightVideoListContainer({
       />
       {showPopper && (
         <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
-          <div className={'border-2 relative p-4 bg-background-light rounded-2xl space-y-4 shadow-outer'}>
+          <div className={'border-2 relative p-4 bg-white rounded-2xl space-y-4 shadow-outer'}>
             <div className="text-blackberry">
               {popperMode === 'edit' ? Strings.CheckVideoEdit : Strings.CheckVideoDelete}
             </div>

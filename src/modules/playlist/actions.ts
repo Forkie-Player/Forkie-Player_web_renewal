@@ -52,7 +52,7 @@ export const playlistActionTypes = {
 }
 
 //액션 생성 함수
-export const addPlaylistAsync = createAsyncAction(ADD_PLAYLIST, ADD_PLAYLIST_SUCCESS, ADD_PLAYLIST_ERROR)<
+export const createPlaylistAsync = createAsyncAction(ADD_PLAYLIST, ADD_PLAYLIST_SUCCESS, ADD_PLAYLIST_ERROR)<
   ICreatePlaylistRequest,
   IPlaylist,
   string
@@ -82,7 +82,7 @@ export const editPlaylistTitleAsync = createAsyncAction(
 )<IEditPlaylistTitleRequest, IEditPlaylistTitleRequest, string>()
 
 export const playlistActions = {
-  addPlaylistAsync,
+  createPlaylistAsync,
   clearThumbnail,
   setThumbnail,
   getPlaylistAsync,

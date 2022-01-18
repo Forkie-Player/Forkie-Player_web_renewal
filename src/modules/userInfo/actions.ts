@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { createAction, createAsyncAction } from 'typesafe-actions'
 import { IUserInfo } from '../../types'
 
@@ -19,7 +18,7 @@ export const userInfoActionTypes = {
 export const getUserInfo = createAsyncAction(GET_USERINFO, GET_USERINFO_SUCCESS, GET_USERINFO_FAILURE)<
   undefined,
   IUserInfo,
-  AxiosError
+  string
 >()
 export const clearUserInfo = createAction(CLEAR_USER_INFO)()
 

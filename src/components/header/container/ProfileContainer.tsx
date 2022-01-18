@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../../lib/api/auth'
+import { logout } from '../../../lib/utils/auth'
 import { RootModuleType } from '../../../modules/moduleTypes'
 import { getPlaylistAsync } from '../../../modules/playlist/actions'
 import { getUserInfo } from '../../../modules/userInfo/actions'

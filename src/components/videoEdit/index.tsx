@@ -7,12 +7,13 @@ import { Range } from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import palette from '../../lib/style/palette'
-import AdjustSeconds from './elements/AdjustSeconds'
-import { CustomButton, ITextButtonProps } from '../elements/CustomButton'
+import { ITextButtonProps } from '../elements/CustomButton'
 
 import * as Strings from '../../lib/strings'
 import toast from 'react-hot-toast'
-import { TimeLapse } from '../elements/TimeLapse'
+import AdjustSecondsContainer from './container/AdjustSecondsContainer'
+import TimeLapseView from './view/TimeLapseView'
+import ButtonsView from './view/ButtonsView'
 
 // refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {
@@ -43,7 +44,7 @@ function VideoEdit({
 }: IProps) {
   const [videoReady, setVideoReady] = useState(false)
   const [videoDuration, setVideoDuration] = useState(0)
-  const [range, setRange] = useState<number[]>([-100, -100])
+  const [range, setRange] = useState<number[]>([video.start, video.end])
   const playerRef = useRef<ReactPlayer>(null)
 
   const onReady = useCallback(() => {
@@ -51,12 +52,9 @@ function VideoEdit({
       const endTime = playerRef.current.getDuration()
       setVideoDuration(endTime)
 
-      /* refactor : end가 0이 아니면 정해진 end로 range의 끝을 정함
-        end가 0이면 영상의 끝으로 range의 끝을 정함
-        상위모듈인 videoAdd 에서 end를 꼭 0으로 넣어주어야하는 하위 모듈로의 의존성이 생김
-      */
-      setRange([video.start, video.end !== 0 ? video.end : endTime])
-      // 다음에 고치자.
+      if (video.end === undefined || video.end === null || video.end === 0) {
+        setRange([video.start, endTime])
+      }
 
       if (onReadyCallback !== undefined) {
         onReadyCallback(endTime)
@@ -65,7 +63,7 @@ function VideoEdit({
     setVideoReady(true)
   }, [playerRef, video, onReadyCallback])
 
-  const onChangeRange = useCallback(
+  const onChangeRangeGraph = useCallback(
     (range: number[]) => {
       setRange(prev => {
         if (range[0] === prev[0]) {
@@ -125,28 +123,18 @@ function VideoEdit({
           <Range
             value={range}
             max={videoDuration}
-            onChange={onChangeRange}
+            onChange={onChangeRangeGraph}
             trackStyle={[{ backgroundColor: palette.redrose }]}
             handleStyle={[handleStyle, handleStyle]}
             railStyle={{ backgroundColor: palette['blackberry-lightest'] }}
           />
-          <div className="w-full flex justify-between">
-            <AdjustSeconds onClickAdjustSeconds={onClickAdjustSeconds} />
-            <AdjustSeconds right onClickAdjustSeconds={onClickAdjustSeconds} />
-          </div>
-          <div className="max-w-fit mx-auto text-3xl">
-            <TimeLapse range={range} />
-          </div>
-          <div className="w-full pt-4 flex text-3xl justify-center gap-x-8">
-            <CustomButton
-              text="적용"
-              size="large"
-              textColor={palette['info']}
-              {...leftButtonProps}
-              onClick={onClickApply}
-            />
-            <CustomButton text="추가" size="large" textColor={palette['redrose']} {...rightButtonProps} />
-          </div>
+          <AdjustSecondsContainer onClickAdjustSeconds={onClickAdjustSeconds} />
+          <TimeLapseView range={range} />
+          <ButtonsView
+            leftButtonProps={leftButtonProps}
+            rightButtonProps={rightButtonProps}
+            onClickApply={onClickApply}
+          />
         </div>
       ) : (
         <div className="py-10">

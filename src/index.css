@@ -13,18 +13,16 @@
   --blackberry-lightest: #acabaf;
   --background-light: #f9f9f9;
   --background-dark: #555555;
-
-  font-family: 'Noto Sans KR', sans-serif;
-  word-break: keep-all;
-  scroll-behavior: smooth;
 }
 
+/* swiper 라이브러리의 기본 색상 변경*/
 :root {
   --swiper-navigation-color: var(--blackberry);
   --swiper-pagination-color: var(--blackberry);
   --swiper-scrollbar-color: var(--primary-redrose);
 }
 
+/* 스크롤바 스타일 변경. 크롬에서만 적용됨. */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -39,15 +37,20 @@
   background: var(--primary-redrose);
 }
 
+/* autocomplete 시 배경화면 변하는 거 없애기 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s;
+}
+
+/* input:focus 시 생기는 outline 제거 */
 input:focus {
   outline: none;
 }
 
-.app {
-  background-color: var(--primary-redrose);
-  color: var(--blackberry);
-}
-
+/* rc-slider 핸들 드래그 시 생기는 그림자 커스텀*/
 .rc-slider-handle-dragging {
   box-shadow: 0 0 5px var(--primary-redrose-light) !important;
 }
@@ -55,10 +58,12 @@ input:focus {
   box-shadow: 0 0 5px var(--primary-redrose-light) !important;
 }
 
+/* 텍스트 선택 안되게 하고 싶으면 이 클래스 추가 */
 .unselectable {
   user-select: none;
 }
 
+/* 두줄로 제한 주고 싶으면 이 클래스 추가*/
 .twoLine {
   display: -webkit-box;
   overflow: hidden;

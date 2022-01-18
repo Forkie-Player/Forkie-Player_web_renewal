@@ -1,0 +1,29 @@
+.navExpandButton {
+  animation-duration: 0.5s;
+  animation-name: rotateNavExpandButton;
+  transform: rotate(180deg);
+}
+
+@keyframes rotateNavExpandButton {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.navCloseButton {
+  animation-duration: 0.5s;
+  animation-name: rotateNavCloseButton;
+  transform: rotate(0deg);
+}
+
+@keyframes rotateNavCloseButton {
+  0% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

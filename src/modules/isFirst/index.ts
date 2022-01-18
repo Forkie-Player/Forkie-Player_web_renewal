@@ -10,7 +10,7 @@ const initialState: IIsFirst = {
 }
 
 const isFirstReducer = createReducer<IIsFirst, TIsFirst_Action>(initialState, {
-  [isFirstActionTypes.SET_ISFIRST]: (state, action) => action.payload,
+  [isFirstActionTypes.GET_ISFIRST]: (state, action) => action.payload,
   [isFirstActionTypes.CLEAR_ISFIRST]: (state, action) => {
     setCookie(`@${action.payload}`, isFirstConstants.NOTFIRST)
     return { ...state, [action.payload]: isFirstConstants.NOTFIRST }

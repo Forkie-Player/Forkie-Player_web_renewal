@@ -4,7 +4,7 @@ import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
 import palette from '../../lib/style/palette'
 import { RootModuleType } from '../../modules/moduleTypes'
-import { addPlaylistAsync } from '../../modules/playlist/actions'
+import { createPlaylistAsync } from '../../modules/playlist/actions'
 import { CustomClearButton } from './CustomButton'
 import LoadingElement from './loading'
 import * as Strings from '../../lib/strings'
@@ -41,7 +41,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
     if (playlist.items.length < 5 || userInfo.userInfo.member === true) {
       setShowPopper(prev => !prev)
     } else {
-      toast.error(Strings.NonMemberCouldMakeOnlyFive)
+      toast.error(Strings.ErrorMessageToUser.EXCEED_NONMEMBER_MAX_PLAYLIST)
     }
   }, [playlist.items, userInfo.userInfo])
 
@@ -51,7 +51,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
       if (checkSameTitle) {
         return Strings.SameTitleInPlaylist
       }
-      dispatch(addPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
+      dispatch(createPlaylistAsync.request({ title, isPublic: false, category: 'GAME' }))
     },
     [playlist, dispatch],
   )
@@ -66,7 +66,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
       />
       {showPopper && (
         <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
-          <div className={clsx('border-2 relative p-4 bg-background-light rounded-2xl shadow-outer')}>
+          <div className={clsx('border-2 relative p-4 bg-white rounded-2xl shadow-outer')}>
             {playlist.pending ? (
               <LoadingElement />
             ) : (

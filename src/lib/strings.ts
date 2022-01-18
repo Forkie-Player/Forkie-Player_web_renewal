@@ -24,11 +24,10 @@ export const Profile = {
 
 export const SelectPlaylist = '추가하실 플레이리스트를 선택하세요'
 export const TypeNewPlaylistName = '새 플레이리스트 이름을 입력하세요'
-export const NonMemberCouldMakeOnlyFive = '비회원은 최대 5개까지만 만들 수 있어요'
 export const SameTitleInPlaylist = '이미 존재하는 제목이에요'
+export const SameTitleCurrent = '같은 제목이에요'
 export const EnterName = '제목을 입력해주세요.'
 
-export const UnknownError = '알수없는 에러가 발생했어요'
 export const addPlaylistSuccess = '플레이리스트가 잘 추가되었어요'
 export const addVideoSuccess = '영상이 잘 추가되었어요'
 
@@ -37,3 +36,12 @@ export const applyTimeLapseSuccess = (start: number, end: number) =>
 
 export const CheckVideoEdit = '정말로 수정하시나요?'
 export const CheckVideoDelete = '정말로 삭제하시나요?'
+
+export const ErrorMessageFromServer = {
+  EXCEED_NONMEMBER_MAX_PLAYLIST: '비회원 playlist 제한을 초과하였습니다.',
+}
+
+export const ErrorMessageToUser = {
+  EXCEED_NONMEMBER_MAX_PLAYLIST: '비회원은 최대 5개까지만 만들 수 있어요',
+  UNKOWN_ERROR: '알수없는 에러가 발생했어요',
+}

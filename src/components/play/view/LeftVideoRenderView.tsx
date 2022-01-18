@@ -12,14 +12,14 @@ interface IProps {
 
 const LeftVideoRenderView = ({ playerRef, video, onVideoEnd }: IProps) => {
   return (
-    <>
+    <div className="col-span-9 pt-4 space-y-4">
       {video !== undefined && (
         <>
           <VideoRender playerRef={playerRef} video={video} playerProps={{ onEnded: onVideoEnd }} />
           <VideoInfo data={video} />
         </>
       )}
-    </>
+    </div>
   )
 }
 

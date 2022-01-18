@@ -5,7 +5,7 @@ import 'swiper/css'
 
 function HomeComponent() {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full grid grid-rows-[60%_40%] grid-cols-1">
       <CarouselContainer />
       <PopularContainer />
     </div>

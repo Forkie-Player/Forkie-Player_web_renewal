@@ -25,20 +25,20 @@ interface IProps {
 
 function PopularView({ screenSize, slidesPerView }: IProps) {
   return (
-    <div className="w-full h-100 px-[5%]">
-      <div className="py-8 text-xl">Popular</div>
+    <div className="w-full h-full max-h-full px-[5%] flex flex-col">
+      <div className="py-4 text-xl">Popular</div>
       <Swiper
         // install Swiper modules
         modules={[Scrollbar, Mousewheel]}
         slidesPerView={slidesPerView}
         scrollbar={{ dragClass: 'swiper-scrollbar-drag bg-blackberry-lightest' }}
         mousewheel
-        className="h-[17rem] w-full"
+        className="w-full"
       >
         {popularList.map((item, index) => (
           <SwiperSlide key={index} className="p-4">
             <div
-              className={`h-60 w-60 rounded-3xl drop-shadow-xl ${item.color}
+              className={`aspect-square max-w-full max-h-full rounded-3xl drop-shadow-xl ${item.color}
             hover:drop-shadow-2xl
             hover:ring-4
             hover:ring-redrose

@@ -7,25 +7,7 @@ import { getUserInfo } from './modules/userInfo/actions'
 import { getIsFirst } from './modules/isFirst/actions'
 import { getPlaylistAsync } from './modules/playlist/actions'
 import { reissue } from './lib/api/auth'
-import { nonMemberLogin } from './lib/utils/auth'
-
-const authInit = async () => {
-  const tokensJson = getCookie('@tokens')
-
-  if (tokensJson !== undefined) {
-    //reissue
-    try {
-      await reissue(tokensJson)
-    } catch (err) {
-      // 리프레시 토큰 만료시 비회원 재로그인
-      // 회원은 기존에 비회원으로 있던 기록이 나오고, 로그인은 자신이 해야함
-      await nonMemberLogin()
-    }
-  } else {
-    // 첫 방문 시 or 쿠키 초기화 후 방문시
-    await nonMemberLogin()
-  }
-}
+import { authInit } from './lib/utils/auth'
 
 export default function AppInit({ children }: { children: React.ReactNode }) {
   const [preLoading, setPreLoading] = useState(true)

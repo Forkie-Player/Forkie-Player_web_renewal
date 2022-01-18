@@ -41,7 +41,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
     if (playlist.items.length < 5 || userInfo.userInfo.member === true) {
       setShowPopper(prev => !prev)
     } else {
-      toast.error(Strings.NonMemberCouldMakeOnlyFive)
+      toast.error(Strings.ErrorMessageToUser.EXCEED_NONMEMBER_MAX_PLAYLIST)
     }
   }, [playlist.items, userInfo.userInfo])
 

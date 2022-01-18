@@ -1,8 +1,26 @@
 import { getCookie, removeCookie, setCookie } from './cookie'
 import { v4 as uuidv4 } from 'uuid'
-import { changeToMember, login, nonSignUp } from '../api/auth'
+import { changeToMember, login, nonSignUp, reissue } from '../api/auth'
 import { IToken } from '../../types'
 import axios from 'axios'
+
+export const authInit = async () => {
+  const tokensJson = getCookie('@tokens')
+
+  if (tokensJson !== undefined) {
+    //reissue
+    try {
+      await reissue(tokensJson)
+    } catch (err) {
+      // 리프레시 토큰 만료시 비회원 재로그인
+      // 회원은 기존에 비회원으로 있던 기록이 나오고, 로그인은 자신이 해야함
+      await nonMemberLogin()
+    }
+  } else {
+    // 첫 방문 시 or 쿠키 초기화 후 방문시
+    await nonMemberLogin()
+  }
+}
 
 export const setTokens = async (tokens: IToken) => {
   const tokensObj = {

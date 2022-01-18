@@ -6,11 +6,14 @@ import { PayloadAction } from 'typesafe-actions'
 import * as Strings from '../lib/strings'
 
 export default function* handleSagaError(err: unknown, failure: (payload: string) => PayloadAction<string, string>) {
+  let errorMessage = Strings.ErrorMessageToUser.UNKOWN_ERROR
   if (axios.isAxiosError(err)) {
-    yield put(failure(err.response?.data.message))
-    toast.error(err.response?.data.message)
-  } else {
-    yield put(failure(Strings.UnknownError))
-    toast.error(Strings.UnknownError)
+    switch (err.response?.data.message) {
+      case [Strings.ErrorMessageFromServer.EXCEED_NONMEMBER_MAX_PLAYLIST]:
+        errorMessage = Strings.ErrorMessageToUser.EXCEED_NONMEMBER_MAX_PLAYLIST
+        break
+    }
   }
+  yield put(failure(errorMessage))
+  toast.error(errorMessage)
 }

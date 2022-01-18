@@ -39,8 +39,8 @@ const lists: INavItem[] = [
 
 function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
   return (
-    <div className={clsx(navExpanded ? 'pr-5' : 'pr-3', 'container relative w-full h-full')}>
-      <div className={'pt-5 pl-3'}>
+    <div className={'container unselectable relative h-full'}>
+      <div className={'pt-8 px-3'}>
         <Link to={'/'} className="flex gap-x-2 item-center w-full text-3xl text-white">
           <img src={logoImage} alt="logo" className="w-10 h-10 rounded-full" />
           {navExpanded && Strings.AppName}
@@ -54,9 +54,9 @@ function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
           <Link
             to={to}
             className={clsx(
-              'block h-10',
-              isActive ? 'text-white' : 'text-white/50',
-              navExpanded ? 'flex gap-x-4 py-2 leading-6' : 'pl-3 py-6 text-center',
+              'block h-10 text-white transition',
+              isActive ? 'opacity-100' : 'opacity-50',
+              navExpanded ? 'flex gap-x-4 py-2 leading-6' : 'my-3 px-3 text-center',
             )}
             key={`nav_${index}`}
           >

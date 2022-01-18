@@ -7,7 +7,7 @@ function SearchComponent() {
   const searchResult = useSelector(({ searchResult }: RootModuleType) => searchResult)
 
   return (
-    <div className="w-full h-full pl-[5%]">
+    <div className="w-full h-full pl-[5%] overflow-y-auto">
       <SearchContainer searchResult={searchResult} />
     </div>
   )

@@ -1,0 +1,9 @@
+/* 앱 기본 설정 */
+.app {
+  background-color: var(--primary-redrose);
+  color: var(--blackberry);
+
+  font-family: 'Noto Sans KR', sans-serif;
+  word-break: keep-all;
+  scroll-behavior: smooth;
+}

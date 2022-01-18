@@ -16,7 +16,7 @@ const imageList = [
 
 function CarouselView() {
   return (
-    <div className="w-full h-3/6 pr-[5%]">
+    <div className="w-full h-full pr-[5%]">
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination, Keyboard, Autoplay]}

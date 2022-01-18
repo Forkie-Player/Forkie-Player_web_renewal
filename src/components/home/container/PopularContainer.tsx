@@ -21,7 +21,7 @@ const calcSlidesPerView = (screenSize: string) => {
     case Contants.screenSizeString.XL:
       return 5
     default:
-      return 1
+      return 6
   }
 }
 

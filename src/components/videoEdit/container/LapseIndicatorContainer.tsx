@@ -7,10 +7,6 @@ interface IProps {
   refs: React.RefObject<HTMLDivElement>[]
 }
 
-/* 리사이즈시 인디케이터는 현재의 range와 상관없이 
-   현재 있는 handle의 위치로 이동함.
-
-*/
 function LapseIndecatorContaier({ updateIndicator, range, refs }: IProps) {
   const [startLapseIndicatorStyle, setStartLapseIndicatorStyle] = useState<React.CSSProperties>({ position: 'fixed' })
   const [endLapseIndicatorStyle, setEndLapseIndicatorStyle] = useState<React.CSSProperties>({ position: 'fixed' })

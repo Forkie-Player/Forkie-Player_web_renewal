@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { usePopper } from 'react-popper'
-import palette from '../../../lib/style/palette'
 import { IVideoInPlaylist } from '../../../types'
 import { CustomClearButton } from '../../elements/CustomButton'
 import RightVideoListView from '../view/RightVideoListView'
@@ -92,12 +91,8 @@ function RightVideoListContainer({
               {popperMode === 'edit' ? Strings.CheckVideoEdit : Strings.CheckVideoDelete}
             </div>
             <div className="flex gap-x-4 justify-center">
-              <CustomClearButton text="아니요" textColor={palette.blackberry} onClick={() => setShowPopper(false)} />
-              <CustomClearButton
-                text="네"
-                textColor={palette.redrose}
-                onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton}
-              />
+              <CustomClearButton text="아니요" type="secondary" onClick={() => setShowPopper(false)} />
+              <CustomClearButton text="네" onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton} />
             </div>
           </div>
         </div>

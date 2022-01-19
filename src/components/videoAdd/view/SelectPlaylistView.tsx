@@ -1,5 +1,4 @@
 import React from 'react'
-import palette from '../../../lib/style/palette'
 import { IPlaylist } from '../../../types'
 import { CustomClearButton } from '../../elements/CustomButton'
 import PlaylistItem from '../../elements/PlaylistItem'
@@ -24,7 +23,7 @@ function SelectPlaylistView({ playlists, onClickCancle, onClickPlaylist }: IProp
         </div>
       </div>
       <div className="basis-1/12 p-2 flex justify-center gap-x-4 w-full">
-        <CustomClearButton text="취소" textColor={palette.cancel} onClick={onClickCancle} />
+        <CustomClearButton text="취소" type="secondary" onClick={onClickCancle} />
         <AddPlaylistButton text="새 플레이리스트" place="top" />
       </div>
     </div>

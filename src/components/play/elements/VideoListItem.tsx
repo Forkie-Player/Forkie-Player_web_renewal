@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { forwardRef, useCallback, useImperativeHandle, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
-import palette from '../../../lib/style/palette'
 import { IVideoInPlaylist } from '../../../types'
 import { CustomIconButton } from '../../elements/CustomButton'
 import { TimeLapse } from '../../elements/TimeLapse'
@@ -73,8 +72,8 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
                 <TimeLapse range={[video.start, video.end]} gap={2} />
               </div>
               <div className="flex gap-x-2 text-lg">
-                <CustomIconButton icon={<MdEdit />} onClick={onClickEditCallback} />
-                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} textColor={palette.redrose} />
+                <CustomIconButton icon={<MdEdit />} onClick={onClickEditCallback} type="secondary" />
+                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} />
               </div>
             </div>
           </div>

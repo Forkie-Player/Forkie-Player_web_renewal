@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import { useCallback, useEffect, useState } from 'react'
 import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
-import palette from '../../lib/style/palette'
 import { RootModuleType } from '../../modules/moduleTypes'
 import { createPlaylistAsync } from '../../modules/playlist/actions'
 import { CustomClearButton } from './CustomButton'
@@ -58,12 +57,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
 
   return (
     <>
-      <CustomClearButton
-        ref={setReferenceElement}
-        text={text}
-        textColor={palette.redrose}
-        onClick={onClickToggleShowPopper}
-      />
+      <CustomClearButton ref={setReferenceElement} text={text} onClick={onClickToggleShowPopper} />
       {showPopper && (
         <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
           <div className={clsx('border-2 relative p-4 bg-white rounded-2xl shadow-outer')}>

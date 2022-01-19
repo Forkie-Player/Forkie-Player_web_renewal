@@ -2,11 +2,9 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import { IVideoHasRange } from '../../types'
 import LoadingElement from '../elements/loading'
 import VideoContainer from '../video'
-import { Range } from 'rc-slider'
 
 import 'rc-slider/assets/index.css'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
-import palette from '../../lib/style/palette'
 import { ITextButtonProps } from '../elements/CustomButton'
 
 import * as Strings from '../../lib/strings'
@@ -14,6 +12,10 @@ import toast from 'react-hot-toast'
 import AdjustSecondsContainer from './container/AdjustSecondsContainer'
 import TimeLapseView from './view/TimeLapseView'
 import ButtonsView from './view/ButtonsView'
+import RangeContainer from './container/RangeContainer'
+
+import LapseIndicatorContainer from './container/LapseIndicatorContainer'
+import { useResizeDetector } from 'react-resize-detector'
 
 // refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {
@@ -23,15 +25,6 @@ interface IProps {
   onRangeChangeCallback?: (range: number[]) => void
   leftButtonProps?: ITextButtonProps
   rightButtonProps?: ITextButtonProps
-}
-
-const handleStyle = {
-  borderColor: palette.blackberry,
-  width: '1.5rem',
-  borderRadius: '0.5rem',
-  ':hover': {
-    backgroundColor: palette.redrose,
-  },
 }
 
 function VideoEdit({
@@ -45,16 +38,34 @@ function VideoEdit({
   const [videoReady, setVideoReady] = useState(false)
   const [videoDuration, setVideoDuration] = useState(0)
   const [range, setRange] = useState<number[]>([video.start, video.end])
-  const playerRef = useRef<ReactPlayer>(null)
+  const [selectedLapse, setSelectedLapse] = useState<number[]>([video.start, video.end])
 
-  const onReady = useCallback(() => {
+  const [updateIndicator, setUpdateIndicator] = useState<number>(0)
+
+  const playerRef = useRef<ReactPlayer>(null)
+  const startHandleRef = useRef<HTMLDivElement>(null)
+  const endHandleRef = useRef<HTMLDivElement>(null)
+
+  // 사이즈 변경시 인디케이터 업데이트
+  // 이때 range 범위도 사용자가 적용한 시간으로 다시 돌아감.
+  const updateIndicatorWithUseCallback = useCallback(() => {
+    setUpdateIndicator(prev => prev + 1)
+    setRange(selectedLapse)
+  }, [selectedLapse])
+  const resizeDetector = useResizeDetector({
+    onResize: updateIndicatorWithUseCallback,
+  })
+
+  const onPlayerReady = useCallback(() => {
     if (playerRef !== null && playerRef.current !== null) {
       const endTime = playerRef.current.getDuration()
       setVideoDuration(endTime)
 
       if (video.end === undefined || video.end === null || video.end === 0) {
         setRange([video.start, endTime])
+        setSelectedLapse([video.start, endTime])
       }
+      setUpdateIndicator(prev => prev + 1)
 
       if (onReadyCallback !== undefined) {
         onReadyCallback(endTime)
@@ -63,7 +74,7 @@ function VideoEdit({
     setVideoReady(true)
   }, [playerRef, video, onReadyCallback])
 
-  const onChangeRangeGraph = useCallback(
+  const onChangeRange = useCallback(
     (range: number[]) => {
       setRange(prev => {
         if (range[0] === prev[0]) {
@@ -80,7 +91,7 @@ function VideoEdit({
     [onRangeChangeCallback],
   )
 
-  const onClickAdjustSeconds = useCallback(
+  const onClickAdjustRangeByOneSecond = useCallback(
     (right: boolean, offset: number) => {
       if (right) {
         setRange(prev => {
@@ -108,32 +119,38 @@ function VideoEdit({
       if (leftButtonProps !== undefined && leftButtonProps.onClick !== undefined) {
         leftButtonProps.onClick(prev)
       }
-      toast.success(Strings.applyTimeLapseSuccess(prev[0], prev[1]))
+      toast.success(Strings.applyTimeLapseSuccess)
+      setSelectedLapse(prev)
       return prev
     })
+    setUpdateIndicator(prev => prev + 1)
   }, [leftButtonProps])
 
-  const playerPropsMemo = useMemo(() => ({ ...playerProps, onReady }), [playerProps, onReady])
+  const playerPropsMemo = useMemo(() => ({ ...playerProps, onReady: onPlayerReady }), [playerProps, onPlayerReady])
+  const lapseIndicatorRefsMemo = useMemo(() => [startHandleRef, endHandleRef], [startHandleRef, endHandleRef])
+  const leftButtonPropsMemo = useMemo(
+    () => ({ ...leftButtonProps, onClick: onClickApply }),
+    [leftButtonProps, onClickApply],
+  )
 
   return (
     <div className="w-full h-full py-5">
       <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
       {videoReady ? (
-        <div className="py-8 space-y-1 px-40">
-          <Range
-            value={range}
+        <div ref={resizeDetector.ref} className="w-full pt-12 space-y-1 px-[10%]">
+          <RangeContainer
+            handleRefs={[startHandleRef, endHandleRef]}
+            range={range}
             max={videoDuration}
-            onChange={onChangeRangeGraph}
-            trackStyle={[{ backgroundColor: palette.redrose }]}
-            handleStyle={[handleStyle, handleStyle]}
-            railStyle={{ backgroundColor: palette['blackberry-lightest'] }}
+            onChange={onChangeRange}
           />
-          <AdjustSecondsContainer onClickAdjustSeconds={onClickAdjustSeconds} />
+          <AdjustSecondsContainer onClickAdjustSeconds={onClickAdjustRangeByOneSecond} />
           <TimeLapseView range={range} />
-          <ButtonsView
-            leftButtonProps={leftButtonProps}
-            rightButtonProps={rightButtonProps}
-            onClickApply={onClickApply}
+          <ButtonsView leftButtonProps={leftButtonPropsMemo} rightButtonProps={rightButtonProps} />
+          <LapseIndicatorContainer
+            updateIndicator={updateIndicator}
+            refs={lapseIndicatorRefsMemo}
+            range={selectedLapse}
           />
         </div>
       ) : (

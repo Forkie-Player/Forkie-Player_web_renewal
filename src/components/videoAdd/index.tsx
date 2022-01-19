@@ -55,7 +55,7 @@ function VideoAdd({ video }: IProps) {
           />
         </div>
         <div
-          className={clsx(showPlaylists ? 'playlistWrapperShowUp' : '-right-[100%]', 'w-[30%] h-full absolute flex')}
+          className={clsx(showPlaylists ? 'playlistWrapperShowUp' : '-right-[100%]', 'w-[25%] h-full absolute flex')}
         >
           {showPlaylists && (
             <>

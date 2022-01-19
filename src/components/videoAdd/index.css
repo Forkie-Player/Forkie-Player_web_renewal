@@ -1,14 +1,14 @@
 .videoEditWrapperShrinked {
   animation-duration: 0.3s;
   animation-name: videoEditWrapperShrinked;
-  flex-basis: 70%;
+  flex-basis: 75%;
 }
 @keyframes videoEditWrapperShrinked {
   from {
     flex-basis: 100%;
   }
   to {
-    flex-basis: 70%;
+    flex-basis: 75%;
   }
 }
 
@@ -19,7 +19,7 @@
 }
 @keyframes videoEditWrapperExpand {
   from {
-    flex-basis: 70%;
+    flex-basis: 75%;
   }
   to {
     flex-basis: 100%;

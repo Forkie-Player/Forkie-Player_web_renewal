@@ -1,5 +1,3 @@
-import secondsToHHMMSS from './utils/secondsToHHMMSS'
-
 export const AppName = 'YourList'
 
 export const GoBack = '뒤로가기'
@@ -31,8 +29,7 @@ export const EnterName = '제목을 입력해주세요.'
 export const addPlaylistSuccess = '플레이리스트가 잘 추가되었어요'
 export const addVideoSuccess = '영상이 잘 추가되었어요'
 
-export const applyTimeLapseSuccess = (start: number, end: number) =>
-  `제대로 적용되었어요\n${secondsToHHMMSS(start)} ~ ${secondsToHHMMSS(end)}`
+export const applyTimeLapseSuccess = `제대로 적용되었어요`
 
 export const CheckVideoEdit = '정말로 수정하시나요?'
 export const CheckVideoDelete = '정말로 삭제하시나요?'

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { usePopper } from 'react-popper'
 
 import * as Strings from '../../../lib/strings'
-import palette from '../../../lib/style/palette'
 import { CustomClearButton } from '../../elements/CustomButton'
 import SimpleTextInput from '../../elements/SimpleTextInput'
 
@@ -69,8 +68,8 @@ const PlaylistPopper = ({
             <div className="p-4 space-y-2">
               <div className="text-blackberry">{Strings.CheckVideoDelete}</div>
               <div className="flex gap-x-4 justify-center">
-                <CustomClearButton text="아니요" textColor={palette.blackberry} onClick={onToggleShowPopper} />
-                <CustomClearButton text="네" textColor={palette.redrose} onClick={onClickDeleteCallback} />
+                <CustomClearButton text="아니요" type="secondary" onClick={onToggleShowPopper} />
+                <CustomClearButton text="네" onClick={onClickDeleteCallback} />
               </div>
             </div>
           )

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import palette from '../../lib/style/palette'
 import { CustomClearButton } from './CustomButton'
 
 interface IProps {
@@ -54,10 +53,10 @@ const SimpleTextInput = ({
       <div className="text-redrose text-sm">{errorMsg}</div>
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (
-          <CustomClearButton text="취소" textColor={palette.blackberry} onClick={onClickCancle} />
+          <CustomClearButton text="취소" type="secondary" onClick={onClickCancle} />
         )}
         <button type="submit">
-          <CustomClearButton text="완료" textColor={palette.redrose} />
+          <CustomClearButton text="완료" type="primary" />
         </button>
       </div>
     </form>

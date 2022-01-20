@@ -28,7 +28,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
     )
 
     const onClickEditCallback = useCallback(
-      (e: MouseEvent) => {
+      (e: React.MouseEvent<HTMLDivElement>) => {
         if (referenceElement !== null) {
           onClickEdit(video, referenceElement)
         }
@@ -37,7 +37,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
       [video, referenceElement, onClickEdit],
     )
     const onClickDeleteCallback = useCallback(
-      (e: MouseEvent) => {
+      (e: React.MouseEvent<HTMLDivElement>) => {
         if (referenceElement !== null) {
           onClickDelete(video, referenceElement)
         }
@@ -60,7 +60,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
               snapshot.isDragging && 'drop-shadow-2xl bg-white',
               video.id === currentVideo.id && 'border-2 border-redrose',
               video.id !== currentVideo.id && !snapshot.isDragging && 'opacity-50',
-              'w-full h-28 cursor-pointer flex gap-2 rounded-2xl overflow-hidden ',
+              'max-w-[25rem] min-w-72 h-28 cursor-pointer flex gap-2 rounded-2xl overflow-hidden ',
               'hover:bg-background-light-hover hover:shadow-outer',
             )}
             onClick={() => onClickItem(video)}

@@ -6,7 +6,6 @@ import { useCallback, useState } from 'react'
 import GobackLine from '../elements/GobackLine'
 import clsx from 'clsx'
 import './index.css'
-import VerticalLine from '../elements/VerticalLine'
 import SelectPlaylistContainer from './container/SelectPlaylistContainer'
 import { useDispatch } from 'react-redux'
 import { addVideoAsync } from '../../modules/playlist/actions'
@@ -43,14 +42,14 @@ function VideoAdd({ video }: IProps) {
   }
 
   return (
-    <div className="w-full h-full px-[5%] flex flex-col">
+    <div className="w-full h-full max-h-full space-y-4 pb-4 flex flex-col">
       <GobackLine />
-      <div className="relative flex flex-1 max-h-full w-full">
+      <div className="relative flex flex-1 w-full box-border">
         <div className={clsx(showPlaylists ? 'videoEditWrapperShrinked' : 'videoEditWrapperExpand', 'h-full')}>
           <VideoEdit
             video={videoState}
             onReadyCallback={onPlayerReady}
-            leftButtonProps={{ onClick: onClickApply }}
+            onApplyButtonCallback={onClickApply}
             rightButtonProps={{ onClick: onClickAdd }}
           />
         </div>
@@ -59,7 +58,6 @@ function VideoAdd({ video }: IProps) {
         >
           {showPlaylists && (
             <>
-              <VerticalLine />
               <SelectPlaylistContainer onClickCancle={onClickClosePlaylist} onClickPlaylist={onClickPlaylist} />
             </>
           )}

@@ -3,14 +3,16 @@ import React from 'react'
 import { MdLogin, MdLogout } from 'react-icons/md'
 import { IUserInfo } from '../../../types'
 import * as Strings from '../../../lib/strings'
+import { CustomButtonWrapper } from '../../elements/CustomButton'
 
 interface IProps {
   userInfo: IUserInfo
   playlistsLength: number
   onClickLogout: () => Promise<void>
+  onClickLogin: () => void
 }
 
-function ProfileView({ userInfo, playlistsLength, onClickLogout }: IProps) {
+function ProfileView({ userInfo, playlistsLength, onClickLogin, onClickLogout }: IProps) {
   return (
     <div className="flex gap-x-5 w-4/12 h-full justify-end">
       <img
@@ -28,7 +30,9 @@ function ProfileView({ userInfo, playlistsLength, onClickLogout }: IProps) {
         <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
       </div>
       <button className="text-2xl h-full align-bottom py-2">
-        {userInfo.member === false ? <MdLogin /> : <MdLogout onClick={onClickLogout} />}
+        <CustomButtonWrapper>
+          {userInfo.member === false ? <MdLogin onClick={onClickLogin} /> : <MdLogout onClick={onClickLogout} />}
+        </CustomButtonWrapper>
       </button>
     </div>
   )

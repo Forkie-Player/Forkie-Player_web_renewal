@@ -6,7 +6,11 @@ import { getPlaylistAsync } from '../../../modules/playlist/actions'
 import { getUserInfo } from '../../../modules/userInfo/actions'
 import ProfileView from '../view/ProfileView'
 
-function ProfileContainer() {
+interface IProps {
+  onClickLogin: () => void
+}
+
+function ProfileContainer({ onClickLogin }: IProps) {
   const { userInfo, playlistsLength } = useSelector(({ userInfo, playlist }: RootModuleType) => ({
     userInfo,
     playlistsLength: playlist.items.length,
@@ -20,7 +24,14 @@ function ProfileContainer() {
     dispatch(getPlaylistAsync.request())
   }
 
-  return <ProfileView userInfo={userInfo.userInfo} playlistsLength={playlistsLength} onClickLogout={onClickLogout} />
+  return (
+    <ProfileView
+      userInfo={userInfo.userInfo}
+      playlistsLength={playlistsLength}
+      onClickLogout={onClickLogout}
+      onClickLogin={onClickLogin}
+    />
+  )
 }
 
 export default ProfileContainer

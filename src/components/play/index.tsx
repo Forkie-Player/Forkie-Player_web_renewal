@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeVideoOrderAsync, deleteVideoAsync, updateCurrentVideo } from '../../modules/video/actions'
 import GobackLine from '../elements/GobackLine'
-import VerticalLine from '../elements/VerticalLine'
 
 import * as Constants from '../../lib/constants'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
@@ -142,25 +141,26 @@ export default function Play({ video }: IProps) {
   }, [isPendingChangeVideoOrder, status])
 
   return (
-    <div className="w-full h-full max-h-full pr-[5%] grid grid-cols-12 grid-rows-[2rem_minmax(100px,_auto)]">
-      <div className="col-span-12">
-        <GobackLine />
-      </div>
-      <LeftVideoRenderView playerRef={playerRef} video={currentVideo} onVideoEnd={onVideoEnd} />
-      <div className="h-full max-h-full col-span-3 flex">
-        <VerticalLine />
-        {isPendingChangeVideoOrder ? (
-          <LoadingElement />
-        ) : (
-          <RightVideoListContainer
-            videoList={videoList}
-            currentVideo={currentVideo}
-            onVideoListDragEnd={onVideoListDragEnd}
-            onClickVideoListItem={onClickVideoListItem}
-            onClickDelete={onClickDelete}
-            onClickEdit={onClickEdit}
-          />
-        )}
+    <div className="w-full h-full max-h-full flex flex-col">
+      <GobackLine />
+      <div className="flex flex-1 overflow-hidden">
+        <div className="flex-1">
+          <LeftVideoRenderView playerRef={playerRef} video={currentVideo} onVideoEnd={onVideoEnd} />
+        </div>
+        <div className="max-w-sm h-full max-h-full pl-4">
+          {isPendingChangeVideoOrder ? (
+            <LoadingElement />
+          ) : (
+            <RightVideoListContainer
+              videoList={videoList}
+              currentVideo={currentVideo}
+              onVideoListDragEnd={onVideoListDragEnd}
+              onClickVideoListItem={onClickVideoListItem}
+              onClickDelete={onClickDelete}
+              onClickEdit={onClickEdit}
+            />
+          )}
+        </div>
       </div>
     </div>
   )

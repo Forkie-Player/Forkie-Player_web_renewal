@@ -24,6 +24,7 @@ interface IProps {
   onReadyCallback?: (endtime: number) => void
   onRangeChangeCallback?: (range: number[]) => void
   leftButtonProps?: ITextButtonProps
+  onApplyButtonCallback?: (range: number[]) => void
   rightButtonProps?: ITextButtonProps
 }
 
@@ -32,6 +33,7 @@ function VideoEdit({
   playerProps,
   onReadyCallback,
   onRangeChangeCallback,
+  onApplyButtonCallback,
   leftButtonProps,
   rightButtonProps,
 }: IProps) {
@@ -116,15 +118,15 @@ function VideoEdit({
 
   const onClickApply = useCallback(() => {
     setRange(prev => {
-      if (leftButtonProps !== undefined && leftButtonProps.onClick !== undefined) {
-        leftButtonProps.onClick(prev)
+      if (onApplyButtonCallback !== undefined && onApplyButtonCallback !== undefined) {
+        onApplyButtonCallback(prev)
       }
       toast.success(Strings.applyTimeLapseSuccess)
       setSelectedLapse(prev)
       return prev
     })
     setUpdateIndicator(prev => prev + 1)
-  }, [leftButtonProps])
+  }, [onApplyButtonCallback])
 
   const playerPropsMemo = useMemo(() => ({ ...playerProps, onReady: onPlayerReady }), [playerProps, onPlayerReady])
   const lapseIndicatorRefsMemo = useMemo(() => [startHandleRef, endHandleRef], [startHandleRef, endHandleRef])
@@ -133,11 +135,14 @@ function VideoEdit({
     [leftButtonProps, onClickApply],
   )
 
+  // 로딩의 길이를 15rem으로 두고, 로딩이 끝나면 controller를 보여주면서 정확한 높이로 맞춰짐
   return (
-    <div className="w-full h-full py-5">
-      <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
+    <div className="w-full h-full flex flex-col">
+      <div className="w-full flex-1">
+        <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
+      </div>
       {videoReady ? (
-        <div ref={resizeDetector.ref} className="w-full pt-12 space-y-1 px-[10%]">
+        <div ref={resizeDetector.ref} className="w-full max-h-fit pt-12 space-y-1 px-[10%]">
           <RangeContainer
             handleRefs={[startHandleRef, endHandleRef]}
             range={range}
@@ -154,7 +159,7 @@ function VideoEdit({
           />
         </div>
       ) : (
-        <div className="py-10">
+        <div className="py-10 h-60">
           <LoadingElement />
         </div>
       )}

@@ -16,9 +16,9 @@ function SearchbarView({ search, onChangeSearchText, onSearch }: IProps) {
       >
         <input
           id="search"
-          type="text"
+          type="search"
           placeholder="Search"
-          className="w-full h-full pl-4 pr-12 placeholder:text-blackberr-lightest shadow-inner bg-background-light rounded-2xl focus:outline-none"
+          className="w-full h-full pl-4 pr-12 placeholder:text-blackberry-lightest shadow-inner bg-background-light rounded-2xl focus:outline-none"
           onChange={onChangeSearchText}
         ></input>
 

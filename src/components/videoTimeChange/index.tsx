@@ -44,7 +44,7 @@ function VideoTimeChange({ video }: IProps) {
         <div className="w-full h-full">
           <VideoEdit
             video={videoState}
-            leftButtonProps={{ onClick: onClickApply }}
+            onApplyButtonCallback={onClickApply}
             rightButtonProps={{ onClick: onClickEdit, text: '수정' }}
           />
         </div>

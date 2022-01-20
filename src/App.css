@@ -3,7 +3,25 @@
   background-color: var(--primary-redrose);
   color: var(--blackberry);
 
-  font-family: 'Noto Sans KR', sans-serif;
-  word-break: keep-all;
   scroll-behavior: smooth;
+}
+
+/** form 스타일 */
+.form_field:placeholder-shown ~ .form__label {
+  font-size: 1rem;
+  top: 0;
+  cursor: text;
+}
+.form_field:focus ~ .form__label {
+  top: -1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-redrose-light);
+}
+.form_field:not(:focus) ~ .form__label {
+  color: var(--blackberry-lightest);
+}
+.form_field:not(:placeholder-shown) ~ .form__label {
+  top: -1.2rem;
+  font-size: 1rem;
 }

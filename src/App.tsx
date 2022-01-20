@@ -9,8 +9,11 @@ import { setScreenSize } from './modules/screenSize/actions'
 import { CustomToast } from './components/elements/CustomToast'
 import MyRoutes from './routes'
 import clsx from 'clsx'
+import ReactModal from 'react-modal'
 
 import './App.css'
+
+ReactModal.setAppElement('#root')
 
 function App() {
   const dispatch = useDispatch()

@@ -5,15 +5,13 @@ import { MdEdit } from 'react-icons/md'
 interface IProps {
   type?: 'primary' | 'secondary'
   size?: 'small' | 'medium' | 'large' | 'fit'
-  onClick?: (any: any) => void | Promise<void>
-  style?: React.CSSProperties
 }
 
-export interface ITextButtonProps extends IProps {
+export interface ITextButtonProps extends IProps, React.HTMLAttributes<HTMLDivElement> {
   text?: string
 }
 
-export interface IIconButtonProps extends IProps {
+export interface IIconButtonProps extends IProps, React.HTMLAttributes<HTMLDivElement> {
   icon?: JSX.Element
 }
 
@@ -30,7 +28,7 @@ const getElementSizeWrapper = (size: string) => {
 }
 
 const CustomButton = forwardRef<HTMLDivElement, ITextButtonProps>(
-  ({ text = '버튼', type = 'primary', size = 'fit', onClick, style }, ref) => {
+  ({ text = '버튼', type = 'primary', size = 'fit', ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -40,8 +38,7 @@ const CustomButton = forwardRef<HTMLDivElement, ITextButtonProps>(
           type === 'primary' && 'bg-redrose-light text-white',
           type === 'secondary' && 'bg-white text-redrose-light',
         )}
-        onClick={onClick}
-        style={style}
+        {...props}
       >
         {text}
       </div>
@@ -50,7 +47,7 @@ const CustomButton = forwardRef<HTMLDivElement, ITextButtonProps>(
 )
 
 const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
-  ({ text = '버튼', type = 'primary', onClick, style }: ITextButtonProps, ref) => {
+  ({ text = '버튼', type = 'primary', ...props }: ITextButtonProps, ref) => {
     return (
       <div
         ref={ref}
@@ -59,8 +56,7 @@ const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
         )}
-        onClick={onClick}
-        style={style}
+        {...props}
       >
         {text}
       </div>
@@ -69,7 +65,7 @@ const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
 )
 
 const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
-  ({ icon = <MdEdit />, type = 'primary', style, onClick }, ref) => {
+  ({ icon = <MdEdit />, type = 'primary', ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -78,8 +74,7 @@ const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
         )}
-        onClick={onClick}
-        style={style}
+        {...props}
       >
         {icon}
       </div>

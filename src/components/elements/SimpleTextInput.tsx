@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { CustomClearButton } from './CustomButton'
+import CustomInput from './CustomInput'
 
 interface IProps {
   title: string
@@ -45,11 +46,7 @@ const SimpleTextInput = ({
   return (
     <form className="space-y-4" onSubmit={onClickComplete}>
       <div className="text-blackberry">{title}</div>
-      <input
-        type="text"
-        className="w-full bg-inherit border-b-[1px] border-blackberry focus:none"
-        onChange={onChangeText}
-      />
+      <CustomInput type="text" onChange={onChangeText} />
       <div className="text-redrose text-sm">{errorMsg}</div>
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (

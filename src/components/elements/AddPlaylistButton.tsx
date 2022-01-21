@@ -9,6 +9,7 @@ import LoadingElement from './loading'
 import * as Strings from '../../lib/strings'
 import toast from 'react-hot-toast'
 import SimpleTextInput from './SimpleTextInput'
+import PopperWrapper from './PopperWrapper'
 
 interface IProps {
   text?: string
@@ -17,13 +18,10 @@ interface IProps {
 
 export default function AddPlaylistButton({ text = '추가', place = 'bottom' }: IProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
   const [showPopper, setShowPopper] = useState(false)
 
   const dispatch = useDispatch()
   const { playlist, userInfo } = useSelector(({ playlist, userInfo }: RootModuleType) => ({ playlist, userInfo }))
-
-  const { styles, attributes } = usePopper(referenceElement, popperElement)
 
   useEffect(() => {
     if (playlist.pending === true) {
@@ -59,7 +57,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
     <>
       <CustomClearButton ref={setReferenceElement} text={text} onClick={onClickToggleShowPopper} />
       {showPopper && (
-        <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
+        <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onClickToggleShowPopper}>
           <div className={clsx('border-2 relative p-4 bg-white rounded-2xl shadow-outer')}>
             {playlist.pending ? (
               <LoadingElement />
@@ -71,7 +69,7 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
               />
             )}
           </div>
-        </div>
+        </PopperWrapper>
       )}
     </>
   )

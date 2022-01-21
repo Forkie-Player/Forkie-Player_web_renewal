@@ -39,7 +39,7 @@ export default function Play({ video }: IProps) {
 
   const onVideoEnd = useCallback(() => {
     const curIndex = getVideoIndex(currentVideo)
-    if (curIndex < videoList.length) {
+    if (curIndex < videoList.length - 1) {
       return dispatch(updateCurrentVideo(videoList[curIndex + 1]))
     } else {
       return dispatch(updateCurrentVideo(videoList[0]))

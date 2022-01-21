@@ -2,8 +2,6 @@
 .app {
   background-color: var(--primary-redrose);
   color: var(--blackberry);
-
-  scroll-behavior: smooth;
 }
 
 /** form 스타일 */

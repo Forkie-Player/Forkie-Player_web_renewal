@@ -3,12 +3,12 @@ import React, { forwardRef } from 'react'
 import { MdEdit } from 'react-icons/md'
 
 interface IProps {
-  type?: 'primary' | 'secondary'
+  type?: 'primary' | 'secondary' | 'none'
   size?: 'small' | 'medium' | 'large' | 'fit'
 }
 
 export interface ITextButtonProps extends IProps, React.HTMLAttributes<HTMLDivElement> {
-  text?: string
+  text?: string | JSX.Element
 }
 
 export interface IIconButtonProps extends IProps, React.HTMLAttributes<HTMLDivElement> {
@@ -52,7 +52,7 @@ const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
       <div
         ref={ref}
         className={clsx(
-          'max-w-fit max-h-9 px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+          'max-w-fit min-h-fit max-h-fit px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
         )}
@@ -68,13 +68,14 @@ const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
   ({ icon = <MdEdit />, type = 'primary', ...props }, ref) => {
     return (
       <div
+        {...props}
         ref={ref}
         className={clsx(
           'max-w-fit max-h-8 p-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
+          props.className,
         )}
-        {...props}
       >
         {icon}
       </div>

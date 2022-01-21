@@ -1,35 +1,23 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../../lib/utils/auth'
-import { RootModuleType } from '../../../modules/moduleTypes'
-import { getPlaylistAsync } from '../../../modules/playlist/actions'
-import { getUserInfo } from '../../../modules/userInfo/actions'
+import { IUserInfo } from '../../../types'
 import ProfileView from '../view/ProfileView'
 
 interface IProps {
+  userInfo: IUserInfo
+  playlistsLength: number
   onClickLogin: () => void
+  onClickLogout: () => Promise<void>
+  onClickProfile: () => void
 }
 
-function ProfileContainer({ onClickLogin }: IProps) {
-  const { userInfo, playlistsLength } = useSelector(({ userInfo, playlist }: RootModuleType) => ({
-    userInfo,
-    playlistsLength: playlist.items.length,
-  }))
-
-  const dispatch = useDispatch()
-
-  const onClickLogout = async () => {
-    await logout()
-    dispatch(getUserInfo.request())
-    dispatch(getPlaylistAsync.request())
-  }
-
+function ProfileContainer({ userInfo, playlistsLength, onClickLogout, onClickLogin, onClickProfile }: IProps) {
   return (
     <ProfileView
-      userInfo={userInfo.userInfo}
+      userInfo={userInfo}
       playlistsLength={playlistsLength}
       onClickLogout={onClickLogout}
       onClickLogin={onClickLogin}
+      onClickProfile={onClickProfile}
     />
   )
 }

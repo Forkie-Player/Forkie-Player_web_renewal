@@ -50,6 +50,13 @@ export interface IUpdateUserSuccess {
   response: IUserInfo
 }
 
+// 프로필사진 업데이트 타입
+export interface IUpdateProfileSuccess {
+  success: boolean
+  error: null
+  response: IUserInfo
+}
+
 // search 타입
 export interface ISearchSuccess {
   data: {

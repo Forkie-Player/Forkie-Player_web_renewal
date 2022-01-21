@@ -10,24 +10,29 @@ interface IProps {
   playlistsLength: number
   onClickLogout: () => Promise<void>
   onClickLogin: () => void
+  onClickProfile: () => void
 }
 
-function ProfileView({ userInfo, playlistsLength, onClickLogin, onClickLogout }: IProps) {
+function ProfileView({ userInfo, playlistsLength, onClickLogin, onClickLogout, onClickProfile }: IProps) {
   return (
-    <div className="flex gap-x-5 w-4/12 h-full justify-end">
-      <img
-        src={
-          userInfo.profileImg !== null ? userInfo.profileImg : 'https://isumstore.co.kr/common/img/default_profile.png'
-        }
-        className={clsx(
-          userInfo.member && 'outline outline-2 outline-redrose',
-          'h-full w-auto object-cover rounded-full aspect-square',
-        )}
-        alt="profile"
-      />
-      <div className="text-sm align-middle py-1">
-        <p>{userInfo.member !== false ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
-        <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
+    <div className="flex gap-x-4 w-4/12 h-full justify-end">
+      <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
+        <img
+          src={
+            userInfo.profileImg !== null && userInfo.profileImg !== ''
+              ? userInfo.profileImg
+              : 'https://isumstore.co.kr/common/img/default_profile.png'
+          }
+          className={clsx(
+            userInfo.member && 'outline outline-2 outline-redrose',
+            'h-full w-auto object-cover rounded-full aspect-square',
+          )}
+          alt="profile"
+        />
+        <div className="text-sm align-middle py-1">
+          <p>{userInfo.member !== false ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
+          <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
+        </div>
       </div>
       <button className="text-2xl h-full align-bottom py-2">
         <CustomButtonWrapper>

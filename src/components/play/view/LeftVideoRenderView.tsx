@@ -18,7 +18,7 @@ const LeftVideoRenderView = ({ playerRef, video, onVideoEnd }: IProps) => {
           <div className="w-full flex-1">
             <VideoRender playerRef={playerRef} video={video} playerProps={{ onEnded: onVideoEnd }} />
           </div>
-          <div className="h-40 pt-4 pb-8">
+          <div className="pt-4 pb-8">
             <VideoInfo data={video} />
           </div>
         </div>

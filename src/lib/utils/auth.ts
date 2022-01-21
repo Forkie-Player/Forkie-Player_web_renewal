@@ -1,8 +1,10 @@
 import { getCookie, removeCookie, setCookie } from './cookie'
 import { v4 as uuidv4 } from 'uuid'
-import { changeToMember, login, nonSignUp, reissue } from '../api/auth'
+import { changeToMember, login, nonSignUp, reissue, removeUser, userSignUp } from '../api/auth'
 import { IToken } from '../../types'
 import axios from 'axios'
+
+import { ErrorMessageFromServer } from '../strings'
 
 export const authInit = async () => {
   const tokensJson = getCookie('@tokens')
@@ -56,6 +58,13 @@ export const SignUp = async (id: string, pw: string) => {
     await changeToMember(id, pw)
     return await login(id, pw)
   } catch (err) {
+    console.error(err)
+  }
+
+  try {
+    await userSignUp(id, pw)
+    return await login(id, pw)
+  } catch (err) {
     // 중복 아이디 처리
     throw err
   }
@@ -67,5 +76,19 @@ export const logout = async () => {
     await nonMemberLogin()
   } catch (err) {
     throw err
+  }
+}
+
+export const withdrawlUser = async () => {
+  try {
+    await removeUser()
+  } catch (err) {
+    throw ErrorMessageFromServer.REMOVE_USER_FAIL
+  }
+
+  try {
+    await logout()
+  } catch (err) {
+    throw ErrorMessageFromServer.NONMEMBER_LOGIN_FAIL
   }
 }

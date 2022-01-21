@@ -14,6 +14,7 @@ const initialState: TUserInfoType = {
     authority: '',
     pc: true,
     member: false,
+    createdAt: new Date(),
   },
 }
 const userInfoReducer = createReducer<TUserInfoType, TUserInfo_Action>(initialState, {
@@ -29,6 +30,10 @@ const userInfoReducer = createReducer<TUserInfoType, TUserInfo_Action>(initialSt
     success: false,
     pending: false,
     error: action.payload,
+  }),
+  [userInfoActionTypes.SET_USERINFO]: (state, action) => ({
+    ...state,
+    userInfo: { signedin: true, ...action.payload },
   }),
   [userInfoActionTypes.CLEAR_USER_INFO]: () => ({ ...initialState }),
 })

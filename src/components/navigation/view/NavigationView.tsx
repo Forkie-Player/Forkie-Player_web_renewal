@@ -45,7 +45,7 @@ function NavigationView({ navExpanded, curPath, onToggleNav }: IProps) {
         'transition-[width] duration-300 unselectable relative h-full pt-8',
       )}
     >
-      <Link to={'/'} className="pl-3 flex gap-x-2 w-full text-3xl text-white">
+      <Link to={'/'} className="pl-3 gap-x-2 flex w-full text-3xl text-white">
         <img src={logoImage} alt="logo" className="w-10 h-10 rounded-full" />
         {navExpanded && Strings.AppName}
       </Link>

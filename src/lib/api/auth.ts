@@ -9,6 +9,7 @@ import {
   IReissueSuccess,
   IRemoveUserSuccess,
   ISignUpSuccess,
+  IUpdateProfileSuccess,
   IUpdateUserSuccess,
 } from './types'
 
@@ -75,29 +76,17 @@ export const pwUpdate = async (pw: string, newPw: string) => {
   })
 }
 
-/*
-export const updateProfileAvatar = async (uri: string, loginId: string) => {
-  try {
-    const formData = new FormData()
-    let file = {
-      uri: uri,
-      name: `${loginId}.png`,
-      type: `image/png`,
-    }
-    const respond = await fetch(uri)
-    const blob = await respond.blob()
-    file = new File([blob], `${loginId}.png`)
-
-    formData.append('img', file)
-
-    const res = await axios.post(`${Address}/api/member/upload`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data;' },
-    })
-    return res.data.response
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      throw err.response.data
-    }
-  }
+export const userSignUp = async (id: string, pw: string) => {
+  await axios.post(`${Address}/api/member/signup/real`, {
+    loginId: id,
+    password: pw,
+    isPC: true,
+  })
 }
-*/
+
+export const updateProfileImag = async (form: FormData) => {
+  const res = await axios.post<IUpdateProfileSuccess>(`${Address}/api/member/upload`, form, {
+    headers: { 'Content-Type': 'multipart/form-data;' },
+  })
+  return res.data
+}

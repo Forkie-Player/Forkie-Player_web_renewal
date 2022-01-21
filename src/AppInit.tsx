@@ -21,7 +21,7 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
         if (err.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true
           const tokensJson = getCookie('@tokens')
-          const res = await reissue(JSON.parse(tokensJson))
+          const res = await reissue(tokensJson)
           if (res !== undefined) {
             axios.defaults.headers.common.Authorization = `Bearer ${res.response.accessToken}`
             originalRequest.headers.Authorization = `Bearer ${res.response.accessToken}`

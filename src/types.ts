@@ -56,6 +56,7 @@ export interface IUserInfo {
   authority: string
   pc: boolean
   member: boolean
+  createdAt: Date
 }
 
 // 플레이 리스트

@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { usePopper } from 'react-popper'
+import React, { useCallback, useState } from 'react'
 import { IVideoInPlaylist } from '../../../types'
 import { CustomClearButton } from '../../elements/CustomButton'
 import RightVideoListView from '../view/RightVideoListView'
 import { DropResult } from 'react-beautiful-dnd'
 import * as Strings from '../../../lib/strings'
+import PopperWrapper from '../../elements/PopperWrapper'
 
 interface IProps {
   videoList: IVideoInPlaylist[]
@@ -26,25 +26,8 @@ function RightVideoListContainer({
   const [showPopper, setShowPopper] = useState(false)
 
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
   const [popperMode, setPopperMode] = useState<'edit' | 'delete'>('edit')
   const [selectedVideo, setSelectedVideo] = useState<IVideoInPlaylist | null>(null)
-
-  const { styles, attributes } = usePopper(referenceElement, popperElement)
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      const eventTarget = event.target as HTMLElement
-      if (popperElement !== null && eventTarget !== null && popperElement.contains(eventTarget) === false) {
-        setShowPopper(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [popperElement])
 
   const onClickEditButton = useCallback(() => {
     if (selectedVideo !== null) {
@@ -74,6 +57,10 @@ function RightVideoListContainer({
     setShowPopper(true)
   }, [])
 
+  const onToggleShowPopper = useCallback(() => {
+    setShowPopper(prev => !prev)
+  }, [])
+
   return (
     <>
       <RightVideoListView
@@ -85,7 +72,7 @@ function RightVideoListContainer({
         onVideoListDragEnd={onVideoListDragEnd}
       />
       {showPopper && (
-        <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-50">
+        <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
           <div className={'border-2 relative p-4 bg-white rounded-2xl space-y-4 shadow-outer'}>
             <div className="text-blackberry">
               {popperMode === 'edit' ? Strings.CheckVideoEdit : Strings.CheckVideoDelete}
@@ -95,7 +82,7 @@ function RightVideoListContainer({
               <CustomClearButton text="네" onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton} />
             </div>
           </div>
-        </div>
+        </PopperWrapper>
       )}
     </>
   )

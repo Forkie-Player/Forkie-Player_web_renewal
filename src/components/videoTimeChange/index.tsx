@@ -40,8 +40,8 @@ function VideoTimeChange({ video }: IProps) {
   return (
     <div className="w-full h-full px-[5%] flex flex-col">
       <GobackLine />
-      <div className="relative flex-1 max-h-full w-full">
-        <div className="w-full h-full">
+      <div className="relative flex-1 w-full">
+        <div className="w-full h-full py-4">
           <VideoEdit
             video={videoState}
             onApplyButtonCallback={onClickApply}

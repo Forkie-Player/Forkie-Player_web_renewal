@@ -1,5 +1,6 @@
 export const NavAbsolutePathItems = {
   HOME: '/',
+  PROFILE: '/profile',
   SEARCH: '/search',
   LIST: '/list',
   VIDEO_ADD: '/search/add',

@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { usePopper } from 'react-popper'
+import React, { useCallback, useState } from 'react'
 
 import * as Strings from '../../../lib/strings'
 import { CustomClearButton } from '../../elements/CustomButton'
+import PopperWrapper from '../../elements/PopperWrapper'
 import SimpleTextInput from '../../elements/SimpleTextInput'
 
 interface IProps {
@@ -18,23 +18,8 @@ const PlaylistPopper = ({
   onClickTitleEdit: onClickTitleEditCallback,
   onClickDelete: onClickDeleteCallback,
 }: IProps) => {
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
   const [onDeleteMode, setOnDeleteMode] = useState(false)
   const [onEditMode, setOnEditMode] = useState(false)
-  const { styles, attributes } = usePopper(referenceElement, popperElement)
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      const eventTarget = event.target as HTMLElement
-      if (popperElement !== null && eventTarget !== null && popperElement.contains(eventTarget) === false) {
-        onToggleShowPopper()
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [popperElement, onToggleShowPopper])
 
   const onClickDeleteButton = useCallback(() => {
     setOnDeleteMode(true)
@@ -47,12 +32,7 @@ const PlaylistPopper = ({
   }, [])
 
   return (
-    <div
-      ref={setPopperElement}
-      style={styles.popper}
-      {...attributes.popper}
-      className="unselectable z-50 text-blackberry"
-    >
+    <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
       <div className={'border-2 relative bg-white rounded-2xl shadow-outer'}>
         {!onEditMode ? (
           !onDeleteMode ? (
@@ -83,7 +63,7 @@ const PlaylistPopper = ({
           </div>
         )}
       </div>
-    </div>
+    </PopperWrapper>
   )
 }
 

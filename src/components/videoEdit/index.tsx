@@ -14,9 +14,6 @@ import TimeLapseView from './view/TimeLapseView'
 import ButtonsView from './view/ButtonsView'
 import RangeContainer from './container/RangeContainer'
 
-import LapseIndicatorContainer from './container/LapseIndicatorContainer'
-import { useResizeDetector } from 'react-resize-detector'
-
 // refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
 interface IProps {
   video: IVideoHasRange
@@ -42,21 +39,7 @@ function VideoEdit({
   const [range, setRange] = useState<number[]>([video.start, video.end])
   const [selectedLapse, setSelectedLapse] = useState<number[]>([video.start, video.end])
 
-  const [updateIndicator, setUpdateIndicator] = useState<number>(0)
-
   const playerRef = useRef<ReactPlayer>(null)
-  const startHandleRef = useRef<HTMLDivElement>(null)
-  const endHandleRef = useRef<HTMLDivElement>(null)
-
-  // 사이즈 변경시 인디케이터 업데이트
-  // 이때 range 범위도 사용자가 적용한 시간으로 다시 돌아감.
-  const updateIndicatorWithUseCallback = useCallback(() => {
-    setUpdateIndicator(prev => prev + 1)
-    setRange(selectedLapse)
-  }, [selectedLapse])
-  const resizeDetector = useResizeDetector({
-    onResize: updateIndicatorWithUseCallback,
-  })
 
   const onPlayerReady = useCallback(() => {
     if (playerRef !== null && playerRef.current !== null) {
@@ -67,7 +50,6 @@ function VideoEdit({
         setRange([video.start, endTime])
         setSelectedLapse([video.start, endTime])
       }
-      setUpdateIndicator(prev => prev + 1)
 
       if (onReadyCallback !== undefined) {
         onReadyCallback(endTime)
@@ -125,11 +107,9 @@ function VideoEdit({
       setSelectedLapse(prev)
       return prev
     })
-    setUpdateIndicator(prev => prev + 1)
   }, [onApplyButtonCallback])
 
   const playerPropsMemo = useMemo(() => ({ ...playerProps, onReady: onPlayerReady }), [playerProps, onPlayerReady])
-  const lapseIndicatorRefsMemo = useMemo(() => [startHandleRef, endHandleRef], [startHandleRef, endHandleRef])
   const leftButtonPropsMemo = useMemo(
     () => ({ ...leftButtonProps, onClick: onClickApply }),
     [leftButtonProps, onClickApply],
@@ -142,21 +122,11 @@ function VideoEdit({
         <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
       </div>
       {videoReady ? (
-        <div ref={resizeDetector.ref} className="w-full max-h-fit pt-12 space-y-1 px-[10%]">
-          <RangeContainer
-            handleRefs={[startHandleRef, endHandleRef]}
-            range={range}
-            max={videoDuration}
-            onChange={onChangeRange}
-          />
+        <div className="w-full max-h-fit pt-12 space-y-1 px-[10%]">
+          <RangeContainer range={range} max={videoDuration} selectedLapse={selectedLapse} onChange={onChangeRange} />
           <AdjustSecondsContainer onClickAdjustSeconds={onClickAdjustRangeByOneSecond} />
           <TimeLapseView range={range} />
           <ButtonsView leftButtonProps={leftButtonPropsMemo} rightButtonProps={rightButtonProps} />
-          <LapseIndicatorContainer
-            updateIndicator={updateIndicator}
-            refs={lapseIndicatorRefsMemo}
-            range={selectedLapse}
-          />
         </div>
       ) : (
         <div className="py-10 h-60">

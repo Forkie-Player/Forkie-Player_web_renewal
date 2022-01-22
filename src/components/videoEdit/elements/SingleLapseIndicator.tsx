@@ -3,13 +3,16 @@ import { GoTriangleDown } from 'react-icons/go'
 import secondsToHHMMSS from '../../../lib/utils/secondsToHHMMSS'
 
 interface IProps {
-  props: HTMLProps<HTMLDivElement>
+  props?: HTMLProps<HTMLDivElement>
   second: number
 }
 
 const SingleLapseIndicator = ({ props, second }: IProps) => {
   return (
-    <div {...props} className="unselectable text-base text-center transition-all">
+    <div
+      {...props}
+      className="unselectable text-base text-center transition-all translate-x-1/3 -translate-y-14 text-blackberry"
+    >
       <div className="-translate-x-1/3">{secondsToHHMMSS(second)}</div>
       <GoTriangleDown />
     </div>

@@ -83,16 +83,18 @@ const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
   },
 )
 
-const CustomButtonWrapper = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div
-      className={clsx(
-        'unselectable p-1 cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
-      )}
-    >
-      {children}
-    </div>
-  )
-}
-
+const CustomButtonWrapper = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
+  ({ children }: { children: React.ReactNode }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={clsx(
+          'unselectable p-1 cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+        )}
+      >
+        {children}
+      </div>
+    )
+  },
+)
 export { CustomButton, CustomClearButton, CustomIconButton, CustomButtonWrapper }

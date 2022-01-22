@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { useCallback, useEffect, useState } from 'react'
-import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootModuleType } from '../../modules/moduleTypes'
 import { createPlaylistAsync } from '../../modules/playlist/actions'

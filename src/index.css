@@ -68,6 +68,9 @@ input:focus {
 .rc-slider-handle:active {
   box-shadow: 0 0 5px var(--primary-redrose-light) !important;
 }
+.rc-slider-dot-active {
+  border-color: var(--blackberry) !important;
+}
 
 /* 텍스트 선택 안되게 하고 싶으면 이 클래스 추가 */
 .unselectable {

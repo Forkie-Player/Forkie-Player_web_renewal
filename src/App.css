@@ -23,3 +23,8 @@
   top: -1.2rem;
   font-size: 1rem;
 }
+
+.popper_hover[data-show] {
+  visibility: hidden;
+  pointer-events: none;
+}

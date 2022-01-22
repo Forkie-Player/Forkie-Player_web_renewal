@@ -20,6 +20,9 @@ export const Profile = {
   MEMBER: '회원',
 }
 
+export const Login = '로그인'
+export const Logout = '로그아웃'
+
 export const SelectPlaylist = '추가하실 플레이리스트를 선택하세요'
 export const TypeNewPlaylistName = '새 플레이리스트 이름을 입력하세요'
 export const SameTitleInPlaylist = '이미 존재하는 제목이에요'

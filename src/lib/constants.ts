@@ -9,23 +9,21 @@ export const NavAbsolutePathItems = {
 }
 
 export const screenSizeString = {
-  XS: 'xs',
   SM: 'sm',
-  LSM: 'lsm',
-  SMD: 'smd',
   MD: 'md',
   LG: 'lg',
   XL: 'xl',
+  '2XL': '2xl`',
+  '3XL': '3xl',
 }
 
 export const screenSizeWidth = {
-  XS: 768,
-  SM: 1024,
-  LSM: 1180,
-  SMD: 1280,
-  MD: 1440,
-  LG: 1920,
-  XL: 2560,
+  SM: 640,
+  MD: 768,
+  LG: 1024,
+  XL: 1280,
+  '2XL': 1546,
+  '3XL': 1920,
 }
 
 export const youtubeVideoPrefixURL = 'https://www.youtube.com/watch?v='

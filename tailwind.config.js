@@ -26,6 +26,9 @@ module.exports = {
       minWidth: {
         96: '24rem',
       },
+      screens: {
+        '3xl': '1920px',
+      },
     },
   },
   plugins: [],

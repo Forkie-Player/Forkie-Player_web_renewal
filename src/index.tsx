@@ -17,6 +17,7 @@ const store = createStore(rootReducer, applyMiddleware(logger, sagaMiddleware))
 const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
 
+console.log('test')
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

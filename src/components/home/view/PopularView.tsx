@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { Scrollbar, Mousewheel } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -23,9 +23,9 @@ interface IProps {
   slidesPerView: number
 }
 
-function PopularView({ screenSize, slidesPerView }: IProps) {
+const PopularView = forwardRef<HTMLDivElement, IProps>(({ screenSize, slidesPerView }: IProps, ref) => {
   return (
-    <div className="w-full h-full max-h-full px-[5%] flex flex-col">
+    <div ref={ref} className="w-full h-full max-h-full px-[5%] flex flex-col">
       <div className="py-4 text-xl">Popular</div>
       <Swiper
         // install Swiper modules
@@ -49,6 +49,6 @@ function PopularView({ screenSize, slidesPerView }: IProps) {
       </Swiper>
     </div>
   )
-}
+})
 
 export default PopularView

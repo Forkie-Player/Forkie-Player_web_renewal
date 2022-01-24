@@ -2,17 +2,8 @@ import { useEffect, useState } from 'react'
 import * as Constants from '../constants'
 
 function calcCurrentScreen(width: number) {
-  if (width < Constants.screenSizeWidth.XS) {
-    return Constants.screenSizeString.XS
-  }
   if (width < Constants.screenSizeWidth.SM) {
     return Constants.screenSizeString.SM
-  }
-  if (width < Constants.screenSizeWidth.LSM) {
-    return Constants.screenSizeString.LSM
-  }
-  if (width < Constants.screenSizeWidth.SMD) {
-    return Constants.screenSizeString.SMD
   }
   if (width < Constants.screenSizeWidth.MD) {
     return Constants.screenSizeString.MD
@@ -20,7 +11,16 @@ function calcCurrentScreen(width: number) {
   if (width < Constants.screenSizeWidth.LG) {
     return Constants.screenSizeString.LG
   }
-  return Constants.screenSizeString.XL
+  if (width < Constants.screenSizeWidth.XL) {
+    return Constants.screenSizeString.XL
+  }
+  if (width < Constants.screenSizeWidth['2XL']) {
+    return Constants.screenSizeString['2XL']
+  }
+  if (width < Constants.screenSizeWidth['3XL']) {
+    return Constants.screenSizeString['3XL']
+  }
+  return Constants.screenSizeString['3XL']
 }
 
 function useScreenSize() {

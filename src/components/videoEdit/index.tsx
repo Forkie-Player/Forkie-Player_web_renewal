@@ -7,8 +7,6 @@ import 'rc-slider/assets/index.css'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import { ITextButtonProps } from '../elements/CustomButton'
 
-import * as Strings from '../../lib/strings'
-import toast from 'react-hot-toast'
 import AdjustSecondsContainer from './container/AdjustSecondsContainer'
 import TimeLapseView from './view/TimeLapseView'
 import ButtonsView from './view/ButtonsView'
@@ -103,7 +101,6 @@ function VideoEdit({
       if (onApplyButtonCallback !== undefined && onApplyButtonCallback !== undefined) {
         onApplyButtonCallback(prev)
       }
-      toast.success(Strings.applyTimeLapseSuccess)
       setSelectedLapse(prev)
       return prev
     })

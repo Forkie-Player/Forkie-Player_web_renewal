@@ -32,7 +32,7 @@ export const EnterName = '제목을 입력해주세요.'
 export const addPlaylistSuccess = '플레이리스트가 잘 추가되었어요'
 export const addVideoSuccess = '영상이 잘 추가되었어요'
 
-export const applyTimeLapseSuccess = `제대로 적용되었어요`
+export const applyTimeLapseSuccess = `적용되었어요`
 
 export const CheckVideoEdit = '정말로 수정하시나요?'
 export const CheckVideoDelete = '정말로 삭제하시나요?'
@@ -61,7 +61,7 @@ export const auth = {
   INPUT_NEW_PASSWORD: '새 비밀번호를 입력해주세요.',
   PASSWORD_CHANGE_SUCCESS: '비밀번호 변경에 성공했어요!',
   LEAVING_REALY: '정말로 떠나시게요?',
-  WITHDRAWL_SUCCESS: "'회원 탈퇴에 성공하셨어요.",
+  WITHDRAWL_SUCCESS: '그동안 감사했어요',
   PASSWORD_CHECK_NOT_MATCH: '비밀번호가 일치하지 않아요',
   PASSWORD_NOT_FORMATTED: '알파벳, 숫자, 특수문자 조합으로 8~20자이어야 해요',
   SAME_PASSWORD: '기존 비밀번호와 같은 비밀번호에요',

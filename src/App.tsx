@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Navigation from './components/navigation'
-import { setNavOpen } from './modules/navExpansion/actions'
+import { setNavClose } from './modules/navExpansion/actions'
 import Header from './components/header'
 import useScreenSize from './lib/hooks/useScreenSize'
 import { setScreenSize } from './modules/screenSize/actions'
@@ -10,6 +10,8 @@ import { CustomToast } from './components/elements/CustomToast'
 import MyRoutes from './routes'
 import clsx from 'clsx'
 import ReactModal from 'react-modal'
+
+import * as Constants from './lib/constants'
 
 import './App.css'
 
@@ -20,11 +22,14 @@ function App() {
   const screenSize = useScreenSize()
 
   useEffect(() => {
-    dispatch(setNavOpen())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(setScreenSize(screenSize))
+    switch (screenSize) {
+      case Constants.screenSizeString.XL:
+      case Constants.screenSizeString.LG:
+      case Constants.screenSizeString.MD:
+      case Constants.screenSizeString.SM:
+        dispatch(setNavClose())
+    }
   }, [screenSize, dispatch])
 
   return (

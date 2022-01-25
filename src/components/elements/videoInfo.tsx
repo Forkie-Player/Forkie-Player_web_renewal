@@ -8,7 +8,7 @@ interface IProps {
 export default function VideoInfo({ data }: IProps) {
   return (
     <div className="space-y-1">
-      <div className="text-lg">{data?.title}</div>
+      <div className="line-clamp-3 text-lg">{data?.title}</div>
       <div className="flex gap-4">
         {data?.views && (
           <div className="text-base text-blackberry-lightest leading-8">조회수 {parseViews(data?.views)}회</div>

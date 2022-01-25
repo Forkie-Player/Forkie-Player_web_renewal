@@ -33,7 +33,7 @@ const PlaylistPopper = ({
 
   return (
     <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
-      <div className={'border-2 relative bg-white rounded-2xl shadow-outer'}>
+      <div className={'border-2 relative rounded-2xl bg-white'}>
         {!onEditMode ? (
           !onDeleteMode ? (
             <div className="p-2 w-32 text-center divide-y-2 leading-10">

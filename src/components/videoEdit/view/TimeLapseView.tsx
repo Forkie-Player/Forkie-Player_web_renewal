@@ -7,7 +7,7 @@ interface IProps {
 
 function TimeLapseView({ range }: IProps) {
   return (
-    <div className="max-w-fit mx-auto text-3xl">
+    <div className="max-w-fit mx-auto text-xl xl:text-2xl 2xl:text-3xl">
       <TimeLapse range={range} />
     </div>
   )

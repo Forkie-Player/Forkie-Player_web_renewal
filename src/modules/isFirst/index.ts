@@ -7,6 +7,7 @@ import { IIsFirst, TIsFirst_Action } from './types'
 const initialState: IIsFirst = {
   [isFirstConstants.P_FIRST]: isFirstConstants.NOTFIRST,
   [isFirstConstants.V_FIRST]: isFirstConstants.NOTFIRST,
+  [isFirstConstants.ADD_FIRST]: isFirstConstants.NOTFIRST,
 }
 
 const isFirstReducer = createReducer<IIsFirst, TIsFirst_Action>(initialState, {

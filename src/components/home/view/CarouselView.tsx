@@ -16,7 +16,7 @@ const imageList = [
 
 function CarouselView() {
   return (
-    <div className="w-full h-full pr-[5%]">
+    <div className="w-full h-full pr-8">
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination, Keyboard, Autoplay]}
@@ -24,14 +24,12 @@ function CarouselView() {
         autoplay
         navigation={{}}
         pagination={{ clickable: true }}
-        onSwiper={swiper => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
         keyboard
         loop
         className="h-full w-full"
       >
         {imageList.map((image, index) => (
-          <SwiperSlide key={index} className="h-full w-full px-[5%]">
+          <SwiperSlide key={index} className="h-full w-full px-[7%] lg:px-[5%]">
             <img src={image} className="h-full w-full rounded-3xl object-cover" alt="slide" />
           </SwiperSlide>
         ))}

@@ -29,16 +29,16 @@ const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
     return (
       <div
         ref={ref}
-        className="w-60 h-60 bg-white rounded-3xl shadow-outer overflow-hidden hover:drop-shadow-md active:shadow-inner cursor-pointer"
+        className="w-full h-full aspect-square flex flex-col bg-white rounded-3xl shadow-outer overflow-hidden hover:drop-shadow-md active:shadow-inner cursor-pointer"
         onClick={onClickListItem}
       >
         {item?.thumbnail ? (
-          <img src={item?.thumbnail} alt="thumbnail" className="w-full min-h-[80%] max-h-[80%] object-cover" />
+          <img src={item?.thumbnail} alt="thumbnail" className="w-full flex-1 object-cover" />
         ) : (
-          <div className="w-full min-h-[80%] max-h-[80%] bg-blackberry-lightest" />
+          <div className="w-full flex-1 bg-blackberry-lightest" />
         )}
-        <div className="relative w-full flex text-center leading-10">
-          <div className="flex-auto">{item?.title}</div>
+        <div className="relative w-full flex text-center h-12 px-14 leading-[3rem]">
+          <div className="flex-auto line-clamp-1 m-auto">{item?.title}</div>
           {showEditButton && (
             <div
               ref={setReferenceElement}

@@ -9,6 +9,8 @@ import './index.css'
 import SelectPlaylistContainer from './container/SelectPlaylistContainer'
 import { useDispatch } from 'react-redux'
 import { addVideoAsync } from '../../modules/playlist/actions'
+import { clearIsFirst } from '../../modules/isFirst/actions'
+import { isFirstConstants } from '../../lib/constants'
 
 interface IProps {
   video: IVideo
@@ -38,14 +40,15 @@ function VideoAdd({ video }: IProps) {
   }, [])
 
   const onClickPlaylist = async (item: IPlaylist) => {
+    dispatch(clearIsFirst(isFirstConstants.ADD_FIRST))
     dispatch(addVideoAsync.request({ playlistId: item.id, video: videoState }))
   }
 
   return (
-    <div className="w-full h-full max-h-full space-y-4 pb-4 flex flex-col">
+    <div className="w-full h-full max-h-full space-y-2 pb-2 2xl:pb-4 flex flex-col">
       <GobackLine />
-      <div className="relative flex flex-1 w-full box-border">
-        <div className={clsx(showPlaylists ? 'videoEditWrapperShrinked' : 'videoEditWrapperExpand', 'h-full')}>
+      <div className="relative flex flex-1 w-full box-border overflow-hidden">
+        <div className={clsx('flex-1 h-full pr-4 lg:pr-0')}>
           <VideoEdit
             video={videoState}
             onReadyCallback={onPlayerReady}
@@ -53,9 +56,7 @@ function VideoAdd({ video }: IProps) {
             rightButtonProps={{ onClick: onClickAdd }}
           />
         </div>
-        <div
-          className={clsx(showPlaylists ? 'playlistWrapperShowUp' : '-right-[100%]', 'w-[25%] h-full absolute flex')}
-        >
+        <div className={clsx(showPlaylists ? 'w-60' : 'w-0', 'transition-all h-full flex')}>
           {showPlaylists && (
             <>
               <SelectPlaylistContainer onClickCancle={onClickClosePlaylist} onClickPlaylist={onClickPlaylist} />

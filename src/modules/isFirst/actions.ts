@@ -16,10 +16,12 @@ export const isFirstActionTypes = {
 export const getIsFirst = createAction(GET_ISFIRST, (): IIsFirst => {
   const p_first = getCookie(`@${isFirstConstants.P_FIRST}`)
   const v_first = getCookie(`@${isFirstConstants.V_FIRST}`)
+  const add_first = getCookie(`@${isFirstConstants.ADD_FIRST}`)
 
   return {
     [isFirstConstants.P_FIRST]: p_first === undefined ? isFirstConstants.FIRST : p_first,
     [isFirstConstants.V_FIRST]: v_first === undefined ? isFirstConstants.FIRST : v_first,
+    [isFirstConstants.ADD_FIRST]: add_first === undefined ? isFirstConstants.FIRST : add_first,
   }
 })()
 export const clearIsFirst = createAction(CLEAR_ISFIRST, (payload: string) => payload)()

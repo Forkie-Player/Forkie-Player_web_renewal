@@ -8,6 +8,7 @@ import { getIsFirst } from './modules/isFirst/actions'
 import { getPlaylistAsync } from './modules/playlist/actions'
 import { reissue } from './lib/api/auth'
 import { authInit } from './lib/utils/auth'
+import { setNavState } from './modules/navExpansion/actions'
 
 export default function AppInit({ children }: { children: React.ReactNode }) {
   const [preLoading, setPreLoading] = useState(true)
@@ -37,7 +38,7 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    const init = async () => {
+    const authenticationInit = async () => {
       try {
         await authInit()
         dispatch(getIsFirst())
@@ -67,7 +68,14 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
       }
       setPreLoading(false)
     }
-    init()
+    const screenInit = () => {
+      const lastNavState = getCookie('@navExpansion')
+      if (lastNavState !== undefined) {
+        dispatch(setNavState(lastNavState))
+      }
+    }
+    screenInit()
+    authenticationInit()
   }, [dispatch])
 
   if (preLoading) {

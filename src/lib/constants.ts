@@ -9,6 +9,7 @@ export const NavAbsolutePathItems = {
 }
 
 export const screenSizeString = {
+  XSM: 'xsm',
   SM: 'sm',
   MD: 'md',
   LG: 'lg',
@@ -33,4 +34,5 @@ export const isFirstConstants = {
   NOTFIRST: 'NOT_FIRST' as const,
   P_FIRST: 'p_first' as const,
   V_FIRST: 'v_first' as const,
+  ADD_FIRST: 'ADD_FIRST' as const,
 }

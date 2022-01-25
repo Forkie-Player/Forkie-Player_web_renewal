@@ -2,25 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootModuleType } from '../../../modules/moduleTypes'
 import PopularView from '../view/PopularView'
-import * as Contants from '../../../lib/constants'
-
-const calcSlidesPerView = (screenSize: string) => {
-  switch (screenSize) {
-    case Contants.screenSizeString.SM:
-      return 12
-    case Contants.screenSizeString.MD:
-      return 14
-    case Contants.screenSizeString.LG:
-    case Contants.screenSizeString.XL:
-      return 16
-    case Contants.screenSizeString['2XL']:
-      return 18
-    case Contants.screenSizeString['3XL']:
-      return 20
-    default:
-      return 25
-  }
-}
+import { screenSizeString } from '../../../lib/constants'
 
 function PopularContainer() {
   const screenSize = useSelector(({ screenSize }: RootModuleType) => screenSize)
@@ -28,13 +10,21 @@ function PopularContainer() {
   const popuperViewRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (popuperViewRef.current !== null) {
-      const width = popuperViewRef.current.clientWidth
-      setSlidesPerView(
-        Math.floor(
-          width / (parseFloat(getComputedStyle(document.documentElement).fontSize) * calcSlidesPerView(screenSize)),
-        ),
-      )
+    switch (screenSize) {
+      case screenSizeString['3XL']:
+      case screenSizeString['2XL']:
+      case screenSizeString.XL:
+      case screenSizeString.LG:
+        setSlidesPerView(5)
+        break
+      case screenSizeString.MD:
+        setSlidesPerView(4)
+        break
+      case screenSizeString.SM:
+        setSlidesPerView(3)
+    }
+    if (window.innerHeight > window.innerWidth) {
+      setSlidesPerView(2)
     }
   }, [screenSize])
 

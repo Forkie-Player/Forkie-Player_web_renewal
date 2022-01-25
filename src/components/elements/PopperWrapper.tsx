@@ -29,7 +29,7 @@ const PopperWrapper = ({ referenceElement, onToggleShowPopper, children }: IProp
       ref={setPopperElement}
       style={styles.popper}
       {...attributes.popper}
-      className="unselectable z-50 text-blackberry bg-white"
+      className="unselectable z-50 text-blackberry overflow-hidden"
     >
       {children}
     </div>

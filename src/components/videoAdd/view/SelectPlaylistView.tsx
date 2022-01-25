@@ -7,24 +7,25 @@ import AddPlaylistButton from '../../elements/AddPlaylistButton'
 
 interface IProps {
   playlists: IPlaylist[]
+  isFirstOnAdd: boolean
   onClickCancle: () => void
   onClickPlaylist: (item: IPlaylist) => void
 }
 
-function SelectPlaylistView({ playlists, onClickCancle, onClickPlaylist }: IProps) {
+function SelectPlaylistView({ playlists, isFirstOnAdd, onClickCancle, onClickPlaylist }: IProps) {
   return (
     <div className="w-full h-full text-center flex flex-col">
-      <div className="w-full basis-11/12 overflow-y-auto ">
-        <div className="text-md">{Strings.SelectPlaylist}</div>
-        <div className="w-full basis-10/12 flex  overflow-y-auto justify-center flex-wrap gap-y-4 py-4">
+      <div className="w-full flex-1 overflow-y-auto">
+        {isFirstOnAdd && <div className="text-md mb-4">{Strings.SelectPlaylist}</div>}
+        <div className="w-full flex flex-wrap overflow-y-auto justify-center gap-4 px-4 pb-4">
           {playlists.map((playlist, index) => (
             <PlaylistItem item={playlist} index={index} onClick={onClickPlaylist} />
           ))}
         </div>
       </div>
-      <div className="basis-1/12 p-2 flex justify-center gap-x-4 w-full">
+      <div className="max-h-fit p-1 flex justify-center gap-x-4 w-full">
         <CustomClearButton text="취소" type="secondary" onClick={onClickCancle} />
-        <AddPlaylistButton text="새 플레이리스트" place="top" />
+        <AddPlaylistButton text="새 리스트" place="top" />
       </div>
     </div>
   )

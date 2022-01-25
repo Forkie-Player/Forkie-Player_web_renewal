@@ -119,7 +119,7 @@ function VideoEdit({
         <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
       </div>
       {videoReady ? (
-        <div className="w-full max-h-fit pt-12 space-y-1 px-[10%]">
+        <div className="w-full max-h-fit pt-10 2xl:pt-12 space-y-1 px-[10%]">
           <RangeContainer range={range} max={videoDuration} selectedLapse={selectedLapse} onChange={onChangeRange} />
           <AdjustSecondsContainer onClickAdjustSeconds={onClickAdjustRangeByOneSecond} />
           <TimeLapseView range={range} />

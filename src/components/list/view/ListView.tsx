@@ -24,7 +24,7 @@ function ListView({
   onClickTitleEdit,
 }: IProps) {
   return (
-    <div className="w-full overflow-y-auto flex gap-8 flex-wrap pr-[10%] py-4 px-2">
+    <div className="w-full pb-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 2xl:gap-8">
       {items.map((item, index) => (
         <PlaylistItem
           key={`playlistItem_${index}`}
@@ -48,3 +48,4 @@ function ListView({
 }
 
 export default ListView
+//flex flex-wrap gap-4 lg:gap-6 2xl:gap-8 py-4

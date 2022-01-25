@@ -23,7 +23,7 @@ function HeaderPopperView({
   onCancleWithdrawl,
 }: IProps) {
   return (
-    <div className="border-2 p-4 rounded-xl">
+    <div className="border-2 p-4 rounded-xl bg-white">
       {reauthenicated ? (
         popperMode === 'WITDRAWL' ? (
           <div className="space-y-2">

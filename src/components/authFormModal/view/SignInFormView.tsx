@@ -3,6 +3,7 @@ import { CustomButton } from '../../elements/CustomButton'
 import CustomInput from '../../elements/CustomInput'
 
 interface IProps {
+  id: string
   idError: string
   passwordError: string
   passwordCheckError: string
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 function SignInFormView({
+  id,
   idError,
   passwordError,
   passwordCheckError,
@@ -24,9 +26,9 @@ function SignInFormView({
   onSubmitForm,
 }: IProps) {
   return (
-    <div className="w-64">
+    <div className="w-full lg:w-64 ">
       <form className="space-y-8 pb-4" onSubmit={onSubmitForm}>
-        <CustomInput id="id" type="id" placeholder="아이디" onChange={onChangeId} error={idError} />
+        <CustomInput id="id" type="id" value={id} placeholder="아이디" onChange={onChangeId} error={idError} />
         <CustomInput
           id="password"
           type="password"
@@ -44,7 +46,7 @@ function SignInFormView({
           />
         )}
         <button type="submit" className="w-full">
-          <CustomButton text={isOnSignUp ? '회원가입' : '로그인'} style={{ padding: '0.5rem' }} />
+          <CustomButton text={isOnSignUp ? '회원가입' : '로그인'} className="p-2" />
         </button>
       </form>
     </div>

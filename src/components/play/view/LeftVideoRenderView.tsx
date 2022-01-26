@@ -12,7 +12,7 @@ interface IProps {
 
 const LeftVideoRenderView = ({ playerRef, video, onVideoEnd }: IProps) => {
   return (
-    <div className="h-full pt-2 2xl:pt-4">
+    <div className="h-full">
       {video !== undefined && (
         <div className="h-full flex flex-col">
           <div className="w-full flex-1">

@@ -29,15 +29,11 @@ function RightVideoListView({
   }, [itemRef, currentVideo])
 
   return (
-    <div ref={containerRef} className="w-full h-full">
+    <div ref={containerRef} className="w-full h-full ">
       <DragDropContext onDragEnd={onVideoListDragEnd}>
         <Droppable droppableId="droppable">
           {provided => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className="w-full h-full space-y-2 overflow-y-auto pb-4 pr-2 "
-            >
+            <div {...provided.droppableProps} ref={provided.innerRef} className="w-full h-full space-y-2 pr-2 ">
               {videoList.map((video, index) => (
                 <VideoListItem
                   ref={video.id === currentVideo.id ? itemRef : undefined}

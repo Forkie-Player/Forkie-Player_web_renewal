@@ -17,7 +17,7 @@ function SelectPlaylistView({ playlists, isFirstOnAdd, onClickCancle, onClickPla
     <div className="w-full h-full text-center flex flex-col">
       <div className="w-full flex-1 overflow-y-auto">
         {isFirstOnAdd && <div className="text-md mb-4">{Strings.SelectPlaylist}</div>}
-        <div className="w-full flex flex-wrap overflow-y-auto justify-center gap-4 px-4 pb-4">
+        <div className="w-full flex flex-wrap overflow-y-auto justify-center gap-4 px-2 pb-2">
           {playlists.map((playlist, index) => (
             <PlaylistItem item={playlist} index={index} onClick={onClickPlaylist} />
           ))}

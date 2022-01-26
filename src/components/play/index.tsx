@@ -9,13 +9,10 @@ import * as Constants from '../../lib/constants'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
 import { TVideoStoreType } from '../../modules/video/types'
 import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
-import LeftVideoRenderView from './view/LeftVideoRenderView'
 import { IVideoInPlaylist } from '../../types'
-import RightVideoListContainer from './container/RightVideoListContainer'
 import { DropResult } from 'react-beautiful-dnd'
 import { IChangeVideoOrderInPlaylistRequest } from '../../lib/api/types'
-import LoadingElement from '../elements/loading'
-import useScreenSize from '../../lib/hooks/useScreenSize'
+import PlayContentContainer from './container/PlayContentContainer'
 
 interface IProps {
   video: TVideoStoreType
@@ -141,29 +138,21 @@ export default function Play({ video }: IProps) {
     }
   }, [isPendingChangeVideoOrder, status])
 
-  const screenSize = useScreenSize()
-  console.log(screenSize)
   return (
     <div className="w-full h-full max-h-full flex flex-col">
       <GobackLine />
-      <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1">
-          <LeftVideoRenderView playerRef={playerRef} video={currentVideo} onVideoEnd={onVideoEnd} />
-        </div>
-        <div className="max-w-[14rem] lg:max-w-xs 2xl:max-w-sm h-full max-h-full pl-2 2xl:pl-4">
-          {isPendingChangeVideoOrder ? (
-            <LoadingElement />
-          ) : (
-            <RightVideoListContainer
-              videoList={videoList}
-              currentVideo={currentVideo}
-              onVideoListDragEnd={onVideoListDragEnd}
-              onClickVideoListItem={onClickVideoListItem}
-              onClickDelete={onClickDelete}
-              onClickEdit={onClickEdit}
-            />
-          )}
-        </div>
+      <div className="flex-1 overflow-x-hidden overflow-y-auto lg:overflow-hidden pr-1 lg:pr-0">
+        <PlayContentContainer
+          playerRef={playerRef}
+          currentVideo={currentVideo}
+          videoList={videoList}
+          isPendingChangeVideoOrder={isPendingChangeVideoOrder}
+          onClickVideoListItem={onClickVideoListItem}
+          onClickEdit={onClickEdit}
+          onClickDelete={onClickDelete}
+          onVideoListDragEnd={onVideoListDragEnd}
+          onVideoEnd={onVideoEnd}
+        />
       </div>
     </div>
   )

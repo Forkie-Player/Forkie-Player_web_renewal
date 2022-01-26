@@ -32,13 +32,14 @@ const CustomButton = forwardRef<HTMLDivElement, ITextButtonProps>(
     return (
       <div
         ref={ref}
+        {...props}
         className={clsx(
           getElementSizeWrapper(size),
-          'p-1 bg-white shadow-outer text-center hover:drop-shadow-md active:shadow-inner cursor-pointer',
+          'p-1 shadow-outer text-center hover:drop-shadow-md active:shadow-inner cursor-pointer',
           type === 'primary' && 'bg-redrose-light text-white',
           type === 'secondary' && 'bg-white text-redrose-light',
+          props.className,
         )}
-        {...props}
       >
         {text}
       </div>
@@ -51,12 +52,13 @@ const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
     return (
       <div
         ref={ref}
+        {...props}
         className={clsx(
           'max-w-fit min-h-fit max-h-fit px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
+          props.className,
         )}
-        {...props}
       >
         {text}
       </div>

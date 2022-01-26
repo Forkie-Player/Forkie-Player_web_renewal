@@ -36,11 +36,13 @@ const SimpleTextInput = ({
 
   const onClickComplete = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (text.length === 0) {
+    const textInput = text.trim()
+    if (textInput.length === 0) {
       setErrorMsg('내용을 입력해주세요')
       return
     }
-    const res = onClickCompleteCallback(text)
+    const res = onClickCompleteCallback(textInput)
+    setText(textInput)
     if (typeof res === 'string') {
       setErrorMsg(res)
     }
@@ -49,7 +51,7 @@ const SimpleTextInput = ({
   return (
     <form className="space-y-4" onSubmit={onClickComplete}>
       <div className="text-blackberry">{title}</div>
-      <CustomInput error={error || errorMsg} onChange={onChangeText} {...inputProps} />
+      <CustomInput value={text} error={error || errorMsg} onChange={onChangeText} {...inputProps} />
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (
           <CustomClearButton text="취소" type="secondary" onClick={onClickCancle} />

@@ -36,3 +36,5 @@ export const isFirstConstants = {
   V_FIRST: 'v_first' as const,
   ADD_FIRST: 'ADD_FIRST' as const,
 }
+
+export const videoAspectRatio = 1.777777

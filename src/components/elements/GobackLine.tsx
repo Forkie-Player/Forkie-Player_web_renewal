@@ -8,5 +8,5 @@ export default function GobackLine() {
   const goback = () => {
     navigate(-1)
   }
-  return <CustomClearButton text={Strings.GoBack} type="secondary" onClick={goback} />
+  return <CustomClearButton text={Strings.GoBack} type="secondary" onClick={goback} className="mb-2" />
 }

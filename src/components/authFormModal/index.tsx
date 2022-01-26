@@ -75,7 +75,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           text={onSignInOrSignUp === 'SignIn' ? Strings.auth.SIGNUP : Strings.auth.SIGNIN}
           type="secondary"
           onClick={onChangeFormMode}
-          style={{ padding: '0.5rem' }}
+          className="p-2"
         />
       </FormWrapper>
     </ReactModal>

@@ -42,7 +42,7 @@ function App() {
           className={clsx(
             'grid grid-cols-1 grid-rows-[4rem_minmax(100px,_auto)]',
             'flex-1 h-full max-h-full overflow-y-auto overflow-x-hidden',
-            'bg-background-light rounded-l-3xl pl-6 pt-6',
+            'bg-background-light rounded-l-3xl pl-1 lg:pl-6 pt-6',
           )}
         >
           <Header />

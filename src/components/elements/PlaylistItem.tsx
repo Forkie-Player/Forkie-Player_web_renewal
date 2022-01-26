@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useCallback } from 'react'
 import { MdMoreVert } from 'react-icons/md'
 import { IPlaylist } from '../../types'
@@ -37,12 +38,12 @@ const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
         ) : (
           <div className="w-full flex-1 bg-blackberry-lightest" />
         )}
-        <div className="relative w-full flex text-center h-12 px-14 leading-[3rem]">
+        <div className={clsx('relative w-full flex text-center h-12 leading-[3rem]', showEditButton ? 'px-8' : 'px-3')}>
           <div className="flex-auto line-clamp-1 m-auto">{item?.title}</div>
           {showEditButton && (
             <div
               ref={setReferenceElement}
-              className="absolute w-12 h-full -right-2 py-2 cursor-pointer"
+              className="absolute w-12 h-full -right-4 py-3 cursor-pointer"
               onClick={onClickEditButton}
             >
               <CustomButtonWrapper>

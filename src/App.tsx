@@ -46,7 +46,7 @@ function App() {
         </div>
         <div
           className={clsx(
-            'grid grid-cols-1 grid-rows-[4rem_auto] flex-1 h-full max-h-full overflow-y-auto overflow-x-hidden bg-background-light pl-1 lg:pl-6 pt-6 rounded-l-3xl',
+            'flex-1 grid grid-cols-1 grid-rows-[4rem_auto] h-full max-h-full overflow-hidden bg-background-light pl-1 lg:pl-6 pt-6 rounded-l-3xl',
           )}
         >
           <Header />

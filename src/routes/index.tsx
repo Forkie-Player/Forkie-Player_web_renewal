@@ -10,7 +10,7 @@ import VideoTimeChange from './VideoTimeChange'
 
 export default function MyRoutes() {
   return (
-    <div className={'w-full h-full pt-8'}>
+    <div className={'w-full h-full pt-4'}>
       <Routes>
         <Route path={Constants.NavAbsolutePathItems.HOME}>
           <Route path={''} element={<Home />} />

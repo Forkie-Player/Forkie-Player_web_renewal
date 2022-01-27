@@ -7,7 +7,11 @@ import NavigationConatainer from './container/NavigationContainer'
 
 import './index.css'
 
-function Navigation() {
+interface IProps {
+  isSmScreen: boolean
+}
+
+function Navigation({ isSmScreen }: IProps) {
   const navExpanded = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
   const dispatch = useDispatch()
   const location = useLocation()
@@ -20,7 +24,14 @@ function Navigation() {
     }
   }, [navExpanded, dispatch])
 
-  return <NavigationConatainer curPath={location.pathname} navExpanded={navExpanded} onToggleNav={onToggleNav} />
+  return (
+    <NavigationConatainer
+      curPath={location.pathname}
+      isSmScreen={isSmScreen}
+      navExpanded={navExpanded}
+      onToggleNav={onToggleNav}
+    />
+  )
 }
 
 export default Navigation

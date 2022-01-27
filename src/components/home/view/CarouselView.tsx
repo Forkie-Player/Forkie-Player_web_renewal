@@ -16,7 +16,7 @@ const imageList = [
 
 function CarouselView() {
   return (
-    <div className="w-full h-full pr-8">
+    <div className="w-full h-full px-1">
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination, Keyboard, Autoplay]}
@@ -29,7 +29,7 @@ function CarouselView() {
         className="h-full w-full"
       >
         {imageList.map((image, index) => (
-          <SwiperSlide key={index} className="h-full w-full px-[7%] lg:px-[5%]">
+          <SwiperSlide key={index} className="h-full w-full">
             <img src={image} className="h-full w-full rounded-3xl object-cover" alt="slide" />
           </SwiperSlide>
         ))}

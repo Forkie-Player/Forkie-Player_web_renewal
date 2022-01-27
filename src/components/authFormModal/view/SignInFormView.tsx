@@ -26,7 +26,7 @@ function SignInFormView({
   onSubmitForm,
 }: IProps) {
   return (
-    <div className="w-full lg:w-64 ">
+    <div className="w-64">
       <form className="space-y-8 pb-4" onSubmit={onSubmitForm}>
         <CustomInput id="id" type="id" value={id} placeholder="아이디" onChange={onChangeId} error={idError} />
         <CustomInput

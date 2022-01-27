@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Navigation from './components/navigation'
 import { setNavClose } from './modules/navExpansion/actions'
@@ -14,12 +14,16 @@ import ReactModal from 'react-modal'
 import * as Constants from './lib/constants'
 
 import './App.css'
+import useIsSmScreen from './lib/hooks/useIsSmScreen'
+import { RootModuleType } from './modules/moduleTypes'
 
 ReactModal.setAppElement('#root')
 
 function App() {
   const dispatch = useDispatch()
   const screenSize = useScreenSize()
+  const isSmScreen = useIsSmScreen()
+  const navExpansion = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
 
   useEffect(() => {
     dispatch(setScreenSize(screenSize))
@@ -28,23 +32,24 @@ function App() {
       case Constants.screenSizeString.LG:
       case Constants.screenSizeString.MD:
       case Constants.screenSizeString.SM:
+      case Constants.screenSizeString.XSM:
         dispatch(setNavClose())
+        break
     }
   }, [screenSize, dispatch])
 
   return (
-    <div className="app flex w-screen h-screen">
+    <div
+      className={clsx(
+        'app flex h-screen transition-[translate]',
+        isSmScreen ? (navExpansion ? 'translate-x-0 w-fit' : '-translate-x-16 w-fit') : 'w-screen',
+      )}
+    >
       <BrowserRouter>
-        <div className={'w-fit h-full'}>
+        <div className={clsx('w-fit h-full')}>
           <Navigation />
         </div>
-        <div
-          className={clsx(
-            'grid grid-cols-1 grid-rows-[4rem_minmax(100px,_auto)]',
-            'flex-1 h-full max-h-full overflow-y-auto overflow-x-hidden',
-            'bg-background-light rounded-l-3xl pl-1 lg:pl-6 pt-6',
-          )}
-        >
+        <div className={clsx(isSmScreen ? 'app-content-container-sm' : 'app-content-container-md')}>
           <Header />
           <MyRoutes />
         </div>

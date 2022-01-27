@@ -63,8 +63,8 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           left: '50%',
           transform: 'translate(-50%, -60%)',
           padding: 0,
-          maxWidth: 'fit-content',
-          maxHeight: 'fit-content',
+          width: 'fit-content',
+          height: 'fit-content',
           borderRadius: '0.5rem',
         },
       }}

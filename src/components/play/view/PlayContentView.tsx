@@ -39,7 +39,7 @@ function PlayContentView({
     <div
       ref={resizeDetectorRef}
       className={clsx(
-        'transition-all w-full h-full grid lg:grid-rows-[auto_10rem] grid-cols-[auto_20rem] 2xl:grid-cols-[auto_24rem] gap-2',
+        'transition-all w-full h-full grid lg:grid-rows-[minmax(0px,_auto)_10rem] grid-cols-[minmax(0px,_auto)_20rem] 2xl:grid-cols-[minmax(0px,_auto)_24rem] gap-2',
       )}
       style={{
         gridTemplateRows: containerGridRows,

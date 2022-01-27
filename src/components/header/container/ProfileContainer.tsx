@@ -5,14 +5,23 @@ import ProfileView from '../view/ProfileView'
 interface IProps {
   userInfo: IUserInfo
   playlistsLength: number
+  isSmScreen: boolean
   onClickLogin: () => void
   onClickLogout: () => Promise<void>
   onClickProfile: () => void
 }
 
-function ProfileContainer({ userInfo, playlistsLength, onClickLogout, onClickLogin, onClickProfile }: IProps) {
+function ProfileContainer({
+  isSmScreen,
+  userInfo,
+  playlistsLength,
+  onClickLogout,
+  onClickLogin,
+  onClickProfile,
+}: IProps) {
   return (
     <ProfileView
+      isSmScreen={isSmScreen}
       userInfo={userInfo}
       playlistsLength={playlistsLength}
       onClickLogout={onClickLogout}

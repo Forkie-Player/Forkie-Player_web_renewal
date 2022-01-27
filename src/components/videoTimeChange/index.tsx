@@ -38,7 +38,7 @@ function VideoTimeChange({ video }: IProps) {
   }, [videoState, dispatch])
 
   return (
-    <div className="w-full h-full px-[5%] flex flex-col">
+    <div className="w-full h-full px-2 md:px-[5%] flex flex-col">
       <GobackLine />
       <div className="relative flex-1 w-full">
         <div className="w-full h-full py-4">

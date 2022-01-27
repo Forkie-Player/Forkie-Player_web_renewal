@@ -2,7 +2,7 @@
 
 import { IPlaylist, IVideo, IVideoHasRange } from '../../types'
 import VideoEdit from '../videoEdit'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import GobackLine from '../elements/GobackLine'
 import clsx from 'clsx'
 import './index.css'
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { addVideoAsync } from '../../modules/playlist/actions'
 import { clearIsFirst } from '../../modules/isFirst/actions'
 import { isFirstConstants } from '../../lib/constants'
+import useIsSmScreen from '../../lib/hooks/useIsSmScreen'
 
 interface IProps {
   video: IVideo
@@ -19,6 +20,7 @@ interface IProps {
 function VideoAdd({ video }: IProps) {
   const [videoState, setVideoState] = useState<IVideoHasRange>({ ...video, start: 0, end: 0 })
   const [showPlaylists, setShowPlaylists] = useState(false)
+  const isSmScreen = useIsSmScreen()
   const dispatch = useDispatch()
 
   const onPlayerReady = useCallback((endTime: number) => {
@@ -44,11 +46,37 @@ function VideoAdd({ video }: IProps) {
     dispatch(addVideoAsync.request({ playlistId: item.id, video: videoState }))
   }
 
+  const SelectPlaylistContainerClassName = useMemo(() => {
+    if (isSmScreen) {
+      if (showPlaylists) {
+        return 'SelectPlaylist-smScreen-show'
+      } else {
+        return 'SelectPlaylist-smScreen'
+      }
+    } else {
+      if (showPlaylists) {
+        return 'SelectPlaylist-show'
+      } else {
+        return 'SelectPlaylist'
+      }
+    }
+  }, [isSmScreen, showPlaylists])
+
+  const PlayerContainerClassName = useMemo(() => {
+    if (isSmScreen) {
+      if (showPlaylists) {
+        return 'showPlayerWhenSmScreen'
+      } else {
+        return 'hidePlayerWhenSmScreen'
+      }
+    }
+  }, [isSmScreen, showPlaylists])
+
   return (
     <div className="w-full h-full max-h-full space-y-2 pb-2 2xl:pb-4 flex flex-col">
       <GobackLine />
-      <div className="relative flex flex-1 w-full box-border overflow-hidden">
-        <div className={clsx('flex-1 px-2 lg:px-0')}>
+      <div className={clsx('flex-1 flex relative w-full overflow-hidden')}>
+        <div className={clsx('flex-1 px-2 lg:pr-0', isSmScreen && 'h-full', PlayerContainerClassName)}>
           <VideoEdit
             video={videoState}
             onReadyCallback={onPlayerReady}
@@ -56,10 +84,14 @@ function VideoAdd({ video }: IProps) {
             rightButtonProps={{ onClick: onClickAdd }}
           />
         </div>
-        <div className={clsx(showPlaylists ? 'w-48 lg:w-60' : 'w-0', 'transition-all h-full flex')}>
+        <div className={clsx(SelectPlaylistContainerClassName, 'transition-all h-full flex')}>
           {showPlaylists && (
             <>
-              <SelectPlaylistContainer onClickCancle={onClickClosePlaylist} onClickPlaylist={onClickPlaylist} />
+              <SelectPlaylistContainer
+                isSmScreen={isSmScreen}
+                onClickCancle={onClickClosePlaylist}
+                onClickPlaylist={onClickPlaylist}
+              />
             </>
           )}
         </div>

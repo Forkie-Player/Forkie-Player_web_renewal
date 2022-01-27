@@ -1,43 +1,41 @@
-.videoEditWrapperShrinked {
-  animation-duration: 0.3s;
-  animation-name: videoEditWrapperShrinked;
-  flex-basis: 75%;
-}
-@keyframes videoEditWrapperShrinked {
-  from {
-    flex-basis: 100%;
+@tailwind components;
+
+@layer components {
+  .SelectPlaylist-smScreen-show {
+    @apply z-50 absolute w-full opacity-100;
   }
-  to {
-    flex-basis: 75%;
+  .SelectPlaylist-smScreen {
+    @apply -z-50 absolute w-full opacity-0;
+  }
+  .SelectPlaylist {
+    @apply w-0;
+  }
+  .SelectPlaylist-show {
+    @apply w-48 lg:w-60;
   }
 }
 
-.videoEditWrapperExpand {
-  animation-duration: 0.3s;
-  animation-name: videoEditWrapperExpand;
-  flex-basis: 100%;
+.showPlayerWhenSmScreen {
+  animation: showPlayerWhenSmScreen 0.2s ease-in-out;
+  transform: translateY(-110%);
 }
-@keyframes videoEditWrapperExpand {
+@keyframes showPlayerWhenSmScreen {
   from {
-    flex-basis: 75%;
+    transform: translateY(0);
   }
   to {
-    flex-basis: 100%;
+    transform: translateY(-110%);
   }
 }
-
-.playlistWrapperShowUp {
-  animation-duration: 0.3s;
-  animation-name: playlistWrapperShowUp;
-  animation-timing-function: ease-out;
-  right: 0%;
+.hidePlayerWhenSmScreen {
+  animation: hidePlayerWhenSmScreen 0.2s ease-in-out;
+  transform: translateY(0);
 }
-
-@keyframes playlistWrapperShowUp {
+@keyframes hidePlayerWhenSmScreen {
   from {
-    right: -100%;
+    transform: translateY(-110%);
   }
   to {
-    right: 0%;
+    transform: translateY(0);
   }
 }

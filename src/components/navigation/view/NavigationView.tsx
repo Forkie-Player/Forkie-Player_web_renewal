@@ -7,7 +7,6 @@ import clsx from 'clsx'
 import { INavItem } from '../types'
 
 interface IProps {
-  isSmScreen: boolean
   navExpanded: boolean
   navLists: INavItem[]
   curActiveIndex: number
@@ -15,21 +14,9 @@ interface IProps {
   onToggleNav: () => void
 }
 
-function NavigationView({
-  isSmScreen,
-  navExpanded,
-  navLists,
-  curActiveIndex,
-  navIndicatorBoxTrnasform,
-  onToggleNav,
-}: IProps) {
+function NavigationView({ navExpanded, navLists, curActiveIndex, navIndicatorBoxTrnasform, onToggleNav }: IProps) {
   return (
-    <div
-      className={clsx(
-        !isSmScreen ? (navExpanded ? 'w-48' : 'w-16') : '-translate-x-full',
-        'transition-[width] unselectable relative h-full pt-8',
-      )}
-    >
+    <div className={clsx(navExpanded ? 'w-48' : 'w-16', 'transition-[width] unselectable relative h-full pt-8')}>
       <Link to={'/'} className="pl-3 gap-x-2 flex w-full text-3xl text-white">
         <img src={logoImage} alt="logo" className="w-10 h-10 rounded-full" />
         {navExpanded && Strings.AppName}

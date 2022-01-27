@@ -20,6 +20,7 @@ function ButtonsView({ leftButtonProps, rightButtonProps }: IProps) {
         return 'medium'
       case screenSizeString['MD']:
       case screenSizeString['SM']:
+      case screenSizeString['XSM']:
         return 'small'
     }
   }, [screenSize])

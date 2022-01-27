@@ -9,14 +9,14 @@ interface IProps {
 function SearchItem({ data, index, onClickItem }: IProps) {
   return (
     <div
-      className="w-full h-fit flex gap-8
+      className="w-full h-fit flex gap-4 md:gap-8
             hover:bg-background-light-hover
             hover:shadow-outer
             rounded-2xl
             cursor-pointer"
       onClick={() => onClickItem(data)}
     >
-      <div className="relative w-80 min-w-[20rem] max-w-[20rem] aspect-video rounded-2xl overflow-hidden">
+      <div className="relative w-[40%] min-w-[40%] max-w-[40%]  md:w-80 md:min-w-[20rem] md:max-w-[20rem] aspect-video rounded-2xl overflow-hidden">
         <div className="absolute right-2 bottom-2 text-white">{data.duration}</div>
         <img src={data.thumbnail} alt={'thumbnail'} className="w-full h-full object-cover" />
       </div>

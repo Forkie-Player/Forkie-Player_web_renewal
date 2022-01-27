@@ -141,7 +141,7 @@ export default function Play({ video }: IProps) {
   return (
     <div className="w-full h-full max-h-full flex flex-col">
       <GobackLine />
-      <div className="flex-1 overflow-x-hidden overflow-y-auto lg:overflow-hidden pr-1 lg:pr-0">
+      <div className="flex-1 overflow-x-hidden overflow-y-auto lg:overflow-hidden px-1 lg:pr-0">
         <PlayContentContainer
           playerRef={playerRef}
           currentVideo={currentVideo}

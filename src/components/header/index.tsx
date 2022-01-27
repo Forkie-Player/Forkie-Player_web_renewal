@@ -9,7 +9,13 @@ import AuthFormModal from '../authFormModal'
 import ProfileContainer from './container/ProfileContainer'
 import SearchbarContainer from './container/SearchbarContainer'
 
+import useIsSmScreen from '../../lib/hooks/useIsSmScreen'
+import NavButtonContainer from './container/NavButtonContainer'
+import { setNavOpen } from '../../modules/navExpansion/actions'
+
 function Header() {
+  const isSmScreen = useIsSmScreen()
+
   const [isOpenAuthForm, setIsOpenAuthForm] = useState(false)
   const navigate = useNavigate()
 
@@ -34,10 +40,16 @@ function Header() {
     dispatch(getPlaylistAsync.request())
   }
 
+  const onClickNavOpen = async () => {
+    dispatch(setNavOpen())
+  }
+
   return (
-    <div className="flex justify-between pl-[5%] pr-[5%] h-12 ">
+    <div className="flex justify-between px-2 md:px-[5%] h-12 gap-4">
+      <NavButtonContainer isSmScreen={isSmScreen} onClickNavOpen={onClickNavOpen} />
       <SearchbarContainer />
       <ProfileContainer
+        isSmScreen={isSmScreen}
         userInfo={userInfo.userInfo}
         playlistsLength={playlistsLength}
         onClickLogin={onClickLogin}

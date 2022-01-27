@@ -8,7 +8,6 @@ import { INavItem } from '../types'
 interface IProps {
   curPath: string
   navExpanded: boolean
-  isSmScreen: boolean
   onToggleNav: () => void
 }
 
@@ -30,7 +29,7 @@ const navLists: INavItem[] = [
   },
 ]
 
-function NavigationConatainer({ isSmScreen, curPath, navExpanded, onToggleNav }: IProps) {
+function NavigationConatainer({ curPath, navExpanded, onToggleNav }: IProps) {
   const [curActiveIndex, setCurActiveIndex] = useState(0)
   const [navIndicatorBoxTrnasform, setNavIndicatorBoxTrnasform] = useState(`-${-0.5 + navLists.length * 2.5}rem`)
 
@@ -45,7 +44,6 @@ function NavigationConatainer({ isSmScreen, curPath, navExpanded, onToggleNav }:
 
   return (
     <NavigationView
-      isSmScreen={isSmScreen}
       curActiveIndex={curActiveIndex}
       navExpanded={navExpanded}
       navIndicatorBoxTrnasform={navIndicatorBoxTrnasform}

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Navigation from './components/navigation'
-import { setNavClose, setNavOpen } from './modules/navExpansion/actions'
+import { setNavClose } from './modules/navExpansion/actions'
 import Header from './components/header'
 import useScreenSize from './lib/hooks/useScreenSize'
 import { setScreenSize } from './modules/screenSize/actions'
@@ -14,13 +14,16 @@ import ReactModal from 'react-modal'
 import * as Constants from './lib/constants'
 
 import './App.css'
+import useIsSmScreen from './lib/hooks/useIsSmScreen'
+import { RootModuleType } from './modules/moduleTypes'
 
 ReactModal.setAppElement('#root')
 
 function App() {
   const dispatch = useDispatch()
   const screenSize = useScreenSize()
-  const [isSmScreen, setIsSmScreen] = useState(false)
+  const isSmScreen = useIsSmScreen()
+  const navExpansion = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
 
   useEffect(() => {
     dispatch(setScreenSize(screenSize))
@@ -28,27 +31,25 @@ function App() {
       case Constants.screenSizeString.XL:
       case Constants.screenSizeString.LG:
       case Constants.screenSizeString.MD:
-        dispatch(setNavClose())
-        setIsSmScreen(false)
-        break
       case Constants.screenSizeString.SM:
       case Constants.screenSizeString.XSM:
-        dispatch(setNavOpen())
-        setIsSmScreen(true)
+        dispatch(setNavClose())
+        break
     }
   }, [screenSize, dispatch])
 
   return (
-    <div className="app flex w-screen h-screen">
+    <div
+      className={clsx(
+        'app flex h-screen transition-[translate]',
+        isSmScreen ? (navExpansion ? 'translate-x-0 w-fit' : '-translate-x-16 w-fit') : 'w-screen',
+      )}
+    >
       <BrowserRouter>
         <div className={clsx('w-fit h-full')}>
-          <Navigation isSmScreen={isSmScreen} />
+          <Navigation />
         </div>
-        <div
-          className={clsx(
-            'flex-1 grid grid-cols-1 grid-rows-[4rem_auto] h-full max-h-full overflow-hidden bg-background-light pl-1 lg:pl-6 pt-6 rounded-l-3xl',
-          )}
-        >
+        <div className={clsx(isSmScreen ? 'app-content-container-sm' : 'app-content-container-md')}>
           <Header />
           <MyRoutes />
         </div>

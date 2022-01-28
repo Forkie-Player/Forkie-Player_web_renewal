@@ -33,13 +33,13 @@ const CustomButton = forwardRef<HTMLDivElement, ITextButtonProps>(
       <div
         ref={ref}
         {...props}
-        className={clsx(
+        className={clsx([
           getElementSizeWrapper(size),
           'p-1 shadow-outer text-center hover:drop-shadow-md active:shadow-inner cursor-pointer',
           type === 'primary' && 'bg-redrose-light text-white',
           type === 'secondary' && 'bg-white text-redrose-light',
           props.className,
-        )}
+        ])}
       >
         {text}
       </div>

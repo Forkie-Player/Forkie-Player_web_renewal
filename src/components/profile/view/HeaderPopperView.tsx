@@ -1,6 +1,6 @@
 import React from 'react'
 import { auth as AuthStrings } from '../../../lib/strings'
-import { CustomClearButton } from '../../elements/CustomButton'
+import { CustomButton } from '../../elements/CustomButton'
 import SimpleTextInput from '../../elements/SimpleTextInput'
 
 interface IProps {
@@ -26,11 +26,11 @@ function HeaderPopperView({
     <div className="border-2 p-4 rounded-xl bg-white">
       {reauthenicated ? (
         popperMode === 'WITDRAWL' ? (
-          <div className="space-y-2">
-            <div className="text-blackberry">{AuthStrings.LEAVING_REALY}</div>
+          <div className="space-y-4">
+            <div className="text-blackberry text-center">{AuthStrings.LEAVING_REALY}</div>
             <div className="flex gap-x-4 justify-center">
-              <CustomClearButton text="아니요" type="secondary" onClick={onCancleWithdrawl} />
-              <CustomClearButton text="네" onClick={onWithdrawl} />
+              <CustomButton text="아니요" size="small" type="secondary" onClick={onCancleWithdrawl} />
+              <CustomButton text="네" size="small" onClick={onWithdrawl} />
             </div>
           </div>
         ) : (

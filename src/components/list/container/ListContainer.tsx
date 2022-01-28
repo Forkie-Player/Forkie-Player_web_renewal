@@ -14,8 +14,7 @@ import useDispatchInteraction from '../../../lib/hooks/useDispatchInteraction'
 import * as Strings from '../../../lib/strings'
 
 function ListContainer() {
-  const [showPopper, setShowPopper] = useState(false)
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
+  const [showModal, setShowModal] = useState(false)
   const [itemOnPopper, setItemOnPopper] = useState<IPlaylist | null>(null)
 
   const playlist = useSelector(({ playlist }: RootModuleType) => playlist)
@@ -43,12 +42,12 @@ function ListContainer() {
 
   useEffect(() => {
     if (playlistStatus === 'SUCCESS') {
-      setShowPopper(false)
+      setShowModal(false)
     }
   }, [playlistStatus])
 
   const onToggleShowPopper = useCallback(() => {
-    setShowPopper(prev => !prev)
+    setShowModal(prev => !prev)
   }, [])
 
   const onClickPlaylistItem = useCallback(
@@ -82,24 +81,22 @@ function ListContainer() {
   )
 
   const onClickEditButton = useCallback(
-    (item: IPlaylist, reference: HTMLDivElement | null) => {
-      setReferenceElement(reference)
-      if (showPopper === true && item === itemOnPopper) {
-        setShowPopper(false)
+    (item: IPlaylist) => {
+      if (showModal === true && item === itemOnPopper) {
+        setShowModal(false)
         setItemOnPopper(null)
       } else {
-        setShowPopper(true)
+        setShowModal(true)
         setItemOnPopper(item)
       }
     },
-    [itemOnPopper, showPopper],
+    [itemOnPopper, showModal],
   )
 
   return (
     <ListView
       items={playlist.items}
-      showPopper={showPopper}
-      referenceElement={referenceElement}
+      showModal={showModal}
       onClickPlaylistItem={onClickPlaylistItem}
       onClickEditButton={onClickEditButton}
       onToggleShowPopper={onToggleShowPopper}

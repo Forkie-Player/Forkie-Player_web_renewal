@@ -1,14 +1,13 @@
 import React, { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
 import { auth as AuthStrings, THANKYOU } from '../../../lib/strings'
-import { IPlaylist, IUserInfo } from '../../../types'
+import { IUserInfo } from '../../../types'
 import PopperWrapper from '../../elements/PopperWrapper'
 import HeaderPopperView from '../view/HeaderPopperView'
 import HeaderUserInfoView from '../view/HeaderUserInfoView'
 
 interface IProps {
   userInfo: IUserInfo
-  playlists: IPlaylist[]
   onWithdrawl: () => Promise<void>
   changePassword: (newPw: string) => Promise<string>
   onEditProfileImg: (e: React.ChangeEvent<HTMLInputElement>) => any
@@ -17,7 +16,6 @@ interface IProps {
 
 function HeaderUserInfoContainer({
   userInfo,
-  playlists,
   onWithdrawl,
   changePassword,
   onEditProfileImg,
@@ -78,7 +76,6 @@ function HeaderUserInfoContainer({
     <>
       <HeaderUserInfoView
         userInfo={userInfo}
-        playlists={playlists}
         onWithdrawl={onClickWithdrawlButton}
         onClickPasswordChangeButton={onClickPasswordChangeButton}
         onEditProfileImg={onEditProfileImg}

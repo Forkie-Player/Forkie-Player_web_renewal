@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { screenSizeString } from '../../../lib/constants'
-import useScreenSize from '../../../lib/hooks/useScreenSize'
+import { RootModuleType } from '../../../modules/moduleTypes'
 import { CustomButton, ITextButtonProps } from '../../elements/CustomButton'
 
 interface IProps {
@@ -9,7 +10,7 @@ interface IProps {
 }
 
 function ButtonsView({ leftButtonProps, rightButtonProps }: IProps) {
-  const screenSize = useScreenSize()
+  const screenSize = useSelector(({ screenSize }: RootModuleType) => screenSize)
   const buttonSize = useMemo(() => {
     switch (screenSize) {
       case screenSizeString['3XL']:

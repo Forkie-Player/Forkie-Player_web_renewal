@@ -1,9 +1,10 @@
 import React from 'react'
 import { DropResult } from 'react-beautiful-dnd'
 import ReactPlayer from 'react-player'
+import { useSelector } from 'react-redux'
 import { useResizeDetector } from 'react-resize-detector'
 import { screenSizeString, videoAspectRatio } from '../../../lib/constants'
-import useScreenSize from '../../../lib/hooks/useScreenSize'
+import { RootModuleType } from '../../../modules/moduleTypes'
 import { IVideoInPlaylist } from '../../../types'
 import PlayContentView from '../view/PlayContentView'
 
@@ -31,7 +32,7 @@ function PlayContentContainer({
   onClickEdit,
 }: IProps) {
   const resizeDetector = useResizeDetector<HTMLDivElement>()
-  const screenSize = useScreenSize()
+  const screenSize = useSelector((state: RootModuleType) => state.screenSize)
 
   const containerGridRows = React.useMemo(() => {
     if (resizeDetector.width !== undefined) {
@@ -39,7 +40,7 @@ function PlayContentContainer({
         case screenSizeString.MD:
         case screenSizeString.SM:
         case screenSizeString.XSM:
-          return `minmax(${resizeDetector?.width / videoAspectRatio}px, auto) 20rem`
+          return `minmax(${resizeDetector?.width / videoAspectRatio}px, auto) min-content min-content`
       }
     }
     return ''

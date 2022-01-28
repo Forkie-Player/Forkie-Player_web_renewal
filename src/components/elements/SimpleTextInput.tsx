@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CustomClearButton } from './CustomButton'
+import { CustomButton } from './CustomButton'
 import CustomInput from './CustomInput'
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -54,10 +54,10 @@ const SimpleTextInput = ({
       <CustomInput value={text} error={error || errorMsg} onChange={onChangeText} {...inputProps} />
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (
-          <CustomClearButton text="취소" type="secondary" onClick={onClickCancle} />
+          <CustomButton text="취소" size="small" type="secondary" onClick={onClickCancle} />
         )}
         <button type="submit">
-          <CustomClearButton text="완료" type="primary" />
+          <CustomButton text="완료" size="small" type="primary" />
         </button>
       </div>
     </form>

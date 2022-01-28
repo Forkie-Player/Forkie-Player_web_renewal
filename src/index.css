@@ -29,17 +29,17 @@ html {
 
 /* 스크롤바 스타일 변경. 크롬에서만 적용됨. */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--blackberry-lightest);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-redrose-light);
+  background: var(--blackberry-lightest);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-redrose);
+  background: var(--blackberry-light);
 }
 
 /* autocomplete 시 배경화면 변하는 거 없애기 */
@@ -75,4 +75,15 @@ input:focus {
 /* 텍스트 선택 안되게 하고 싶으면 이 클래스 추가 */
 .unselectable {
   user-select: none;
+}
+
+/* 스크롤바 없애고 싶을때 */
+/* Hide scrollbar for IE, Edge and Firefox */
+.noscrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.noscrollbar::-webkit-scrollbar {
+  display: none;
 }

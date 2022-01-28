@@ -4,10 +4,9 @@ import PlaylistPopper from '../elements/PlaylistPopper'
 
 interface IProps {
   items: IPlaylist[]
-  showPopper: boolean
-  referenceElement: HTMLDivElement | null
+  showModal: boolean
   onClickPlaylistItem: ({ id }: { id: number }) => void
-  onClickEditButton: (item: IPlaylist, reference: HTMLDivElement | null) => void | Promise<void>
+  onClickEditButton: (item: IPlaylist) => void | Promise<void>
   onToggleShowPopper: () => void
   onClickDeleteListItem: () => void
   onClickTitleEdit: (titleInput: string) => string
@@ -15,8 +14,7 @@ interface IProps {
 
 function ListView({
   items,
-  showPopper,
-  referenceElement,
+  showModal,
   onClickPlaylistItem,
   onClickEditButton,
   onToggleShowPopper,
@@ -35,14 +33,12 @@ function ListView({
           onClickEdit={onClickEditButton}
         />
       ))}
-      {showPopper && (
-        <PlaylistPopper
-          referenceElement={referenceElement}
-          onToggleShowPopper={onToggleShowPopper}
-          onClickDelete={onClickDeleteListItem}
-          onClickTitleEdit={onClickTitleEdit}
-        />
-      )}
+      <PlaylistPopper
+        showModal={showModal}
+        onToggleShowPopper={onToggleShowPopper}
+        onClickDelete={onClickDeleteListItem}
+        onClickTitleEdit={onClickTitleEdit}
+      />
     </div>
   )
 }

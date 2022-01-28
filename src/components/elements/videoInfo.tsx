@@ -11,11 +11,11 @@ export default function VideoInfo({ data }: IProps) {
       <div className="line-clamp-1 md:line-clamp-2 text-lg">{data?.title}</div>
       <div className="flex gap-4">
         {data?.views && (
-          <div className="line-clamp-1 text-base text-blackberry-lightest leading-8">
+          <div className="line-clamp-1 te xt-base text-blackberry-lightest leading-8">
             조회수 {parseViews(data?.views)}회
           </div>
         )}
-        <div className=" line-clamp-1 text-base text-blackberry-lightest leading-8">{data?.uploadedAt}</div>
+        <div className="line-clamp-1 text-base text-blackberry-lightest leading-8">{data?.uploadedAt}</div>
       </div>
       <div className="flex gap-2">
         <img src={data?.channelAvatar} alt={'channel'} className="w-8 h-8 rounded-full" />

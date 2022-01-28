@@ -157,3 +157,27 @@ export interface IEditVideoTimeRangeSuccess {
   id: number
   edited: boolean
 }
+
+// 인기 동영상 파이어베이스 반환 타입
+export interface IFBPopularVideo {
+  contentDetails: {
+    duration: string
+  }
+  id: string
+  snippet: {
+    channelTitle: string
+    thumbnails: {
+      medium: {
+        url: string
+      }
+    }
+    title: string
+    publishedAt: string
+  }
+  statistics: {
+    viewCount: string
+  }
+}
+export interface IGetPopularVideoSuccess {
+  popular: IFBPopularVideo[]
+}

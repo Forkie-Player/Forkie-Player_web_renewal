@@ -16,6 +16,7 @@ import * as Constants from './lib/constants'
 import './App.css'
 import useIsSmScreen from './lib/hooks/useIsSmScreen'
 import { RootModuleType } from './modules/moduleTypes'
+import { getPopularVideoAsync } from './modules/popularVideos/actions'
 
 ReactModal.setAppElement('#root')
 
@@ -35,6 +36,7 @@ function App() {
         dispatch(setNavClose())
         break
     }
+    dispatch(getPopularVideoAsync.request())
   }, [screenSize, dispatch])
 
   const containerClassNameMemo = useMemo(

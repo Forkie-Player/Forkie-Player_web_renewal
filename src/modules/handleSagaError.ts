@@ -14,6 +14,7 @@ export default function* handleSagaError(err: unknown, failure: (payload: string
         break
     }
   }
+  console.log(err)
   yield put(failure(errorMessage))
   toast.error(errorMessage)
 }

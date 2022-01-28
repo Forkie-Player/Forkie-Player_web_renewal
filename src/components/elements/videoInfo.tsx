@@ -18,7 +18,9 @@ export default function VideoInfo({ data }: IProps) {
         <div className="line-clamp-1 text-base text-blackberry-lightest leading-8">{data?.uploadedAt}</div>
       </div>
       <div className="flex gap-2">
-        <img src={data?.channelAvatar} alt={'channel'} className="w-8 h-8 rounded-full" />
+        {data?.channelAvatar !== undefined && (
+          <img src={data.channelAvatar} alt={'channel'} className="w-8 h-8 rounded-full" />
+        )}
         <div className="text-base leading-8  line-clamp-1">{data?.channelTitle}</div>
       </div>
     </div>

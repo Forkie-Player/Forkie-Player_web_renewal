@@ -8,8 +8,12 @@ import {
   IDeleteVideoSuccess,
   IEditVideoTimeRangeRequest,
   IEditVideoTimeRangeSuccess,
+  IGetPopularVideoSuccess,
   IGetVideoListSuccess,
 } from './types'
+
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../../firebaseInit'
 
 export const getVideoList = async (id: number) => {
   const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play/list/${id}`)
@@ -37,4 +41,12 @@ export const changeVideoOrder = async (request: IChangeVideoOrderInPlaylistReque
 export const editVideoTimeRange = async (request: IEditVideoTimeRangeRequest) => {
   const res = await axios.put<IEditVideoTimeRangeSuccess>(`${Address}/api/play/edit/time`, request)
   return res.data
+}
+
+export const getPopularVideos = async () => {
+  const docRef = doc(db, 'popular', 'popular')
+  const docSnap = await getDoc(docRef)
+
+  const docData = docSnap.data() as IGetPopularVideoSuccess
+  return docData
 }

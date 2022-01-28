@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Navigation from './components/navigation'
@@ -28,7 +28,6 @@ function App() {
   useEffect(() => {
     dispatch(setScreenSize(screenSize))
     switch (screenSize) {
-      case Constants.screenSizeString.XL:
       case Constants.screenSizeString.LG:
       case Constants.screenSizeString.MD:
       case Constants.screenSizeString.SM:
@@ -38,18 +37,27 @@ function App() {
     }
   }, [screenSize, dispatch])
 
-  return (
-    <div
-      className={clsx(
+  const containerClassNameMemo = useMemo(
+    () =>
+      clsx(
         'app flex h-screen transition-[translate]',
         isSmScreen ? (navExpansion ? 'translate-x-0 w-fit' : '-translate-x-16 w-fit') : 'w-screen',
-      )}
-    >
+      ),
+    [isSmScreen, navExpansion],
+  )
+  const contentClassNameMemo = useMemo(
+    () => clsx(isSmScreen ? 'app-content-container-sm' : 'app-content-container-md'),
+    [isSmScreen],
+  )
+  const navClassNameMemo = useMemo(() => clsx('w-fit h-full'), [])
+
+  return (
+    <div className={containerClassNameMemo}>
       <BrowserRouter>
-        <div className={clsx('w-fit h-full')}>
+        <div className={navClassNameMemo}>
           <Navigation />
         </div>
-        <div className={clsx(isSmScreen ? 'app-content-container-sm' : 'app-content-container-md')}>
+        <div className={contentClassNameMemo}>
           <Header />
           <MyRoutes />
         </div>

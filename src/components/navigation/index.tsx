@@ -34,8 +34,8 @@ function Navigation() {
         isOpen={isSmScreen && navExpanded}
         onRequestClose={onRequestClose}
         style={{
-          overlay: { left: '12rem' },
-          content: { visibility: 'hidden' },
+          overlay: { left: '12rem', height: '100vh', maxHeight: '100vh', overflow: 'hidden' },
+          content: { visibility: 'hidden', height: '100vh' },
         }}
       />
     </>

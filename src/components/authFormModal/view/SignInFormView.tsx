@@ -46,7 +46,7 @@ function SignInFormView({
           />
         )}
         <button type="submit" className="w-full">
-          <CustomButton text={isOnSignUp ? '회원가입' : '로그인'} className="p-2" />
+          <CustomButton text={isOnSignUp ? '회원가입' : '로그인'} className="py-2" />
         </button>
       </form>
     </div>

@@ -59,7 +59,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           text={onSignInOrSignUp === 'SignIn' ? Strings.auth.SIGNUP : Strings.auth.SIGNIN}
           type="secondary"
           onClick={onChangeFormMode}
-          className="p-2"
+          className="py-2"
         />
       </FormWrapper>
     </CustomModalWrapper>

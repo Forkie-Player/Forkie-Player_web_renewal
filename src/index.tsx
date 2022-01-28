@@ -13,7 +13,11 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(rootReducer, applyMiddleware(logger, sagaMiddleware))
+const store =
+  !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+    ? createStore(rootReducer, applyMiddleware(logger, sagaMiddleware))
+    : createStore(rootReducer, applyMiddleware(sagaMiddleware))
+
 const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
 

@@ -60,7 +60,7 @@ export const auth = {
   INPUT_PASSWORD_AGAIN: '비밀번호를 다시 입력해주세요.',
   INPUT_NEW_PASSWORD: '새 비밀번호를 입력해주세요.',
   PASSWORD_CHANGE_SUCCESS: '비밀번호 변경에 성공했어요!',
-  LEAVING_REALY: '정말로 떠나시게요?',
+  LEAVING_REALY: '정말로 탈퇴하시나요?',
   WITHDRAWL_SUCCESS: '그동안 감사했어요',
   PASSWORD_CHECK_NOT_MATCH: '비밀번호가 일치하지 않아요',
   PASSWORD_NOT_FORMATTED: '알파벳, 숫자, 특수문자 조합으로 8~20자이어야 해요',

@@ -9,22 +9,21 @@ interface IProps {
   index: number
   showEditButton?: boolean
   onClick: (item: IPlaylist) => any
-  onClickEdit?: (item: IPlaylist, ref: HTMLDivElement | null) => any
+  onClickEdit?: (item: IPlaylist) => any
 }
 
 const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
   ({ item, showEditButton = false, onClick, onClickEdit }: IProps, ref) => {
-    const [referenceElement, setReferenceElement] = React.useState<HTMLDivElement | null>(null)
     const onClickListItem = useCallback(() => onClick(item), [item, onClick])
 
     const onClickEditButton = useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation()
         if (onClickEdit !== undefined) {
-          onClickEdit(item, referenceElement)
+          onClickEdit(item)
         }
       },
-      [item, referenceElement, onClickEdit],
+      [item, onClickEdit],
     )
 
     return (
@@ -41,11 +40,7 @@ const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
         <div className={clsx('relative w-full flex text-center h-12 leading-[3rem]', showEditButton ? 'px-8' : 'px-3')}>
           <div className="flex-auto line-clamp-1 m-auto">{item?.title}</div>
           {showEditButton && (
-            <div
-              ref={setReferenceElement}
-              className="absolute w-12 h-full -right-4 py-3 cursor-pointer"
-              onClick={onClickEditButton}
-            >
+            <div className="absolute w-12 h-full -right-4 py-3 cursor-pointer" onClick={onClickEditButton}>
               <CustomButtonWrapper>
                 <MdMoreVert className="text-xl" />
               </CustomButtonWrapper>

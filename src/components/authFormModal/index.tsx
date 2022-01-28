@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react'
-import ReactModal from 'react-modal'
 import { CustomButton } from '../elements/CustomButton'
 import SignInFormContainer from './container/SignInFormContainer'
 import FormWrapper from './view/FormWrapper'
@@ -11,6 +10,7 @@ import { SignUp as SignUpApi } from '../../lib/utils/auth'
 import { useDispatch } from 'react-redux'
 import { getUserInfo } from '../../modules/userInfo/actions'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
+import CustomModalWrapper from '../elements/CustomModalWrapper'
 
 interface IProps {
   isOpen: boolean
@@ -52,23 +52,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
   }
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      style={{
-        overlay: { zIndex: 50 },
-        content: {
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -60%)',
-          padding: 0,
-          width: 'fit-content',
-          height: 'fit-content',
-          borderRadius: '0.5rem',
-        },
-      }}
-    >
+    <CustomModalWrapper isOpen={isOpen} onRequestClose={onClose}>
       <FormWrapper mode={onSignInOrSignUp}>
         <SignInFormContainer isOnSignUp={onSignInOrSignUp === 'SignUp'} onLogin={onLogin} onSignUp={onSignUp} />
         <CustomButton
@@ -78,7 +62,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           className="p-2"
         />
       </FormWrapper>
-    </ReactModal>
+    </CustomModalWrapper>
   )
 }
 

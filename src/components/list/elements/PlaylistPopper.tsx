@@ -1,23 +1,18 @@
 import React, { useCallback, useState } from 'react'
 
 import * as Strings from '../../../lib/strings'
-import { CustomClearButton } from '../../elements/CustomButton'
-import PopperWrapper from '../../elements/PopperWrapper'
+import { CustomButton } from '../../elements/CustomButton'
+import CustomModalWrapper from '../../elements/CustomModalWrapper'
 import SimpleTextInput from '../../elements/SimpleTextInput'
 
 interface IProps {
-  referenceElement: HTMLDivElement | null
+  showModal: boolean
   onToggleShowPopper: () => void
   onClickTitleEdit: (title: string) => string
   onClickDelete: () => void
 }
 
-const PlaylistPopper = ({
-  referenceElement,
-  onToggleShowPopper,
-  onClickTitleEdit: onClickTitleEditCallback,
-  onClickDelete: onClickDeleteCallback,
-}: IProps) => {
+const PlaylistModal = ({ showModal, onToggleShowPopper, onClickTitleEdit, onClickDelete }: IProps) => {
   const [onDeleteMode, setOnDeleteMode] = useState(false)
   const [onEditMode, setOnEditMode] = useState(false)
 
@@ -31,8 +26,27 @@ const PlaylistPopper = ({
     setOnDeleteMode(false)
   }, [])
 
+  const onRequestClose = useCallback(() => {
+    setOnDeleteMode(false)
+    setOnEditMode(false)
+    onToggleShowPopper()
+  }, [onToggleShowPopper])
+
+  const onClickTitleEditCallback = useCallback(
+    (title: string) => {
+      onClickTitleEdit(title)
+      onRequestClose()
+    },
+    [onClickTitleEdit, onRequestClose],
+  )
+
+  const onClickDeleteCallback = useCallback(() => {
+    onClickDelete()
+    onRequestClose()
+  }, [onClickDelete, onRequestClose])
+
   return (
-    <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
+    <CustomModalWrapper isOpen={showModal} onRequestClose={onRequestClose}>
       <div className={'border-2 relative rounded-2xl bg-white'}>
         {!onEditMode ? (
           !onDeleteMode ? (
@@ -45,11 +59,11 @@ const PlaylistPopper = ({
               </div>
             </div>
           ) : (
-            <div className="p-4 space-y-2">
-              <div className="text-blackberry">{Strings.CheckVideoDelete}</div>
+            <div className="p-4 space-y-4">
+              <div className="text-blackberry text-center">{Strings.CheckVideoDelete}</div>
               <div className="flex gap-x-4 justify-center">
-                <CustomClearButton text="아니요" type="secondary" onClick={onToggleShowPopper} />
-                <CustomClearButton text="네" onClick={onClickDeleteCallback} />
+                <CustomButton text="아니요" size="small" type="secondary" onClick={onRequestClose} />
+                <CustomButton text="네" size="small" onClick={onClickDeleteCallback} />
               </div>
             </div>
           )
@@ -57,14 +71,14 @@ const PlaylistPopper = ({
           <div className="p-4">
             <SimpleTextInput
               title={Strings.TypeNewPlaylistName}
-              onClickCancle={onToggleShowPopper}
+              onClickCancle={onRequestClose}
               onClickComplete={onClickTitleEditCallback}
             />
           </div>
         )}
       </div>
-    </PopperWrapper>
+    </CustomModalWrapper>
   )
 }
 
-export default React.memo(PlaylistPopper)
+export default React.memo(PlaylistModal)

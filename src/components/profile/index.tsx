@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login, pwUpdate, updateProfileImag } from '../../lib/api/auth'
 import { auth as AuthStrings, ErrorMessageFromServer, ErrorMessageToUser } from '../../lib/strings'
 import { withdrawlUser } from '../../lib/utils/auth'
 import { checkPassword, handleAuthApiError } from '../../lib/utils/handleAuthErr'
-import { RootModuleType } from '../../modules/moduleTypes'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
 import { clearUserInfo, getUserInfo, setUserInfo } from '../../modules/userInfo/actions'
 import { IUserInfo } from '../../types'
@@ -18,7 +17,6 @@ interface IProps {
 }
 
 const Profile = ({ userInfo }: IProps) => {
-  const playlists = useSelector(({ playlist }: RootModuleType) => playlist.items)
   const [prevPassword, setPrevPassword] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -90,11 +88,10 @@ const Profile = ({ userInfo }: IProps) => {
   )
 
   return (
-    <div className="w-full h-full px-[5%]">
+    <div className="w-full h-full px-2 md:px-[5%] grid grid-rows-6">
       <HeaderBackground />
       <HeaderUserInfoContainer
         userInfo={userInfo}
-        playlists={playlists}
         onWithdrawl={onWithdrawl}
         changePassword={changePassword}
         onEditProfileImg={onEditProfileImg}

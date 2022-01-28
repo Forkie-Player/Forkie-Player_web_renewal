@@ -139,9 +139,9 @@ export default function Play({ video }: IProps) {
   }, [isPendingChangeVideoOrder, status])
 
   return (
-    <div className="w-full h-full max-h-full flex flex-col">
+    <div className="w-full h-full flex flex-col overflow-x-hidden overflow-y-auto">
       <GobackLine />
-      <div className="flex-1 overflow-x-hidden overflow-y-auto lg:overflow-hidden px-1 lg:pr-0">
+      <div className="lg:flex-1 lg:overflow-hidden px-1 lg:pr-0">
         <PlayContentContainer
           playerRef={playerRef}
           currentVideo={currentVideo}

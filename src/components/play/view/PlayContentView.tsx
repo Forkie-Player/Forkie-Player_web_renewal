@@ -39,16 +39,16 @@ function PlayContentView({
     <div
       ref={resizeDetectorRef}
       className={clsx(
-        'transition-all w-full h-full grid lg:grid-rows-[minmax(0px,_auto)_10rem] grid-cols-[minmax(0px,_auto)_20rem] 2xl:grid-cols-[minmax(0px,_auto)_24rem] gap-2',
+        'w-full h-full grid lg:grid-rows-[auto_10rem] grid-cols-[auto_20rem] 2xl:grid-cols-[auto_24rem] gap-2',
       )}
       style={{
         gridTemplateRows: containerGridRows,
       }}
     >
-      <div className="w-full h-full col-span-2 lg:col-span-1">
+      <div className="z-50 sticky top-0 self-start w-full h-full col-span-2 lg:col-span-1">
         <VideoRender playerRef={playerRef} video={currentVideo} playerProps={{ onEnded: onVideoEnd }} />
       </div>
-      <div className="mr-2 lg:mr-0 row-start-2 col-start-2 lg:row-start-1 lg:col-start-2 lg:row-span-2 overflow-y-auto mb-1">
+      <div className="mr-2 lg:mr-0 row-start-3 col-span-2 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:row-span-2 overflow-y-auto mb-1">
         {isPendingChangeVideoOrder ? (
           <LoadingElement />
         ) : (
@@ -62,7 +62,7 @@ function PlayContentView({
           />
         )}
       </div>
-      <div className="row-start-2 col-start-1 pl-2 lg:col-start-1 lg:row-start-2 pb-4 2xl:pb-8">
+      <div className="h-fit row-start-2 col-span-2 pl-2 lg:col-start-1 lg:row-start-2 pb-4 2xl:pb-8">
         <VideoInfo data={currentVideo} />
       </div>
     </div>

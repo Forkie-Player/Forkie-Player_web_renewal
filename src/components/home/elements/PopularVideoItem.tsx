@@ -35,7 +35,7 @@ export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVid
           <div className="line-clamp-2 p-1">{item.title}</div>
         </div>
         <div className="absolute w-full h-full bg-background-light text-blackberry popularCardContentExpanded">
-          <img src={item.thumbnail} alt="thumbnail" className="h-full w-1/2 object-cover" />
+          <img src={item.thumbnail} alt="thumbnail" className="h-full min-w-1/2 max-w-[50%] object-cover" />
           <VideoInfo data={item} className="w-full p-2 " />
         </div>
       </div>

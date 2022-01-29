@@ -10,7 +10,7 @@ function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
     const response: IGetVideoListSuccess = yield call(getVideoList, action.payload)
     yield put(getVideoAsync.success({ playlistId: action.payload, items: response.response }))
   } catch (err) {
-    handleSagaError(err, deleteVideoAsync.failure)
+    yield handleSagaError(err, deleteVideoAsync.failure)
   }
 }
 
@@ -19,7 +19,7 @@ function* deleteVideoSaga(action: ReturnType<typeof deleteVideoAsync.request>) {
     const res: IDeleteVideoSuccess = yield call(deleteVideo, action.payload)
     yield put(deleteVideoAsync.success(res.id))
   } catch (err) {
-    handleSagaError(err, deleteVideoAsync.failure)
+    yield handleSagaError(err, deleteVideoAsync.failure)
   }
 }
 
@@ -28,7 +28,7 @@ function* editTimeRangeSaga(action: ReturnType<typeof editTimeRangeAsync.request
     yield call(editVideoTimeRange, action.payload)
     yield put(editTimeRangeAsync.success(action.payload))
   } catch (err) {
-    handleSagaError(err, editTimeRangeAsync.failure)
+    yield handleSagaError(err, editTimeRangeAsync.failure)
   }
 }
 
@@ -37,7 +37,7 @@ function* changeVideoOrderSaga(action: ReturnType<typeof changeVideoOrderAsync.r
     const res: IChangeVIdeoOrderInPlaylistSuccess = yield call(changeVideoOrder, action.payload)
     yield put(changeVideoOrderAsync.success(res.response))
   } catch (err) {
-    handleSagaError(err, changeVideoOrderAsync.failure)
+    yield handleSagaError(err, changeVideoOrderAsync.failure)
   }
 }
 

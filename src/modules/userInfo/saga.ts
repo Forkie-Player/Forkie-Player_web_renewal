@@ -9,7 +9,7 @@ function* getUserInfoSaga() {
     const res: IGetUserInfoSuccess = yield call(getUserInfoApi)
     yield put(getUserInfo.success(res.response))
   } catch (err) {
-    handleSagaError(err, getUserInfo.failure)
+    yield handleSagaError(err, getUserInfo.failure)
   }
 }
 

@@ -15,14 +15,15 @@ function* getPopularVideoSaga() {
       title: item.snippet.title,
       thumbnail: item.snippet.thumbnails.medium.url,
       channelTitle: item.snippet.channelTitle,
+      channelAvatar: '',
       duration: secondsToHHMMSS(moment.duration(item.contentDetails.duration).asSeconds()),
       views: parseInt(item.statistics.viewCount),
-      uploadedAt: item.snippet.publishedAt,
+      uploadedAt: item.snippet.publishedAt.slice(0, 10),
     }))
 
     yield put(getPopularVideoAsync.success(ans))
   } catch (err) {
-    handleSagaError(err, getPopularVideoAsync.failure)
+    yield handleSagaError(err, getPopularVideoAsync.failure)
   }
 }
 

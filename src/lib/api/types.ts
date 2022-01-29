@@ -177,6 +177,7 @@ export interface IFBPopularVideo {
   statistics: {
     viewCount: string
   }
+  channelAvatar: string
 }
 export interface IGetPopularVideoSuccess {
   popular: IFBPopularVideo[]

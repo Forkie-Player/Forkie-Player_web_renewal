@@ -14,7 +14,7 @@
 }
 
 .populuarSlide:not(:hover) {
-  animation-duration: 0.5s;
+  animation-duration: 0.15s;
   animation-name: expand;
   aspect-ratio: 1 / 1;
 }
@@ -23,6 +23,6 @@
     aspect-ratio: 2 / 1;
   }
   100% {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 2 / 1;
   }
 }

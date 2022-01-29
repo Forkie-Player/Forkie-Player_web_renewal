@@ -41,7 +41,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
       playlist.id === action.payload.id ? { ...playlist, thumbnail: action.payload.thumbnail } : playlist,
     ),
   }),
-  [playlistActionTypes.ADD_VIDEO]: (state, action) => ({ ...state, error: null, pending: true }),
+  [playlistActionTypes.ADD_VIDEO]: (state, action) => ({ ...state, success: false, error: null, pending: true }),
   [playlistActionTypes.ADD_VIDEO_SUCCESS]: (state, action) => ({
     ...state,
     success: true,

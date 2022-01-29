@@ -23,6 +23,9 @@ import playlistSaga from './playlist/saga'
 import video from './video'
 import videoSaga from './video/saga'
 
+import popularVideos from './popularVideos'
+import popularVideosSaga from './popularVideos/saga'
+
 const persistConfig = {
   key: 'root',
   // localStorage에 저장합니다.
@@ -41,11 +44,12 @@ const rootReducer = combineReducers({
   isFirst,
   playlist,
   video,
+  popularVideos,
 })
 
 // react saga 연결
 export function* rootSaga() {
-  yield all([playlistSaga(), searchResultSaga(), userInfoSaga(), videoSaga()])
+  yield all([playlistSaga(), searchResultSaga(), userInfoSaga(), videoSaga(), popularVideosSaga()])
 }
 
 export default persistReducer(persistConfig, rootReducer)

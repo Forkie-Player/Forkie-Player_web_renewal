@@ -21,7 +21,7 @@ function* getPlaylistSaga() {
     const res: IGetPlaylistSuccess = yield call(getPlaylistApi)
     yield put(getPlaylistAsync.success(res.response))
   } catch (err) {
-    handleSagaError(err, createPlaylistAsync.failure)
+    yield handleSagaError(err, createPlaylistAsync.failure)
   }
 }
 
@@ -31,7 +31,7 @@ function* createPlaylistSaga(action: ReturnType<typeof createPlaylistAsync.reque
     yield put(createPlaylistAsync.success(res.response))
     toast.success(Strings.addPlaylistSuccess)
   } catch (err) {
-    handleSagaError(err, createPlaylistAsync.failure)
+    yield handleSagaError(err, createPlaylistAsync.failure)
   }
 }
 
@@ -41,7 +41,7 @@ function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) {
     yield put(addVideoAsync.success(res))
     toast.success(Strings.addVideoSuccess)
   } catch (err) {
-    handleSagaError(err, createPlaylistAsync.failure)
+    yield handleSagaError(err, addVideoAsync.failure)
   }
 }
 
@@ -50,7 +50,7 @@ function* deletePlaylistSaga(action: ReturnType<typeof deletePlaylistAsync.reque
     const res: IDeletePlaylistSuccess = yield call(deletePlaylist, action.payload)
     yield put(deletePlaylistAsync.success(res.id))
   } catch (err) {
-    handleSagaError(err, deletePlaylistAsync.failure)
+    yield handleSagaError(err, deletePlaylistAsync.failure)
   }
 }
 
@@ -59,7 +59,7 @@ function* editPlaylistTitleSaga(action: ReturnType<typeof editPlaylistTitleAsync
     yield call(editPlaylistTitle, action.payload)
     yield put(editPlaylistTitleAsync.success(action.payload))
   } catch (err) {
-    handleSagaError(err, editPlaylistTitleAsync.failure)
+    yield handleSagaError(err, editPlaylistTitleAsync.failure)
   }
 }
 

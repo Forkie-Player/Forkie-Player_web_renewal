@@ -22,7 +22,7 @@ function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>
 
     yield put(getSearchResult.success(result))
   } catch (err) {
-    handleSagaError(err, getSearchResult.failure)
+    yield handleSagaError(err, getSearchResult.failure)
   }
 }
 

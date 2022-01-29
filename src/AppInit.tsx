@@ -9,6 +9,7 @@ import { getPlaylistAsync } from './modules/playlist/actions'
 import { reissue } from './lib/api/auth'
 import { authInit } from './lib/utils/auth'
 import { setNavState } from './modules/navExpansion/actions'
+import { getPopularVideoAsync } from './modules/popularVideos/actions'
 
 export default function AppInit({ children }: { children: React.ReactNode }) {
   const [preLoading, setPreLoading] = useState(true)
@@ -44,6 +45,7 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
         dispatch(getIsFirst())
         dispatch(getUserInfo.request())
         dispatch(getPlaylistAsync.request())
+        dispatch(getPopularVideoAsync.request())
 
         setCookie('@restart', 'false')
       } catch (err) {

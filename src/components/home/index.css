@@ -1,0 +1,14 @@
+.popularCardContainer:hover > .popularCardContentExpanded {
+  display: flex;
+}
+.popularCardContainer:hover > .popularCardContentShinked {
+  visibility: hidden;
+}
+
+.popularCardContentExpanded {
+  display: none;
+}
+
+.popularCardContentShinked {
+  visibility: visible;
+}

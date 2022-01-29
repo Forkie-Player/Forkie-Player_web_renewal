@@ -17,7 +17,6 @@ function CarouselView() {
         // install Swiper modules
         modules={[Navigation, Pagination, Keyboard, Autoplay]}
         slidesPerView={1}
-        autoplay
         navigation={{}}
         pagination={{ clickable: true }}
         keyboard

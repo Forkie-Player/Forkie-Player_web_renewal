@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import VideoAddIndex from '../components/videoAdd'
+import { AppName } from '../lib/strings'
 import { IVideo } from '../types'
 
 function VideoAdd() {
@@ -16,6 +17,10 @@ function VideoAdd() {
       navigate('/')
     }
   }, [state, navigate])
+
+  useEffect(() => {
+    document.title = `${AppName} - ${state.title}`
+  }, [state])
 
   return <VideoAddIndex video={state} />
 }

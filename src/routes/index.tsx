@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import * as Constants from '../lib/constants'
 import Home from './Home'
 import List from './List'
@@ -27,6 +27,7 @@ export default function MyRoutes() {
             <Route path={Constants.NavAbsolutePathItems.VIDEO_EDIT} element={<VideoTimeChange />} />
           </Route>
         </Route>
+        <Route path="*" element={<Navigate to={Constants.NavAbsolutePathItems.HOME} />} />
       </Routes>
     </div>
   )

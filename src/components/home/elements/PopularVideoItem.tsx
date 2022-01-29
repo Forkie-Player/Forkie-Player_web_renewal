@@ -21,7 +21,7 @@ export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVid
   return (
     <SwiperSlide
       key={index}
-      className={clsx('p-2 pb-4 aspect-square transition-all hover:aspect-[2/1] hover:cursor-pointer')}
+      className={clsx('populuarSlide p-2 pb-4  transition-[width] hover:aspect-[2/1] hover:cursor-pointer')}
       css={css`
         &:hover {
           width: ${(2 / slidesPerView) * 100}% !important;

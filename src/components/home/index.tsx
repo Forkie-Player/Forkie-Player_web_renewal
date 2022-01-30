@@ -1,14 +1,15 @@
 import CarouselContainer from './container/CarouselContainer'
 import PopularContainer from './container/PopularContainer'
 
-import 'swiper/css'
-import './index.css'
 import { useSelector } from 'react-redux'
 import { RootModuleType } from '../../modules/moduleTypes'
 import { useCallback } from 'react'
 import { IVideo } from '../../types'
 import { useNavigate } from 'react-router-dom'
 import { NavAbsolutePathItems } from '../../lib/constants'
+
+import 'swiper/css'
+import './index.css'
 
 function HomeComponent() {
   const popularVideos = useSelector(({ popularVideos }: RootModuleType) => popularVideos.items)

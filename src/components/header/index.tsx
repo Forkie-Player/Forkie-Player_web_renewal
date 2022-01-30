@@ -20,7 +20,6 @@ function Header() {
   const [isOpenAuthForm, setIsOpenAuthForm] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(location)
 
   const { userInfo, playlistsLength } = useSelector(({ userInfo, playlist }: RootModuleType) => ({
     userInfo,

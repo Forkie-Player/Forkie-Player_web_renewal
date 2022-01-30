@@ -9,6 +9,7 @@ import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import { IVideoHasRange } from '../../types'
 import VideoView from './view/VideoView'
 
+import './index.css'
 interface IProps {
   playerRef: React.RefObject<ReactPlayer>
   video: IVideoHasRange

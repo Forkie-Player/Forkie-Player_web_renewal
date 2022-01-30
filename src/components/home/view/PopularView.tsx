@@ -22,7 +22,6 @@ const PopularView = forwardRef<HTMLDivElement, IProps>(
         <Swiper
           // install Swiper modules
           modules={[Scrollbar, Mousewheel]}
-          slidesPerView={slidesPerView}
           scrollbar={{ dragClass: 'swiper-scrollbar-drag bg-blackberry-lightest' }}
           mousewheel
           className="w-full"

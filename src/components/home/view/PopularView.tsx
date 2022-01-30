@@ -37,7 +37,6 @@ const PopularView = forwardRef<HTMLDivElement, IProps>(
             />
           ))}
           <SwiperSlide
-          // blank slide
           />
         </Swiper>
       </div>

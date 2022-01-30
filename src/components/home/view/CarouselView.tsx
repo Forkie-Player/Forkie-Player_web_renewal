@@ -15,7 +15,6 @@ function CarouselView() {
   return (
     <div className="w-full h-full px-1">
       <Swiper
-        // install Swiper modules
         modules={[Navigation, Pagination, Keyboard, Autoplay]}
         slidesPerView={1}
         navigation={{}}

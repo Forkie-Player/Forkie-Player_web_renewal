@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { logout } from '../../lib/utils/auth'
 import { RootModuleType } from '../../modules/moduleTypes'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
@@ -12,12 +12,15 @@ import SearchbarContainer from './container/SearchbarContainer'
 import useIsSmScreen from '../../lib/hooks/useIsSmScreen'
 import NavButtonContainer from './container/NavButtonContainer'
 import { setNavOpen } from '../../modules/navExpansion/actions'
+import { NavAbsolutePathItems } from '../../lib/constants'
 
 function Header() {
   const isSmScreen = useIsSmScreen()
 
   const [isOpenAuthForm, setIsOpenAuthForm] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location)
 
   const { userInfo, playlistsLength } = useSelector(({ userInfo, playlist }: RootModuleType) => ({
     userInfo,
@@ -25,7 +28,9 @@ function Header() {
   }))
   const dispatch = useDispatch()
 
-  const onClickLogin = useCallback(() => setIsOpenAuthForm(true), [])
+  const onClickLogin = useCallback(() => {
+    setIsOpenAuthForm(true)
+  }, [])
   const onClickCloseAuthForm = useCallback(() => setIsOpenAuthForm(false), [])
 
   const onClickProfile = useCallback(() => {
@@ -38,6 +43,8 @@ function Header() {
     await logout()
     dispatch(getUserInfo.request())
     dispatch(getPlaylistAsync.request())
+    if (location.pathname === NavAbsolutePathItems.PLAY || location.pathname === NavAbsolutePathItems.VIDEO_EDIT)
+      navigate(NavAbsolutePathItems.LIST)
   }
 
   const onClickNavOpen = async () => {

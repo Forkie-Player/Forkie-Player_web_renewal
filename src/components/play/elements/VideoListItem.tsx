@@ -5,6 +5,7 @@ import { IVideoInPlaylist } from '../../../types'
 import { CustomIconButton } from '../../elements/CustomButton'
 import { TimeLapse } from '../../elements/TimeLapse'
 import { Draggable } from 'react-beautiful-dnd'
+import { twMerge } from 'tailwind-merge'
 
 interface IVideoListItemProps {
   video: IVideoInPlaylist
@@ -56,12 +57,15 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
             }}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className={clsx(
-              snapshot.isDragging && 'drop-shadow-2xl bg-white',
-              video.id === currentVideo.id && 'border-2 border-redrose',
-              video.id !== currentVideo.id && !snapshot.isDragging && 'opacity-50',
-              'w-full h-fit 2xl:h-28 cursor-pointer flex gap-2 rounded-2xl overflow-hidden ',
-              'hover:bg-background-light-hover hover:shadow-outer',
+            className={twMerge(
+              clsx(
+                video.id === currentVideo.id && 'border-2 border-redrose',
+                video.id !== currentVideo.id && !snapshot.isDragging && 'opacity-50',
+                'h-fit 2xl:h-28 cursor-pointer flex gap-2 rounded-2xl overflow-hidden ',
+                'hover:bg-background-light-hover hover:shadow-outer',
+                !snapshot.isDragging && 'w-full',
+                snapshot.isDragging && 'drop-shadow-2xl bg-white',
+              ),
             )}
             onClick={() => onClickItem(video)}
           >

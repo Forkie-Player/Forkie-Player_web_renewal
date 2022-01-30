@@ -21,28 +21,32 @@ export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVid
   return (
     <SwiperSlide
       key={index}
-      className={clsx('populuarSlide p-2 pb-4  transition-[width] hover:aspect-[2/1] hover:cursor-pointer')}
+      className={clsx('p-2 pb-4 aspect-square hover:aspect-[2/1] hover:cursor-pointer')}
       css={css`
         &:hover {
+          transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1);
           width: ${(2 / slidesPerView) * 100}% !important;
+        }
+        &:not(:hover) {
+          transition: aspect-ratio 0s 0.15s, width 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+          width: ${(1 / slidesPerView) * 100}% !important;
         }
       `}
       onClick={onClick}
     >
       <div className="w-full h-full rounded-2xl bg-background-light drop-shadow-md overflow-hidden flex popularCardContainer">
         <div className="w-full h-full flex flex-col popularCardContentShinked">
-          <div className="relative flex-1 max-h-[70%] w-full ">
+          <div className="relative h-full w-full ">
             <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
             <div className="absolute right-2 bottom-2 text-white">{item.duration}</div>
           </div>
-          <div className="line-clamp-2 p-1">{item.title}</div>
         </div>
         <div className="absolute w-full h-full bg-background-light popularCardContentExpanded">
-          <div className="relative h-full min-w-1/2 max-w-[50%] ">
+          <div className="relative flex-1">
             <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
             <div className="absolute right-2 bottom-2 text-white">{item.duration}</div>
           </div>
-          <VideoInfo data={item} className="w-full p-2 " />
+          <VideoInfo data={item} className="flex-1 p-2 " />
         </div>
       </div>
     </SwiperSlide>

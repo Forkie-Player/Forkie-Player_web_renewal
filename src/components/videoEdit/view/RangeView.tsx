@@ -29,7 +29,6 @@ function RangeView({ range, max, selectedLapse, onChange, renderCustomHandle }: 
         [selectedLapse[0]]: <SingleLapseIndicator second={selectedLapse[0]} />,
         [selectedLapse[1]]: <SingleLapseIndicator second={selectedLapse[1]} />,
       }}
-      dots={false}
       handle={renderCustomHandle}
       onChange={onChange}
       handleStyle={[handleStyle, handleStyle]}

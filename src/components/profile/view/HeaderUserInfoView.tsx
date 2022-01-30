@@ -38,7 +38,7 @@ const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
           </div>
           <div className="row-span-1 md:row-span-2 relative col-span-2 md:col-span-1">
             <div className="absolute bottom-0">
-              <p className="text-2xl">{userInfo.loginId}</p>
+              <p className="text-lg md:text-2xl">{userInfo.loginId}</p>
               <p className="text-blackberry-lightest line-clamp-1">
                 가입일. {userInfo.createdAt.toString().slice(0, 10)}
               </p>

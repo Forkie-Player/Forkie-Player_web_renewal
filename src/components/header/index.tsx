@@ -45,7 +45,7 @@ function Header() {
   }
 
   return (
-    <div className="flex justify-between px-2 md:px-[5%] h-12 gap-4">
+    <header className="flex justify-between px-2 md:px-[5%] h-12 gap-4">
       <NavButtonContainer isSmScreen={isSmScreen} onClickNavOpen={onClickNavOpen} />
       <SearchbarContainer />
       <ProfileContainer
@@ -57,7 +57,7 @@ function Header() {
         onClickProfile={onClickProfile}
       />
       <AuthFormModal isOpen={isOpenAuthForm} onClose={onClickCloseAuthForm} />
-    </div>
+    </header>
   )
 }
 export default React.memo(Header)

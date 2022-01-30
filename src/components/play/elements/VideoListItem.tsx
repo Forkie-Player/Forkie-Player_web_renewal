@@ -65,7 +65,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
             )}
             onClick={() => onClickItem(video)}
           >
-            <img src={video.thumbnail} alt="thumbnail" className="w-1/3 min-w-1/3 aspect-video" />
+            <img src={video.thumbnail} alt="thumbnail" className="w-1/3 min-w-1/3 aspect-video object-cover" />
             <div className="flex flex-col justify-between py-1">
               <div className="line-clamp-1 2xl:line-clamp-2">{video.title}</div>
               <div className="text-blackberry-light">

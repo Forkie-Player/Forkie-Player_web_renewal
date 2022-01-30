@@ -14,7 +14,7 @@ interface IProps {
 function SearchView({ searchResultItems, loading, onClickItem }: IProps) {
   return (
     <div className="h-full space-y-4 pr-[5%] pb-16 ">
-      <div className="w-full text-xl">{SearchStrings.SEARCH_RESULT}</div>
+      <div className="w-full text-xl font-bold">{SearchStrings.SEARCH_RESULT}</div>
       {!loading ? (
         searchResultItems.length > 0 ? (
           searchResultItems.map((item, index) => (

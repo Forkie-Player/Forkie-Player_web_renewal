@@ -9,6 +9,7 @@
       content="Web site created using create-react-app"
     />
 
+
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple_icon.png" />
     <!-- 웹 어플리케이션 모드 설정하기 (Apple 웹 앱을 위해 기본적으로 필요함) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,6 +20,13 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Yourlist</title>
 
+    <!-- 성능 개선-->
+    <link rel="dns-prefetch" href="https://www.yourlist.kro.kr">
+    <link rel="dns-prefetch" href="https://crawl.yourlist.kro.kr">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+ 
     <!-- 
       facebook 메타테그
     -->
@@ -38,10 +46,11 @@
     <meta name="twitter:url" content="https://www.yourlist.me">
     <meta name="twitter:title" content="Yourlist - 유튜브 영상 플레이리스트">
     <meta name="twitter:description" content="유튜브 영상의 원하는 부분만을 정해서 플레이리스트를 만들 수 있습니다.">
-    <meta name="twitter:image" content="%PUBLIC_URL%/wide_image.png">
-  </head>
+    <meta name="twitter:image" content="%PUBLIC_URL%/icon.png">
+    
+    </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>현재 사용 중인 브라우저는 스크립트를 지원하지 않거나, 해당 기능이 활성화되어 있지 않습니다!</noscript>
     <div id="root"></div>
     <!--
       This HTML file is a template.

@@ -30,14 +30,14 @@ export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVid
       onClick={onClick}
     >
       <div className="w-full h-full rounded-2xl bg-background-light drop-shadow-md overflow-hidden flex popularCardContainer">
-        <div className="w-full h-full popularCardContentShinked">
-          <div className="relative max-h-[70%] w-full ">
+        <div className="w-full h-full flex flex-col popularCardContentShinked">
+          <div className="relative flex-1 max-h-[70%] w-full ">
             <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
             <div className="absolute right-2 bottom-2 text-white">{item.duration}</div>
           </div>
           <div className="line-clamp-2 p-1">{item.title}</div>
         </div>
-        <div className="absolute w-full h-full bg-background-light text-blackberry popularCardContentExpanded">
+        <div className="absolute w-full h-full bg-background-light popularCardContentExpanded">
           <div className="relative h-full min-w-1/2 max-w-[50%] ">
             <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
             <div className="absolute right-2 bottom-2 text-white">{item.duration}</div>

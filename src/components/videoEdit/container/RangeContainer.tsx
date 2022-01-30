@@ -11,7 +11,7 @@ interface IProps {
 
 function RangeContainer({ range, max, selectedLapse, onChange }: IProps) {
   const renderCustomHandle = (props: HandleProps & { index: number }) => {
-    return <CustomRangeHandle props={props} />
+    return <CustomRangeHandle key={`handle_${props.index}`} props={props} />
   }
 
   return (

@@ -7,11 +7,11 @@
 @tailwind components;
 @layer components {
   .app-content-container-md {
-    @apply flex-1 h-full max-h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-y-auto overflow-x-hidden bg-background-light pt-6;
+    @apply flex-1 h-full max-h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-auto bg-background-light pt-6;
     @apply rounded-l-3xl;
   }
   .app-content-container-sm {
-    @apply w-screen h-full max-h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-y-auto overflow-x-hidden bg-background-light pt-6;
+    @apply w-screen h-full max-h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-auto bg-background-light pt-6;
   }
 }
 

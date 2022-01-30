@@ -26,7 +26,7 @@ function SelectPlaylistView({ playlists, isSmScreen, isFirstOnAdd, onClickCancle
           )}
         >
           {playlists.map((playlist, index) => (
-            <PlaylistItem item={playlist} index={index} onClick={onClickPlaylist} />
+            <PlaylistItem key={index} item={playlist} index={index} onClick={onClickPlaylist} />
           ))}
         </div>
       </div>

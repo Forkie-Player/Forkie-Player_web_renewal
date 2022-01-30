@@ -74,7 +74,9 @@ function VideoAdd({ video }: IProps) {
 
   return (
     <div className="w-full h-full max-h-full space-y-2 pb-2 2xl:pb-4 flex flex-col">
-      <GobackLine />
+      <div className="px-2">
+        <GobackLine />
+      </div>
       <div className={clsx('flex-1 flex relative w-full overflow-hidden')}>
         <div className={clsx('flex-1 px-2 lg:pr-0', isSmScreen && 'h-full', PlayerContainerClassName)}>
           <VideoEdit

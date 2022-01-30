@@ -114,7 +114,7 @@ function VideoEdit({
 
   // 로딩의 길이를 15rem으로 두고, 로딩이 끝나면 controller를 보여주면서 정확한 높이로 맞춰짐
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col pb-1">
       <div className="w-full flex-1">
         <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
       </div>

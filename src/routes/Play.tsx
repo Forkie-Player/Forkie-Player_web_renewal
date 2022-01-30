@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import LoadingElement from '../components/elements/loading'
 import PlayIndex from '../components/play'
+import { AppName } from '../lib/strings'
 import { RootModuleType } from '../modules/moduleTypes'
 
 function Play() {
@@ -18,6 +19,10 @@ function Play() {
       setLoading(false)
     }
   }, [navigate, video, loading])
+
+  useEffect(() => {
+    document.title = `${AppName} - ${video.currentVideo.title}`
+  }, [video.currentVideo])
 
   return <>{loading ? <LoadingElement /> : <PlayIndex video={video} />}</>
 }

@@ -11,6 +11,8 @@ import { useDispatch } from 'react-redux'
 import { getUserInfo } from '../../modules/userInfo/actions'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
 import CustomModalWrapper from '../elements/CustomModalWrapper'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { NavAbsolutePathItems } from '../../lib/constants'
 
 interface IProps {
   isOpen: boolean
@@ -21,6 +23,8 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
   const [onSignInOrSignUp, setOnSignInOrSignUp] = useState<'SignIn' | 'SignUp'>('SignIn')
 
   const dispatch = useDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const onChangeFormMode = useCallback(() => {
     setOnSignInOrSignUp(prev => (prev === 'SignIn' ? 'SignUp' : 'SignIn'))
@@ -36,6 +40,9 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
   const onLogin = async (id: string, password: string) => {
     try {
       await loginApi(id, password)
+      if (location.pathname === NavAbsolutePathItems.PLAY || location.pathname === NavAbsolutePathItems.VIDEO_EDIT)
+        navigate(NavAbsolutePathItems.LIST)
+
       return onSuccessAuth()
     } catch (err) {
       return handleAuthApiError(err)

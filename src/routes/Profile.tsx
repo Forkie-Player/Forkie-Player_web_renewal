@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import LoadingElement from '../components/elements/loading'
 import Profile from '../components/profile'
+import { AppName } from '../lib/strings'
 import { RootModuleType } from '../modules/moduleTypes'
 
 const ProfilePage = () => {
@@ -16,6 +17,10 @@ const ProfilePage = () => {
     }
     setLoaded(true)
   }, [navigate, userInfo.member])
+
+  useEffect(() => {
+    document.title = `${AppName} - profile`
+  }, [])
 
   return <>{loaded ? <Profile userInfo={userInfo} /> : <LoadingElement />}</>
 }

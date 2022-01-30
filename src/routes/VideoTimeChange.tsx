@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import VideoTimeChangeIndex from '../components/videoTimeChange'
+import { AppName } from '../lib/strings'
 import { IVideoInPlaylist } from '../types'
 
 function VideoTimeChange() {
@@ -16,6 +17,10 @@ function VideoTimeChange() {
       navigate('/')
     }
   }, [state, navigate])
+
+  useEffect(() => {
+    document.title = `${AppName} - ${state.title}`
+  }, [state.title])
 
   return <VideoTimeChangeIndex video={state} />
 }

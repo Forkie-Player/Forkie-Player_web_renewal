@@ -18,7 +18,7 @@ const PopularView = forwardRef<HTMLDivElement, IProps>(
   ({ popularVideos, slidesPerView, onClickPopularVideo }: IProps, ref) => {
     return (
       <div ref={ref} className="w-full h-full max-h-full px-[5%] flex flex-col">
-        <div className="py-4 text-xl">Popular</div>
+        <div className="py-4 text-xl font-bold">Popular</div>
         <Swiper
           // install Swiper modules
           modules={[Scrollbar, Mousewheel]}

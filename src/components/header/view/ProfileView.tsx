@@ -6,6 +6,8 @@ import * as Strings from '../../../lib/strings'
 import { CustomButtonWrapper } from '../../elements/CustomButton'
 import PopperHoverWrapper from '../../elements/PopperHoverWrapper'
 
+import defaultProfileImg from '../../../assets/images/default_profile.png'
+
 interface IProps {
   isSmScreen: boolean
   userInfo: IUserInfo
@@ -22,11 +24,7 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
     <div className="flex gap-x-2 md:gap-x-4 md:basis-7/12 h-full justify-end">
       <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
         <img
-          src={
-            userInfo.profileImg !== null && userInfo.profileImg !== ''
-              ? userInfo.profileImg
-              : 'https://isumstore.co.kr/common/img/default_profile.png'
-          }
+          src={userInfo.profileImg !== null && userInfo.profileImg !== '' ? userInfo.profileImg : defaultProfileImg}
           className={clsx(
             userInfo.member && 'outline outline-2 outline-redrose',
             'h-full w-auto object-cover rounded-full aspect-square',

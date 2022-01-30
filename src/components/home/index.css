@@ -12,17 +12,3 @@
 .popularCardContentShinked {
   visibility: visible;
 }
-
-.populuarSlide:not(:hover) {
-  animation-duration: 0.15s;
-  animation-name: expand;
-  aspect-ratio: 1 / 1;
-}
-@keyframes expand {
-  0% {
-    aspect-ratio: 2 / 1;
-  }
-  100% {
-    aspect-ratio: 2 / 1;
-  }
-}

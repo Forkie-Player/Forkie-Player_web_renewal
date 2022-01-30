@@ -7,6 +7,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/keyboard'
 import 'swiper/css/autoplay'
+import ImageFallback from '../../elements/ImageFallback'
 
 const imageList = [landingFirst]
 
@@ -25,7 +26,7 @@ function CarouselView() {
       >
         {imageList.map((image, index) => (
           <SwiperSlide key={index} className="h-full w-full">
-            <img src={image} className="h-full w-full rounded-3xl object-cover" alt="slide" />
+            <ImageFallback src={image} className="h-full w-full rounded-3xl object-cover" alt="slide" />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setLoading, setUnloading } from '../../../modules/loading/actions'
@@ -17,14 +18,21 @@ function SearchbarContainer() {
 
   const onSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      dispatch(setLoading())
-      navigate('/search')
-      dispatch(getSearchResult.request(search))
-      dispatch(setUnloading())
-    } catch (err) {
-      console.log(err)
+    const trimedSearch = search.trim()
+    if (trimedSearch.length !== 0) {
+      try {
+        dispatch(setLoading())
+        navigate('/search')
+        dispatch(getSearchResult.request(trimedSearch))
+        dispatch(setUnloading())
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
+      toast.error('검색어를 입력해주세요.')
     }
+
+    setSearch(trimedSearch)
   }
 
   return <SearchbarView search={search} onChangeSearchText={onChangeSearchText} onSearch={onSearch} />

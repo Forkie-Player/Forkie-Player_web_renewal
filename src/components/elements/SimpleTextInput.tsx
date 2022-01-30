@@ -50,7 +50,7 @@ const SimpleTextInput = ({
 
   return (
     <form className="space-y-4" onSubmit={onClickComplete}>
-      <div className="text-blackberry">{title}</div>
+      <div className="text-blackberry text-center">{title}</div>
       <CustomInput value={text} error={error || errorMsg} onChange={onChangeText} {...inputProps} />
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (

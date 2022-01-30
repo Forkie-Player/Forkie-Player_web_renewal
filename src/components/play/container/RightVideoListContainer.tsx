@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { IVideoInPlaylist } from '../../../types'
-import { CustomClearButton } from '../../elements/CustomButton'
+import { CustomButton } from '../../elements/CustomButton'
 import RightVideoListView from '../view/RightVideoListView'
 import { DropResult } from 'react-beautiful-dnd'
 import * as Strings from '../../../lib/strings'
@@ -74,12 +74,16 @@ function RightVideoListContainer({
       {showPopper && (
         <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
           <div className={'border-2 relative p-4 bg-white rounded-2xl space-y-4 shadow-outer'}>
-            <div className="text-blackberry">
+            <div className="text-blackberry text-center">
               {popperMode === 'edit' ? Strings.CheckVideoEdit : Strings.CheckVideoDelete}
             </div>
             <div className="flex gap-x-4 justify-center">
-              <CustomClearButton text="아니요" type="secondary" onClick={() => setShowPopper(false)} />
-              <CustomClearButton text="네" onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton} />
+              <CustomButton text="아니요" size="small" type="secondary" onClick={() => setShowPopper(false)} />
+              <CustomButton
+                text="네"
+                size="small"
+                onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton}
+              />
             </div>
           </div>
         </PopperWrapper>

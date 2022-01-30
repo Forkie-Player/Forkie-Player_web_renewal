@@ -7,6 +7,7 @@ import { CustomButtonWrapper } from '../../elements/CustomButton'
 import PopperHoverWrapper from '../../elements/PopperHoverWrapper'
 
 import defaultProfileImg from '../../../assets/images/default_profile.png'
+import ImageFallback from '../../elements/ImageFallback'
 
 interface IProps {
   isSmScreen: boolean
@@ -23,7 +24,7 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
   return (
     <div className="flex gap-x-2 md:gap-x-4 md:basis-7/12 h-full justify-end">
       <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
-        <img
+        <ImageFallback
           src={userInfo.profileImg !== null && userInfo.profileImg !== '' ? userInfo.profileImg : defaultProfileImg}
           className={clsx(
             userInfo.member && 'outline outline-2 outline-redrose',

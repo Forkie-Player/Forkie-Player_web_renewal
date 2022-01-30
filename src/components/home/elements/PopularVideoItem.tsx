@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import React from 'react'
 import { css } from '@emotion/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
@@ -34,7 +35,7 @@ export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVid
       `}
       onClick={onClick}
     >
-      <div className="w-full h-full rounded-2xl bg-background-light drop-shadow-md overflow-hidden flex popularCardContainer">
+      <div className="popularCardContainer w-full h-full rounded-2xl bg-background-light drop-shadow-md overflow-hidden flex">
         <div className="w-full h-full flex flex-col popularCardContentShinked">
           <div className="relative h-full w-full ">
             <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />

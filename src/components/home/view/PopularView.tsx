@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import { Scrollbar, Mousewheel } from 'swiper'
-import { Swiper } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { IVideo } from '../../../types'
 
 import 'swiper/css/scrollbar'
@@ -20,7 +20,6 @@ const PopularView = forwardRef<HTMLDivElement, IProps>(
       <div ref={ref} className="w-full h-full max-h-full px-[5%] flex flex-col">
         <div className="py-4 text-xl font-bold">Popular</div>
         <Swiper
-          // install Swiper modules
           modules={[Scrollbar, Mousewheel]}
           slidesPerView={slidesPerView}
           scrollbar={{ dragClass: 'swiper-scrollbar-drag bg-blackberry-lightest' }}
@@ -37,6 +36,9 @@ const PopularView = forwardRef<HTMLDivElement, IProps>(
               onClickPopularVideo={onClickPopularVideo}
             />
           ))}
+          <SwiperSlide
+          // blank slide
+          />
         </Swiper>
       </div>
     )

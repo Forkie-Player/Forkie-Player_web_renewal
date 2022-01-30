@@ -1,32 +1,71 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import Navigation from './components/navigation'
+import { setNavClose } from './modules/navExpansion/actions'
+import Header from './components/header'
+import useScreenSize from './lib/hooks/useScreenSize'
+import { setScreenSize } from './modules/screenSize/actions'
+import { CustomToast } from './components/elements/CustomToast'
+import MyRoutes from './routes'
+import clsx from 'clsx'
+import ReactModal from 'react-modal'
+
+import * as Constants from './lib/constants'
+
+import './App.css'
+import useIsSmScreen from './lib/hooks/useIsSmScreen'
 import { RootModuleType } from './modules/moduleTypes'
-import { setNavOpen } from './modules/navExpansion'
-import Home from './routes/Home'
+import { getPopularVideoAsync } from './modules/popularVideos/actions'
+
+ReactModal.setAppElement('#root')
 
 function App() {
   const dispatch = useDispatch()
-  const navExpanded = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
+  const screenSize = useScreenSize()
+  const isSmScreen = useIsSmScreen()
+  const navExpansion = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
 
   useEffect(() => {
-    dispatch(setNavOpen())
-  }, [dispatch])
+    dispatch(setScreenSize(screenSize))
+    switch (screenSize) {
+      case Constants.screenSizeString.LG:
+      case Constants.screenSizeString.MD:
+      case Constants.screenSizeString.SM:
+      case Constants.screenSizeString.XSM:
+        dispatch(setNavClose())
+        break
+    }
+    dispatch(getPopularVideoAsync.request())
+  }, [screenSize, dispatch])
+
+  const containerClassNameMemo = useMemo(
+    () =>
+      clsx(
+        'app flex h-screen transition-[translate]',
+        isSmScreen ? (navExpansion ? 'translate-x-0 w-fit' : '-translate-x-16 w-fit') : 'w-screen',
+      ),
+    [isSmScreen, navExpansion],
+  )
+  const contentClassNameMemo = useMemo(
+    () => clsx(isSmScreen ? 'app-content-container-sm' : 'app-content-container-md'),
+    [isSmScreen],
+  )
+  const navClassNameMemo = useMemo(() => clsx('w-fit h-full'), [])
 
   return (
-    <BrowserRouter>
-      <div className="flex w-screen h-screen">
-        <div className="basis-1/7">
+    <div className={containerClassNameMemo}>
+      <BrowserRouter>
+        <div className={navClassNameMemo}>
           <Navigation />
         </div>
-        <div className="basis-6/7 bg-background-light rounded-l-3xl p-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
+        <div className={contentClassNameMemo}>
+          <Header />
+          <MyRoutes />
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+      <CustomToast />
+    </div>
   )
 }
 

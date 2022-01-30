@@ -1,8 +1,13 @@
 import React from 'react'
-import HomeIndex from '../components/home'
+import HomeComponent from '../components/home'
+import { AppName } from '../lib/strings'
 
 function Home() {
-  return <HomeIndex />
+  React.useEffect(() => {
+    document.title = `${AppName} - home`
+  }, [])
+
+  return <HomeComponent />
 }
 
 export default Home

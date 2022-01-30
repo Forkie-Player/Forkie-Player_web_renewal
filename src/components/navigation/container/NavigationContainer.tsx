@@ -1,22 +1,56 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootModuleType } from '../../../modules/moduleTypes'
-import { setNavClose, setNavOpen } from '../../../modules/navExpansion'
+import React, { useEffect, useState } from 'react'
 import NavigationView from '../view/NavigationView'
+import * as Strings from '../../../lib/strings'
+import * as Constants from '../../../lib/constants'
+import { MdHome, MdList, MdSearch } from 'react-icons/md'
+import { INavItem } from '../types'
 
-function NavigationConatainer() {
-  const navExpanded = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
-  const dispatch = useDispatch()
-
-  const onToggleNav = () => {
-    if (navExpanded) {
-      dispatch(setNavClose())
-    } else {
-      dispatch(setNavOpen())
-    }
-  }
-
-  return <NavigationView navExpanded={navExpanded} onToggleNav={onToggleNav} />
+interface IProps {
+  curPath: string
+  navExpanded: boolean
+  onToggleNav: () => void
 }
 
-export default NavigationConatainer
+const navLists: INavItem[] = [
+  {
+    to: Constants.NavAbsolutePathItems.HOME,
+    label: Strings.NavLabelItems.HOME,
+    icon: <MdHome />,
+  },
+  {
+    to: Constants.NavAbsolutePathItems.SEARCH,
+    label: Strings.NavLabelItems.SEARCH,
+    icon: <MdSearch />,
+  },
+  {
+    to: Constants.NavAbsolutePathItems.LIST,
+    label: Strings.NavLabelItems.LIST,
+    icon: <MdList />,
+  },
+]
+
+function NavigationConatainer({ curPath, navExpanded, onToggleNav }: IProps) {
+  const [curActiveIndex, setCurActiveIndex] = useState(0)
+  const [navIndicatorBoxTrnasform, setNavIndicatorBoxTrnasform] = useState(`-${-0.5 + navLists.length * 2.5}rem`)
+
+  useEffect(() => {
+    navLists.forEach(({ to }, index) => {
+      if (index === 0 ? curPath === to : curPath.startsWith(to)) {
+        setCurActiveIndex(index)
+        setNavIndicatorBoxTrnasform(`-${-0.5 + (navLists.length - index) * 2.5}rem`)
+      }
+    })
+  }, [curPath])
+
+  return (
+    <NavigationView
+      curActiveIndex={curActiveIndex}
+      navExpanded={navExpanded}
+      navIndicatorBoxTrnasform={navIndicatorBoxTrnasform}
+      navLists={navLists}
+      onToggleNav={onToggleNav}
+    />
+  )
+}
+
+export default React.memo(NavigationConatainer)

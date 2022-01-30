@@ -1,0 +1,4 @@
+/* firefox에서 플레이어 주위로 outline이 생기는걸 지움 */
+ #widget4:focus-visible {
+  outline: 0;
+}

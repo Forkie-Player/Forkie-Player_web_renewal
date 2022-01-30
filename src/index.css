@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.html {
-  font-size: 10px;
+html {
+  font-family: 'Noto Sans KR', sans-serif !important;
+  word-break: keep-all;
 }
 
 :root {
@@ -15,6 +16,72 @@
   --blackberry-lightest: #acabaf;
   --background-light: #f9f9f9;
   --background-dark: #555555;
+}
 
-  background-color: var(--primary-redrose-light);
+/* swiper 라이브러리의 기본 색상 변경*/
+:root {
+  --swiper-navigation-color: var(--blackberry);
+  --swiper-pagination-color: var(--blackberry);
+  --swiper-scrollbar-color: var(--primary-redrose);
+}
+
+/* 스크롤바 스타일 변경. 크롬에서만 적용됨. */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--blackberry-lightest);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blackberry-light);
+}
+
+/* autocomplete 시 배경화면 변하는 거 없애기 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* input:focus 시 생기는 outline 제거 */
+input:focus {
+  outline: none;
+}
+
+/* rc-slider 핸들 드래그 시 생기는 그림자 커스텀*/
+.rc-slider-handle-dragging {
+  box-shadow: 0 0 5px var(--primary-redrose-light) !important;
+}
+.rc-slider-handle:active {
+  box-shadow: 0 0 5px var(--primary-redrose-light) !important;
+}
+.rc-slider-dot-active {
+  border-color: var(--blackberry) !important;
+}
+
+/* 텍스트 선택 안되게 하고 싶으면 이 클래스 추가 */
+.unselectable {
+  user-select: none;
+}
+
+/* 스크롤바 없애고 싶을때 */
+/* Hide scrollbar for IE, Edge and Firefox */
+.noscrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.noscrollbar::-webkit-scrollbar {
+  display: none;
 }

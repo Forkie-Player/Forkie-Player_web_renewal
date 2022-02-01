@@ -14,7 +14,7 @@ export default function* handleSagaError(err: unknown, failure: (payload: string
         break
     }
   }
-  yield Sentry.captureException(`Catched Error : ${err}`)
+  Sentry.captureException(`Catched Error : ${err}`)
   yield put(failure(errorMessage))
   toast.error(errorMessage)
 }

@@ -48,19 +48,37 @@
     <meta name="twitter:description" content="유튜브 영상의 원하는 부분만을 정해서 플레이리스트를 만들 수 있습니다.">
     <meta name="twitter:image" content="%PUBLIC_URL%/icon.png">
     
+
+    <!--
+      index.html에 적용할 css 파일 import
+    -->
+    <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/index.css" />
+    <style>
+      /* css 파일을 연동하는 시간을 아끼기 위한 내부 스타일시트 선언*/
+      #loadingElement {
+        animation: 1s linear infinite rotateLoadingElement;
+      }
+      @keyframes rotateLoadingElement {
+        from {
+          transform:translate(-50%,-50%) rotate(0deg);
+        }
+        to {
+          transform:translate(-50%,-50%) rotate(360deg);
+        }
+      }
+    </style>
     </head>
   <body>
     <noscript>현재 사용 중인 브라우저는 스크립트를 지원하지 않거나, 해당 기능이 활성화되어 있지 않습니다!</noscript>
     <div id="root"></div>
+
     <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
+      번들을 다운로드 받는 동안, 아래 loading화면을 띄움
+      css 파일을 연동하는 시간도 아끼기 위해 inline style도 사용함
+      번들 다운로드 후, 내부 api 작업을 위한 로딩은 #root 안에서 해결
     -->
+    <div id="loading">
+        <img id="loadingElement" src="%PUBLIC_URL%/loading.png" style="position:absolute; width:100px; top:50%; left:50%;"/>
+    </div>
   </body>
 </html>

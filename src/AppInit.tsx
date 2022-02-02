@@ -41,6 +41,7 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const authenticationInit = async () => {
       try {
+        console.log('asdasdad')
         await authInit()
         dispatch(getIsFirst())
         dispatch(getUserInfo.request())
@@ -81,7 +82,7 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
   }, [dispatch])
 
   if (preLoading) {
-    return <LoadingElement />
+    return <LoadingElement className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
   }
 
   return <>{children}</>

@@ -11,15 +11,27 @@ interface IProps {
   onClickPasswordChangeButton: (e: React.MouseEvent<HTMLDivElement>) => any
 }
 
+/**
+ * 파이어폭스는 이미지의 너비를 그대로 받으려고 함
+ * 이때 aspect-ratio 도 파이어폭스에선 너비의 제한으로 인정하지 않음.
+ * 따라서 너비를 정확히 지정해줘야 파이어폭스에서는 작동함
+ * 하지만 height를 기준으로 width를 지정하도록 하였는데, 만약 정확히 height로 지정하려면 JS를 사용하여야하고,
+ * 이는 성능 저하를 불러일으키며, 무엇보다 시도해봤는데 추가적인 손질이 더 필요했음
+ * 따라서 svg를 사용하여 너비를 차지하게 하고, img는 absolute로 띄워 너비에 영향을 주지 않도록 함.
+ */
+
 const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
   ({ userInfo, onWithdrawl, onEditProfileImg, onClickPasswordChangeButton }: IProps, ref) => {
     return (
       <div ref={ref} className="pb-2">
         <div className="h-full grid grid-rows-2 grid-cols-[max-content_auto_max-content] gap-x-4 ">
           <div className="relative row-span-2 h-full aspect-[1.1] scale-110 sm:aspect-[5/4] sm:scale-125 origin-bottom-left">
+            <svg viewBox="0 0 50 50" className="h-full aspect-square"></svg>
             <img
               src={userInfo.profileImg !== null ? userInfo.profileImg : defaultProfileImage}
-              className={'outline outline-2 outline-redrose h-full object-cover rounded-full aspect-square'}
+              className={
+                'absolute top-0 left-0 outline outline-2 outline-redrose h-full aspect-square object-cover rounded-full'
+              }
               alt="profile"
             />
             <div>
@@ -27,18 +39,18 @@ const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
                 <CustomIconButton
                   icon={<MdEdit />}
                   type="none"
-                  className="z-50 absolute bottom-0 right-[10%] sm:right-[20%] bg-blackberry-lightest text-white p-2 rounded-full active:bg-blackberry-lightest"
+                  className=" absolute bottom-0 right-[10%] sm:right-[20%] z-50 bg-blackberry-lightest text-white p-2 rounded-full active:bg-blackberry-lightest"
                 />
               </label>
               <input id="imageInput" type="file" className="hidden" accept="image/*" onChange={onEditProfileImg} />
             </div>
           </div>
-          <div className="row-span-1 md:row-span-2 relative col-span-2 md:col-span-1">
-            <div className="absolute bottom-0">
-              <p className="text-lg md:text-2xl">{userInfo.loginId}</p>
-              <p className="text-blackberry-lightest line-clamp-1 text-sm sm:text-base">
+          <div className="w-full row-span-1 md:row-span-2 col-span-2 md:col-span-1">
+            <div className="h-full flex flex-col justify-end">
+              <div className="text-lg md:text-2xl">{userInfo.loginId}</div>
+              <div className="text-blackberry-lightest line-clamp-1 text-sm sm:text-base">
                 가입일. {userInfo.createdAt.toString().slice(0, 10)}
-              </p>
+              </div>
             </div>
           </div>
           <div className="unselectable col-span-2 md:col-span-1 md:row-span-2 flex md:flex-col justify-start sm:justify-end items-end md:items-start">

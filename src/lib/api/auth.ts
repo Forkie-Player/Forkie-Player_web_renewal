@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { logEvent } from 'firebase/analytics'
+import { analytics } from '../../firebaseInit'
 import { IToken } from '../../types'
 import { setTokens } from '../utils/auth'
 import { removeCookie } from '../utils/cookie'
@@ -32,6 +34,7 @@ export const login = async (id: string, pw: string) => {
     password: pw,
     isPC: true,
   })
+  logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
   await setTokens(res.data.response)
 }
 
@@ -41,6 +44,7 @@ export const reissue = async (tokens: IToken) => {
     isPC: true,
   })
   await setTokens(res.data.response)
+  logEvent(analytics, '리이슈')
   return res.data
 }
 
@@ -54,6 +58,7 @@ export const nonSignUp = async (newId: string) => {
     deviceId: newId,
     isPC: true,
   })
+  logEvent(analytics, '비회원 회원가입')
   return res.data
 }
 
@@ -82,6 +87,7 @@ export const userSignUp = async (id: string, pw: string) => {
     password: pw,
     isPC: true,
   })
+  logEvent(analytics, '회원가입')
 }
 
 export const updateProfileImag = async (form: FormData) => {

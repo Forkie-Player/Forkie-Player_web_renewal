@@ -11,6 +11,9 @@ import createSagaMiddleware from 'redux-saga'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import * as Sentry from '@sentry/react'
+import { Integrations } from '@sentry/tracing'
+
 const sagaMiddleware = createSagaMiddleware()
 
 const store =
@@ -20,6 +23,13 @@ const store =
 
 const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
+
+Sentry.init({
+  dsn: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_SENTRY_DSN,
+  integrations: [new Integrations.BrowserTracing()],
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 0.5,
+})
 
 ReactDOM.render(
   <React.StrictMode>

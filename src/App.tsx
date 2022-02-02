@@ -29,7 +29,6 @@ function App() {
   useEffect(() => {
     dispatch(setScreenSize(screenSize))
     switch (screenSize) {
-      case Constants.screenSizeString.LG:
       case Constants.screenSizeString.MD:
       case Constants.screenSizeString.SM:
       case Constants.screenSizeString.XSM:

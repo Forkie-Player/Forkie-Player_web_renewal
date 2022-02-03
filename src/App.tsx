@@ -1,42 +1,22 @@
-import React, { useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Navigation from './components/navigation'
-import { setNavClose } from './modules/navExpansion/actions'
 import Header from './components/header'
-import useScreenSize from './lib/hooks/useScreenSize'
-import { setScreenSize } from './modules/screenSize/actions'
 import { CustomToast } from './components/elements/CustomToast'
 import MyRoutes from './routes'
 import clsx from 'clsx'
 import ReactModal from 'react-modal'
 
-import * as Constants from './lib/constants'
-
 import './App.css'
 import useIsSmScreen from './lib/hooks/useIsSmScreen'
 import { RootModuleType } from './modules/moduleTypes'
-import { getPopularVideoAsync } from './modules/popularVideos/actions'
 
 ReactModal.setAppElement('#root')
 
 function App() {
-  const dispatch = useDispatch()
-  const screenSize = useScreenSize()
   const isSmScreen = useIsSmScreen()
   const navExpansion = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
-
-  useEffect(() => {
-    dispatch(setScreenSize(screenSize))
-    switch (screenSize) {
-      case Constants.screenSizeString.MD:
-      case Constants.screenSizeString.SM:
-      case Constants.screenSizeString.XSM:
-        dispatch(setNavClose())
-        break
-    }
-    dispatch(getPopularVideoAsync.request())
-  }, [screenSize, dispatch])
 
   const containerClassNameMemo = useMemo(
     () =>

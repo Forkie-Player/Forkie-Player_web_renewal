@@ -14,6 +14,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
 
+/**
+ * 리덕스 관련 초기화 작업들
+ */
 const sagaMiddleware = createSagaMiddleware()
 
 const store =
@@ -24,6 +27,9 @@ const store =
 const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
 
+/**
+ * Sentry 관련 초기화 작업들
+ */
 Sentry.init({
   dsn: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_SENTRY_DSN,
   integrations: [new Integrations.BrowserTracing()],

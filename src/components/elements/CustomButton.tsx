@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import { MdEdit } from 'react-icons/md'
+import { twMerge } from 'tailwind-merge'
 
 interface IProps {
   type?: 'primary' | 'secondary' | 'none'
@@ -54,7 +55,7 @@ const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
         ref={ref}
         {...props}
         className={clsx(
-          'max-w-fit min-h-fit max-h-fit px-2 py-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+          'max-w-fit min-h-fit max-h-fit px-2 py-1 select-none text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
           props.className,
@@ -73,7 +74,7 @@ const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
         {...props}
         ref={ref}
         className={clsx(
-          'max-w-fit max-h-8 p-1 unselectable text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+          'max-w-fit max-h-8 p-1 select-none text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
           type === 'primary' && 'text-redrose',
           type === 'secondary' && 'text-blackberry',
           props.className,
@@ -85,13 +86,15 @@ const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
   },
 )
 
-const CustomButtonWrapper = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
-  ({ children }: { children: React.ReactNode }, ref) => {
+const CustomButtonWrapper = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>, ref) => {
     return (
       <div
         ref={ref}
-        className={clsx(
-          'unselectable p-1 cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+        {...props}
+        className={twMerge(
+          'select-none p-1 cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
+          props.className,
         )}
       >
         {children}

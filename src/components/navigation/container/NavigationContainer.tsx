@@ -31,13 +31,13 @@ const navLists: INavItem[] = [
 
 function NavigationConatainer({ curPath, navExpanded, onToggleNav }: IProps) {
   const [curActiveIndex, setCurActiveIndex] = useState(0)
-  const [navIndicatorBoxTrnasform, setNavIndicatorBoxTrnasform] = useState(`-${-0.5 + navLists.length * 2.5}rem`)
+  const [navIndicatorTrnasformOffset, setNavIndicatorTrnasformOffset] = useState(`-${-0.5 + navLists.length * 2.5}rem`)
 
   useEffect(() => {
     navLists.forEach(({ to }, index) => {
       if (index === 0 ? curPath === to : curPath.startsWith(to)) {
         setCurActiveIndex(index)
-        setNavIndicatorBoxTrnasform(`-${-0.5 + (navLists.length - index) * 2.5}rem`)
+        setNavIndicatorTrnasformOffset(`-${-0.5 + (navLists.length - index) * 2.5}rem`)
       }
     })
   }, [curPath])
@@ -46,7 +46,7 @@ function NavigationConatainer({ curPath, navExpanded, onToggleNav }: IProps) {
     <NavigationView
       curActiveIndex={curActiveIndex}
       navExpanded={navExpanded}
-      navIndicatorBoxTrnasform={navIndicatorBoxTrnasform}
+      navIndicatorTrnasformOffset={navIndicatorTrnasformOffset}
       navLists={navLists}
       onToggleNav={onToggleNav}
     />

@@ -9,25 +9,26 @@ import clsx from 'clsx'
 import ReactModal from 'react-modal'
 
 import './App.css'
-import useIsSmScreen from './lib/hooks/useIsSmScreen'
 import { RootModuleType } from './modules/moduleTypes'
 
 ReactModal.setAppElement('#root')
 
 function App() {
-  const isSmScreen = useIsSmScreen()
-  const navExpansion = useSelector(({ navExpansion }: RootModuleType) => navExpansion)
+  const { navExpansion, isSmScreen } = useSelector(({ navExpansion, isSmScreen }: RootModuleType) => ({
+    navExpansion,
+    isSmScreen,
+  }))
 
   const containerClassNameMemo = useMemo(
     () =>
       clsx(
-        'app flex h-screen transition-[translate]',
+        'app flex h-screen max-h-screen transition-[translate]',
         isSmScreen ? (navExpansion ? 'translate-x-0 w-fit' : '-translate-x-16 w-fit') : 'w-screen',
       ),
     [isSmScreen, navExpansion],
   )
   const contentClassNameMemo = useMemo(
-    () => clsx(isSmScreen ? 'app-content-container-sm' : 'app-content-container-md'),
+    () => clsx('app-content-container', isSmScreen ? 'app-content-container-sm' : 'app-content-container-md'),
     [isSmScreen],
   )
   const navClassNameMemo = useMemo(() => clsx('w-fit h-full'), [])

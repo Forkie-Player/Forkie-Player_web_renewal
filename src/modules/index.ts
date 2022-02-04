@@ -26,6 +26,8 @@ import videoSaga from './video/saga'
 import popularVideos from './popularVideos'
 import popularVideosSaga from './popularVideos/saga'
 
+import isSmScreen from './isSmScreen'
+
 const persistConfig = {
   key: 'root',
   // localStorage에 저장합니다.
@@ -45,6 +47,7 @@ const rootReducer = combineReducers({
   playlist,
   video,
   popularVideos,
+  isSmScreen,
 })
 
 // react saga 연결

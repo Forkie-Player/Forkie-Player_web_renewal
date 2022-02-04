@@ -14,6 +14,7 @@ import useScreenSize from './lib/hooks/useScreenSize'
 import { setScreenSize } from './modules/screenSize/actions'
 
 import * as Constants from './lib/constants'
+import { setIsNotSmScreen, setIsSmScreen } from './modules/isSmScreen/actions'
 
 export default function AppInit({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
@@ -88,17 +89,23 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
   }, [dispatch])
 
   /**
-   * 1. screenSize가 변경될때마다 리덕스에 저장된 screenSize를 업데이트함.
+   * 1. screenSize가 변경될 때마다 리덕스에 저장된 screenSize를 업데이트함.
    * 2. screenSize가 작을시, 자동으로 nav를 닫는다.
    */
   useEffect(() => {
     dispatch(setScreenSize(screenSize))
     switch (screenSize) {
       case Constants.screenSizeString.MD:
+        dispatch(setIsNotSmScreen())
+        dispatch(setNavClose())
+        break
       case Constants.screenSizeString.SM:
       case Constants.screenSizeString.XSM:
         dispatch(setNavClose())
+        dispatch(setIsSmScreen())
         break
+      default:
+        dispatch(setIsNotSmScreen())
     }
   }, [screenSize, dispatch])
 

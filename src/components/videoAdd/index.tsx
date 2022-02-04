@@ -7,11 +7,11 @@ import GobackLine from '../elements/GobackLine'
 import clsx from 'clsx'
 import './index.css'
 import SelectPlaylistContainer from './container/SelectPlaylistContainer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addVideoAsync } from '../../modules/playlist/actions'
 import { clearIsFirst } from '../../modules/isFirst/actions'
 import { isFirstConstants } from '../../lib/constants'
-import useIsSmScreen from '../../lib/hooks/useIsSmScreen'
+import { RootModuleType } from '../../modules/moduleTypes'
 
 interface IProps {
   video: IVideo
@@ -20,7 +20,7 @@ interface IProps {
 function VideoAdd({ video }: IProps) {
   const [videoState, setVideoState] = useState<IVideoHasRange>({ ...video, start: 0, end: 0 })
   const [showPlaylists, setShowPlaylists] = useState(false)
-  const isSmScreen = useIsSmScreen()
+  const isSmScreen = useSelector(({ isSmScreen }: RootModuleType) => isSmScreen)
   const dispatch = useDispatch()
 
   const onPlayerReady = useCallback((endTime: number) => {

@@ -70,11 +70,6 @@ input:focus {
   border-color: var(--blackberry) !important;
 }
 
-/* 텍스트 선택 안되게 하고 싶으면 이 클래스 추가 */
-.unselectable {
-  user-select: none;
-}
-
 /* 스크롤바 없애고 싶을때 */
 /* Hide scrollbar for IE, Edge and Firefox */
 .noscrollbar {
@@ -84,4 +79,24 @@ input:focus {
 /* Hide scrollbar for Chrome, Safari and Opera */
 .noscrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/** form 스타일 */
+.form_field:placeholder-shown ~ .form__label {
+  font-size: 1rem;
+  top: 0;
+  cursor: text;
+}
+.form_field:focus ~ .form__label {
+  top: -1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-redrose-light);
+}
+.form_field:not(:focus) ~ .form__label {
+  color: var(--blackberry-lightest);
+}
+.form_field:not(:placeholder-shown) ~ .form__label {
+  top: -1.2rem;
+  font-size: 1rem;
 }

@@ -72,3 +72,5 @@ export const auth = {
 }
 
 export const THANKYOU = '감사합니다!!'
+
+export const NoSearchString = '검색어를 입력해주세요.'

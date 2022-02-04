@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { setLoading, setUnloading } from '../../../modules/loading/actions'
-import { getSearchResult } from '../../../modules/searchResult/actions'
+import { NoSearchString } from '../../../lib/strings'
 import SearchbarView from '../view/SearchbarView'
 
-function SearchbarContainer() {
-  const [search, setSearch] = useState('')
+interface IProps {
+  onSearch: (search: string) => void
+}
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
+  const [search, setSearch] = useState('')
 
   const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -20,16 +18,9 @@ function SearchbarContainer() {
     e.preventDefault()
     const trimedSearch = search.trim()
     if (trimedSearch.length !== 0) {
-      try {
-        dispatch(setLoading())
-        navigate('/search')
-        dispatch(getSearchResult.request(trimedSearch))
-        dispatch(setUnloading())
-      } catch (err) {
-        console.log(err)
-      }
+      onSearchCallback(trimedSearch)
     } else {
-      toast.error('검색어를 입력해주세요.')
+      toast.error(NoSearchString)
     }
 
     setSearch(trimedSearch)
@@ -38,4 +29,4 @@ function SearchbarContainer() {
   return <SearchbarView search={search} onChangeSearchText={onChangeSearchText} onSearch={onSearch} />
 }
 
-export default SearchbarContainer
+export default React.memo(SearchbarContainer)

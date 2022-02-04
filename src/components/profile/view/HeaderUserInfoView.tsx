@@ -2,7 +2,7 @@ import React from 'react'
 import { MdDeleteForever, MdEdit, MdOutlineAutorenew } from 'react-icons/md'
 import { IUserInfo } from '../../../types'
 import { CustomClearButton, CustomIconButton } from '../../elements/CustomButton'
-import defaultProfileImage from '../../../assets/images/default_profile.png'
+import ProfileImage from '../../elements/ProfileImage'
 
 interface IProps {
   userInfo: IUserInfo
@@ -27,13 +27,7 @@ const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
         <div className="h-full grid grid-rows-2 grid-cols-[max-content_auto_max-content] gap-x-4 ">
           <div className="relative row-span-2 h-full aspect-[1.1] scale-110 sm:aspect-[5/4] sm:scale-125 origin-bottom-left">
             <svg viewBox="0 0 50 50" className="h-full aspect-square"></svg>
-            <img
-              src={userInfo.profileImg !== null ? userInfo.profileImg : defaultProfileImage}
-              className={
-                'absolute top-0 left-0 outline outline-2 outline-redrose h-full aspect-square object-cover rounded-full'
-              }
-              alt="profile"
-            />
+            <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} className="absolute top-0 left-0" />
             <div>
               <label htmlFor="imageInput">
                 <CustomIconButton

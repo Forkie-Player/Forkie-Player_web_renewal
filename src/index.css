@@ -100,3 +100,11 @@ input:focus {
   top: -1.2rem;
   font-size: 1rem;
 }
+
+/* absolute로 부모 요소의 중앙에 오게하고 싶을 때 */
+.absolute-place-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

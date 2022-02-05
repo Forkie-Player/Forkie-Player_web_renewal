@@ -17,15 +17,14 @@ interface IProps {
 const PopularView = forwardRef<HTMLDivElement, IProps>(
   ({ popularVideos, slidesPerView, onClickPopularVideo }: IProps, ref) => {
     return (
-      <div ref={ref} className="w-full h-full max-h-full px-[5%] flex flex-col">
+      <div ref={ref} className="w-full h-full px-[5%] flex flex-col">
         <div className="py-4 text-xl font-bold">Popular</div>
         <Swiper
           modules={[Scrollbar, Mousewheel]}
           slidesPerView={slidesPerView}
           scrollbar={{ dragClass: 'swiper-scrollbar-drag bg-blackberry-lightest' }}
           mousewheel
-          className="w-full"
-          wrapperTag="div"
+          className="w-full flex-1"
         >
           {popularVideos.map((item, index) => (
             <PopularVideoItem
@@ -33,11 +32,10 @@ const PopularView = forwardRef<HTMLDivElement, IProps>(
               item={item}
               index={index}
               slidesPerView={slidesPerView}
-              onClickPopularVideo={onClickPopularVideo}
+              onClick={onClickPopularVideo}
             />
           ))}
-          <SwiperSlide
-          />
+          <SwiperSlide />
         </Swiper>
       </div>
     )

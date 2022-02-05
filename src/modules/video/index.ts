@@ -15,14 +15,17 @@ const initialState: TVideoStoreType = {
 
 const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState, {
   [videoActionTypes.GET_VIDEO]: (state, action) => ({ ...state, error: null, success: false, pending: true }),
-  [videoActionTypes.GET_VIDEO_SUCCESS]: (state, action) => ({
-    ...state,
-    success: true,
-    pending: false,
-    playlistId: action.payload.playlistId,
-    currentVideo: action.payload.items[0],
-    items: action.payload.items.sort(sortPlaylistBySequence),
-  }),
+  [videoActionTypes.GET_VIDEO_SUCCESS]: (state, action) => {
+    const sortedItems = action.payload.items.sort(sortPlaylistBySequence)
+    return {
+      ...state,
+      success: true,
+      pending: false,
+      playlistId: action.payload.playlistId,
+      currentVideo: sortedItems[0],
+      items: sortedItems,
+    }
+  },
   [videoActionTypes.GET_VIDEO_ERROR]: (state, action) => ({
     ...state,
     success: false,

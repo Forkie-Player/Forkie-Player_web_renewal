@@ -1,6 +1,7 @@
 import { createAction, createAsyncAction } from 'typesafe-actions'
-import { IChangeVideoOrderInPlaylistRequest, IEditVideoTimeRangeRequest, ISeqListItem } from '../../lib/api/types'
+import { IEditVideoTimeRangeRequest, ISeqListItem } from '../../lib/api/types'
 import { IVideoInPlaylist } from '../../types'
+import { IChangeVideoOrderAsyncRequest } from './types'
 
 // 액션 타입
 const GET_VIDEO = 'video/GET_VIDEO' as const
@@ -59,7 +60,7 @@ export const changeVideoOrderAsync = createAsyncAction(
   CHANGE_VIDEO_ORDER,
   CHANGE_VIDEO_ORDER_SUCCESS,
   CHANGE_VIDEO_ORDER_ERROR,
-)<IChangeVideoOrderInPlaylistRequest, ISeqListItem[], string>()
+)<IChangeVideoOrderAsyncRequest, ISeqListItem[], string>()
 
 export const videoActions = {
   getVideoAsync,

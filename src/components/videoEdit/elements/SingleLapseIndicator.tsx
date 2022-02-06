@@ -1,13 +1,12 @@
-import React, { HTMLProps } from 'react'
+import React from 'react'
 import { GoTriangleDown } from 'react-icons/go'
 import secondsToHHMMSS from '../../../lib/utils/secondsToHHMMSS'
 
-interface IProps {
-  props?: HTMLProps<HTMLDivElement>
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   second: number
 }
 
-const SingleLapseIndicator = ({ props, second }: IProps) => {
+const SingleLapseIndicator = ({ second, ...props }: IProps) => {
   return (
     <div
       {...props}

@@ -22,6 +22,7 @@ export const Profile = {
 
 export const Login = '로그인'
 export const Logout = '로그아웃'
+export const Playlists = '재생목록'
 
 export const SelectPlaylist = '추가하실 플레이리스트를 선택하세요'
 export const TypeNewPlaylistName = '새 플레이리스트 이름을 입력하세요'
@@ -74,3 +75,12 @@ export const auth = {
 export const THANKYOU = '감사합니다!!'
 
 export const NoSearchString = '검색어를 입력해주세요.'
+
+export const ButtonStrings = {
+  APPLY: '적용',
+  ADD: '추가',
+  DELETE: '삭제',
+  EDIT_TITLE: '타이틀 수정',
+  YES: '네',
+  NO: '아니오',
+}

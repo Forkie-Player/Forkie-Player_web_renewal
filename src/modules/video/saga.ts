@@ -1,9 +1,18 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { changeVideoOrder, deleteVideo, editVideoTimeRange, getVideoList } from '../../lib/api/videos'
 import { changeVideoOrderAsync, deleteVideoAsync, editTimeRangeAsync, getVideoAsync } from './actions'
 
-import { IChangeVIdeoOrderInPlaylistSuccess, IDeleteVideoSuccess, IGetVideoListSuccess } from '../../lib/api/types'
+import {
+  IChangeVideoOrderInPlaylistRequest,
+  IChangeVIdeoOrderInPlaylistSuccess,
+  IDeleteVideoSuccess,
+  IGetVideoListSuccess,
+} from '../../lib/api/types'
 import handleSagaError from '../handleSagaError'
+import { RootModuleType } from '../moduleTypes'
+import { TVideoStoreType } from './types'
+
+const getState = (state: RootModuleType) => state.video
 
 function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
   try {
@@ -34,7 +43,19 @@ function* editTimeRangeSaga(action: ReturnType<typeof editTimeRangeAsync.request
 
 function* changeVideoOrderSaga(action: ReturnType<typeof changeVideoOrderAsync.request>) {
   try {
-    const res: IChangeVIdeoOrderInPlaylistSuccess = yield call(changeVideoOrder, action.payload)
+    const state: TVideoStoreType = yield select(getState)
+    const { from, to } = action.payload
+    const request: IChangeVideoOrderInPlaylistRequest = {
+      playlistId: state.playlistId as number,
+      seqList: state.items.map((item, index) => {
+        return {
+          id: item.id,
+          sequence: from !== index ? (to !== index ? item.sequence : from + 1) : to + 1,
+        }
+      }),
+    }
+
+    const res: IChangeVIdeoOrderInPlaylistSuccess = yield call(changeVideoOrder, request)
     yield put(changeVideoOrderAsync.success(res.response))
   } catch (err) {
     yield handleSagaError(err, changeVideoOrderAsync.failure)

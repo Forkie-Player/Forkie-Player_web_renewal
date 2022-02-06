@@ -18,11 +18,11 @@ export interface IIconButtonProps extends IProps, React.HTMLAttributes<HTMLDivEl
 
 const getElementSizeWrapper = (size: string) => {
   if (size === 'small') {
-    return 'w-20 h-10 rounded-xl text-base leading-8'
+    return 'w-20 h-10 rounded-xl text-base leading-10'
   } else if (size === 'medium') {
-    return 'w-24 h-12 rounded-xl text-lg leading-10'
+    return 'w-24 h-12 rounded-xl text-lg leading-[3rem]'
   } else if (size === 'large') {
-    return 'w-28 h-14 rounded-2xl text-xl leading-[3rem]'
+    return 'w-28 h-14 rounded-2xl text-xl leading-[3.5rem]'
   } else {
     return 'h-fit rounded-xl text-base'
   }

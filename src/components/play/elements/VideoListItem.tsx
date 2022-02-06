@@ -73,7 +73,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
             <div className="flex flex-col justify-between py-1">
               <div className="line-clamp-1 2xl:line-clamp-2">{video.title}</div>
               <div className="text-blackberry-light">
-                <TimeLapse range={[video.start, video.end]} gap={2} />
+                <TimeLapse range={[video.start, video.end]} className="gap-x-2" />
               </div>
               <div className="flex gap-x-2 text-lg">
                 <CustomIconButton icon={<MdEdit />} onClick={onClickEditCallback} type="secondary" />

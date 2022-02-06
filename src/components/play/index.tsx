@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeVideoOrderAsync, deleteVideoAsync, updateCurrentVideo } from '../../modules/video/actions'
-import GobackLine from '../elements/GobackLine'
 
 import * as Constants from '../../lib/constants'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
@@ -11,8 +10,8 @@ import { TVideoStoreType } from '../../modules/video/types'
 import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
 import { IVideoInPlaylist } from '../../types'
 import { DropResult } from 'react-beautiful-dnd'
-import { IChangeVideoOrderInPlaylistRequest } from '../../lib/api/types'
 import PlayContentContainer from './container/PlayContentContainer'
+import { RootModuleType } from '../../modules/moduleTypes'
 
 interface IProps {
   video: TVideoStoreType
@@ -25,9 +24,11 @@ export default function Play({ video }: IProps) {
   const { items: videoList, currentVideo } = video
   const status = useDispatchInteraction(video)
   const playerRef = useRef<ReactPlayer>(null)
+  const screenSize = useSelector((state: RootModuleType) => state.screenSize)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  // 입력으로 들어온 영상의 index를 반환. 없으면 -1를 반환.
   const getVideoIndex = useCallback(
     (curVideo: IVideoInPlaylist) => {
       return videoList.findIndex(v => v.id === curVideo.id)
@@ -44,6 +45,9 @@ export default function Play({ video }: IProps) {
     }
   }, [videoList, currentVideo, dispatch, getVideoIndex])
 
+  /**
+   * 사용자가 리스트에 있는 영상을 눌렀을때. 그 영상을 재생시킴
+   */
   const onClickVideoListItem = useCallback(
     (item: IVideoInPlaylist) => {
       dispatch(updateCurrentVideo(item))
@@ -54,8 +58,6 @@ export default function Play({ video }: IProps) {
   /**
    * 비디오 삭제
    * 삭제 완료시
-   *  현재 재생중인 동영상이면, 다음 영상 재생(마지막 영상일 경우 첫번째 영상)
-   *  현재 재생중인 동영상이 아니면, 현재 재생중인 동영상 유지
    *  첫번째 영상이면, 썸네일 변경
    *  남은 영상이 없으면, 재생목록으로 이동
    */
@@ -71,22 +73,14 @@ export default function Play({ video }: IProps) {
     if (inProgressingDeleteIdx !== null) {
       switch (status) {
         case 'SUCCESS':
-          // 이미 삭제 된 후의 index
-          const currentVideoIndex = getVideoIndex(currentVideo)
-          if (currentVideoIndex === -1) {
-            if (inProgressingDeleteIdx >= videoList.length) {
-              dispatch(updateCurrentVideo(videoList[0]))
-            } else {
-              dispatch(updateCurrentVideo(videoList[inProgressingDeleteIdx]))
-            }
-          }
-
+          // 첫번째 영상을 삭제했을 경우
           if (inProgressingDeleteIdx === 0) {
             if (videoList.length === 0) {
+              // 남은 영상이 없음. 뒤로가기
               if (video.playlistId !== null) {
                 dispatch(clearThumbnail(video.playlistId))
               }
-              navigate(-1)
+              navigate(Constants.NavAbsolutePathItems.LIST)
             } else {
               if (video.playlistId !== null) {
                 dispatch(setThumbnail(video.playlistId, videoList[0].thumbnail))
@@ -105,6 +99,7 @@ export default function Play({ video }: IProps) {
     [navigate],
   )
 
+  // 비디오 순서 변경
   const onVideoListDragEnd = useCallback(
     (result: DropResult) => {
       const from = result.source.index,
@@ -113,20 +108,11 @@ export default function Play({ video }: IProps) {
         return
       }
       if (to !== undefined) {
-        const request: IChangeVideoOrderInPlaylistRequest = {
-          playlistId: video.playlistId as number,
-          seqList: video.items.map((item, index) => {
-            return {
-              id: item.id,
-              sequence: from !== index ? (to !== index ? item.sequence : from + 1) : to + 1,
-            }
-          }),
-        }
         setIsPendingChangeVideoOrder(true)
-        dispatch(changeVideoOrderAsync.request(request))
+        dispatch(changeVideoOrderAsync.request({ from: from, to: to }))
       }
     },
-    [dispatch, video],
+    [dispatch],
   )
 
   useEffect(() => {
@@ -139,23 +125,17 @@ export default function Play({ video }: IProps) {
   }, [isPendingChangeVideoOrder, status])
 
   return (
-    <div className="w-full h-full flex flex-col overflow-x-hidden overflow-y-auto">
-      <div className="px-1">
-        <GobackLine />
-      </div>
-      <div className="lg:flex-1 lg:overflow-hidden px-1 lg:pr-0">
-        <PlayContentContainer
-          playerRef={playerRef}
-          currentVideo={currentVideo}
-          videoList={videoList}
-          isPendingChangeVideoOrder={isPendingChangeVideoOrder}
-          onClickVideoListItem={onClickVideoListItem}
-          onClickEdit={onClickEdit}
-          onClickDelete={onClickDelete}
-          onVideoListDragEnd={onVideoListDragEnd}
-          onVideoEnd={onVideoEnd}
-        />
-      </div>
-    </div>
+    <PlayContentContainer
+      playerRef={playerRef}
+      screenSize={screenSize}
+      currentVideo={currentVideo}
+      videoList={videoList}
+      isPendingChangeVideoOrder={isPendingChangeVideoOrder}
+      onClickVideoListItem={onClickVideoListItem}
+      onClickEdit={onClickEdit}
+      onClickDelete={onClickDelete}
+      onVideoListDragEnd={onVideoListDragEnd}
+      onVideoEnd={onVideoEnd}
+    />
   )
 }

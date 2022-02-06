@@ -1,3 +1,8 @@
+/**
+ * 비디오 수정 컴포넌트
+ *
+ */
+
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { IVideoHasRange } from '../../types'
 import LoadingElement from '../elements/loading'
@@ -7,55 +12,59 @@ import 'rc-slider/assets/index.css'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import { ITextButtonProps } from '../elements/CustomButton'
 
-import AdjustSecondsContainer from './container/AdjustSecondsContainer'
 import TimeLapseView from './view/TimeLapseView'
-import ButtonsView from './view/ButtonsView'
 import RangeContainer from './container/RangeContainer'
+import AdjustSecondsView from './view/AdjustSecondsView'
+import { useSelector } from 'react-redux'
+import { RootModuleType } from '../../modules/moduleTypes'
+import ButtonsContainer from './container/ButtonsContainer'
 
-// refactor : onReadyCallback 을 playerProps에서 따로 빼주는게 맞을까?
+interface ITextButtonPropsWithOnClick extends Omit<ITextButtonProps, 'onClick'> {
+  onClick?: (range: number[]) => void
+}
+
 interface IProps {
   video: IVideoHasRange
   playerProps?: ReactPlayerProps
-  onReadyCallback?: (endtime: number) => void
+  applyButtonProps?: ITextButtonPropsWithOnClick
+  completeButtonProps?: ITextButtonProps
   onRangeChangeCallback?: (range: number[]) => void
-  leftButtonProps?: ITextButtonProps
-  onApplyButtonCallback?: (range: number[]) => void
-  rightButtonProps?: ITextButtonProps
 }
 
-function VideoEdit({
-  video,
-  playerProps,
-  onReadyCallback,
-  onRangeChangeCallback,
-  onApplyButtonCallback,
-  leftButtonProps,
-  rightButtonProps,
-}: IProps) {
+function VideoEdit({ video, playerProps, applyButtonProps, completeButtonProps, onRangeChangeCallback }: IProps) {
   const [videoReady, setVideoReady] = useState(false)
+  // 비디오 전체 길이
   const [videoDuration, setVideoDuration] = useState(0)
+  // 사용자가 선택하고, 적용하지는 않은 범위
   const [range, setRange] = useState<number[]>([video.start, video.end])
+  // 사용자가 적용한 범위
   const [selectedLapse, setSelectedLapse] = useState<number[]>([video.start, video.end])
 
+  const screenSize = useSelector(({ screenSize }: RootModuleType) => screenSize)
   const playerRef = useRef<ReactPlayer>(null)
 
-  const onPlayerReady = useCallback(() => {
-    if (playerRef !== null && playerRef.current !== null) {
-      const endTime = playerRef.current.getDuration()
-      setVideoDuration(endTime)
+  // 비디오가 로드되었을때 실행.
+  const onPlayerReady = useCallback(
+    (player: ReactPlayer) => {
+      if (player) {
+        const endTime = player.getDuration()
+        setVideoDuration(endTime)
 
-      if (video.end === undefined || video.end === null || video.end === 0) {
-        setRange([video.start, endTime])
-        setSelectedLapse([video.start, endTime])
+        if (video.end === undefined || video.end === null || video.end === 0) {
+          setRange([video.start, endTime])
+          setSelectedLapse([video.start, endTime])
+        }
+
+        if (playerProps !== undefined && playerProps.onReady !== undefined) {
+          playerProps.onReady(player)
+        }
       }
+      setVideoReady(true)
+    },
+    [video, playerProps],
+  )
 
-      if (onReadyCallback !== undefined) {
-        onReadyCallback(endTime)
-      }
-    }
-    setVideoReady(true)
-  }, [playerRef, video, onReadyCallback])
-
+  // 슬라이더로 범위조절 시 호출
   const onChangeRange = useCallback(
     (range: number[]) => {
       setRange(prev => {
@@ -73,6 +82,7 @@ function VideoEdit({
     [onRangeChangeCallback],
   )
 
+  // 버튼으로 범위조절 시 호출
   const onClickAdjustRangeByOneSecond = useCallback(
     (right: boolean, offset: number) => {
       if (right) {
@@ -96,40 +106,45 @@ function VideoEdit({
     [videoDuration],
   )
 
+  // 적용버튼 눌렀을때
   const onClickApply = useCallback(() => {
     setRange(prev => {
-      if (onApplyButtonCallback !== undefined && onApplyButtonCallback !== undefined) {
-        onApplyButtonCallback(prev)
-      }
       setSelectedLapse(prev)
+      if (applyButtonProps !== undefined && applyButtonProps.onClick !== undefined) {
+        applyButtonProps.onClick(prev)
+      }
       return prev
     })
-  }, [onApplyButtonCallback])
+  }, [applyButtonProps])
 
   const playerPropsMemo = useMemo(() => ({ ...playerProps, onReady: onPlayerReady }), [playerProps, onPlayerReady])
-  const leftButtonPropsMemo = useMemo(
-    () => ({ ...leftButtonProps, onClick: onClickApply }),
-    [leftButtonProps, onClickApply],
+  const applyButtonPropsMemo = useMemo(
+    () => ({ ...applyButtonProps, onClick: onClickApply }),
+    [applyButtonProps, onClickApply],
   )
 
   // 로딩의 길이를 15rem으로 두고, 로딩이 끝나면 controller를 보여주면서 정확한 높이로 맞춰짐
   return (
-    <div className="w-full h-full flex flex-col pb-1">
+    <div className="h-full flex flex-col pb-1">
       <div className="w-full flex-1">
         <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
       </div>
-      {videoReady ? (
-        <div className="w-full max-h-fit pt-10 2xl:pt-12 space-y-1 px-[10%]">
-          <RangeContainer range={range} max={videoDuration} selectedLapse={selectedLapse} onChange={onChangeRange} />
-          <AdjustSecondsContainer onClickAdjustSeconds={onClickAdjustRangeByOneSecond} />
-          <TimeLapseView range={range} />
-          <ButtonsView leftButtonProps={leftButtonPropsMemo} rightButtonProps={rightButtonProps} />
-        </div>
-      ) : (
-        <div className="py-10 h-60">
-          <LoadingElement />
-        </div>
-      )}
+      <div className="w-full max-h-fit pt-10 2xl:pt-12 space-y-1 px-[10%]">
+        {videoReady ? (
+          <>
+            <RangeContainer range={range} max={videoDuration} selectedLapse={selectedLapse} onChange={onChangeRange} />
+            <AdjustSecondsView onClickAdjustSeconds={onClickAdjustRangeByOneSecond} />
+            <TimeLapseView range={range} />
+            <ButtonsContainer
+              applyButtonProps={applyButtonPropsMemo}
+              completeButtonProps={completeButtonProps}
+              screenSize={screenSize}
+            />
+          </>
+        ) : (
+          <LoadingElement className="py-10" />
+        )}
+      </div>
     </div>
   )
 }

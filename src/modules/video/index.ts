@@ -8,7 +8,7 @@ const initialState: TVideoStoreType = {
   success: false,
   pending: false,
   error: null,
-  playlistId: null,
+  playlistId: -1,
   currentVideo: {} as IVideoInPlaylist,
   items: [],
 }
@@ -33,12 +33,29 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     error: action.payload,
   }),
   [videoActionTypes.DELETE_VIDEO]: (state, action) => ({ ...state, error: null, success: false, pending: true }),
-  [videoActionTypes.DELETE_VIDEO_SUCCESS]: (state, action) => ({
-    ...state,
-    success: true,
-    pending: false,
-    items: state.items.filter(item => item.id !== action.payload),
-  }),
+  [videoActionTypes.DELETE_VIDEO_SUCCESS]: (state, action) => {
+    /**
+     * 비디오 삭제 완료 : 삭제한 영상이
+     *  현재 재생중인 동영상이면, 다음 영상 재생(마지막 영상일 경우 첫번째 영상)
+     *  현재 재생중인 동영상이 아니면, 현재 재생중인 동영상 유지
+     */
+    let currentVideo = state.currentVideo
+    if (currentVideo.id === action.payload) {
+      if (currentVideo.sequence >= state.items.length) {
+        currentVideo = state.items[0]
+      } else {
+        currentVideo = state.items[currentVideo.sequence]
+      }
+    }
+
+    return {
+      ...state,
+      currentVideo: currentVideo,
+      success: true,
+      pending: false,
+      items: state.items.filter(item => item.id !== action.payload),
+    }
+  },
   [videoActionTypes.DELETE_VIDEO_ERROR]: (state, action) => ({
     ...state,
     success: false,

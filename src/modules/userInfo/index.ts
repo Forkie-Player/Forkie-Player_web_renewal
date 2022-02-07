@@ -31,6 +31,19 @@ const userInfoReducer = createReducer<TUserInfoType, TUserInfo_Action>(initialSt
     pending: false,
     error: action.payload,
   }),
+  [userInfoActionTypes.UPDATE_PROFILE_IMG]: state => ({ ...state, error: null, success: false, pending: true }),
+  [userInfoActionTypes.UPDATE_PROFILE_IMG_SUCCESS]: (state, action) => ({
+    ...state,
+    success: true,
+    pending: false,
+    userInfo: { ...state.userInfo, profileImg: action.payload },
+  }),
+  [userInfoActionTypes.UPDATE_PROFILE_IMG_FAILURE]: (state, action) => ({
+    ...state,
+    success: false,
+    pending: false,
+    error: action.payload,
+  }),
   [userInfoActionTypes.SET_USERINFO]: (state, action) => ({
     ...state,
     userInfo: { signedin: true, ...action.payload },

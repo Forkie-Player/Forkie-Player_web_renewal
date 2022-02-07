@@ -7,7 +7,6 @@ import { changeVideoOrderAsync, deleteVideoAsync, updateCurrentVideo } from '../
 import * as Constants from '../../lib/constants'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
 import { TVideoStoreType } from '../../modules/video/types'
-import { clearThumbnail, setThumbnail } from '../../modules/playlist/actions'
 import { IVideoInPlaylist } from '../../types'
 import { DropResult } from 'react-beautiful-dnd'
 import PlayContentContainer from './container/PlayContentContainer'
@@ -18,7 +17,7 @@ interface IProps {
 }
 
 export default function Play({ video }: IProps) {
-  const [inProgressingDeleteIdx, setInProgressingDeleteIdx] = useState<number | null>(null)
+  const [isPendingDeleteVideo, setIsPendingDeleteVideo] = useState<boolean>(false)
   const [isPendingChangeVideoOrder, setIsPendingChangeVideoOrder] = useState(false)
 
   const { items: videoList, currentVideo } = video
@@ -64,33 +63,23 @@ export default function Play({ video }: IProps) {
   const onClickDelete = useCallback(
     (item: IVideoInPlaylist) => {
       dispatch(deleteVideoAsync.request(item.id))
-      setInProgressingDeleteIdx(getVideoIndex(item))
+      setIsPendingDeleteVideo(true)
     },
-    [dispatch, getVideoIndex],
+    [dispatch],
   )
 
   useEffect(() => {
-    if (inProgressingDeleteIdx !== null) {
+    if (isPendingDeleteVideo === true) {
       switch (status) {
         case 'SUCCESS':
-          // 첫번째 영상을 삭제했을 경우
-          if (inProgressingDeleteIdx === 0) {
-            if (videoList.length === 0) {
-              // 남은 영상이 없음. 뒤로가기
-              if (video.playlistId !== null) {
-                dispatch(clearThumbnail(video.playlistId))
-              }
-              navigate(Constants.NavAbsolutePathItems.LIST)
-            } else {
-              if (video.playlistId !== null) {
-                dispatch(setThumbnail(video.playlistId, videoList[0].thumbnail))
-              }
-            }
+          // 남은 영상이 없는 경우
+          if (videoList.length === 0) {
+            navigate(Constants.NavAbsolutePathItems.LIST)
           }
-          setInProgressingDeleteIdx(null)
+          setIsPendingDeleteVideo(false)
       }
     }
-  }, [navigate, status, inProgressingDeleteIdx, currentVideo, getVideoIndex, video.playlistId, videoList, dispatch])
+  }, [navigate, status, isPendingDeleteVideo, videoList])
 
   const onClickEdit = useCallback(
     (item: IVideoInPlaylist) => {

@@ -8,4 +8,4 @@ function HeaderBackground() {
   )
 }
 
-export default HeaderBackground
+export default React.memo(HeaderBackground)

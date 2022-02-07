@@ -1,3 +1,4 @@
+import React from 'react'
 import parseViews from '../../lib/utils/parseViews'
 import { IVideo } from '../../types'
 
@@ -5,7 +6,7 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   data?: IVideo
 }
 
-export default function VideoInfo({ data, ...props }: IProps) {
+function VideoInfo({ data, ...props }: IProps) {
   return (
     <div className="space-y-1" {...props}>
       <div className="line-clamp-1 md:line-clamp-2 text-lg">{data?.title}</div>
@@ -26,3 +27,5 @@ export default function VideoInfo({ data, ...props }: IProps) {
     </div>
   )
 }
+
+export default React.memo(VideoInfo)

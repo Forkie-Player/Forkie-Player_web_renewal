@@ -30,29 +30,26 @@ export default function handleError(code: string) {
 
 export const checkId = (id: string) => {
   if (!id) {
-    return handleError('blank_id')
+    throw Error(handleError('blank_id'))
   } else if (id.length < 6) {
-    return handleError('short_id')
+    throw Error(handleError('short_id'))
   }
-  return ''
 }
 
 export const checkPassword = (password: string, passwordCheck?: string) => {
   if (!password) {
-    return handleError('blank_password')
+    throw Error(handleError('blank_password'))
   } else if (!testPassword(password)) {
-    return handleError('password_not_formmatted')
+    throw Error(handleError('password_not_formmatted'))
   } else if (passwordCheck !== undefined && password !== passwordCheck) {
-    return handleError('not_match_password_and_check')
+    throw Error(handleError('not_match_password_and_check'))
   }
-  return ''
 }
 
 export const checkPasswordCheck = (password: string, passwordCheck: string) => {
   if (password !== passwordCheck) {
-    return handleError('not_match_password_and_check')
+    throw Error(handleError('not_match_password_and_check'))
   }
-  return ''
 }
 
 export const handleAuthApiError = (err: any) => {

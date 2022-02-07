@@ -11,6 +11,7 @@ import {
 import handleSagaError from '../handleSagaError'
 import { RootModuleType } from '../moduleTypes'
 import { TVideoStoreType } from './types'
+import { clearThumbnail, setThumbnail } from '../playlist/actions'
 
 const getState = (state: RootModuleType) => state.video
 
@@ -26,7 +27,29 @@ function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
 function* deleteVideoSaga(action: ReturnType<typeof deleteVideoAsync.request>) {
   try {
     const res: IDeleteVideoSuccess = yield call(deleteVideo, action.payload)
-    yield put(deleteVideoAsync.success(res.id))
+    /**
+     * 비디오 삭제 완료 : 삭제한 영상이
+     *  현재 재생중인 동영상이면, 다음 영상 재생(마지막 영상일 경우 첫번째 영상)
+     *  현재 재생중인 동영상이 아니면, 현재 재생중인 동영상 유지
+     */
+    const state: TVideoStoreType = yield select(getState)
+    let currentVideo = state.currentVideo
+    if (currentVideo.id === action.payload) {
+      if (currentVideo.sequence >= state.items.length) {
+        currentVideo = state.items[0]
+      } else {
+        currentVideo = state.items[currentVideo.sequence]
+      }
+    }
+    yield put(deleteVideoAsync.success({ id: res.id, currentVideo }))
+
+    if (state.items.length === 1 && state.playlistId !== null) {
+      // 마지막 남은 비디오를 삭제한 경우
+      yield put(clearThumbnail(state.playlistId))
+    } else if (action.payload === state.items[0].id && state.playlistId !== null) {
+      // 첫번째 비디오를 삭제한 경우
+      yield put(setThumbnail(state.playlistId, state.items[1].thumbnail))
+    }
   } catch (err) {
     yield handleSagaError(err, deleteVideoAsync.failure)
   }

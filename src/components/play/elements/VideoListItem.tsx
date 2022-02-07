@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useImperativeHandle, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import { IVideoInPlaylist } from '../../../types'
 import { CustomIconButton } from '../../elements/CustomButton'
-import { TimeLapse } from '../../elements/TimeLapse'
+import TimeLapse from '../../elements/TimeLapse'
 import { Draggable } from 'react-beautiful-dnd'
 import { twMerge } from 'tailwind-merge'
 

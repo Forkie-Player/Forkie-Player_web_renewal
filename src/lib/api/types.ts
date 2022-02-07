@@ -51,7 +51,7 @@ export interface IUpdateUserSuccess {
 }
 
 // 프로필사진 업데이트 타입
-export interface IUpdateProfileSuccess {
+export interface IUpdateProfileImgSuccess {
   success: boolean
   error: null
   response: IUserInfo

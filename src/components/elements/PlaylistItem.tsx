@@ -52,4 +52,4 @@ const PlaylistItem = React.forwardRef<HTMLDivElement, IProps>(
   },
 )
 
-export default PlaylistItem
+export default React.memo(PlaylistItem)

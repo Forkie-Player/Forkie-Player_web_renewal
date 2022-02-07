@@ -1,8 +1,10 @@
 import React from 'react'
 import { MdDeleteForever, MdEdit, MdOutlineAutorenew } from 'react-icons/md'
 import { IUserInfo } from '../../../types'
-import { CustomClearButton, CustomIconButton } from '../../elements/CustomButton'
+import { CustomButtonWrapper, CustomClearButton, CustomIconButton } from '../../elements/CustomButton'
 import ProfileImage from '../../elements/ProfileImage'
+
+import * as Strings from '../../../lib/strings'
 
 interface IProps {
   userInfo: IUserInfo
@@ -48,25 +50,18 @@ const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
             </div>
           </div>
           <div className="unselectable col-span-2 md:col-span-1 md:row-span-2 flex md:flex-col justify-start sm:justify-end items-end md:items-start">
-            <CustomClearButton
-              text={
-                <div className="flex min-w-fit gap-2">
-                  <MdDeleteForever className="text-lg sm:text-2xl" />
-                  <div className="min-w-fit text-sm sm:text-base">회원&nbsp;탈퇴</div>
-                </div>
-              }
-              onClick={onWithdrawl}
-            />
-            <CustomClearButton
-              text={
-                <div className="flex w-fit gap-2">
-                  <MdOutlineAutorenew className="text-lg sm:text-2xl" />
-                  <div className="min-w-fit text-sm sm:text-base">비밀번호&nbsp;변경</div>
-                </div>
-              }
-              type="secondary"
-              onClick={onClickPasswordChangeButton}
-            />
+            <CustomButtonWrapper onClick={onWithdrawl}>
+              <div className="flex min-w-fit gap-2">
+                <MdDeleteForever className="text-lg sm:text-2xl text-redrose" />
+                <div className="min-w-fit text-redrose text-sm sm:text-base">{Strings.auth.WITHDRAWL}</div>
+              </div>
+            </CustomButtonWrapper>
+            <CustomButtonWrapper onClick={onClickPasswordChangeButton}>
+              <div className="flex w-fit gap-2">
+                <MdOutlineAutorenew className="text-lg sm:text-2xl" />
+                <div className="min-w-fit text-sm sm:text-base">{Strings.auth.CHANGE_PASSWORD}</div>
+              </div>
+            </CustomButtonWrapper>
           </div>
         </div>
       </div>

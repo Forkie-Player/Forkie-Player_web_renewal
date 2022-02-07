@@ -38,6 +38,8 @@ export const applyTimeLapseSuccess = `적용되었어요`
 export const CheckVideoEdit = '정말로 수정하시나요?'
 export const CheckVideoDelete = '정말로 삭제하시나요?'
 
+export const BlackInput = '내용을 입력해주세요'
+
 export const ErrorMessageFromServer = {
   EXCEED_NONMEMBER_MAX_PLAYLIST: '비회원 playlist 제한을 초과하였습니다.',
   REMOVE_USER_FAIL: '회원 탈퇴 실패',
@@ -54,6 +56,8 @@ export const ErrorMessageToUser = {
 export const auth = {
   SIGNIN: '로그인',
   SIGNUP: '회원가입',
+  WITHDRAWL: '회원탈퇴',
+  CHANGE_PASSWORD: '비밀번호 변경',
   BLANK_ID: '아이디를 입력해주세요',
   SHORT_ID: '아이디는 6자 이상이어야 해요',
   BLANK_PASSWORD: '비밀번호를 입력해주세요',
@@ -83,4 +87,6 @@ export const ButtonStrings = {
   EDIT_TITLE: '타이틀 수정',
   YES: '네',
   NO: '아니오',
+  COMPLETE: '완료',
+  CANCEL: '취소',
 }

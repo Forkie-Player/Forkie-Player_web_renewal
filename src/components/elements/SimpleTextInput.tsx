@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { BlackInput, ButtonStrings } from '../../lib/strings'
 import { CustomButton } from './CustomButton'
 import CustomInput from './CustomInput'
 
@@ -38,7 +39,7 @@ const SimpleTextInput = ({
     e.preventDefault()
     const textInput = text.trim()
     if (textInput.length === 0) {
-      setErrorMsg('내용을 입력해주세요')
+      setErrorMsg(BlackInput)
       return
     }
     const res = onClickCompleteCallback(textInput)
@@ -54,10 +55,10 @@ const SimpleTextInput = ({
       <CustomInput value={text} error={error || errorMsg} onChange={onChangeText} {...inputProps} />
       <div className="flex gap-x-4 justify-center">
         {onClickCancleCallback !== undefined && (
-          <CustomButton text="취소" size="small" type="secondary" onClick={onClickCancle} />
+          <CustomButton text={ButtonStrings.CANCEL} size="small" type="secondary" onClick={onClickCancle} />
         )}
         <button type="submit">
-          <CustomButton text="완료" size="small" type="primary" />
+          <CustomButton text={ButtonStrings.COMPLETE} size="small" type="primary" />
         </button>
       </div>
     </form>

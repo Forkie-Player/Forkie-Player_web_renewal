@@ -32,7 +32,7 @@ function SelectPlaylistView({ playlists, isSmScreen, isFirstOnAdd, onClickCancle
       </div>
       <div className="max-h-fit p-1 flex justify-center gap-x-4 w-full">
         <CustomClearButton text="취소" type="secondary" onClick={onClickCancle} />
-        <AddPlaylistButton text="새 리스트" place="top" />
+        <AddPlaylistButton text="새 리스트" />
       </div>
     </div>
   )

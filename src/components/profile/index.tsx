@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { login, pwUpdate, updateProfileImag } from '../../lib/api/auth'
+import { login, pwUpdate } from '../../lib/api/auth'
 import { auth as AuthStrings, ErrorMessageFromServer, ErrorMessageToUser } from '../../lib/strings'
 import { withdrawlUser } from '../../lib/utils/auth'
 import { checkPassword, handleAuthApiError } from '../../lib/utils/handleAuthErr'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
-import { clearUserInfo, getUserInfo, setUserInfo } from '../../modules/userInfo/actions'
+import { clearUserInfo, getUserInfo, updateProfileImgAsync } from '../../modules/userInfo/actions'
 import { IUserInfo } from '../../types'
 import HeaderUserInfoContainer from './container/HeaderUserInfoContainer'
 import HeaderBackground from './view/HeaderBackground'
@@ -17,7 +17,6 @@ interface IProps {
 }
 
 const Profile = ({ userInfo }: IProps) => {
-  const [prevPassword, setPrevPassword] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -40,49 +39,39 @@ const Profile = ({ userInfo }: IProps) => {
 
   const onEditProfileImg = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const formData = new FormData()
       if (e.target.files !== undefined && e.target.files !== null) {
-        formData.append('img', e.target.files[0])
-        try {
-          const res = await updateProfileImag(formData)
-          dispatch(setUserInfo(res.response))
-        } catch (err) {
-          toast.error(ErrorMessageToUser.UPDATE_PROFILE_IMG_FAIL)
-        }
+        dispatch(updateProfileImgAsync.request(e.target.files[0]))
       }
     },
     [dispatch],
   )
 
-  const changePassword = useCallback(
-    async (newPw: string) => {
-      const checkPasswordRef = checkPassword(newPw)
-      if (checkPasswordRef !== '') {
-        return checkPasswordRef
-      }
-      try {
-        await pwUpdate(prevPassword, newPw)
-      } catch (err) {
-        return handleAuthApiError(err)
-      }
-      return ''
-    },
-    [prevPassword],
-  )
+  const changePassword = useCallback(async (prevPw: string, newPw: string) => {
+    try {
+      checkPassword(newPw)
+    } catch (err) {
+      throw err
+    }
+
+    try {
+      await pwUpdate(prevPw, newPw)
+    } catch (err) {
+      throw Error(handleAuthApiError(err))
+    }
+  }, [])
 
   const onClickReauthenticate = useCallback(
     async (password: string) => {
-      const checkPasswordRef = checkPassword(password)
-      if (checkPasswordRef !== '') {
-        return checkPasswordRef
+      try {
+        checkPassword(password)
+      } catch (err) {
+        throw err
       }
       try {
         await login(userInfo.loginId, password)
       } catch (err) {
-        return handleAuthApiError(err)
+        throw Error(handleAuthApiError(err))
       }
-      setPrevPassword(password)
-      return ''
     },
     [userInfo],
   )

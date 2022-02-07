@@ -11,7 +11,7 @@ import {
   IReissueSuccess,
   IRemoveUserSuccess,
   ISignUpSuccess,
-  IUpdateProfileSuccess,
+  IUpdateProfileImgSuccess,
   IUpdateUserSuccess,
 } from './types'
 
@@ -91,7 +91,7 @@ export const userSignUp = async (id: string, pw: string) => {
 }
 
 export const updateProfileImag = async (form: FormData) => {
-  const res = await axios.post<IUpdateProfileSuccess>(`${Address}/api/member/upload`, form, {
+  const res = await axios.post<IUpdateProfileImgSuccess>(`${Address}/api/member/upload`, form, {
     headers: { 'Content-Type': 'multipart/form-data;' },
   })
   return res.data

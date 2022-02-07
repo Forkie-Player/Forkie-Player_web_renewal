@@ -10,6 +10,10 @@ export type TVideoStoreType = IAsyncState & {
   items: IVideoInPlaylist[]
   currentVideo: IVideoInPlaylist
 }
+export interface IDeleteVideoSuccess {
+  id: number
+  currentVideo: IVideoInPlaylist
+}
 
 export interface IChangeVideoOrderAsyncRequest {
   from: number

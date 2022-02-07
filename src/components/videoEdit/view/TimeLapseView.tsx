@@ -1,5 +1,5 @@
 import React from 'react'
-import { TimeLapse } from '../../elements/TimeLapse'
+import TimeLapse from '../../elements/TimeLapse'
 
 interface IProps {
   range: number[]

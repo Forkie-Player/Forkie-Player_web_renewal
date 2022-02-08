@@ -59,12 +59,12 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
     }
   }, [playerRef, video, playerProps, seekTo])
 
-  /**
-   * videoId가 변경되면, 영상을 다시 로드해야함. 같으면 할 필요없음.
-   * 따라서 prevVideo와 video.videoId를 비교하여 변경되었는지 확인하고,
-   * 변경되었으면, ready 상태를 false로 바꾸어 줌.
-   */
   useEffect(() => {
+    /**
+     * videoId가 변경되면, 영상이 바뀌었다는 의미이므로 영상을 다시 로드해야함.
+     * 따라서 prevVideo와 video.videoId를 비교하여 변경되었는지 확인하고,
+     * 변경되었으면, ready 상태를 false로 바꾸어 줌.
+     */
     if (prevVideo !== video.videoId) {
       setVideoReady(false)
       setPrevVideo(video.videoId)

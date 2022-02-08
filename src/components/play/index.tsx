@@ -76,8 +76,8 @@ export default function Play({ video }: IProps) {
           if (videoList.length === 0) {
             navigate(Constants.NavAbsolutePathItems.LIST)
           }
-          setIsPendingDeleteVideo(false)
       }
+      setIsPendingDeleteVideo(false)
     }
   }, [navigate, status, isPendingDeleteVideo, videoList])
 

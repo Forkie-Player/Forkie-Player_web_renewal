@@ -39,6 +39,7 @@ function VideoTimeChange({ video }: IProps) {
 
   const applyButtonProps = useMemo(() => ({ onClick: onClickApply }), [onClickApply])
   const completeButtonProps = useMemo(() => ({ onClick: onClickEdit, text: '수정' }), [onClickEdit])
+
   return (
     <div className="w-full h-full px-2 md:px-[5%] flex flex-col">
       <GobackLine />

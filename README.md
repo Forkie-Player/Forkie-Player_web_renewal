@@ -1,6 +1,7 @@
-# Yourlist 웹 리뉴얼
+# Forkie-Player 웹 리뉴얼
 
 - 본 프로젝트는 [yourlist](https://yourlist.me) 웹 리뉴얼을 위해 만들어졌습니다.
+  - 구 프로젝트 이름 : Yourlist, 변경된 이름 : Forkie-Player
 - 디자인 시안 : https://www.figma.com/file/KHYV1S3QY7xZh0shUpyHhd/Yourlist?node-id=0%3A1
 
 ### 스택

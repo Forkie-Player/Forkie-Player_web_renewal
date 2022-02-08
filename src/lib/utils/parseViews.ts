@@ -11,9 +11,9 @@ function addRest(views: string) {
 
 export default function parseViews(views: number) {
   if (views >= 100000000) {
-    return `${addRest(Math.floor(views / 100000000).toString())}억 `
+    return `${addRest(Math.floor(views / 100000000).toString())}억`
   } else if (views >= 10000) {
-    return `${addRest(Math.floor(views / 10000).toString())}만 `
+    return `${addRest(Math.floor(views / 10000).toString())}만`
   } else {
     return `${addRest(views.toString())}`
   }

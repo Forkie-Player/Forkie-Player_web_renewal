@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdDeleteForever, MdEdit, MdOutlineAutorenew } from 'react-icons/md'
 import { IUserInfo } from '../../../types'
-import { CustomButtonWrapper, CustomClearButton, CustomIconButton } from '../../elements/CustomButton'
+import { CustomButtonWrapper, CustomIconButton } from '../../elements/CustomButton'
 import ProfileImage from '../../elements/ProfileImage'
 
 import * as Strings from '../../../lib/strings'

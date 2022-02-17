@@ -96,7 +96,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
     if (playerProps !== undefined && playerProps.onEnded !== undefined) {
       playerProps.onEnded()
     }
-  }, [playerProps, seekTo, video])
+  }, [playerProps, seekTo, video.start])
 
   const playerPropsMemo = useMemo(
     () => ({
@@ -107,7 +107,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
     [playerProps, onVideoEnded, onVideoReady],
   )
 
-  return <VideoView playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
+  return <VideoView playerRef={playerRef} playerProps={playerPropsMemo} videoId={video.videoId} />
 }
 
 export default VideoRender

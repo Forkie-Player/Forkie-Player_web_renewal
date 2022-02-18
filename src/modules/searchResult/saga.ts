@@ -5,7 +5,7 @@ import { ICrawlResultItem, IVideo } from '../../types'
 import handleSagaError from '../handleSagaError'
 import { getSearchResult, searchResultActionTypes } from './actions'
 
-function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>) {
+export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>) {
   try {
     const res: ISearchSuccess = yield call(getSearchResultApi, action.payload)
 

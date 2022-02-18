@@ -1,4 +1,5 @@
-import { IPlaylist } from '../types'
+import { IPlaylist, IVideo } from '../types'
+import { ISearchSuccess } from './api/types'
 
 export const items: IPlaylist[] = [
   {
@@ -25,3 +26,44 @@ export const items: IPlaylist[] = [
     thumbnail: 'https://wallpaperaccess.com/full/2742175.jpg',
   },
 ]
+
+export const temp_searchResult: IVideo[] = [
+  {
+    videoId: 'videoId',
+    title: 'title',
+    thumbnail: 'thumbnail',
+    channelTitle: 'channelTitle',
+    duration: 'duration',
+    channelAvatar: 'channelAvatar',
+    views: 1,
+    uploadedAt: 'uploadedAt',
+  },
+]
+
+export const temp_searchSuccess: ISearchSuccess = {
+  data: {
+    items: [
+      {
+        id: 'videoId',
+        title: 'title',
+        thumbnails: [
+          {
+            url: 'thumbnail',
+          },
+        ],
+        bestThumbnail: {
+          url: 'thumbnail',
+        },
+        author: {
+          name: 'channelTitle',
+          bestAvatar: {
+            url: 'channelAvatar',
+          },
+        },
+        duration: 'duration',
+        views: 1,
+        uploadedAt: 'uploadedAt',
+      },
+    ],
+  },
+}

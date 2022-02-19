@@ -62,7 +62,7 @@ export const setThumbnail = createAction(SET_THUMBNAIL, (id: number, thumbnail: 
 export const getPlaylistAsync = createAsyncAction(GET_PLAYLIST, GET_PLAYLIST_SUCESS, GET_PLAYLIST_ERROR)<
   undefined,
   IPlaylist[],
-  AxiosError
+  string
 >()
 export const addVideoAsync = createAsyncAction(ADD_VIDEO, ADD_VIDEO_SUCCESS, ADD_VIDEO_ERROR)<
   IAddVideoToPlaylistRequest,

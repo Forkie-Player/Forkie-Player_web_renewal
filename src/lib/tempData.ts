@@ -1,7 +1,7 @@
-import { IPlaylist, IVideo } from '../types'
+import { IPlaylist, IVideo, IVideoHasRange } from '../types'
 import { ISearchSuccess } from './api/types'
 
-export const items: IPlaylist[] = [
+export const temp_playlist: IPlaylist[] = [
   {
     id: 1,
     title: 'pop music',
@@ -39,6 +39,12 @@ export const temp_searchResult: IVideo[] = [
     uploadedAt: 'uploadedAt',
   },
 ]
+
+export const temp_videoHasRange: IVideoHasRange = {
+  ...temp_searchResult[0],
+  end: 100,
+  start: 0,
+}
 
 export const temp_searchSuccess: ISearchSuccess = {
   data: {

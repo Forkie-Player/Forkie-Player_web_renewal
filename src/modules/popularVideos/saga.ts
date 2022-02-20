@@ -7,7 +7,7 @@ import { IVideo } from '../../types'
 import handleSagaError from '../handleSagaError'
 import { getPopularVideoAsync, popularVideosTypes } from './actions'
 
-function* getPopularVideoSaga() {
+export function* getPopularVideoSaga() {
   try {
     const res: IGetPopularVideoSuccess = yield call(getPopularVideosApi)
     const ans: IVideo[] = res.popular.map(item => ({

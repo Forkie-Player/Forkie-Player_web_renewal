@@ -180,4 +180,43 @@ describe('test playlistReducer', () => {
   })
 
   // EDIT
+  test('EDIT_PLAYLIST_TITLE', () => {
+    state = playlistReducer(
+      state,
+      actions.editPlaylistTitleAsync.request({ id: temp_playlist[1].id, title: 'new_title' }),
+    )
+    expect(state).toEqual({
+      ...state,
+      pending: true,
+    })
+  })
+  test('EDIT_PLAYLIST_TITLE_SUCCESS', () => {
+    state = playlistReducer(
+      state,
+      actions.editPlaylistTitleAsync.success({ id: temp_playlist[1].id, title: 'new_title' }),
+    )
+    expect(state).toEqual({
+      ...state,
+      success: true,
+      pending: false,
+      items: state.items.map(item => {
+        if (item.id === temp_playlist[1].id) {
+          return {
+            ...item,
+            title: 'new_title',
+          }
+        }
+        return item
+      }),
+    })
+  })
+  test('EDIT_PLAYLIST_TITLE_FAILURE', () => {
+    state = playlistReducer(state, actions.editPlaylistTitleAsync.failure('test'))
+    expect(state).toEqual({
+      ...state,
+      success: false,
+      pending: false,
+      error: 'test',
+    })
+  })
 })

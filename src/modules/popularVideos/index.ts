@@ -23,7 +23,7 @@ const popularVideosReducer = createReducer<TPopularVideoType, TPopularVideo_Acti
     error: null,
     items: action.payload,
   }),
-  [popularVideosTypes.GET_POPULAR_VIDEOS_ERROR]: (state, action) => ({
+  [popularVideosTypes.GET_SEARCH_RESULT_FAILURE]: (state, action) => ({
     ...state,
     success: false,
     pending: false,

@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { createAction, createAsyncAction } from 'typesafe-actions'
 import {
   IAddVideoToPlaylistRequest,

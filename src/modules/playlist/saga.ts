@@ -16,16 +16,16 @@ import * as Strings from '../../lib/strings'
 import { ICreatePlaylistSuccess, IDeletePlaylistSuccess, IGetPlaylistSuccess } from '../../lib/api/types'
 import handleSagaError from '../handleSagaError'
 
-function* getPlaylistSaga() {
+export function* getPlaylistSaga() {
   try {
     const res: IGetPlaylistSuccess = yield call(getPlaylistApi)
     yield put(getPlaylistAsync.success(res.response))
   } catch (err) {
-    yield handleSagaError(err, createPlaylistAsync.failure)
+    yield handleSagaError(err, getPlaylistAsync.failure)
   }
 }
 
-function* createPlaylistSaga(action: ReturnType<typeof createPlaylistAsync.request>) {
+export function* createPlaylistSaga(action: ReturnType<typeof createPlaylistAsync.request>) {
   try {
     const res: ICreatePlaylistSuccess = yield call(createPlaylist, action.payload)
     yield put(createPlaylistAsync.success(res.response))
@@ -35,7 +35,7 @@ function* createPlaylistSaga(action: ReturnType<typeof createPlaylistAsync.reque
   }
 }
 
-function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) {
+export function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) {
   try {
     const res: IAddVideoReturn = yield call(addVideo, action.payload)
     yield put(addVideoAsync.success(res))
@@ -45,7 +45,7 @@ function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) {
   }
 }
 
-function* deletePlaylistSaga(action: ReturnType<typeof deletePlaylistAsync.request>) {
+export function* deletePlaylistSaga(action: ReturnType<typeof deletePlaylistAsync.request>) {
   try {
     const res: IDeletePlaylistSuccess = yield call(deletePlaylist, action.payload)
     yield put(deletePlaylistAsync.success(res.id))
@@ -54,7 +54,7 @@ function* deletePlaylistSaga(action: ReturnType<typeof deletePlaylistAsync.reque
   }
 }
 
-function* editPlaylistTitleSaga(action: ReturnType<typeof editPlaylistTitleAsync.request>) {
+export function* editPlaylistTitleSaga(action: ReturnType<typeof editPlaylistTitleAsync.request>) {
   try {
     yield call(editPlaylistTitle, action.payload)
     yield put(editPlaylistTitleAsync.success(action.payload))

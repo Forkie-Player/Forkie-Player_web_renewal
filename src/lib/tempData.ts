@@ -1,5 +1,5 @@
-import { IPlaylist, IVideo, IVideoHasRange } from '../types'
-import { ISearchSuccess } from './api/types'
+import { IPlaylist, IUserInfo, IVideo, IVideoHasRange } from '../types'
+import { IFBPopularVideo, ISearchSuccess } from './api/types'
 
 export const temp_playlist: IPlaylist[] = [
   {
@@ -27,7 +27,7 @@ export const temp_playlist: IPlaylist[] = [
   },
 ]
 
-export const temp_searchResult: IVideo[] = [
+export const temp_videos: IVideo[] = [
   {
     videoId: 'videoId',
     title: 'title',
@@ -39,6 +39,8 @@ export const temp_searchResult: IVideo[] = [
     uploadedAt: 'uploadedAt',
   },
 ]
+
+export const temp_searchResult: IVideo[] = temp_videos
 
 export const temp_videoHasRange: IVideoHasRange = {
   ...temp_searchResult[0],
@@ -72,4 +74,81 @@ export const temp_searchSuccess: ISearchSuccess = {
       },
     ],
   },
+}
+
+export const temp_popularVideo: IFBPopularVideo[] = [
+  {
+    contentDetails: {
+      duration: 'PT2M15S',
+    },
+    id: 'SQ-FAQZSV6w',
+    statistics: {
+      viewCount: '1819232',
+    },
+    channelAvatar:
+      'https://yt3.ggpht.com/ytc/AKedOLQeu53EoiRWPEDO3Ucq8Z-qPcswHk34rBGFAEGTxro=s240-c-k-c0x00ffffff-no-rj',
+    snippet: {
+      title: 'Harry Kane MASTERCLASS! 🔥 Spurs beat Man City at the death! | HIGHLIGHTS | Man City 2-3 Spurs',
+      thumbnails: {
+        medium: {
+          url: 'https://i.ytimg.com/vi/SQ-FAQZSV6w/mqdefault.jpg',
+        },
+      },
+      publishedAt: '2022-02-19T22:00:16Z',
+      channelTitle: 'Tottenham Hotspur',
+    },
+  },
+  {
+    snippet: {
+      publishedAt: '2022-02-18T09:00:01Z',
+      channelTitle: '스튜디오 와플 - STUDIO WAFFLE',
+      thumbnails: {
+        medium: {
+          url: 'https://i.ytimg.com/vi/0R5YYHdFOAY/mqdefault.jpg',
+        },
+      },
+      title: '[ENG] 꼴값 떨고 남 연애 참견하다가 이용진의 참한 犬 돼버린 주우재 편 | 터키즈온더블럭 EP.36',
+    },
+    contentDetails: {
+      duration: 'PT13M45S',
+    },
+    statistics: {
+      viewCount: '1756788',
+    },
+    channelAvatar: 'https://yt3.ggpht.com/ytc/AKedOLSZmhVSQtTtir5RU8Pi-7y_K84BP9ij7HzJHEM=s240-c-k-c0x00ffffff-no-rj',
+    id: '0R5YYHdFOAY',
+  },
+]
+export const temp_popularVideo_parsed: IVideo[] = [
+  {
+    videoId: 'SQ-FAQZSV6w',
+    title: 'Harry Kane MASTERCLASS! 🔥 Spurs beat Man City at the death! | HIGHLIGHTS | Man City 2-3 Spurs',
+    thumbnail: 'https://i.ytimg.com/vi/SQ-FAQZSV6w/mqdefault.jpg',
+    channelTitle: 'Tottenham Hotspur',
+    channelAvatar:
+      'https://yt3.ggpht.com/ytc/AKedOLQeu53EoiRWPEDO3Ucq8Z-qPcswHk34rBGFAEGTxro=s240-c-k-c0x00ffffff-no-rj',
+    duration: '02:15',
+    views: 1819232,
+    uploadedAt: '2022-02-19',
+  },
+  {
+    videoId: '0R5YYHdFOAY',
+    title: '[ENG] 꼴값 떨고 남 연애 참견하다가 이용진의 참한 犬 돼버린 주우재 편 | 터키즈온더블럭 EP.36',
+    thumbnail: 'https://i.ytimg.com/vi/0R5YYHdFOAY/mqdefault.jpg',
+    channelTitle: '스튜디오 와플 - STUDIO WAFFLE',
+    channelAvatar: 'https://yt3.ggpht.com/ytc/AKedOLSZmhVSQtTtir5RU8Pi-7y_K84BP9ij7HzJHEM=s240-c-k-c0x00ffffff-no-rj',
+    duration: '13:45',
+    views: 1756788,
+    uploadedAt: '2022-02-18',
+  },
+]
+
+export const temp_userInfo: IUserInfo = {
+  id: 355,
+  loginId: 'ac05254d-3ae8-4b41-9ab9-9bf73f7b5a2b',
+  profileImg: '',
+  authority: 'ROLE_USER',
+  pc: false,
+  member: false,
+  createdAt: new Date('2022-02-20T10:56:16.238263'),
 }

@@ -1,4 +1,4 @@
-export const AppName = 'Yourlist'
+export const AppName = 'Forkie'
 
 export const GoBack = '뒤로가기'
 

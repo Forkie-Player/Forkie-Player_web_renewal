@@ -38,8 +38,8 @@ const CustomButton = forwardRef<HTMLDivElement, ITextButtonProps>(
           clsx([
             getElementSizeWrapper(size),
             'select-none shadow-outer text-center hover:drop-shadow-md active:shadow-inner cursor-pointer',
-            type === 'primary' && 'bg-redrose-light text-white',
-            type === 'secondary' && 'bg-white text-redrose-light',
+            type === 'primary' && 'bg-primary-yellow text-white',
+            type === 'secondary' && 'bg-white text-primary-yellow',
             props.className,
           ]),
         )}
@@ -59,7 +59,7 @@ const CustomClearButton = forwardRef<HTMLDivElement, ITextButtonProps>(
         className={twMerge(
           clsx(
             'max-w-fit min-h-fit max-h-fit px-2 py-1 select-none text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
-            type === 'primary' && 'text-redrose',
+            type === 'primary' && 'text-primary-yellow',
             type === 'secondary' && 'text-blackberry',
             props.className,
           ),
@@ -80,7 +80,7 @@ const CustomIconButton = forwardRef<HTMLDivElement, IIconButtonProps>(
         className={twMerge(
           clsx(
             'max-w-fit max-h-8 p-1 select-none text-base cursor-pointer rounded-xl hover:shadow-outer active:shadow-inner active:bg-inherit',
-            type === 'primary' && 'text-redrose',
+            type === 'primary' && 'text-primary-yellow',
             type === 'secondary' && 'text-blackberry',
             props.className,
           ),

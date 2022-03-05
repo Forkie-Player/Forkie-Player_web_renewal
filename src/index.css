@@ -8,21 +8,19 @@ html {
 }
 
 :root {
-  --primary-redrose: #e81e25;
-  --primary-redrose-dark: #d50909;
-  --primary-redrose-light: #ff7075;
-  --blackberry: #0e0301;
-  --blackberry-light: #555555;
-  --blackberry-lightest: #acabaf;
+  --primary-redrose: #d50909;
+  --primary-yellow: #ffd169;
+  --blackberry: #1d1d1d;
+  --blackberry-light: #757575;
+  --blackberry-lightest: #aeaeae;
   --background-light: #f9f9f9;
-  --background-dark: #555555;
+  --background-dark: #757575;
 }
 
 /* swiper 라이브러리의 기본 색상 변경*/
 :root {
   --swiper-navigation-color: var(--blackberry);
   --swiper-pagination-color: var(--blackberry);
-  --swiper-scrollbar-color: var(--primary-redrose);
 }
 
 /* 스크롤바 스타일 변경. 크롬에서만 적용됨. */
@@ -61,10 +59,10 @@ input:focus {
 
 /* rc-slider 핸들 드래그 시 생기는 그림자 커스텀*/
 .rc-slider-handle-dragging {
-  box-shadow: 0 0 5px var(--primary-redrose-light) !important;
+  box-shadow: 0 0 5px var(--primary-yellow) !important;
 }
 .rc-slider-handle:active {
-  box-shadow: 0 0 5px var(--primary-redrose-light) !important;
+  box-shadow: 0 0 5px var(--primary-yellow) !important;
 }
 .rc-slider-dot-active {
   border-color: var(--blackberry) !important;
@@ -91,7 +89,7 @@ input:focus {
   top: -1.2rem;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--primary-redrose-light);
+  color: var(--primary-yellow);
 }
 .form_field:not(:focus) ~ .form__label {
   color: var(--blackberry-lightest);

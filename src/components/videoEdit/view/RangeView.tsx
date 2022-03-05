@@ -8,7 +8,7 @@ const handleStyle = {
   width: '1.5rem',
   borderRadius: '0.5rem',
   ':hover': {
-    backgroundColor: palette.redrose,
+    backgroundColor: palette['primary-yellow'],
   },
 }
 
@@ -32,7 +32,7 @@ function RangeView({ range, max, selectedLapse, onChange, renderCustomHandle }: 
       handle={renderCustomHandle}
       onChange={onChange}
       handleStyle={[handleStyle, handleStyle]}
-      trackStyle={[{ backgroundColor: palette.redrose }]}
+      trackStyle={[{ backgroundColor: palette['primary-yellow'] }]}
       railStyle={{ backgroundColor: palette['blackberry-lightest'] }}
     />
   )

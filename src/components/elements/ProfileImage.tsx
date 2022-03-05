@@ -14,7 +14,7 @@ const ProfileImage = ({ isMember, imgSrc, ...props }: IProps) => {
       {...props}
       src={imgSrc !== null && imgSrc !== '' ? imgSrc : defaultProfileImg}
       className={twMerge(
-        clsx(isMember && 'outline outline-2 outline-redrose', 'h-full object-cover rounded-full aspect-square'),
+        clsx(isMember && 'outline outline-2 outline-primary-yellow', 'h-full object-cover rounded-full aspect-square'),
         props.className,
       )}
       alt="profile"

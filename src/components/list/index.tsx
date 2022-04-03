@@ -9,10 +9,16 @@ import { getVideoAsync } from '../../modules/video/actions'
 import { deletePlaylistAsync, editPlaylistTitleAsync } from '../../modules/playlist/actions'
 
 function ListComponent() {
-  const { playlist: playlistStore, video: videoStore } = useSelector(({ playlist, video }: RootModuleType) => ({
+  const {
+    playlist: playlistStore,
+    video: videoStore,
+    userInfo,
+  } = useSelector(({ playlist, video, userInfo }: RootModuleType) => ({
     playlist,
     video,
+    userInfo: userInfo.userInfo,
   }))
+  console.log(userInfo)
 
   const dispatch = useDispatch()
 
@@ -43,15 +49,19 @@ function ListComponent() {
     <div className="w-full h-full px-[5%] space-y-4">
       <div className="flex justify-between">
         <div className="select-none text-xl font-bold">{Strings.Playlists}</div>
-        <AddPlaylistButton />
+        {userInfo.loginId !== '' && <AddPlaylistButton />}
       </div>
-      <ListContainer
-        playlistStore={playlistStore}
-        videoStore={videoStore}
-        onClickPlaylistItem={onClickPlaylistItem}
-        onClickTitleEdit={onClickTitleEdit}
-        onClickDeleteListItem={onClickDeleteListItem}
-      />
+      {userInfo.loginId !== '' ? (
+        <ListContainer
+          playlistStore={playlistStore}
+          videoStore={videoStore}
+          onClickPlaylistItem={onClickPlaylistItem}
+          onClickTitleEdit={onClickTitleEdit}
+          onClickDeleteListItem={onClickDeleteListItem}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   )
 }

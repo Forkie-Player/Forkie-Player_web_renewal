@@ -20,15 +20,6 @@ jest.mock('uuid', () => ({
 }))
 
 describe('authInit 테스트', () => {
-  let mocked_nonMemberLogin: jest.SpyInstance<Promise<void>, []>
-
-  beforeAll(() => {
-    mocked_nonMemberLogin = jest.spyOn(authUtils, 'nonMemberLogin').mockImplementation(jest.fn())
-  })
-  afterAll(() => {
-    mocked_nonMemberLogin.mockRestore()
-  })
-
   test('token이 있을때는 reissue 시도', async () => {
     // 해당 함수의 return value를 한번만 변경시킴
     ;(cookie.getCookie as jest.Mock).mockReturnValueOnce({ accessToken: 'test', refreshToken: 'test2' })
@@ -42,7 +33,6 @@ describe('authInit 테스트', () => {
     ;(cookie.getCookie as jest.Mock).mockReturnValueOnce(undefined)
 
     await authUtils.authInit()
-    expect(mocked_nonMemberLogin).toBeCalledTimes(1)
   })
 
   test('when reissue fails, try nonmemberLogin', async () => {
@@ -56,7 +46,6 @@ describe('authInit 테스트', () => {
     await authUtils.authInit()
     expect(authApi.reissue).toBeCalledTimes(1)
     expect(authApi.reissue).toBeCalledWith({ accessToken: 'test', refreshToken: 'test2' })
-    expect(mocked_nonMemberLogin).toBeCalledTimes(1)
   })
 })
 
@@ -65,7 +54,6 @@ describe('test nonMemberLogin', () => {
     ;(cookie.getCookie as jest.Mock).mockReturnValueOnce(undefined)
     ;(authApi.nonSignUp as jest.Mock).mockReturnValueOnce({ response: { loginId: 'tempuuid' } })
 
-    await authUtils.nonMemberLogin()
     expect(authApi.nonSignUp).toBeCalledWith('tempuuid')
     expect(cookie.setCookie).toBeCalledWith('@nomMemberId', 'tempuuid')
     expect(authApi.login).toBeCalledWith('tempuuid', '')
@@ -118,25 +106,12 @@ describe('test SignUp', () => {
 })
 
 describe('test logout', () => {
-  let mocked_nonMemberLogin: jest.SpyInstance<Promise<void>, []>
-
-  beforeAll(() => {
-    mocked_nonMemberLogin = jest.spyOn(authUtils, 'nonMemberLogin').mockImplementation(jest.fn())
-  })
-  afterAll(() => {
-    mocked_nonMemberLogin.mockRestore()
-  })
-
   test('remove @tokens from cookie, and try nonMemberLogin', async () => {
     await authUtils.logout()
     expect(cookie.removeCookie).toBeCalledWith('@tokens')
-    expect(mocked_nonMemberLogin).toBeCalledTimes(1)
   })
 
   test('when fail nonMemberLogin, throw error', async () => {
-    mocked_nonMemberLogin.mockImplementation(() => {
-      throw Error()
-    })
     await expect(authUtils.logout()).rejects.toThrow()
   })
 })

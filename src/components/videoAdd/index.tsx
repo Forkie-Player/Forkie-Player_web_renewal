@@ -11,7 +11,6 @@ import { RootModuleType } from '../../modules/moduleTypes'
 import './index.css'
 import ReactPlayer from 'react-player'
 import VideoAddView from './indexView'
-import toast from 'react-hot-toast'
 import { authModalActions } from '../../modules/authModal/actions'
 
 interface IProps {

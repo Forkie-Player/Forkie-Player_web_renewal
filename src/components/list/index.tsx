@@ -7,6 +7,7 @@ import ListContainer from './container/ListContainer'
 import * as Strings from '../../lib/strings'
 import { getVideoAsync } from '../../modules/video/actions'
 import { deletePlaylistAsync, editPlaylistTitleAsync } from '../../modules/playlist/actions'
+import AskSigninContainer from './container/AskSigninContainer'
 
 function ListComponent() {
   const {
@@ -60,7 +61,7 @@ function ListComponent() {
           onClickDeleteListItem={onClickDeleteListItem}
         />
       ) : (
-        <></>
+        <AskSigninContainer />
       )}
     </div>
   )

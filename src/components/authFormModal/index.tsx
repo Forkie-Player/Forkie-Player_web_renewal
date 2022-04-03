@@ -16,7 +16,7 @@ import { NavAbsolutePathItems } from '../../lib/constants'
 
 interface IProps {
   isOpen: boolean
-  onClose: () => void
+  onClose?: () => void
 }
 
 const AuthFormModal = ({ isOpen, onClose }: IProps) => {
@@ -33,7 +33,9 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
   const onSuccessAuth = () => {
     dispatch(getUserInfo.request())
     dispatch(getPlaylistAsync.request())
-    onClose()
+    if (onClose !== undefined) {
+      onClose()
+    }
     return 'SUCCESS'
   }
 

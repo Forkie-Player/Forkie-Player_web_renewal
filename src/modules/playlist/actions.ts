@@ -30,6 +30,8 @@ const EDIT_PLAYLIST_TITLE = 'playlist/EDIT_PLAYLIST_TITLE' as const
 const EDIT_PLAYLIST_TITLE_SUCCESS = 'playlist/EDIT_PLAYLIST_TITLE_SUCCESS' as const
 const EDIT_PLAYLIST_TITLE_ERROR = 'playlist/EDIT_PLAYLIST_TITLE_ERROR' as const
 
+const INIT_PLAYLIST = 'playlist/INIT_PLAYLIST' as const
+
 export const playlistActionTypes = {
   ADD_PLAYLIST,
   ADD_PLAYLIST_SUCCESS,
@@ -48,6 +50,7 @@ export const playlistActionTypes = {
   EDIT_PLAYLIST_TITLE,
   EDIT_PLAYLIST_TITLE_SUCCESS,
   EDIT_PLAYLIST_TITLE_ERROR,
+  INIT_PLAYLIST,
 }
 
 //액션 생성 함수
@@ -80,6 +83,8 @@ export const editPlaylistTitleAsync = createAsyncAction(
   EDIT_PLAYLIST_TITLE_ERROR,
 )<IEditPlaylistTitleRequest, IEditPlaylistTitleRequest, string>()
 
+export const initPlaylist = createAction(INIT_PLAYLIST, () => {})()
+
 export const playlistActions = {
   createPlaylistAsync,
   clearThumbnail,
@@ -88,4 +93,5 @@ export const playlistActions = {
   addVideoAsync,
   deletePlaylistAsync,
   editPlaylistTitleAsync,
+  initPlaylist,
 }

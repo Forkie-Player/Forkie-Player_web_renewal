@@ -12,6 +12,7 @@ import './index.css'
 import ReactPlayer from 'react-player'
 import VideoAddView from './indexView'
 import toast from 'react-hot-toast'
+import { authModalActions } from '../../modules/authModal/actions'
 
 interface IProps {
   video: IVideo
@@ -44,11 +45,11 @@ function VideoAdd({ video }: IProps) {
   // 추가버튼 눌렀을때
   const onClickAdd = useCallback(() => {
     if (userInfo.loginId === '') {
-      toast.error('로그인이 필요합니다.')
+      dispatch(authModalActions.openAuthModal())
       return false
     }
     return true
-  }, [userInfo])
+  }, [userInfo, dispatch])
 
   // 플레이리스트에서 추가버튼 눌렀을때
   // 비디오 추가 및 isFirst 초기화

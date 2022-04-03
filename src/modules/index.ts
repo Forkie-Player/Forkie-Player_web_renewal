@@ -28,6 +28,8 @@ import popularVideosSaga from './popularVideos/saga'
 
 import isSmScreen from './isSmScreen'
 
+import authModal from './authModal'
+
 const persistConfig = {
   key: 'root',
   // localStorage에 저장합니다.
@@ -48,6 +50,7 @@ const rootReducer = combineReducers({
   video,
   popularVideos,
   isSmScreen,
+  authModal,
 })
 
 // react saga 연결

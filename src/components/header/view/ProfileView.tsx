@@ -36,22 +36,21 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
       <CustomButtonWrapper ref={referenceElement} className="text-2xl my-auto">
         {userInfo.member === false ? (
           <div className="flex gap-x-2 p-1" onClick={onClickLogin}>
-            <div className="text-base align-middle">
-              {Strings.Login}/{Strings.auth.SIGNUP}
-            </div>
+            <div className="text-base align-middle">{!isSmScreen ? Strings.Login + '/' + Strings.auth.SIGNUP : ''}</div>
             <MdLogin />
           </div>
         ) : (
           <MdLogout onClick={onClickLogout} />
         )}
       </CustomButtonWrapper>
-      {userInfo.loginId !== '' && (
-        <PopperHoverWrapper referenceElement={referenceElement.current}>
-          <div className="p-1 bg-black text-white text-xs rounded-lg">
-            {userInfo.member === false ? Strings.Login : Strings.Logout}
-          </div>
-        </PopperHoverWrapper>
-      )}
+      {userInfo.loginId !== '' ||
+        (isSmScreen && (
+          <PopperHoverWrapper referenceElement={referenceElement.current}>
+            <div className="p-1 bg-black text-white text-xs rounded-lg">
+              {userInfo.member === false ? Strings.Login : Strings.Logout}
+            </div>
+          </PopperHoverWrapper>
+        ))}
     </div>
   )
 }

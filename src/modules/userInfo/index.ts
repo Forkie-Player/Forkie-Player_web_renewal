@@ -49,6 +49,7 @@ const userInfoReducer = createReducer<TUserInfoType, TUserInfo_Action>(initialSt
     userInfo: { signedin: true, ...action.payload },
   }),
   [userInfoActionTypes.CLEAR_USER_INFO]: () => ({ ...initialState }),
+  [userInfoActionTypes.INIT_USERINFO]: () => initialState,
 })
 
 export default userInfoReducer

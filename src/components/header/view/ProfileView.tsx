@@ -22,23 +22,35 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
 
   return (
     <div className="flex gap-x-2 md:gap-x-4 md:basis-7/12 h-full justify-end">
-      <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
-        <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} />
-        {!isSmScreen && (
-          <div className="text-sm align-middle py-1">
-            <p>{userInfo.member === true ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
-            <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
-          </div>
-        )}
-      </div>
-      <CustomButtonWrapper ref={referenceElement} className="text-2xl my-auto">
-        {userInfo.member === false ? <MdLogin onClick={onClickLogin} /> : <MdLogout onClick={onClickLogout} />}
-      </CustomButtonWrapper>
-      <PopperHoverWrapper referenceElement={referenceElement.current}>
-        <div className="p-1 bg-black text-white text-xs rounded-lg">
-          {userInfo.member === false ? Strings.Login : Strings.Logout}
+      {userInfo.loginId !== '' && (
+        <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
+          <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} />
+          {!isSmScreen && (
+            <div className="text-sm align-middle py-1">
+              <p>{userInfo.member === true ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
+              <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
+            </div>
+          )}
         </div>
-      </PopperHoverWrapper>
+      )}
+      <CustomButtonWrapper ref={referenceElement} className="text-2xl my-auto">
+        {userInfo.member === false ? (
+          <div className="flex gap-x-2 p-1" onClick={onClickLogin}>
+            <div className="text-base align-middle">{!isSmScreen ? Strings.Login + '/' + Strings.auth.SIGNUP : ''}</div>
+            <MdLogin />
+          </div>
+        ) : (
+          <MdLogout onClick={onClickLogout} />
+        )}
+      </CustomButtonWrapper>
+      {userInfo.loginId !== '' ||
+        (isSmScreen && (
+          <PopperHoverWrapper referenceElement={referenceElement.current}>
+            <div className="p-1 bg-black text-white text-xs rounded-lg">
+              {userInfo.member === false ? Strings.Login : Strings.Logout}
+            </div>
+          </PopperHoverWrapper>
+        ))}
     </div>
   )
 }

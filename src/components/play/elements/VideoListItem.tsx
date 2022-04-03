@@ -59,7 +59,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
             {...provided.dragHandleProps}
             className={twMerge(
               clsx(
-                video.id === currentVideo.id && 'border-2 border-redrose',
+                video.id === currentVideo.id && 'border-2 border-primary-yellow',
                 video.id !== currentVideo.id && !snapshot.isDragging && 'opacity-50',
                 'h-fit 2xl:h-28 cursor-pointer flex gap-2 rounded-2xl overflow-hidden ',
                 'hover:bg-background-light-hover hover:shadow-outer',
@@ -77,7 +77,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
               </div>
               <div className="flex gap-x-2 text-lg">
                 <CustomIconButton icon={<MdEdit />} onClick={onClickEditCallback} type="secondary" />
-                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} />
+                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} className="text-error" />
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-export const AppName = 'Yourlist'
+export const AppName = 'Forkie'
 
 export const GoBack = '뒤로가기'
 
@@ -79,6 +79,8 @@ export const auth = {
 export const THANKYOU = '감사합니다!!'
 
 export const NoSearchString = '검색어를 입력해주세요.'
+
+export const AskSignin = '서비스를 이용하기 위해서 로그인을 해주세요.'
 
 export const ButtonStrings = {
   APPLY: '적용',

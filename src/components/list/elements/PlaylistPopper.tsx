@@ -54,7 +54,7 @@ const PlaylistModal = ({ showModal, onToggleShowPopper, onClickTitleEdit, onClic
               <div className="cursor-pointer" onClick={onClickEditButton}>
                 {Strings.ButtonStrings.EDIT_TITLE}
               </div>
-              <div className="cursor-pointer text-redrose" onClick={onClickDeleteButton}>
+              <div className="cursor-pointer text-error" onClick={onClickDeleteButton}>
                 {Strings.ButtonStrings.DELETE}
               </div>
             </div>

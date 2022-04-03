@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaLessThan } from 'react-icons/fa'
 import logoImage from '../../../assets/images/logo.png'
-import * as Strings from '../../../lib/strings'
+import logoIcon from '../../../assets/images/icon.png'
 import clsx from 'clsx'
 import { INavItem } from '../types'
 import * as Contants from '../../../lib/constants'
@@ -22,8 +22,11 @@ function NavigationView({ navExpanded, navLists, curActiveIndex, navIndicatorTrn
       className={clsx(navExpanded ? 'w-48' : 'w-16', 'relative h-full pt-8 transition-[width] duration-75 select-none')}
     >
       <Link to={Contants.NavAbsolutePathItems.HOME} className="flex w-full pl-3 gap-x-2 text-3xl text-white">
-        <img src={logoImage} alt="logo" className="w-10 rounded-full" />
-        {navExpanded && Strings.AppName}
+        {navExpanded ? (
+          <img src={logoImage} alt="logo" className="w-40" />
+        ) : (
+          <img src={logoIcon} alt="logo" className="w-10" />
+        )}
       </Link>
       <div className="h-12" />
       {navExpanded && <div className="text-white/50 pl-7">Menus</div>}

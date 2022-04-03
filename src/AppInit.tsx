@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoadingElement from './components/elements/loading'
-import { getCookie, removeCookie } from './lib/utils/cookie'
+import { getCookie } from './lib/utils/cookie'
 import { getUserInfo } from './modules/userInfo/actions'
 import { getIsFirst } from './modules/isFirst/actions'
 import { getPlaylistAsync } from './modules/playlist/actions'
@@ -54,18 +54,12 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const authenticationInit = async (isRestart: boolean = false) => {
-      try {
-        // 유저 auth 상태 초기화
-        await authInit()
+      // 유저 auth 상태 초기화
+      const ans = await authInit()
+      if (ans === true) {
         // auth 작업 완료 후, auth가 필요해야 가져올 수 있는 데이터 fetch
         dispatch(getUserInfo.request())
         dispatch(getPlaylistAsync.request())
-      } catch (err) {
-        // 유저 auth 상태 초기화 실패시, 기존 nonmemberId를 삭제하고 다시 시도함.
-        if (isRestart === false) {
-          removeCookie('@nomMemberId')
-          authenticationInit(true)
-        }
       }
       // auth 작업만 끝나면, 일단 필수적인 초기화 작업은 끝난 것이기에, 로딩을 품
       setIsLoading(false)

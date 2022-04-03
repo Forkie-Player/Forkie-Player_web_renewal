@@ -52,8 +52,8 @@ const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
           <div className="unselectable col-span-2 md:col-span-1 md:row-span-2 flex md:flex-col justify-start sm:justify-end items-end md:items-start">
             <CustomButtonWrapper onClick={onWithdrawl}>
               <div className="flex min-w-fit gap-2">
-                <MdDeleteForever className="text-lg sm:text-2xl text-redrose" />
-                <div className="min-w-fit text-redrose text-sm sm:text-base">{Strings.auth.WITHDRAWL}</div>
+                <MdDeleteForever className="text-lg sm:text-2xl text-error" />
+                <div className="min-w-fit text-error text-sm sm:text-base">{Strings.auth.WITHDRAWL}</div>
               </div>
             </CustomButtonWrapper>
             <CustomButtonWrapper onClick={onClickPasswordChangeButton}>

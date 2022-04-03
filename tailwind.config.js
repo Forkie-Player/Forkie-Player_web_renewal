@@ -3,15 +3,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        redrose: '#e81e25',
-        'redrose-light': '#ff7075',
-        'redrose-dark': '#d50909',
-        blackberry: '#0e0301',
-        'blackberry-light': '#555555',
-        'blackberry-lightest': '#acabaf',
+        'primary-yellow': '#ffd169',
+        'primary-resrose': '#d50909',
+        blackberry: '#1d1d1d',
+        'blackberry-light': '#757575',
+        'blackberry-lightest': '#aeaeae',
         'background-light': '#f9f9f9',
         'background-light-hover': '#f3f3f3',
-        'background-dark': '#555555',
+        'background-dark': '#757575',
+        error: '#E81E25',
       },
       flexBasis: {
         '1/14': '7.1428571%',

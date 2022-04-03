@@ -96,6 +96,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     pending: false,
     error: action.payload,
   }),
+  [playlistActionTypes.INIT_PLAYLIST]: (state, action) => initialState,
 })
 
 export default playlistReducer

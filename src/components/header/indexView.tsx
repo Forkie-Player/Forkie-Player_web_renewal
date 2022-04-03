@@ -1,4 +1,6 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { authModalActions } from '../../modules/authModal/actions'
 import { IUserInfo } from '../../types'
 import AuthFormModal from '../authFormModal'
 import SearchbarContainer from './container/SearchbarContainer'
@@ -9,6 +11,7 @@ interface IProps {
   isSmScreen: boolean
   userInfo: IUserInfo
   playlistsLength: number
+  isOpenAuthModal: boolean
   onSearch: (search: string) => void
   onClickLogout: () => Promise<void>
   onClickProfile: () => void
@@ -16,6 +19,7 @@ interface IProps {
 }
 
 const HeaderView = ({
+  isOpenAuthModal,
   isSmScreen,
   userInfo,
   playlistsLength,
@@ -24,12 +28,11 @@ const HeaderView = ({
   onClickProfile,
   onClickNavOpen,
 }: IProps) => {
-  const [isOpenAuthForm, setIsOpenAuthForm] = useState(false)
-
+  const dispatch = useDispatch()
   const onClickOpenAuthForm = useCallback(() => {
-    setIsOpenAuthForm(true)
-  }, [])
-  const onClickCloseAuthForm = useCallback(() => setIsOpenAuthForm(false), [])
+    dispatch(authModalActions.openAuthModal())
+  }, [dispatch])
+  const onClickCloseAuthForm = useCallback(() => dispatch(authModalActions.closeAuthModal()), [dispatch])
 
   return (
     <header className="flex justify-between px-2 md:px-[5%] h-12 gap-x-4">
@@ -43,7 +46,7 @@ const HeaderView = ({
         onClickLogout={onClickLogout}
         onClickProfile={onClickProfile}
       />
-      <AuthFormModal isOpen={isOpenAuthForm} onClose={onClickCloseAuthForm} />
+      <AuthFormModal isOpen={isOpenAuthModal} onClose={onClickCloseAuthForm} />
     </header>
   )
 }

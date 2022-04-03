@@ -13,6 +13,8 @@ const UPDATE_PROFILE_IMG_FAILURE = 'userInfo/UPDATE_PROFILE_IMG_FAILURE' as cons
 const SET_USERINFO = 'userInfo/SET_USERINFO' as const
 const CLEAR_USER_INFO = 'userInfo/CLEAR_USER_INFO' as const
 
+const INIT_USERINFO = 'userInfo/INIT_USERINFO' as const
+
 export const userInfoActionTypes = {
   GET_USERINFO,
   GET_USERINFO_SUCCESS,
@@ -22,6 +24,7 @@ export const userInfoActionTypes = {
   UPDATE_PROFILE_IMG_FAILURE,
   SET_USERINFO,
   CLEAR_USER_INFO,
+  INIT_USERINFO,
 }
 
 //액션 생성 함수
@@ -38,9 +41,12 @@ export const updateProfileImgAsync = createAsyncAction(
 export const setUserInfo = createAction(SET_USERINFO, (payload: IUserInfo) => payload)<IUserInfo>()
 export const clearUserInfo = createAction(CLEAR_USER_INFO)()
 
+export const initUserInfo = createAction(INIT_USERINFO)()
+
 export const userInfoActions = {
   getUserInfo,
   updateProfileImgAsync,
   clearUserInfo,
   setUserInfo,
+  initUserInfo,
 }

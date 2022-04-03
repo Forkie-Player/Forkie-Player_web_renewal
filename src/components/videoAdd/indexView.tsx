@@ -16,15 +16,27 @@ interface IProps {
   isFirst: IIsFirst
   onClickPlaylist: (item: IPlaylist) => void
   onClickApply: (range: number[]) => void
+  onClickAdd: () => boolean
 }
 
-function VideoAddView({ isSmScreen, video, playerProps, playlists, isFirst, onClickPlaylist, onClickApply }: IProps) {
+function VideoAddView({
+  isSmScreen,
+  video,
+  playerProps,
+  playlists,
+  isFirst,
+  onClickPlaylist,
+  onClickApply,
+  onClickAdd: onClickAddCallback,
+}: IProps) {
   const [showPlaylists, setShowPlaylists] = useState(false)
 
   // 추가버튼 눌렀을 때
   const onClickAdd = useCallback(() => {
-    setShowPlaylists(true)
-  }, [])
+    if (onClickAddCallback()) {
+      setShowPlaylists(true)
+    }
+  }, [onClickAddCallback])
 
   // 플레이리스트에서 닫기버튼 눌렀을때
   const onClickClosePlaylist = () => {

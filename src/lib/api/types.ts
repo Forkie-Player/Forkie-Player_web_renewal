@@ -12,7 +12,7 @@ export interface IRequestFail {
 export interface IReissueSuccess {
   success: boolean
   error: string | null
-  response: IToken
+  data: IToken
 }
 
 // getUserInfo  반환 타입

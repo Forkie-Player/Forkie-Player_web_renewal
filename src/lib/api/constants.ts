@@ -1,3 +1,3 @@
-export const Address = 'https://www.yourlist.kro.kr'
+export const Address = 'https://forkie-api.com'
 
 export const CrawlAddress = 'https://crawl.yourlist.kro.kr/api/crawler/'

@@ -1,5 +1,5 @@
 import { getCookie, removeCookie, setCookie } from './cookie'
-import { changeToMember, login, reissue, removeUser, userSignUp } from '../api/auth'
+import { login, reissue, removeUser, userSignUp } from '../api/auth'
 import { IToken } from '../../types'
 import axios from 'axios'
 
@@ -24,6 +24,7 @@ export const authInit = async () => {
 }
 
 export const setTokens = async (tokens: IToken) => {
+  console.log(tokens)
   const tokensObj = {
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
@@ -34,16 +35,11 @@ export const setTokens = async (tokens: IToken) => {
 
 export const SignUp = async (id: string, pw: string) => {
   try {
-    await changeToMember(id, pw)
+    await userSignUp(id, pw)
   } catch (err) {
-    try {
-      await userSignUp(id, pw)
-    } catch (err) {
-      // 중복 아이디 처리
-      throw err
-    }
+    // 중복 아이디 처리
+    throw err
   }
-
   return await login(id, pw)
 }
 

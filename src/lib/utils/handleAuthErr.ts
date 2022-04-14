@@ -53,6 +53,8 @@ export const checkPasswordCheck = (password: string, passwordCheck: string) => {
 }
 
 export const handleAuthApiError = (err: any) => {
+  console.log(err)
+  console.log({ ...err })
   if (axios.isAxiosError(err)) {
     switch (err.response?.data.message) {
       case '비밀번호가 일치하지 않습니다.':

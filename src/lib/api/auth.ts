@@ -29,13 +29,13 @@ import {
 */
 
 export const login = async (id: string, pw: string) => {
-  const res = await axios.post<IReissueSuccess>(`${Address}/api/member/login`, {
+  const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/member`, {
     loginId: id,
     password: pw,
     isPC: true,
   })
   logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
-  await setTokens(res.data.response)
+  await setTokens(res.data.data)
 }
 
 export const reissue = async (tokens: IToken) => {
@@ -43,7 +43,7 @@ export const reissue = async (tokens: IToken) => {
     ...tokens,
     isPC: true,
   })
-  await setTokens(res.data.response)
+  await setTokens(res.data.data)
   logEvent(analytics, '리이슈')
   return res.data
 }
@@ -82,7 +82,7 @@ export const pwUpdate = async (pw: string, newPw: string) => {
 }
 
 export const userSignUp = async (id: string, pw: string) => {
-  await axios.post(`${Address}/api/member/signup/real`, {
+  await axios.post(`${Address}/api/user/auth/signup/member`, {
     loginId: id,
     password: pw,
     isPC: true,

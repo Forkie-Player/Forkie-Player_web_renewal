@@ -40,8 +40,8 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
           if (tokensJson !== undefined) {
             const res = await reissue(tokensJson)
             if (res !== undefined) {
-              axios.defaults.headers.common.Authorization = `Bearer ${res.response.accessToken}`
-              originalRequest.headers.Authorization = `Bearer ${res.response.accessToken}`
+              axios.defaults.headers.common.Authorization = `Bearer ${res.data.accessToken}`
+              originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`
             }
             return axios(originalRequest)
           }

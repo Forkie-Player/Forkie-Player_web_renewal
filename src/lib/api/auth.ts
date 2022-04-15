@@ -39,7 +39,7 @@ export const login = async (id: string, pw: string) => {
 }
 
 export const reissue = async (tokens: IToken) => {
-  const res = await axios.post<IReissueSuccess>(`${Address}/api/member/reissue`, {
+  const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/reissue`, {
     ...tokens,
     isPC: true,
   })
@@ -49,8 +49,22 @@ export const reissue = async (tokens: IToken) => {
 }
 
 export const getUserInfoApi = async () => {
-  const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/member`)
-  return res.data
+  //  const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/member`)
+  //return res.data
+
+  return {
+    success: true,
+    error: null,
+    response: {
+      id: 123,
+      loginId: 'test1234',
+      profileImg: '',
+      authority: 'ROLE_USER',
+      pc: true,
+      member: true,
+      createdAt: new Date(),
+    },
+  }
 }
 
 export const nonSignUp = async (newId: string) => {

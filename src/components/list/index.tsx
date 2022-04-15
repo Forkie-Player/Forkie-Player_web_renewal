@@ -19,7 +19,6 @@ function ListComponent() {
     video,
     userInfo: userInfo.userInfo,
   }))
-  console.log(userInfo)
 
   const dispatch = useDispatch()
 
@@ -34,7 +33,7 @@ function ListComponent() {
       if (playlistStore.items.some(item => item.title === newTitle)) {
         return Strings.SameTitleInPlaylist
       }
-      dispatch(editPlaylistTitleAsync.request({ id: id, title: newTitle }))
+      dispatch(editPlaylistTitleAsync.request({ playlistId: id, title: newTitle }))
     },
     [playlistStore, dispatch],
   )

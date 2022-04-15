@@ -66,9 +66,9 @@ export interface ISearchSuccess {
 
 // 플레이리스트 get 반환 타입
 export interface IGetPlaylistSuccess {
-  success: boolean
-  error: null
-  response: IPlaylist[]
+  status: number
+  message: string
+  data: IPlaylist[]
 }
 
 // 플레이리스트 create 타입
@@ -78,30 +78,28 @@ export interface ICreatePlaylistRequest {
   category: string
 }
 export interface ICreatePlaylistSuccess {
-  success: boolean
-  error: null
-  response: IPlaylist
+  status: number
+  message: string
+  data: null
 }
 
 // 플레이리스트 제목 edit 요청 타입
 export interface IEditPlaylistTitleRequest {
-  id: number
+  playlistId: number
   title: string
 }
 export interface IEditPlaylistTitleSuccess {
-  success: boolean
-  error: null
-  id: number
-  editted: boolean
+  status: number
+  message: string
+  data: null
 }
 
 // 플레이리스트 삭제 타입
 export type TDeletePlaylistRequest = number
 export interface IDeletePlaylistSuccess {
-  success: boolean
-  error: null
-  id: number
-  deleted: boolean
+  status: number
+  message: string
+  data: null
 }
 
 // 플레이리스트 안의 비디오 순서 변경 api 타입

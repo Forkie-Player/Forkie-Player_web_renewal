@@ -24,7 +24,6 @@ export const authInit = async () => {
 }
 
 export const setTokens = async (tokens: IToken) => {
-  console.log(tokens)
   const tokensObj = {
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,

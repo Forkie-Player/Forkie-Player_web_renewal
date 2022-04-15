@@ -16,15 +16,12 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebaseInit'
 
 export const getVideoList = async (id: number) => {
-  const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play`, {
-    data: { playlistId: id },
-  })
-  console.log(res)
+  const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play/${id}`)
   return res.data
 }
 
 export const addVideo = async (request: IAddVideoToPlaylistRequest) => {
-  await axios.post<IAddVideoToPlaylistSuccess>(`${Address}/api/play/create`, {
+  await axios.post<IAddVideoToPlaylistSuccess>(`${Address}/api/play`, {
     playlistId: request.playlistId,
     ...request.video,
   })

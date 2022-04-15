@@ -25,7 +25,7 @@ export interface IVideo {
   title: string
   thumbnail: string
   channelTitle: string
-  channelAvatar?: string
+  channelImg?: string
   duration: string
   views: number
   uploadedAt: string
@@ -33,8 +33,8 @@ export interface IVideo {
 
 // 시작과 끝이 정해진 비디오 타입
 export interface IVideoHasRange extends IVideo {
-  start: number
-  end: number
+  startTime: number
+  endTime: number
 }
 
 export interface IVideoInPlaylist extends IVideoHasRange {

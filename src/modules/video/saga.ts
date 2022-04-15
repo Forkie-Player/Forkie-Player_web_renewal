@@ -18,7 +18,7 @@ const getState = (state: RootModuleType) => state.video
 function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
   try {
     const response: IGetVideoListSuccess = yield call(getVideoList, action.payload)
-    yield put(getVideoAsync.success({ playlistId: action.payload, items: response.response }))
+    yield put(getVideoAsync.success({ playlistId: action.payload, items: response.data }))
   } catch (err) {
     yield handleSagaError(err, deleteVideoAsync.failure)
   }

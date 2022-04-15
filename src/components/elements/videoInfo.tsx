@@ -19,8 +19,8 @@ function VideoInfo({ data, ...props }: IProps) {
         <div className="line-clamp-1 text-base text-blackberry-lightest leading-8">{data?.uploadedAt}</div>
       </div>
       <div className="flex gap-2">
-        {data?.channelAvatar !== undefined && data?.channelAvatar !== '' && (
-          <img src={data.channelAvatar} alt="channel" className="w-8 h-8 rounded-full" />
+        {data?.channelImg !== undefined && data?.channelImg !== '' && (
+          <img src={data.channelImg} alt="channel" className="w-8 h-8 rounded-full" />
         )}
         <div className="text-base leading-8  line-clamp-1">{data?.channelTitle}</div>
       </div>

@@ -130,9 +130,9 @@ export interface IAddVideoToPlaylistSuccess {
 
 // 비디오 조회 반환타입
 export interface IGetVideoListSuccess {
-  success: boolean
-  error: null
-  response: IVideoInPlaylist[]
+  status: number
+  message: string
+  data: IVideoInPlaylist[]
 }
 
 // 비디오 삭제 성공 반환 타입

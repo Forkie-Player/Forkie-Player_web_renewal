@@ -15,7 +15,7 @@ export function* getPopularVideoSaga() {
       title: item.snippet.title,
       thumbnail: item.snippet.thumbnails.medium.url,
       channelTitle: item.snippet.channelTitle,
-      channelAvatar: item.channelAvatar,
+      channelImg: item.channelAvatar,
       duration: secondsToHHMMSS(moment.duration(item.contentDetails.duration).asSeconds()),
       views: parseInt(item.statistics.viewCount),
       uploadedAt: item.snippet.publishedAt.slice(0, 10),

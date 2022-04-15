@@ -33,8 +33,8 @@ export interface IVideo {
 
 // 시작과 끝이 정해진 비디오 타입
 export interface IVideoHasRange extends IVideo {
-  startTime: number
-  endTime: number
+  start: number
+  end: number
 }
 
 export interface IVideoInPlaylist extends IVideoHasRange {

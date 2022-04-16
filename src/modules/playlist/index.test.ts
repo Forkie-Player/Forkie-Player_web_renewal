@@ -121,7 +121,15 @@ describe('test playlistReducer', () => {
   test('ADD_VIDEO', () => {
     state = playlistReducer(
       state,
-      actions.addVideoAsync.request({ playlistId: temp_playlist[1].id, video: temp_videoHasRange }),
+      actions.addVideoAsync.request({
+        playlistId: temp_playlist[1].id,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
     )
     expect(state).toEqual({
       ...state,

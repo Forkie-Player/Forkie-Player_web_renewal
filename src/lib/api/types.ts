@@ -96,6 +96,10 @@ export interface IEditPlaylistTitleSuccess {
 
 // 플레이리스트 삭제 타입
 export type TDeletePlaylistRequest = number
+export interface IDeletePlaylistRequest {
+  playlistId: number
+  playId: number
+}
 export interface IDeletePlaylistSuccess {
   status: number
   message: string
@@ -104,23 +108,27 @@ export interface IDeletePlaylistSuccess {
 
 // 플레이리스트 안의 비디오 순서 변경 api 타입
 export interface ISeqListItem {
-  id: number
+  playId: number
   sequence: number
 }
 export interface IChangeVideoOrderInPlaylistRequest {
   playlistId: number
-  seqList: ISeqListItem[]
+  list: ISeqListItem[]
 }
 export interface IChangeVIdeoOrderInPlaylistSuccess {
-  success: boolean
-  error: null
-  response: ISeqListItem[]
+  status: number
+  message: string
+  data: null
 }
 
 // 비디오를 플레이리스트에 추가하는 api 타입
 export interface IAddVideoToPlaylistRequest {
   playlistId: number
-  video: IVideoHasRange
+  video: Omit<IVideoHasRange, 'start' & 'end' & 'channelImage'> & {
+    startTime: number
+    endTime: number
+    channelImg?: string
+  }
 }
 export interface IAddVideoToPlaylistSuccess {
   success: boolean
@@ -137,23 +145,22 @@ export interface IGetVideoListSuccess {
 
 // 비디오 삭제 성공 반환 타입
 export interface IDeleteVideoSuccess {
-  success: boolean
-  error: null
-  id: number
-  deleted: boolean
+  status: number
+  message: string
+  data: null
 }
 
 // 비디오 timelapse 변경 타입
 export interface IEditVideoTimeRangeRequest {
-  id: number
-  start: number
-  end: number
+  playlistId: number
+  playId: number
+  startTime: number
+  endTime: number
 }
 export interface IEditVideoTimeRangeSuccess {
-  success: boolean
-  error: null
-  id: number
-  edited: boolean
+  status: number
+  message: string
+  data: null
 }
 
 // 인기 동영상 파이어베이스 반환 타입

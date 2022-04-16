@@ -14,7 +14,7 @@ export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.r
       title: item.title,
       thumbnail: (item.thumbnails && item.thumbnails[0].url) || item.bestThumbnail.url,
       channelTitle: item.author.name,
-      channelAvatar: item.author.bestAvatar.url,
+      channelImage: item.author.bestAvatar.url,
       duration: item.duration,
       views: item.views,
       uploadedAt: item.uploadedAt,

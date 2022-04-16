@@ -34,8 +34,17 @@ function VideoTimeChange({ video }: IProps) {
   }, [])
 
   const onClickEdit = useCallback(() => {
-    dispatch(editTimeRangeAsync.request({ id: videoState.id, start: videoState.start, end: videoState.end }))
-  }, [videoState, dispatch])
+    if (videoModule.playlistId !== null) {
+      dispatch(
+        editTimeRangeAsync.request({
+          playlistId: videoModule.playlistId,
+          playId: videoState.id,
+          startTime: videoState.start,
+          endTime: videoState.end,
+        }),
+      )
+    }
+  }, [videoState, dispatch, videoModule])
 
   const applyButtonProps = useMemo(() => ({ onClick: onClickApply }), [onClickApply])
   const completeButtonProps = useMemo(() => ({ onClick: onClickEdit, text: '수정' }), [onClickEdit])

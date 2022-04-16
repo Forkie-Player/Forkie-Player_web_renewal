@@ -54,7 +54,17 @@ function VideoAdd({ video }: IProps) {
   // 비디오 추가 및 isFirst 초기화
   const onClickPlaylist = async (item: IPlaylist) => {
     dispatch(clearIsFirst(isFirstConstants.ADD_FIRST))
-    dispatch(addVideoAsync.request({ playlistId: item.id, video: videoState }))
+    dispatch(
+      addVideoAsync.request({
+        playlistId: item.id,
+        video: {
+          ...videoState,
+          startTime: videoState.start,
+          endTime: videoState.end,
+          channelImg: videoState.channelImage,
+        },
+      }),
+    )
   }
 
   const playerPropsMemo = useMemo(

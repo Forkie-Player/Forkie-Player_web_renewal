@@ -25,7 +25,7 @@ export interface IVideo {
   title: string
   thumbnail: string
   channelTitle: string
-  channelImg?: string
+  channelImage: string
   duration: string
   views: number
   uploadedAt: string

@@ -1,5 +1,5 @@
 import { createAction, createAsyncAction } from 'typesafe-actions'
-import { IEditVideoTimeRangeRequest, ISeqListItem } from '../../lib/api/types'
+import { IDeletePlaylistRequest, IEditVideoTimeRangeRequest, ISeqListItem } from '../../lib/api/types'
 import { IVideoInPlaylist } from '../../types'
 import { IChangeVideoOrderAsyncRequest, IDeleteVideoSuccess } from './types'
 
@@ -43,7 +43,7 @@ export const getVideoAsync = createAsyncAction(GET_VIDEO, GET_VIDEO_SUCCESS, GET
 >()
 
 export const deleteVideoAsync = createAsyncAction(DELETE_VIDEO, DELETE_VIDEO_SUCCESS, DELETE_VIDEO_ERROR)<
-  number,
+  IDeletePlaylistRequest,
   IDeleteVideoSuccess,
   string
 >()

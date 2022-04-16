@@ -39,6 +39,7 @@ export const login = async (id: string, pw: string) => {
 }
 
 export const reissue = async (tokens: IToken) => {
+  console.log(tokens)
   const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/reissue`, {
     ...tokens,
     isPC: true,

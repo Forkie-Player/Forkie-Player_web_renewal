@@ -59,8 +59,8 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     success: true,
     pending: false,
     items: state.items.map(item => {
-      if (item.id === action.payload.id) {
-        return { ...item, start: action.payload.start, end: action.payload.end }
+      if (item.id === action.payload.playId) {
+        return { ...item, start: action.payload.startTime, end: action.payload.endTime }
       }
       return item
     }),
@@ -86,7 +86,7 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     pending: false,
     success: true,
     items: state.items
-      .map(item => ({ ...item, sequence: action.payload.find(s => s.id === item.id)?.sequence || item.sequence }))
+      .map(item => ({ ...item, sequence: action.payload.find(s => s.playId === item.id)?.sequence || item.sequence }))
       .sort(sortPlaylistBySequence),
   }),
   [videoActionTypes.CHANGE_VIDEO_ORDER_ERROR]: (state, action) => ({

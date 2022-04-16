@@ -91,10 +91,30 @@ describe('test createPlaylistSaga', () => {
 
 describe('test addVideoSaga', () => {
   test('should yield put properly', () => {
-    const generator = sagas.addVideoSaga(actions.addVideoAsync.request({ playlistId: 1, video: temp_videoHasRange }))
+    const generator = sagas.addVideoSaga(
+      actions.addVideoAsync.request({
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
     const mocked_toast_success = jest.spyOn(toast, 'success')
 
-    expect(generator.next().value).toEqual(call(addVideo, { playlistId: 1, video: temp_videoHasRange }))
+    expect(generator.next().value).toEqual(
+      call(addVideo, {
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
     expect(
       generator.next({
         id: 1,
@@ -113,9 +133,29 @@ describe('test addVideoSaga', () => {
     expect(mocked_toast_success).toBeCalledWith(Strings.addVideoSuccess)
   })
   test('when api fail, call handleSagaError', () => {
-    const generator = sagas.addVideoSaga(actions.addVideoAsync.request({ playlistId: 1, video: temp_videoHasRange }))
+    const generator = sagas.addVideoSaga(
+      actions.addVideoAsync.request({
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
 
-    expect(generator.next().value).toEqual(call(addVideo, { playlistId: 1, video: temp_videoHasRange }))
+    expect(generator.next().value).toEqual(
+      call(addVideo, {
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
     generator.throw(tempError)
     expect(handleSagaError).toHaveBeenCalled()
     expect(handleSagaError).toBeCalledWith(tempError, actions.addVideoAsync.failure)

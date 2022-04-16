@@ -16,7 +16,6 @@ function* getUserInfoSaga() {
 }
 function* updateProfileImgSaga(action: ReturnType<typeof updateProfileImgAsync.request>) {
   try {
-    console.log(action.payload)
     const formData = new FormData()
     formData.append('img', action.payload)
     const res: IUpdateProfileImgSuccess = yield call(updateProfileImag, formData)

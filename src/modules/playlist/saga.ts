@@ -13,13 +13,13 @@ import {
 import { IAddVideoReturn } from './types'
 
 import * as Strings from '../../lib/strings'
-import { ICreatePlaylistSuccess, IDeletePlaylistSuccess, IGetPlaylistSuccess } from '../../lib/api/types'
+import { IGetPlaylistSuccess } from '../../lib/api/types'
 import handleSagaError from '../handleSagaError'
 
 export function* getPlaylistSaga() {
   try {
     const res: IGetPlaylistSuccess = yield call(getPlaylistApi)
-    yield put(getPlaylistAsync.success(res.response))
+    yield put(getPlaylistAsync.success(res.data))
   } catch (err) {
     yield handleSagaError(err, getPlaylistAsync.failure)
   }
@@ -27,9 +27,9 @@ export function* getPlaylistSaga() {
 
 export function* createPlaylistSaga(action: ReturnType<typeof createPlaylistAsync.request>) {
   try {
-    const res: ICreatePlaylistSuccess = yield call(createPlaylist, action.payload)
-    yield put(createPlaylistAsync.success(res.response))
-    toast.success(Strings.addPlaylistSuccess)
+    yield call(createPlaylist, action.payload)
+    yield put(createPlaylistAsync.success(null))
+    yield put(getPlaylistAsync.request())
   } catch (err) {
     yield handleSagaError(err, createPlaylistAsync.failure)
   }
@@ -47,8 +47,9 @@ export function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) 
 
 export function* deletePlaylistSaga(action: ReturnType<typeof deletePlaylistAsync.request>) {
   try {
-    const res: IDeletePlaylistSuccess = yield call(deletePlaylist, action.payload)
-    yield put(deletePlaylistAsync.success(res.id))
+    yield call(deletePlaylist, action.payload)
+    yield put(deletePlaylistAsync.success(null))
+    yield put(getPlaylistAsync.request())
   } catch (err) {
     yield handleSagaError(err, deletePlaylistAsync.failure)
   }

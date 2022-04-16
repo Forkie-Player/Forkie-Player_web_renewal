@@ -30,9 +30,9 @@ describe('test getPlaylistSaga', () => {
     expect(generator.next().value).toEqual(call(apis.getPlaylistApi))
     expect(
       generator.next({
-        success: true,
-        error: null,
-        response: temp_playlist,
+        status: 200,
+        message: '성공',
+        data: temp_playlist,
       }).value,
     ).toEqual(put(actions.getPlaylistAsync.success(temp_playlist)))
   })
@@ -62,11 +62,11 @@ describe('test createPlaylistSaga', () => {
     )
     expect(
       generator.next({
-        success: true,
-        error: null,
-        response: temp_playlist[0],
+        status: 200,
+        message: '성공',
+        data: null,
       }).value,
-    ).toEqual(put(actions.createPlaylistAsync.success(temp_playlist[0])))
+    ).toEqual(put(actions.createPlaylistAsync.success(null)))
     generator.next()
     expect(mocked_toast_success).toBeCalledTimes(1)
     expect(mocked_toast_success).toBeCalledWith(Strings.addPlaylistSuccess)
@@ -91,10 +91,30 @@ describe('test createPlaylistSaga', () => {
 
 describe('test addVideoSaga', () => {
   test('should yield put properly', () => {
-    const generator = sagas.addVideoSaga(actions.addVideoAsync.request({ playlistId: 1, video: temp_videoHasRange }))
+    const generator = sagas.addVideoSaga(
+      actions.addVideoAsync.request({
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
     const mocked_toast_success = jest.spyOn(toast, 'success')
 
-    expect(generator.next().value).toEqual(call(addVideo, { playlistId: 1, video: temp_videoHasRange }))
+    expect(generator.next().value).toEqual(
+      call(addVideo, {
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
     expect(
       generator.next({
         id: 1,
@@ -113,9 +133,29 @@ describe('test addVideoSaga', () => {
     expect(mocked_toast_success).toBeCalledWith(Strings.addVideoSuccess)
   })
   test('when api fail, call handleSagaError', () => {
-    const generator = sagas.addVideoSaga(actions.addVideoAsync.request({ playlistId: 1, video: temp_videoHasRange }))
+    const generator = sagas.addVideoSaga(
+      actions.addVideoAsync.request({
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
 
-    expect(generator.next().value).toEqual(call(addVideo, { playlistId: 1, video: temp_videoHasRange }))
+    expect(generator.next().value).toEqual(
+      call(addVideo, {
+        playlistId: 1,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
+    )
     generator.throw(tempError)
     expect(handleSagaError).toHaveBeenCalled()
     expect(handleSagaError).toBeCalledWith(tempError, actions.addVideoAsync.failure)
@@ -128,7 +168,7 @@ describe('test deletePlaylistSaga', () => {
 
     expect(generator.next().value).toEqual(call(apis.deletePlaylist, 1))
     expect(generator.next({ success: true, error: null, id: 1, deleted: true }).value).toEqual(
-      put(actions.deletePlaylistAsync.success(1)),
+      put(actions.deletePlaylistAsync.success(null)),
     )
   })
   test('when api fail, call handleSagaError', () => {
@@ -143,15 +183,21 @@ describe('test deletePlaylistSaga', () => {
 
 describe('test editPlaylistTitleSaga', () => {
   test('should yield put properly', () => {
-    const generator = sagas.editPlaylistTitleSaga(actions.editPlaylistTitleAsync.request({ id: 1, title: 'test' }))
+    const generator = sagas.editPlaylistTitleSaga(
+      actions.editPlaylistTitleAsync.request({ playlistId: 1, title: 'test' }),
+    )
 
-    expect(generator.next().value).toEqual(call(apis.editPlaylistTitle, { id: 1, title: 'test' }))
-    expect(generator.next().value).toEqual(put(actions.editPlaylistTitleAsync.success({ id: 1, title: 'test' })))
+    expect(generator.next().value).toEqual(call(apis.editPlaylistTitle, { playlistId: 1, title: 'test' }))
+    expect(generator.next().value).toEqual(
+      put(actions.editPlaylistTitleAsync.success({ playlistId: 1, title: 'test' })),
+    )
   })
   test('when api fail, call handleSagaError', () => {
-    const generator = sagas.editPlaylistTitleSaga(actions.editPlaylistTitleAsync.request({ id: 1, title: 'test' }))
+    const generator = sagas.editPlaylistTitleSaga(
+      actions.editPlaylistTitleAsync.request({ playlistId: 1, title: 'test' }),
+    )
 
-    expect(generator.next().value).toEqual(call(apis.editPlaylistTitle, { id: 1, title: 'test' }))
+    expect(generator.next().value).toEqual(call(apis.editPlaylistTitle, { playlistId: 1, title: 'test' }))
     generator.throw(tempError)
     expect(handleSagaError).toHaveBeenCalled()
     expect(handleSagaError).toBeCalledWith(tempError, actions.editPlaylistTitleAsync.failure)

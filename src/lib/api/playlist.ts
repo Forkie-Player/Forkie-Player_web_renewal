@@ -16,16 +16,15 @@ export const getPlaylistApi = async () => {
 }
 
 export const deletePlaylist = async (request: TDeletePlaylistRequest) => {
-  const res = await axios.delete<IDeletePlaylistSuccess>(`${Address}/api/playlist/delete/${request}`)
-  return res.data
+  await axios.delete<IDeletePlaylistSuccess>(`${Address}/api/playlist`, {
+    data: { playlistId: request },
+  })
 }
 
 export const createPlaylist = async (obj: ICreatePlaylistRequest) => {
-  const res = await axios.post<ICreatePlaylistSuccess>(`${Address}/api/playlist/create`, obj)
-  return res.data
+  await axios.post<ICreatePlaylistSuccess>(`${Address}/api/playlist`, obj)
 }
 
 export const editPlaylistTitle = async (obj: IEditPlaylistTitleRequest) => {
-  const res = await axios.put<IEditPlaylistTitleSuccess>(`${Address}/api/playlist/edit`, obj)
-  return res.data
+  await axios.patch<IEditPlaylistTitleSuccess>(`${Address}/api/playlist`, obj)
 }

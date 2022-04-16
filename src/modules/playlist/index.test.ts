@@ -21,7 +21,7 @@ describe('test playlistReducer', () => {
     })
   })
   test('ADD_PLAYLIST_SUCCESS', () => {
-    state = playlistReducer(state, actions.createPlaylistAsync.success(temp_playlist[0]))
+    state = playlistReducer(state, actions.createPlaylistAsync.success(null))
     expect(state).toEqual({
       ...state,
       success: true,
@@ -71,7 +71,7 @@ describe('test playlistReducer', () => {
     })
   })
   test('DELETE_PLAYLIST_SUCCESS', () => {
-    state = playlistReducer(state, actions.deletePlaylistAsync.success(temp_playlist[0].id))
+    state = playlistReducer(state, actions.deletePlaylistAsync.success(null))
     expect(state).toEqual({
       ...state,
       success: true,
@@ -121,7 +121,15 @@ describe('test playlistReducer', () => {
   test('ADD_VIDEO', () => {
     state = playlistReducer(
       state,
-      actions.addVideoAsync.request({ playlistId: temp_playlist[1].id, video: temp_videoHasRange }),
+      actions.addVideoAsync.request({
+        playlistId: temp_playlist[1].id,
+        video: {
+          ...temp_videoHasRange,
+          startTime: temp_videoHasRange.start,
+          endTime: temp_videoHasRange.end,
+          channelImg: temp_videoHasRange.channelImage,
+        },
+      }),
     )
     expect(state).toEqual({
       ...state,
@@ -183,7 +191,7 @@ describe('test playlistReducer', () => {
   test('EDIT_PLAYLIST_TITLE', () => {
     state = playlistReducer(
       state,
-      actions.editPlaylistTitleAsync.request({ id: temp_playlist[1].id, title: 'new_title' }),
+      actions.editPlaylistTitleAsync.request({ playlistId: temp_playlist[1].id, title: 'new_title' }),
     )
     expect(state).toEqual({
       ...state,
@@ -193,7 +201,7 @@ describe('test playlistReducer', () => {
   test('EDIT_PLAYLIST_TITLE_SUCCESS', () => {
     state = playlistReducer(
       state,
-      actions.editPlaylistTitleAsync.success({ id: temp_playlist[1].id, title: 'new_title' }),
+      actions.editPlaylistTitleAsync.success({ playlistId: temp_playlist[1].id, title: 'new_title' }),
     )
     expect(state).toEqual({
       ...state,

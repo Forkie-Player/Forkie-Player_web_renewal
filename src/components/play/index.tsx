@@ -62,10 +62,12 @@ export default function Play({ video }: IProps) {
    */
   const onClickDelete = useCallback(
     (item: IVideoInPlaylist) => {
-      dispatch(deleteVideoAsync.request(item.id))
-      setIsPendingDeleteVideo(true)
+      if (video.playlistId !== null) {
+        setIsPendingDeleteVideo(true)
+        dispatch(deleteVideoAsync.request({ playlistId: video.playlistId, playId: item.id }))
+      }
     },
-    [dispatch],
+    [dispatch, video],
   )
 
   useEffect(() => {
@@ -76,8 +78,11 @@ export default function Play({ video }: IProps) {
           if (videoList.length === 0) {
             navigate(Constants.NavAbsolutePathItems.LIST)
           }
+          setIsPendingDeleteVideo(false)
+          break
+        case 'ERROR':
+          setIsPendingDeleteVideo(false)
       }
-      setIsPendingDeleteVideo(false)
     }
   }, [navigate, status, isPendingDeleteVideo, videoList])
 

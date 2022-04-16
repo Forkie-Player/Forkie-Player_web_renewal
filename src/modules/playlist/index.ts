@@ -15,7 +15,6 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     ...state,
     success: true,
     pending: false,
-    items: [...state.items, action.payload],
   }),
   [playlistActionTypes.ADD_PLAYLIST_ERROR]: (state, action) => ({
     ...state,
@@ -68,7 +67,6 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     ...state,
     success: true,
     pending: false,
-    items: state.items.filter(playlist => playlist.id !== action.payload),
   }),
   [playlistActionTypes.DELETE_PLAYLIST_ERROR]: (state, action) => ({
     ...state,
@@ -87,7 +85,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     success: true,
     pending: false,
     items: state.items.map(playlist =>
-      playlist.id === action.payload.id ? { ...playlist, title: action.payload.title } : playlist,
+      playlist.id === action.payload.playlistId ? { ...playlist, title: action.payload.title } : playlist,
     ),
   }),
   [playlistActionTypes.EDIT_PLAYLIST_TITLE_ERROR]: (state, action) => ({

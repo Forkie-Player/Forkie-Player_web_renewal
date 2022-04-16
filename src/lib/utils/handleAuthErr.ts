@@ -53,13 +53,14 @@ export const checkPasswordCheck = (password: string, passwordCheck: string) => {
 }
 
 export const handleAuthApiError = (err: any) => {
+  console.log({ ...err })
   if (axios.isAxiosError(err)) {
     switch (err.response?.data.message) {
       case '비밀번호가 일치하지 않습니다.':
         return handleError('auth/wrong-password')
       case '존재하지 않는 회원입니다.':
         return handleError('auth/user-not-found')
-      case 'ID가 중복된 회원입니다.':
+      case 'Already register Member':
         return handleError('auth/id-already-in-use')
       case '기존 비밀번호와 같은 비밀번호 입니다.':
         return handleError('auth/same-password')

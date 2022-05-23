@@ -52,6 +52,7 @@ export const temp_searchSuccess: ISearchSuccess = {
   data: {
     items: [
       {
+        type: 'video',
         id: 'videoId',
         title: 'title',
         thumbnails: [

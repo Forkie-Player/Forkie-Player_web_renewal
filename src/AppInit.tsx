@@ -30,21 +30,44 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
    * 5. 재발급 요청에 retry 값을 붙여, 또다시 실패가 일어나면 재요청을 포기하고 실패를 보냄.
    */
   useEffect(() => {
+    let refreshSubscriber: Function[] = []
+    const onTokenRefreshed = (accessToken: string) => {
+      refreshSubscriber.map(callback => callback(accessToken))
+    }
+    const addRefreshSubscriber = (callback: Function) => {
+      refreshSubscriber.push(callback)
+    }
     const interceptorId = axios.interceptors.response.use(
       res => res,
       async err => {
         const originalRequest = err.config
-        if (err.response?.status === 401 && !originalRequest._retry) {
+        const isRefreshing = getCookie('isRefreshing') === 'false' ? false : true
+        if (
+          !originalRequest._retry &&
+          ((err.response?.data.status === 400 && err.response?.data.message.includes('만료된 JWT')) ||
+            (err.response?.data.status === 401 && err.response?.data.message.includes('잘못된 JWT')))
+        ) {
           originalRequest._retry = true
-          const tokensJson = getCookie('@tokens')
-          if (tokensJson !== undefined) {
-            const res = await reissue(tokensJson)
-            if (res !== undefined) {
-              axios.defaults.headers.common.Authorization = `Bearer ${res.data.accessToken}`
-              originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`
+          console.log('reissue!!!')
+          const retryOriginalRequest = new Promise(resolve => {
+            addRefreshSubscriber((accessToken: string) => {
+              originalRequest.headers.Authorization = 'Bearer ' + accessToken
+              resolve(axios(originalRequest))
+            })
+          })
+          if (!isRefreshing) {
+            localStorage.setItem('isRefreshing', 'true')
+            const tokensJson = getCookie('@tokens')
+            try {
+              const res = await reissue(tokensJson)
+              console.log(res)
+              onTokenRefreshed(res.data.accessToken)
+            } catch (e) {
+              refreshSubscriber = []
             }
-            return axios(originalRequest)
+            localStorage.setItem('isRefreshing', 'false')
           }
+          return retryOriginalRequest
         }
         return Promise.reject(err)
       },

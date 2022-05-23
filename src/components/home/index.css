@@ -1,5 +1,5 @@
 .popularCardContainer:hover > .popularCardContentExpanded {
-  display: flex;
+  display: block;
 }
 .popularCardContainer:hover > .popularCardContentShinked {
   visibility: hidden;

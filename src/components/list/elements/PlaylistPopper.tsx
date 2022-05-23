@@ -52,18 +52,18 @@ const PlaylistModal = ({ showModal, onToggleShowPopper, onClickTitleEdit, onClic
           !onDeleteMode ? (
             <div className="p-2 w-32 text-center divide-y-2 leading-10">
               <div className="cursor-pointer" onClick={onClickEditButton}>
-                타이틀 수정
+                {Strings.ButtonStrings.EDIT_TITLE}
               </div>
-              <div className="cursor-pointer text-redrose" onClick={onClickDeleteButton}>
-                삭제
+              <div className="cursor-pointer text-error" onClick={onClickDeleteButton}>
+                {Strings.ButtonStrings.DELETE}
               </div>
             </div>
           ) : (
             <div className="p-4 space-y-4">
               <div className="text-blackberry text-center">{Strings.CheckVideoDelete}</div>
               <div className="flex gap-x-4 justify-center">
-                <CustomButton text="아니요" size="small" type="secondary" onClick={onRequestClose} />
-                <CustomButton text="네" size="small" onClick={onClickDeleteCallback} />
+                <CustomButton text={Strings.ButtonStrings.NO} size="small" type="secondary" onClick={onRequestClose} />
+                <CustomButton text={Strings.ButtonStrings.YES} size="small" onClick={onClickDeleteCallback} />
               </div>
             </div>
           )

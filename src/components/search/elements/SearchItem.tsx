@@ -3,10 +3,9 @@ import VideoInfo from '../../elements/videoInfo'
 
 interface IProps {
   data: IVideo
-  index: number
-  onClickItem: (item: IVideo) => void
+  onClick: (item: IVideo) => void
 }
-function SearchItem({ data, index, onClickItem }: IProps) {
+function SearchItem({ data, onClick }: IProps) {
   return (
     <div
       className="w-full h-fit flex gap-4 md:gap-8
@@ -14,7 +13,7 @@ function SearchItem({ data, index, onClickItem }: IProps) {
             hover:shadow-outer
             rounded-2xl
             cursor-pointer"
-      onClick={() => onClickItem(data)}
+      onClick={() => onClick(data)}
     >
       <div className="relative w-[40%] min-w-[40%] max-w-[40%]  md:w-80 md:min-w-[20rem] md:max-w-[20rem] aspect-video rounded-2xl overflow-hidden">
         <div className="absolute right-2 bottom-2 text-white">{data.duration}</div>

@@ -31,20 +31,23 @@ function SignInFormContainer({ isOnSignUp, onLogin, onSignUp }: IProps) {
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const idCheck = id.trim()
-    const checkIdMessage = checkId(idCheck)
-    if (checkIdMessage !== '') {
-      setIdError(checkIdMessage)
+    try {
+      checkId(idCheck)
+    } catch (err: any) {
+      setIdError(err.message)
       return
     }
-    const checkPasswordMessage = checkPassword(password)
-    if (checkPasswordMessage !== '') {
-      setPasswordError(checkPasswordMessage)
+    try {
+      checkPassword(password)
+    } catch (err: any) {
+      setPasswordError(err.message)
       return
     }
     if (isOnSignUp) {
-      const checkPasswordCheckMessage = checkPasswordCheck(password, passwordCheck)
-      if (checkPasswordCheckMessage !== '') {
-        setPasswordCheckError(checkPasswordCheckMessage)
+      try {
+        checkPasswordCheck(password, passwordCheck)
+      } catch (err: any) {
+        setPasswordCheckError(err.message)
         return
       }
     }

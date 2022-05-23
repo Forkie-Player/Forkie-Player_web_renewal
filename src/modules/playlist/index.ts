@@ -15,7 +15,6 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     ...state,
     success: true,
     pending: false,
-    items: [...state.items, action.payload],
   }),
   [playlistActionTypes.ADD_PLAYLIST_ERROR]: (state, action) => ({
     ...state,
@@ -30,7 +29,12 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     error: null,
     items: action.payload,
   }),
-  [playlistActionTypes.GET_PLAYLIST_ERROR]: state => ({ ...state, success: false, pending: false, error: 'error' }),
+  [playlistActionTypes.GET_PLAYLIST_ERROR]: (state, action) => ({
+    ...state,
+    success: false,
+    pending: false,
+    error: action.payload,
+  }),
   [playlistActionTypes.CLEAR_THUMBNAIL]: (state, action) => ({
     ...state,
     items: state.items.map(playlist => (playlist.id === action.payload ? { ...playlist, thumbnail: null } : playlist)),
@@ -52,13 +56,17 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
         : playlist,
     ),
   }),
-  [playlistActionTypes.ADD_VIDEO_ERROR]: state => ({ ...state, success: false, pending: false, error: 'error' }),
+  [playlistActionTypes.ADD_VIDEO_ERROR]: (state, action) => ({
+    ...state,
+    success: false,
+    pending: false,
+    error: action.payload,
+  }),
   [playlistActionTypes.DELETE_PLAYLIST]: (state, action) => ({ ...state, success: false, error: null, pending: true }),
   [playlistActionTypes.DELETE_PLAYLIST_SUCCESS]: (state, action) => ({
     ...state,
     success: true,
     pending: false,
-    items: state.items.filter(playlist => playlist.id !== action.payload),
   }),
   [playlistActionTypes.DELETE_PLAYLIST_ERROR]: (state, action) => ({
     ...state,
@@ -77,7 +85,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     success: true,
     pending: false,
     items: state.items.map(playlist =>
-      playlist.id === action.payload.id ? { ...playlist, title: action.payload.title } : playlist,
+      playlist.id === action.payload.playlistId ? { ...playlist, title: action.payload.title } : playlist,
     ),
   }),
   [playlistActionTypes.EDIT_PLAYLIST_TITLE_ERROR]: (state, action) => ({
@@ -86,6 +94,7 @@ const playlistReducer = createReducer<TPlaylistType, TPlaylist_Action>(initialSt
     pending: false,
     error: action.payload,
   }),
+  [playlistActionTypes.INIT_PLAYLIST]: (state, action) => initialState,
 })
 
 export default playlistReducer

@@ -9,9 +9,9 @@ import HeaderUserInfoView from '../view/HeaderUserInfoView'
 interface IProps {
   userInfo: IUserInfo
   onWithdrawl: () => Promise<void>
-  changePassword: (newPw: string) => Promise<string>
+  changePassword: (prevPw: string, newPw: string) => Promise<void>
   onEditProfileImg: (e: React.ChangeEvent<HTMLInputElement>) => any
-  onClickReauthenticate: (password: string) => Promise<string>
+  onClickReauthenticate: (password: string) => Promise<void>
 }
 
 function HeaderUserInfoContainer({
@@ -21,8 +21,10 @@ function HeaderUserInfoContainer({
   onEditProfileImg,
   onClickReauthenticate: onClickReauthenticateCallback,
 }: IProps) {
+  const [prevPassword, setPrevPassword] = useState('')
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
-  const [reauthenicated, setReauthenicated] = useState(false)
+  // 재인증 되었냐 아니냐
+  const [isReauthenicated, setIsReauthenicated] = useState(false)
   const [showPopper, setShowPopper] = useState(false)
   const [popperMode, setPopperMode] = useState<'WITDRAWL' | 'PASSWORD_CHANGE'>('WITDRAWL')
   const [error, setError] = useState('')
@@ -32,40 +34,48 @@ function HeaderUserInfoContainer({
     setError('')
   }, [])
 
+  // 회원 탈퇴버튼 눌렀을시, 회원탈퇴 팝업창을 보여줌
   const onClickWithdrawlButton = (e: React.MouseEvent<HTMLDivElement>) => {
     setShowPopper(true)
     setReferenceElement(e.target as HTMLElement)
     setPopperMode('WITDRAWL')
   }
+  // 비밀번호 변경 버튼 눌렀을시, 비밀번호 변경 팝업창을 보여줌
   const onClickPasswordChangeButton = (e: React.MouseEvent<HTMLDivElement>) => {
     setShowPopper(true)
     setReferenceElement(e.target as HTMLElement)
     setPopperMode('PASSWORD_CHANGE')
   }
 
+  // 비밀번호 입력 후 확인버튼 눌렀을시 호출
   const onClickReauthenticate = async (password: string) => {
     setError('')
-    const res = await onClickReauthenticateCallback(password)
-    if (res !== '') {
-      setError(res)
-    } else {
-      setReauthenicated(true)
+    try {
+      await onClickReauthenticateCallback(password)
+      setPrevPassword(password)
+      setIsReauthenicated(true)
       onToggleShowPopper()
       onToggleShowPopper()
+    } catch (err: any) {
+      setError(err.message)
     }
   }
 
+  // 비밀번호 변경 시도
   const onClickChangePassword = async (newPassword: string) => {
     setError('')
-    const res = await changePassword(newPassword)
-    if (res !== '') {
-      setError(res)
-    } else {
+    try {
+      await changePassword(prevPassword, newPassword)
       toast.success(AuthStrings.PASSWORD_CHANGE_SUCCESS)
+      setIsReauthenicated(false)
+      setPrevPassword('')
       onToggleShowPopper()
+    } catch (err: any) {
+      setError(err.message)
     }
   }
 
+  // 회원탈퇴 취소
   const onCancleWithdrawl = () => {
     setShowPopper(false)
     setReferenceElement(null)
@@ -84,7 +94,7 @@ function HeaderUserInfoContainer({
         <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
           <HeaderPopperView
             error={error}
-            reauthenicated={reauthenicated}
+            isReauthenicated={isReauthenicated}
             popperMode={popperMode}
             onWithdrawl={onWithdrawl}
             onClickReauthenticate={onClickReauthenticate}
@@ -97,4 +107,4 @@ function HeaderUserInfoContainer({
   )
 }
 
-export default HeaderUserInfoContainer
+export default React.memo(HeaderUserInfoContainer)

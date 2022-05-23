@@ -11,11 +11,9 @@ function NavButtonView({ isSmScreen, onClickNavOpen }: IProps) {
   return (
     <>
       {isSmScreen && (
-        <div className="m-auto">
-          <CustomButtonWrapper>
-            <MdMenuOpen className="text-3xl text-blackberry-lightest" onClick={onClickNavOpen} />
-          </CustomButtonWrapper>
-        </div>
+        <CustomButtonWrapper className="m-auto">
+          <MdMenuOpen className="text-3xl text-blackberry-lightest" onClick={onClickNavOpen} />
+        </CustomButtonWrapper>
       )}
     </>
   )

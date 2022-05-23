@@ -1,6 +1,6 @@
 //재생화면에서 넘어온 이미 등록된 비디오를 수정하는 화면
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import useDispatchInteraction from '../../lib/hooks/useDispatchInteraction'
@@ -34,19 +34,27 @@ function VideoTimeChange({ video }: IProps) {
   }, [])
 
   const onClickEdit = useCallback(() => {
-    dispatch(editTimeRangeAsync.request({ id: videoState.id, start: videoState.start, end: videoState.end }))
-  }, [videoState, dispatch])
+    if (videoModule.playlistId !== null) {
+      dispatch(
+        editTimeRangeAsync.request({
+          playlistId: videoModule.playlistId,
+          playId: videoState.id,
+          startTime: videoState.start,
+          endTime: videoState.end,
+        }),
+      )
+    }
+  }, [videoState, dispatch, videoModule])
+
+  const applyButtonProps = useMemo(() => ({ onClick: onClickApply }), [onClickApply])
+  const completeButtonProps = useMemo(() => ({ onClick: onClickEdit, text: '수정' }), [onClickEdit])
 
   return (
     <div className="w-full h-full px-2 md:px-[5%] flex flex-col">
       <GobackLine />
       <div className="relative flex-1 w-full">
         <div className="w-full h-full py-4">
-          <VideoEdit
-            video={videoState}
-            onApplyButtonCallback={onClickApply}
-            rightButtonProps={{ onClick: onClickEdit, text: '수정' }}
-          />
+          <VideoEdit video={videoState} applyButtonProps={applyButtonProps} completeButtonProps={completeButtonProps} />
         </div>
       </div>
     </div>

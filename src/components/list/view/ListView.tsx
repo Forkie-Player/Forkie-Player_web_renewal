@@ -5,7 +5,7 @@ import PlaylistPopper from '../elements/PlaylistPopper'
 interface IProps {
   items: IPlaylist[]
   showModal: boolean
-  onClickPlaylistItem: ({ id }: { id: number }) => void
+  onClickPlaylistItem: (item: IPlaylist) => void
   onClickEditButton: (item: IPlaylist) => void | Promise<void>
   onToggleShowPopper: () => void
   onClickDeleteListItem: () => void
@@ -25,7 +25,7 @@ function ListView({
     <div className="w-full pb-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 2xl:gap-8">
       {items.map((item, index) => (
         <PlaylistItem
-          key={`playlistItem_${index}`}
+          key={item.id}
           item={item}
           index={index}
           showEditButton={true}

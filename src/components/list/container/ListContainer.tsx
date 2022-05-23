@@ -1,29 +1,37 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { RootModuleType } from '../../../modules/moduleTypes'
-import { getVideoAsync } from '../../../modules/video/actions'
 import ListView from '../view/ListView'
 
 import * as Constants from '../../../lib/constants'
 import { IPlaylist } from '../../../types'
-import { deletePlaylistAsync, editPlaylistTitleAsync } from '../../../modules/playlist/actions'
 import useDispatchInteraction from '../../../lib/hooks/useDispatchInteraction'
 
 import * as Strings from '../../../lib/strings'
+import { TPlaylistType } from '../../../modules/playlist/types'
+import { TVideoStoreType } from '../../../modules/video/types'
 
-function ListContainer() {
+interface IProps {
+  playlistStore: TPlaylistType
+  videoStore: TVideoStoreType
+  onClickPlaylistItem: (item: IPlaylist) => void
+  onClickTitleEdit: (id: number, title: string) => void
+  onClickDeleteListItem: (id: number) => void
+}
+
+function ListContainer({
+  playlistStore,
+  videoStore,
+  onClickPlaylistItem,
+  onClickTitleEdit: onClickTitleEditCallback,
+  onClickDeleteListItem: onClickDeleteListItemCallback,
+}: IProps) {
   const [showModal, setShowModal] = useState(false)
   const [itemOnPopper, setItemOnPopper] = useState<IPlaylist | null>(null)
 
-  const playlist = useSelector(({ playlist }: RootModuleType) => playlist)
-  const videoStore = useSelector(({ video }: RootModuleType) => video)
-  const dispatch = useDispatch()
-
   const navigate = useNavigate()
 
-  const playlistStatus = useDispatchInteraction(playlist)
+  const playlistStatus = useDispatchInteraction(playlistStore)
   const videoStoreStatus = useDispatchInteraction(videoStore)
 
   useEffect(() => {
@@ -50,18 +58,11 @@ function ListContainer() {
     setShowModal(prev => !prev)
   }, [])
 
-  const onClickPlaylistItem = useCallback(
-    ({ id }: { id: number }) => {
-      dispatch(getVideoAsync.request(id))
-    },
-    [dispatch],
-  )
-
   const onClickDeleteListItem = useCallback(() => {
     if (itemOnPopper !== null) {
-      dispatch(deletePlaylistAsync.request(itemOnPopper.id))
+      onClickDeleteListItemCallback(itemOnPopper.id)
     }
-  }, [itemOnPopper, dispatch])
+  }, [itemOnPopper, onClickDeleteListItemCallback])
 
   const onClickTitleEdit = useCallback(
     (titleInput: string): string => {
@@ -70,14 +71,11 @@ function ListContainer() {
         if (itemOnPopper.title === title) {
           return Strings.SameTitleCurrent
         }
-        if (playlist.items.some(item => item.title === title)) {
-          return Strings.SameTitleInPlaylist
-        }
-        dispatch(editPlaylistTitleAsync.request({ id: itemOnPopper.id, title }))
+        onClickTitleEditCallback(itemOnPopper.id, title)
       }
       return ''
     },
-    [itemOnPopper, playlist, dispatch],
+    [itemOnPopper, onClickTitleEditCallback],
   )
 
   const onClickEditButton = useCallback(
@@ -95,7 +93,7 @@ function ListContainer() {
 
   return (
     <ListView
-      items={playlist.items}
+      items={playlistStore.items}
       showModal={showModal}
       onClickPlaylistItem={onClickPlaylistItem}
       onClickEditButton={onClickEditButton}

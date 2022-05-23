@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { logEvent } from 'firebase/analytics'
+import { analytics } from '../../firebaseInit'
 import { IToken } from '../../types'
 import { setTokens } from '../utils/auth'
 import { removeCookie } from '../utils/cookie'
@@ -9,7 +11,7 @@ import {
   IReissueSuccess,
   IRemoveUserSuccess,
   ISignUpSuccess,
-  IUpdateProfileSuccess,
+  IUpdateProfileImgSuccess,
   IUpdateUserSuccess,
 } from './types'
 
@@ -27,26 +29,43 @@ import {
 */
 
 export const login = async (id: string, pw: string) => {
-  const res = await axios.post<IReissueSuccess>(`${Address}/api/member/login`, {
+  const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/member`, {
     loginId: id,
     password: pw,
     isPC: true,
   })
-  await setTokens(res.data.response)
+  logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
+  await setTokens(res.data.data)
 }
 
 export const reissue = async (tokens: IToken) => {
-  const res = await axios.post<IReissueSuccess>(`${Address}/api/member/reissue`, {
+  console.log(tokens)
+  const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/reissue`, {
     ...tokens,
     isPC: true,
   })
-  await setTokens(res.data.response)
+  await setTokens(res.data.data)
+  logEvent(analytics, '리이슈')
   return res.data
 }
 
 export const getUserInfoApi = async () => {
-  const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/member`)
-  return res.data
+  //  const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/member`)
+  // return res.data
+
+  return {
+    success: true,
+    error: null,
+    response: {
+      id: 123,
+      loginId: 'test1234',
+      profileImg: '',
+      authority: 'ROLE_USER',
+      pc: true,
+      member: true,
+      createdAt: new Date(),
+    },
+  }
 }
 
 export const nonSignUp = async (newId: string) => {
@@ -54,6 +73,7 @@ export const nonSignUp = async (newId: string) => {
     deviceId: newId,
     isPC: true,
   })
+  logEvent(analytics, '비회원 회원가입')
   return res.data
 }
 
@@ -77,15 +97,16 @@ export const pwUpdate = async (pw: string, newPw: string) => {
 }
 
 export const userSignUp = async (id: string, pw: string) => {
-  await axios.post(`${Address}/api/member/signup/real`, {
+  await axios.post(`${Address}/api/user/auth/signup/member`, {
     loginId: id,
     password: pw,
     isPC: true,
   })
+  logEvent(analytics, '회원가입')
 }
 
 export const updateProfileImag = async (form: FormData) => {
-  const res = await axios.post<IUpdateProfileSuccess>(`${Address}/api/member/upload`, form, {
+  const res = await axios.post<IUpdateProfileImgSuccess>(`${Address}/api/member/upload`, form, {
     headers: { 'Content-Type': 'multipart/form-data;' },
   })
   return res.data

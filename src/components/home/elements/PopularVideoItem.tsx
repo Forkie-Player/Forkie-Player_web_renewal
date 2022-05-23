@@ -6,18 +6,19 @@ import { useCallback } from 'react'
 import { SwiperSlide } from 'swiper/react'
 import { IVideo } from '../../../types'
 import VideoInfo from '../../elements/videoInfo'
+import VideoThumbnail from '../../elements/VideoThumbnail'
 
 interface IProps {
   item: IVideo
   index: number
   slidesPerView: number
-  onClickPopularVideo: (item: IVideo) => void
+  onClick: (item: IVideo) => void
 }
 
-export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVideo }: IProps) => {
+export const PopularVideoItem = ({ index, slidesPerView, item, onClick: onClickCallback }: IProps) => {
   const onClick = useCallback(() => {
-    onClickPopularVideo(item)
-  }, [item, onClickPopularVideo])
+    onClickCallback(item)
+  }, [item, onClickCallback])
 
   return (
     <SwiperSlide
@@ -35,19 +36,15 @@ export const PopularVideoItem = ({ index, slidesPerView, item, onClickPopularVid
       `}
       onClick={onClick}
     >
-      <div className="popularCardContainer w-full h-full rounded-2xl bg-background-light drop-shadow-md overflow-hidden flex">
-        <div className="w-full h-full flex flex-col popularCardContentShinked">
-          <div className="relative h-full w-full ">
-            <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
-            <div className="absolute right-2 bottom-2 text-white">{item.duration}</div>
-          </div>
+      <div className="popularCardContainer flex w-full h-full rounded-2xl bg-background-light drop-shadow-md overflow-hidden ">
+        <div className="w-full h-full popularCardContentShinked">
+          <VideoThumbnail thumbnail={item.thumbnail} duration={item.duration} />
         </div>
         <div className="absolute w-full h-full bg-background-light popularCardContentExpanded">
-          <div className="relative flex-1">
-            <img src={item.thumbnail} alt="thumbnail" className="h-full w-full object-cover" />
-            <div className="absolute right-2 bottom-2 text-white">{item.duration}</div>
+          <div className="w-full h-full flex">
+            <VideoThumbnail thumbnail={item.thumbnail} duration={item.duration} className="w-1/2" />
+            <VideoInfo data={item} className="w-1/2 p-2" />
           </div>
-          <VideoInfo data={item} className="flex-1 p-2 " />
         </div>
       </div>
     </SwiperSlide>

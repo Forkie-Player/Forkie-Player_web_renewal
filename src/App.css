@@ -1,36 +1,18 @@
 /* 앱 기본 설정 */
 .app {
-  background-color: var(--primary-redrose);
+  background-color: var(--blackberry);
   color: var(--blackberry);
 }
 
 @tailwind components;
 @layer components {
+  .app-content-container {
+    @apply h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-auto bg-background-light pt-6;
+  }
   .app-content-container-md {
-    @apply flex-1 h-full max-h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-auto bg-background-light pt-6;
-    @apply rounded-l-3xl;
+    @apply flex-1 rounded-l-3xl;
   }
   .app-content-container-sm {
-    @apply w-screen h-full max-h-full grid grid-cols-1 grid-rows-[4rem_minmax(0px,_auto)] overflow-auto bg-background-light pt-6;
+    @apply w-screen;
   }
-}
-
-/** form 스타일 */
-.form_field:placeholder-shown ~ .form__label {
-  font-size: 1rem;
-  top: 0;
-  cursor: text;
-}
-.form_field:focus ~ .form__label {
-  top: -1.2rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--primary-redrose-light);
-}
-.form_field:not(:focus) ~ .form__label {
-  color: var(--blackberry-lightest);
-}
-.form_field:not(:placeholder-shown) ~ .form__label {
-  top: -1.2rem;
-  font-size: 1rem;
 }

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootModuleType } from '../../modules/moduleTypes'
 import { createPlaylistAsync } from '../../modules/playlist/actions'
@@ -12,10 +12,9 @@ import PopperWrapper from './PopperWrapper'
 
 interface IProps {
   text?: string
-  place?: 'top' | 'bottom'
 }
 
-export default function AddPlaylistButton({ text = '추가', place = 'bottom' }: IProps) {
+function AddPlaylistButton({ text = '추가' }: IProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
   const [showPopper, setShowPopper] = useState(false)
 
@@ -73,3 +72,5 @@ export default function AddPlaylistButton({ text = '추가', place = 'bottom' }:
     </>
   )
 }
+
+export default React.memo(AddPlaylistButton)

@@ -13,25 +13,22 @@ const imageList = [landingFirst]
 
 function CarouselView() {
   return (
-    <div className="w-full h-full px-1">
-      <Swiper
-        // install Swiper modules
-        modules={[Navigation, Pagination, Keyboard, Autoplay]}
-        slidesPerView={1}
-        navigation={{}}
-        pagination={{ clickable: true }}
-        keyboard
-        loop
-        className="h-full w-full"
-      >
-        {imageList.map((image, index) => (
-          <SwiperSlide key={index} className="h-full w-full">
-            <ImageFallback src={image} className="h-full w-full rounded-3xl object-cover" alt="slide" />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <Swiper
+      modules={[Navigation, Pagination, Keyboard, Autoplay]}
+      slidesPerView={1}
+      navigation={{}}
+      pagination={{ clickable: true }}
+      keyboard
+      loop
+      className="h-full w-full px-1"
+    >
+      {imageList.map(image => (
+        <SwiperSlide key={image.slice(-10)} className="h-full w-full">
+          <ImageFallback src={image} className="h-full w-full rounded-3xl object-cover" />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   )
 }
 
-export default CarouselView
+export default React.memo(CarouselView)

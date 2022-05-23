@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiPlusCircle, FiMinusCircle } from 'react-icons/fi'
+import { CustomButtonWrapper } from '../../elements/CustomButton'
 
 interface IProps {
   right?: boolean
@@ -8,19 +9,21 @@ interface IProps {
 
 function AdjustSeconds({ right, onClickAdjustSeconds }: IProps) {
   return (
-    <div className={`flex gap-x-2 ${right === undefined ? '-translate-x-6' : 'translate-x-6'}`}>
-      <FiMinusCircle
-        className="text-2xl rounded-2xl text-blackberry 
-      cursor-pointer hover:shadow-outer hover:drop-shadow-md active:drop-shadow-none active:shadow-inner"
-        onClick={() => onClickAdjustSeconds(right !== undefined, -1)}
-      />
-      <FiPlusCircle
-        className="text-2xl rounded-2xl text-blackberry 
-      cursor-pointer hover:shadow-outer hover:drop-shadow-md  active:drop-shadow-none  active:shadow-inner"
-        onClick={() => onClickAdjustSeconds(right !== undefined, 1)}
-      />
+    <div className={`flex gap-x-2 ${right ? 'translate-x-6' : '-translate-x-6'}`}>
+      <CustomButtonWrapper className="p-0">
+        <FiMinusCircle
+          className="text-2xl rounded-full text-blackberry"
+          onClick={() => onClickAdjustSeconds(right !== undefined ? right : false, -1)}
+        />
+      </CustomButtonWrapper>
+      <CustomButtonWrapper className="p-0">
+        <FiPlusCircle
+          className="text-2xl rounded-full text-blackberry"
+          onClick={() => onClickAdjustSeconds(right !== undefined ? right : false, 1)}
+        />
+      </CustomButtonWrapper>
     </div>
   )
 }
 
-export default React.memo(AdjustSeconds)
+export default AdjustSeconds

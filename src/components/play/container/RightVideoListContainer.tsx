@@ -1,10 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import { IVideoInPlaylist } from '../../../types'
-import { CustomButton } from '../../elements/CustomButton'
 import RightVideoListView from '../view/RightVideoListView'
 import { DropResult } from 'react-beautiful-dnd'
-import * as Strings from '../../../lib/strings'
-import PopperWrapper from '../../elements/PopperWrapper'
+import VideoListPopper from '../elements/VideoListPopper'
 
 interface IProps {
   videoList: IVideoInPlaylist[]
@@ -24,38 +22,40 @@ function RightVideoListContainer({
   onVideoListDragEnd,
 }: IProps) {
   const [showPopper, setShowPopper] = useState(false)
-
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
   const [popperMode, setPopperMode] = useState<'edit' | 'delete'>('edit')
   const [selectedVideo, setSelectedVideo] = useState<IVideoInPlaylist | null>(null)
 
-  const onClickEditButton = useCallback(() => {
-    if (selectedVideo !== null) {
-      onClickEdit(selectedVideo)
-    }
-  }, [onClickEdit, selectedVideo])
-
-  const onClickDeleteButton = useCallback(() => {
-    if (selectedVideo !== null) {
-      onClickDelete(selectedVideo)
-    }
-    setShowPopper(false)
-  }, [onClickDelete, selectedVideo])
-
+  // 비디오 수정 버튼 눌렀을때, 설정하고 팝업 띄우기
   const onClickEditButtonCheck = useCallback((video: IVideoInPlaylist, reference: HTMLDivElement) => {
     setPopperMode('edit')
     setSelectedVideo(video)
     setReferenceElement(reference)
-    console.log('asdasd')
     setShowPopper(true)
   }, [])
 
+  // 비디오 삭제 버튼 눌렀을때, 설정하고 팝업 띄우기
   const onClickDeleteButtonCheck = useCallback((video: IVideoInPlaylist, reference: HTMLDivElement) => {
     setPopperMode('delete')
     setSelectedVideo(video)
     setReferenceElement(reference)
     setShowPopper(true)
   }, [])
+
+  // 비디오 수정 팝업에서 '예' 눌렀을때
+  const onClickEditComplete = useCallback(() => {
+    if (selectedVideo !== null) {
+      onClickEdit(selectedVideo)
+    }
+  }, [onClickEdit, selectedVideo])
+
+  // 비디오 삭제 팝업에서 '예' 눌렀을때
+  const onClickDeleteComplete = useCallback(() => {
+    if (selectedVideo !== null) {
+      onClickDelete(selectedVideo)
+    }
+    setShowPopper(false)
+  }, [onClickDelete, selectedVideo])
 
   const onToggleShowPopper = useCallback(() => {
     setShowPopper(prev => !prev)
@@ -72,21 +72,13 @@ function RightVideoListContainer({
         onVideoListDragEnd={onVideoListDragEnd}
       />
       {showPopper && (
-        <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
-          <div className={'border-2 relative p-4 bg-white rounded-2xl space-y-4 shadow-outer'}>
-            <div className="text-blackberry text-center">
-              {popperMode === 'edit' ? Strings.CheckVideoEdit : Strings.CheckVideoDelete}
-            </div>
-            <div className="flex gap-x-4 justify-center">
-              <CustomButton text="아니요" size="small" type="secondary" onClick={() => setShowPopper(false)} />
-              <CustomButton
-                text="네"
-                size="small"
-                onClick={popperMode === 'edit' ? onClickEditButton : onClickDeleteButton}
-              />
-            </div>
-          </div>
-        </PopperWrapper>
+        <VideoListPopper
+          referenceElement={referenceElement}
+          popperMode={popperMode}
+          onToggleShowPopper={onToggleShowPopper}
+          onClickEditComplete={onClickEditComplete}
+          onClickDeleteComplete={onClickDeleteComplete}
+        />
       )}
     </>
   )

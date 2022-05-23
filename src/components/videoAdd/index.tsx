@@ -1,17 +1,17 @@
 // 검색 화면에서 넘어온 비디오 추가 화면
 
 import { IPlaylist, IVideo, IVideoHasRange } from '../../types'
-import VideoEdit from '../videoEdit'
 import { useCallback, useMemo, useState } from 'react'
-import GobackLine from '../elements/GobackLine'
-import clsx from 'clsx'
-import './index.css'
-import SelectPlaylistContainer from './container/SelectPlaylistContainer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addVideoAsync } from '../../modules/playlist/actions'
 import { clearIsFirst } from '../../modules/isFirst/actions'
 import { isFirstConstants } from '../../lib/constants'
-import useIsSmScreen from '../../lib/hooks/useIsSmScreen'
+import { RootModuleType } from '../../modules/moduleTypes'
+
+import './index.css'
+import ReactPlayer from 'react-player'
+import VideoAddView from './indexView'
+import { authModalActions } from '../../modules/authModal/actions'
 
 interface IProps {
   video: IVideo
@@ -19,86 +19,71 @@ interface IProps {
 
 function VideoAdd({ video }: IProps) {
   const [videoState, setVideoState] = useState<IVideoHasRange>({ ...video, start: 0, end: 0 })
-  const [showPlaylists, setShowPlaylists] = useState(false)
-  const isSmScreen = useIsSmScreen()
+  const { isSmScreen, playlist, isFirst, userInfo } = useSelector(
+    ({ isSmScreen, playlist, isFirst, userInfo }: RootModuleType) => ({
+      isSmScreen,
+      playlist,
+      isFirst,
+      userInfo: userInfo.userInfo,
+    }),
+  )
   const dispatch = useDispatch()
 
-  const onPlayerReady = useCallback((endTime: number) => {
-    if (endTime) {
+  const onPlayerReady = useCallback((player: ReactPlayer) => {
+    if (player) {
+      const endTime = player.getDuration()
       setVideoState(prev => ({ ...prev, end: endTime }))
     }
   }, [])
 
+  // 적용버튼 눌렀을때.
   const onClickApply = useCallback((range: number[]) => {
     setVideoState(prev => ({ ...prev, start: range[0], end: range[1] }))
   }, [])
 
+  // 추가버튼 눌렀을때
   const onClickAdd = useCallback(() => {
-    setShowPlaylists(true)
-  }, [])
+    if (userInfo.loginId === '') {
+      dispatch(authModalActions.openAuthModal())
+      return false
+    }
+    return true
+  }, [userInfo, dispatch])
 
-  const onClickClosePlaylist = useCallback(() => {
-    setShowPlaylists(false)
-  }, [])
-
+  // 플레이리스트에서 추가버튼 눌렀을때
+  // 비디오 추가 및 isFirst 초기화
   const onClickPlaylist = async (item: IPlaylist) => {
     dispatch(clearIsFirst(isFirstConstants.ADD_FIRST))
-    dispatch(addVideoAsync.request({ playlistId: item.id, video: videoState }))
+    dispatch(
+      addVideoAsync.request({
+        playlistId: item.id,
+        video: {
+          ...videoState,
+          startTime: videoState.start,
+          endTime: videoState.end,
+          channelImg: videoState.channelImage,
+        },
+      }),
+    )
   }
 
-  const SelectPlaylistContainerClassName = useMemo(() => {
-    if (isSmScreen) {
-      if (showPlaylists) {
-        return 'SelectPlaylist-smScreen-show'
-      } else {
-        return 'SelectPlaylist-smScreen'
-      }
-    } else {
-      if (showPlaylists) {
-        return 'SelectPlaylist-show'
-      } else {
-        return 'SelectPlaylist'
-      }
-    }
-  }, [isSmScreen, showPlaylists])
-
-  const PlayerContainerClassName = useMemo(() => {
-    if (isSmScreen) {
-      if (showPlaylists) {
-        return 'showPlayerWhenSmScreen'
-      } else {
-        return 'hidePlayerWhenSmScreen'
-      }
-    }
-  }, [isSmScreen, showPlaylists])
-
+  const playerPropsMemo = useMemo(
+    () => ({
+      onReady: onPlayerReady,
+    }),
+    [onPlayerReady],
+  )
   return (
-    <div className="w-full h-full max-h-full space-y-2 pb-2 2xl:pb-4 flex flex-col">
-      <div className="px-2">
-        <GobackLine />
-      </div>
-      <div className={clsx('flex-1 flex relative w-full overflow-hidden')}>
-        <div className={clsx('flex-1 px-2 lg:pr-0', isSmScreen && 'h-full', PlayerContainerClassName)}>
-          <VideoEdit
-            video={videoState}
-            onReadyCallback={onPlayerReady}
-            onApplyButtonCallback={onClickApply}
-            rightButtonProps={{ onClick: onClickAdd }}
-          />
-        </div>
-        <div className={clsx(SelectPlaylistContainerClassName, 'transition-all h-full flex')}>
-          {showPlaylists && (
-            <>
-              <SelectPlaylistContainer
-                isSmScreen={isSmScreen}
-                onClickCancle={onClickClosePlaylist}
-                onClickPlaylist={onClickPlaylist}
-              />
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+    <VideoAddView
+      video={videoState}
+      isSmScreen={isSmScreen}
+      playerProps={playerPropsMemo}
+      playlists={playlist.items}
+      isFirst={isFirst}
+      onClickPlaylist={onClickPlaylist}
+      onClickApply={onClickApply}
+      onClickAdd={onClickAdd}
+    />
   )
 }
 

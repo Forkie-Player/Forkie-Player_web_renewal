@@ -15,14 +15,17 @@ const initialState: TVideoStoreType = {
 
 const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState, {
   [videoActionTypes.GET_VIDEO]: (state, action) => ({ ...state, error: null, success: false, pending: true }),
-  [videoActionTypes.GET_VIDEO_SUCCESS]: (state, action) => ({
-    ...state,
-    success: true,
-    pending: false,
-    playlistId: action.payload.playlistId,
-    currentVideo: action.payload.items[0],
-    items: action.payload.items.sort(sortPlaylistBySequence),
-  }),
+  [videoActionTypes.GET_VIDEO_SUCCESS]: (state, action) => {
+    const sortedItems = action.payload.items.sort(sortPlaylistBySequence)
+    return {
+      ...state,
+      success: true,
+      pending: false,
+      playlistId: action.payload.playlistId,
+      currentVideo: sortedItems[0],
+      items: sortedItems,
+    }
+  },
   [videoActionTypes.GET_VIDEO_ERROR]: (state, action) => ({
     ...state,
     success: false,
@@ -30,12 +33,15 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     error: action.payload,
   }),
   [videoActionTypes.DELETE_VIDEO]: (state, action) => ({ ...state, error: null, success: false, pending: true }),
-  [videoActionTypes.DELETE_VIDEO_SUCCESS]: (state, action) => ({
-    ...state,
-    success: true,
-    pending: false,
-    items: state.items.filter(item => item.id !== action.payload),
-  }),
+  [videoActionTypes.DELETE_VIDEO_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      currentVideo: action.payload.currentVideo,
+      success: true,
+      pending: false,
+      items: state.items.filter(item => item.id !== action.payload.id),
+    }
+  },
   [videoActionTypes.DELETE_VIDEO_ERROR]: (state, action) => ({
     ...state,
     success: false,
@@ -53,8 +59,8 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     success: true,
     pending: false,
     items: state.items.map(item => {
-      if (item.id === action.payload.id) {
-        return { ...item, start: action.payload.start, end: action.payload.end }
+      if (item.id === action.payload.playId) {
+        return { ...item, start: action.payload.startTime, end: action.payload.endTime }
       }
       return item
     }),
@@ -80,7 +86,7 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     pending: false,
     success: true,
     items: state.items
-      .map(item => ({ ...item, sequence: action.payload.find(s => s.id === item.id)?.sequence || item.sequence }))
+      .map(item => ({ ...item, sequence: action.payload.find(s => s.playId === item.id)?.sequence || item.sequence }))
       .sort(sortPlaylistBySequence),
   }),
   [videoActionTypes.CHANGE_VIDEO_ORDER_ERROR]: (state, action) => ({

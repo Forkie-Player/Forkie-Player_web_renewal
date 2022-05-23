@@ -14,4 +14,4 @@ function AdjustSecondsView({ onClickAdjustSeconds }: IProps) {
   )
 }
 
-export default AdjustSecondsView
+export default React.memo(AdjustSecondsView)

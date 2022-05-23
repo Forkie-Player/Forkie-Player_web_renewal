@@ -5,6 +5,7 @@ import {
   IAddVideoToPlaylistSuccess,
   IChangeVideoOrderInPlaylistRequest,
   IChangeVIdeoOrderInPlaylistSuccess,
+  IDeletePlaylistRequest,
   IDeleteVideoSuccess,
   IEditVideoTimeRangeRequest,
   IEditVideoTimeRangeSuccess,
@@ -16,31 +17,30 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebaseInit'
 
 export const getVideoList = async (id: number) => {
-  const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play/list/${id}`)
+  const res = await axios.get<IGetVideoListSuccess>(`${Address}/api/play/${id}`)
   return res.data
 }
 
 export const addVideo = async (request: IAddVideoToPlaylistRequest) => {
-  await axios.post<IAddVideoToPlaylistSuccess>(`${Address}/api/play/create`, {
+  await axios.post<IAddVideoToPlaylistSuccess>(`${Address}/api/play`, {
     playlistId: request.playlistId,
     ...request.video,
   })
   return { id: request.playlistId, thumbnail: request.video.thumbnail }
 }
 
-export const deleteVideo = async (id: number) => {
-  const res = await axios.delete<IDeleteVideoSuccess>(`${Address}/api/play/delete/${id}`)
-  return res.data
+export const deleteVideo = async (request: IDeletePlaylistRequest) => {
+  await axios.delete<IDeleteVideoSuccess>(`${Address}/api/play`, {
+    data: request,
+  })
 }
 
 export const changeVideoOrder = async (request: IChangeVideoOrderInPlaylistRequest) => {
-  const res = await axios.put<IChangeVIdeoOrderInPlaylistSuccess>(`${Address}/api/play/edit/seq`, request)
-  return res.data
+  await axios.patch<IChangeVIdeoOrderInPlaylistSuccess>(`${Address}/api/play/sequence`, request)
 }
 
 export const editVideoTimeRange = async (request: IEditVideoTimeRangeRequest) => {
-  const res = await axios.put<IEditVideoTimeRangeSuccess>(`${Address}/api/play/edit/time`, request)
-  return res.data
+  await axios.patch<IEditVideoTimeRangeSuccess>(`${Address}/api/play/time`, request)
 }
 
 export const getPopularVideos = async () => {

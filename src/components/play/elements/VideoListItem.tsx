@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useImperativeHandle, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import { IVideoInPlaylist } from '../../../types'
 import { CustomIconButton } from '../../elements/CustomButton'
-import { TimeLapse } from '../../elements/TimeLapse'
+import TimeLapse from '../../elements/TimeLapse'
 import { Draggable } from 'react-beautiful-dnd'
 import { twMerge } from 'tailwind-merge'
 
@@ -59,7 +59,7 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
             {...provided.dragHandleProps}
             className={twMerge(
               clsx(
-                video.id === currentVideo.id && 'border-2 border-redrose',
+                video.id === currentVideo.id && 'border-2 border-primary-yellow',
                 video.id !== currentVideo.id && !snapshot.isDragging && 'opacity-50',
                 'h-fit 2xl:h-28 cursor-pointer flex gap-2 rounded-2xl overflow-hidden ',
                 'hover:bg-background-light-hover hover:shadow-outer',
@@ -73,11 +73,11 @@ const VideoListItem = forwardRef<HTMLDivElement | null, IVideoListItemProps>(
             <div className="flex flex-col justify-between py-1">
               <div className="line-clamp-1 2xl:line-clamp-2">{video.title}</div>
               <div className="text-blackberry-light">
-                <TimeLapse range={[video.start, video.end]} gap={2} />
+                <TimeLapse range={[video.start, video.end]} className="gap-x-2" />
               </div>
               <div className="flex gap-x-2 text-lg">
                 <CustomIconButton icon={<MdEdit />} onClick={onClickEditCallback} type="secondary" />
-                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} />
+                <CustomIconButton icon={<MdDelete />} onClick={onClickDeleteCallback} className="text-error" />
               </div>
             </div>
           </div>

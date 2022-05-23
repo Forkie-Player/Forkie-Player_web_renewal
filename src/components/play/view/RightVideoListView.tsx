@@ -20,7 +20,6 @@ function RightVideoListView({
   onVideoListDragEnd,
 }: IProps) {
   const itemRef = React.useRef<HTMLDivElement | null>(null)
-  const containerRef = React.useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (itemRef.current !== null) {
@@ -29,7 +28,7 @@ function RightVideoListView({
   }, [itemRef, currentVideo])
 
   return (
-    <div ref={containerRef} className="w-full h-full ">
+    <div className="w-full h-full">
       <DragDropContext onDragEnd={onVideoListDragEnd}>
         <Droppable droppableId="droppable">
           {provided => (
@@ -37,7 +36,7 @@ function RightVideoListView({
               {videoList.map((video, index) => (
                 <VideoListItem
                   ref={video.id === currentVideo.id ? itemRef : undefined}
-                  key={`videolist_${index}`}
+                  key={video.id}
                   video={video}
                   currentVideo={currentVideo}
                   index={index}

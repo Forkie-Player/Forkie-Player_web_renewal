@@ -1,69 +1,65 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { logout } from '../../lib/utils/auth'
 import { RootModuleType } from '../../modules/moduleTypes'
-import { getPlaylistAsync } from '../../modules/playlist/actions'
-import { getUserInfo } from '../../modules/userInfo/actions'
-import AuthFormModal from '../authFormModal'
-import ProfileContainer from './container/ProfileContainer'
-import SearchbarContainer from './container/SearchbarContainer'
-
-import useIsSmScreen from '../../lib/hooks/useIsSmScreen'
-import NavButtonContainer from './container/NavButtonContainer'
 import { setNavOpen } from '../../modules/navExpansion/actions'
 import { NavAbsolutePathItems } from '../../lib/constants'
+import HeaderView from './indexView'
+import { getSearchResult } from '../../modules/searchResult/actions'
+import { playlistActions } from '../../modules/playlist/actions'
+import { userInfoActions } from '../../modules/userInfo/actions'
 
 function Header() {
-  const isSmScreen = useIsSmScreen()
-
-  const [isOpenAuthForm, setIsOpenAuthForm] = useState(false)
+  const { userInfo, playlistsLength, isSmScreen, isOpenAuthModal } = useSelector(
+    ({ userInfo, playlist, isSmScreen, authModal }: RootModuleType) => ({
+      userInfo,
+      playlistsLength: playlist.items.length,
+      isSmScreen,
+      isOpenAuthModal: authModal,
+    }),
+  )
   const navigate = useNavigate()
   const location = useLocation()
-
-  const { userInfo, playlistsLength } = useSelector(({ userInfo, playlist }: RootModuleType) => ({
-    userInfo,
-    playlistsLength: playlist.items.length,
-  }))
   const dispatch = useDispatch()
 
-  const onClickLogin = useCallback(() => {
-    setIsOpenAuthForm(true)
-  }, [])
-  const onClickCloseAuthForm = useCallback(() => setIsOpenAuthForm(false), [])
+  const onSearch = useCallback(
+    (search: string) => {
+      navigate(NavAbsolutePathItems.SEARCH)
+      dispatch(getSearchResult.request(search))
+    },
+    [dispatch, navigate],
+  )
 
   const onClickProfile = useCallback(() => {
     if (userInfo.userInfo.member === true) {
-      navigate('/profile')
+      navigate(NavAbsolutePathItems.PROFILE)
     }
   }, [navigate, userInfo])
 
   const onClickLogout = async () => {
     await logout()
-    dispatch(getUserInfo.request())
-    dispatch(getPlaylistAsync.request())
+    dispatch(playlistActions.initPlaylist())
+    dispatch(userInfoActions.initUserInfo())
     if (location.pathname === NavAbsolutePathItems.PLAY || location.pathname === NavAbsolutePathItems.VIDEO_EDIT)
       navigate(NavAbsolutePathItems.LIST)
   }
 
-  const onClickNavOpen = async () => {
+  const onClickNavOpen = useCallback(() => {
     dispatch(setNavOpen())
-  }
+  }, [dispatch])
 
   return (
-    <header className="flex justify-between px-2 md:px-[5%] h-12 gap-4">
-      <NavButtonContainer isSmScreen={isSmScreen} onClickNavOpen={onClickNavOpen} />
-      <SearchbarContainer />
-      <ProfileContainer
-        isSmScreen={isSmScreen}
-        userInfo={userInfo.userInfo}
-        playlistsLength={playlistsLength}
-        onClickLogin={onClickLogin}
-        onClickLogout={onClickLogout}
-        onClickProfile={onClickProfile}
-      />
-      <AuthFormModal isOpen={isOpenAuthForm} onClose={onClickCloseAuthForm} />
-    </header>
+    <HeaderView
+      isSmScreen={isSmScreen}
+      userInfo={userInfo.userInfo}
+      playlistsLength={playlistsLength}
+      isOpenAuthModal={isOpenAuthModal}
+      onSearch={onSearch}
+      onClickLogout={onClickLogout}
+      onClickNavOpen={onClickNavOpen}
+      onClickProfile={onClickProfile}
+    />
   )
 }
 export default React.memo(Header)

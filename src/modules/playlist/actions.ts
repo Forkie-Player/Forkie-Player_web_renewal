@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { createAction, createAsyncAction } from 'typesafe-actions'
 import {
   IAddVideoToPlaylistRequest,
@@ -31,6 +30,8 @@ const EDIT_PLAYLIST_TITLE = 'playlist/EDIT_PLAYLIST_TITLE' as const
 const EDIT_PLAYLIST_TITLE_SUCCESS = 'playlist/EDIT_PLAYLIST_TITLE_SUCCESS' as const
 const EDIT_PLAYLIST_TITLE_ERROR = 'playlist/EDIT_PLAYLIST_TITLE_ERROR' as const
 
+const INIT_PLAYLIST = 'playlist/INIT_PLAYLIST' as const
+
 export const playlistActionTypes = {
   ADD_PLAYLIST,
   ADD_PLAYLIST_SUCCESS,
@@ -49,12 +50,13 @@ export const playlistActionTypes = {
   EDIT_PLAYLIST_TITLE,
   EDIT_PLAYLIST_TITLE_SUCCESS,
   EDIT_PLAYLIST_TITLE_ERROR,
+  INIT_PLAYLIST,
 }
 
 //액션 생성 함수
 export const createPlaylistAsync = createAsyncAction(ADD_PLAYLIST, ADD_PLAYLIST_SUCCESS, ADD_PLAYLIST_ERROR)<
   ICreatePlaylistRequest,
-  IPlaylist,
+  null,
   string
 >()
 export const clearThumbnail = createAction(CLEAR_THUMBNAIL, (id: number) => id)()
@@ -62,7 +64,7 @@ export const setThumbnail = createAction(SET_THUMBNAIL, (id: number, thumbnail: 
 export const getPlaylistAsync = createAsyncAction(GET_PLAYLIST, GET_PLAYLIST_SUCESS, GET_PLAYLIST_ERROR)<
   undefined,
   IPlaylist[],
-  AxiosError
+  string
 >()
 export const addVideoAsync = createAsyncAction(ADD_VIDEO, ADD_VIDEO_SUCCESS, ADD_VIDEO_ERROR)<
   IAddVideoToPlaylistRequest,
@@ -71,7 +73,7 @@ export const addVideoAsync = createAsyncAction(ADD_VIDEO, ADD_VIDEO_SUCCESS, ADD
 >()
 export const deletePlaylistAsync = createAsyncAction(DELETE_PLAYLIST, DELETE_PLAYLIST_SUCCESS, DELETE_PLAYLIST_ERROR)<
   TDeletePlaylistRequest,
-  number,
+  null,
   string
 >()
 
@@ -81,6 +83,8 @@ export const editPlaylistTitleAsync = createAsyncAction(
   EDIT_PLAYLIST_TITLE_ERROR,
 )<IEditPlaylistTitleRequest, IEditPlaylistTitleRequest, string>()
 
+export const initPlaylist = createAction(INIT_PLAYLIST, () => {})()
+
 export const playlistActions = {
   createPlaylistAsync,
   clearThumbnail,
@@ -89,4 +93,5 @@ export const playlistActions = {
   addVideoAsync,
   deletePlaylistAsync,
   editPlaylistTitleAsync,
+  initPlaylist,
 }

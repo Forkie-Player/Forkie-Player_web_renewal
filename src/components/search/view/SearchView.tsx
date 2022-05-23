@@ -7,27 +7,25 @@ import LoadingElement from '../../elements/loading'
 
 interface IProps {
   searchResultItems: IVideo[]
-  loading: boolean
+  pending: boolean
   onClickItem: (item: IVideo) => void
 }
 
-function SearchView({ searchResultItems, loading, onClickItem }: IProps) {
+function SearchView({ searchResultItems, pending, onClickItem }: IProps) {
   return (
-    <div className="h-full space-y-4 pr-[5%] pb-16 ">
+    <div className="relative w-full h-full space-y-4 px-[5%] pb-4 overflow-y-auto">
       <div className="w-full text-xl font-bold">{SearchStrings.SEARCH_RESULT}</div>
-      {!loading ? (
+      {!pending ? (
         searchResultItems.length > 0 ? (
-          searchResultItems.map((item, index) => (
-            <SearchItem data={item} index={index} key={`searchResult_${index}`} onClickItem={onClickItem} />
-          ))
+          searchResultItems.map(item => <SearchItem key={item.videoId} data={item} onClick={onClickItem} />)
         ) : (
-          <div className="w-full h-96 max-h-full py-32 space-y-4">
-            <img src={no_search_result} alt={'no_search_result'} className="m-auto w-36 h-36" />
-            <div className="w-full  text-center text-blackberry-lightest">{SearchStrings.NO_SEARCH_RESULT}</div>
+          <div className="absolute-place-center space-y-4">
+            <img src={no_search_result} alt="no_search_result" className="m-auto w-36 h-36" />
+            <div className="w-full text-center text-blackberry-lightest">{SearchStrings.NO_SEARCH_RESULT}</div>
           </div>
         )
       ) : (
-        <div className="w-full h-96 max-h-full py-32">
+        <div className="absolute-place-center w-36 h-36">
           <LoadingElement />
         </div>
       )}
@@ -35,4 +33,4 @@ function SearchView({ searchResultItems, loading, onClickItem }: IProps) {
   )
 }
 
-export default SearchView
+export default React.memo(SearchView)

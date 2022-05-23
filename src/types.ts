@@ -9,6 +9,7 @@ export interface ICrawlThumbnail {
   url: string
 }
 export interface ICrawlResultItem {
+  type: 'video' | string
   id: string
   title: string
   thumbnails?: ICrawlThumbnail[]
@@ -25,7 +26,7 @@ export interface IVideo {
   title: string
   thumbnail: string
   channelTitle: string
-  channelAvatar?: string
+  channelImage: string
   duration: string
   views: number
   uploadedAt: string

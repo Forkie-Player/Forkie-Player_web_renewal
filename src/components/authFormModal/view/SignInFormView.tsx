@@ -30,7 +30,7 @@ function SignInFormView({
       <form className="space-y-8 pb-4" onSubmit={onSubmitForm}>
         <CustomInput
           id="email"
-          type="email"
+          type={isOnSignUp ? 'email' : 'id'}
           value={id}
           placeholder={isOnSignUp ? '이메일' : '이메일 or 아이디'}
           onChange={onChangeId}

@@ -28,7 +28,14 @@ function SignInFormView({
   return (
     <div className="w-64">
       <form className="space-y-8 pb-4" onSubmit={onSubmitForm}>
-        <CustomInput id="id" type="id" value={id} placeholder="아이디" onChange={onChangeId} error={idError} />
+        <CustomInput
+          id="email"
+          type={isOnSignUp ? 'email' : 'id'}
+          value={id}
+          placeholder={isOnSignUp ? '이메일' : '이메일 or 아이디'}
+          onChange={onChangeId}
+          error={idError}
+        />
         <CustomInput
           id="password"
           type="password"

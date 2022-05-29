@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import { applyMiddleware, createStore } from 'redux'
@@ -37,7 +37,16 @@ Sentry.init({
   tracesSampleRate: 0.5,
 })
 
-ReactDOM.render(
+/**
+ * 렌더
+ *
+ */
+const rootElement = document.getElementById('root')
+if (rootElement === null) {
+  throw new Error('Root element is null')
+}
+const root = ReactDOM.createRoot(rootElement)
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -47,5 +56,4 @@ ReactDOM.render(
       </PersistGate>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
 )

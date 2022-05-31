@@ -82,7 +82,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
   }, [video, prevVideo, videoReady, seekTo])
 
   const onVideoReady = useCallback(
-    e => {
+    (e: any) => {
       if (playerProps !== undefined && playerProps.onReady !== undefined) {
         playerProps.onReady(e)
       }

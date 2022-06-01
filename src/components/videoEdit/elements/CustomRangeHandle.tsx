@@ -6,9 +6,8 @@ interface IProps {
 }
 
 const CustomRangeHandle = React.forwardRef<HTMLDivElement, IProps>(({ props }: IProps, ref) => {
-  const { value, ...restProps } = props
   return (
-    <Handle value={value} {...restProps}>
+    <Handle {...props}>
       <div ref={ref} />
     </Handle>
   )

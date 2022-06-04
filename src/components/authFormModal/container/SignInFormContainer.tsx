@@ -30,22 +30,28 @@ function SignInFormContainer({ isOnSignUp, onLogin, onSignUp }: IProps) {
   }
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const idCheck = id.trim()
+    const idCheck = id.trim(),
+      pwTrim = password.trim(),
+      pwCheckTrim = passwordCheck.trim()
+
+    setId(idCheck)
+    setPassword(pwTrim)
+    setPasswordCheck(pwCheckTrim)
     try {
-      checkId(idCheck)
+      checkId(idCheck, isOnSignUp)
     } catch (err: any) {
       setIdError(err.message)
       return
     }
     try {
-      checkPassword(password)
+      checkPassword(pwTrim)
     } catch (err: any) {
       setPasswordError(err.message)
       return
     }
     if (isOnSignUp) {
       try {
-        checkPasswordCheck(password, passwordCheck)
+        checkPasswordCheck(pwTrim, pwCheckTrim)
       } catch (err: any) {
         setPasswordCheckError(err.message)
         return
@@ -53,12 +59,10 @@ function SignInFormContainer({ isOnSignUp, onLogin, onSignUp }: IProps) {
     }
 
     if (isOnSignUp) {
-      handleAuthApiRes(await onSignUp(idCheck, password))
+      handleAuthApiRes(await onSignUp(idCheck, pwTrim))
     } else {
-      handleAuthApiRes(await onLogin(idCheck, password))
+      handleAuthApiRes(await onLogin(idCheck, pwTrim))
     }
-
-    setId(idCheck)
   }
 
   const handleAuthApiRes = (res: string) => {

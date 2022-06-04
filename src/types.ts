@@ -66,3 +66,9 @@ export interface IPlaylist {
   title: string
   thumbnail: string | null
 }
+
+// OAuth2 인증 타입
+export type OAuth2Type = 'google' | 'kakao'
+
+// 검색 타입
+export type SearchPlatformType = 'youtube' | 'twitch' | 'facebook' | 'vimeo' | 'dailymotion'

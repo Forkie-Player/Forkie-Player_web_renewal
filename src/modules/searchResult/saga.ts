@@ -10,7 +10,7 @@ import {
   searchResultActionTypes,
 } from './actions'
 
-export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult>) {
+export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>) {
   for (const platform of action.payload.platforms) {
     switch (platform) {
       case 'youtube':
@@ -24,6 +24,7 @@ export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult>)
         break
     }
   }
+  yield put(getSearchResult.success())
 }
 
 export function* getYoutubeSearchResultSaga(action: ReturnType<typeof getSearchResultYoutube.request>) {

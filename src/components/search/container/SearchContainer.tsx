@@ -1,4 +1,5 @@
 import React from 'react'
+import { searchPlatforms } from '../../../lib/constants'
 import { TSearchResultType } from '../../../modules/searchResult/types'
 import { IVideo, SearchPlatformType } from '../../../types'
 import SearchView from '../view/SearchView'
@@ -20,15 +21,16 @@ function SearchContainer({ searchResultStore, onClickItem }: IProps) {
   const [searchResultItems, setSearchResultItems] = React.useState<TSearchResultViewType>([])
 
   React.useEffect(() => {
-    const searchPlatforms = ['youtube', 'twitch', 'dailymotion'] as const
     const newSearchResultItems: ISearchResultView[] = []
     searchPlatforms.forEach(platform => {
-      newSearchResultItems.push({
-        platform,
-        items: searchResultStore[platform].items,
-        pending: searchResultStore[platform].pending,
-        seeMore: false,
-      })
+      if (searchResultStore[platform].pending || searchResultStore[platform].items.length !== 0) {
+        newSearchResultItems.push({
+          platform,
+          items: searchResultStore[platform].items,
+          pending: searchResultStore[platform].pending,
+          seeMore: false,
+        })
+      }
     })
     setSearchResultItems(newSearchResultItems)
   }, [searchResultStore])

@@ -34,8 +34,11 @@ export const searchResultActionTypes = {
 }
 
 //액션 함수
-export const getSearchResult =
-  createAction(GET_SEARCH_RESULT)<{ search: string; platforms: Array<SearchPlatformType> }>()
+export const getSearchResult = createAsyncAction(
+  GET_SEARCH_RESULT,
+  GET_SEARCH_RESULT_SUCCESS,
+  GET_SEARCH_RESULT_FAILURE,
+)<{ search: string; platforms: Array<SearchPlatformType> }, void, string>()
 export const clearSearchResult = createAction(CLEAR_SEARCH_RESULT)()
 
 export const getSearchResultYoutube = createAsyncAction(

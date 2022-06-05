@@ -67,13 +67,17 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
     try {
       switch (type) {
         case 'kakao':
-          await loginWithKakao()
+          // await loginWithKakao()
+          const resKakao = window.open('https://forkie-api.com/v1/oauth2/authorization/kakao', '_blank', 'popup=true')
+          console.log(resKakao?.document?.body.innerHTML)
           break
         case 'google':
-          await loginWithGoogle()
+          // await loginWithGoogle()
+          const resGoogle = window.open('https://forkie-api.com/v1/oauth2/authorization/google', '_blank', 'popup=true')
+          console.log(resGoogle?.document?.body.innerHTML)
           break
       }
-      onSuccessAuth()
+      // onSuccessAuth()
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log(err.response?.data)

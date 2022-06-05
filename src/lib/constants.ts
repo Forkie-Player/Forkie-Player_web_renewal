@@ -43,3 +43,5 @@ export const isFirstConstants = {
 
 export const videoAspectRatio = 1.777777
 export const infiniteEndTime = 1000000000000
+
+export const searchPlatforms = ['youtube', 'twitch', 'dailymotion'] as const

@@ -25,13 +25,11 @@ function OAuthView({ onOAuth }: IProps) {
         </CustomButtonWrapper>
 
         <CustomButtonWrapper className="h-16 w-16 rounded-full p-0" onClick={() => onOAuth('kakao')}>
-          <a href="https://forkie-api.com/v1/oauth2/authorization/kakao" target="_blank" rel="noreferrer">
-            <img
-              src="https://pbs.twimg.com/profile_images/738200195578494976/CuZ9yUAT_400x400.jpg"
-              alt="카카오 로그인"
-              className="rounded-full"
-            />
-          </a>
+          <img
+            src="https://pbs.twimg.com/profile_images/738200195578494976/CuZ9yUAT_400x400.jpg"
+            alt="카카오 로그인"
+            className="rounded-full"
+          />
         </CustomButtonWrapper>
       </div>
     </div>

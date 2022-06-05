@@ -1,4 +1,5 @@
 import { createReducer } from 'typesafe-actions'
+import { searchPlatforms } from '../../lib/constants'
 import { searchResultActionTypes } from './actions'
 import { TSearchResultType, TSearchResult_Action } from './types'
 
@@ -25,6 +26,12 @@ const initialState: TSearchResultType = {
 
 const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Action>(initialState, {
   [searchResultActionTypes.GET_SEARCH_RESULT]: state => ({ ...state }),
+  [searchResultActionTypes.GET_SEARCH_RESULT_SUCCESS]: (state, action) => {
+    searchPlatforms.forEach(platform => {
+      state[platform].items = []
+    })
+    return state
+  },
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE]: state => ({
     ...state,
     youtube: {

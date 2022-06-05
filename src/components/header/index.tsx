@@ -27,7 +27,7 @@ function Header() {
   const onSearch = useCallback(
     (search: string, selectedPlatform: Array<SearchPlatformType>) => {
       navigate(NavAbsolutePathItems.SEARCH)
-      dispatch(getSearchResult({ search: search, platforms: selectedPlatform }))
+      dispatch(getSearchResult.request({ search: search, platforms: selectedPlatform }))
     },
     [dispatch, navigate],
   )

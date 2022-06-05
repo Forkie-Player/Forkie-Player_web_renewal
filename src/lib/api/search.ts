@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { SearchPlatformType } from '../../types'
+import { cloudfunctionAddress } from './constants'
 import { ISearchSuccess } from './types'
 
-const localhost = 'http://localhost:3001'
 export const getSearchResultByPlatform = async ({
   search,
   platform = 'youtube',
@@ -11,7 +11,7 @@ export const getSearchResultByPlatform = async ({
   platform: SearchPlatformType
 }) => {
   const res = await axios.get<ISearchSuccess>(
-    `${localhost}/api/search/${platform}?search=${decodeURIComponent(search)}`,
+    `${cloudfunctionAddress}/api/search/${platform}?search=${decodeURIComponent(search)}`,
   )
   return res
 }

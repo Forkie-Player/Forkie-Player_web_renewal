@@ -9,6 +9,7 @@ interface IProps {
   platformOptions: Array<{ value: SearchPlatformType; label: React.ReactNode }>
   onChangeSearchText: (e: React.ChangeEvent<HTMLInputElement>) => void
   onSearch: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
+  onMenuOpen: () => void
   onSelectPlatform: (platform: SearchPlatformType) => void
 }
 const selectStyles: StylesConfig = {
@@ -34,7 +35,7 @@ const selectStyles: StylesConfig = {
 }
 
 const SearchbarView = React.forwardRef<HTMLDivElement, IProps>(
-  ({ search, platformOptions, onChangeSearchText, onSearch, onSelectPlatform }: IProps, ref) => {
+  ({ search, platformOptions, onChangeSearchText, onSearch, onMenuOpen, onSelectPlatform }: IProps, ref) => {
     return (
       <div ref={ref} className="h-full flex-1 md:basis-5/12 bg-white rounded-2xl shadow-outer p-1 flex">
         <form className="relative flex w-full h-full bg-background-light rounded-2xl flex-1" onSubmit={onSearch}>
@@ -61,6 +62,7 @@ const SearchbarView = React.forwardRef<HTMLDivElement, IProps>(
           onChange={(e: any) => {
             onSelectPlatform(e.value as SearchPlatformType)
           }}
+          onMenuOpen={onMenuOpen}
           options={platformOptions}
           closeMenuOnSelect={false}
           isSearchable={false}

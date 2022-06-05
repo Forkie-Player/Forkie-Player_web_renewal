@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import { searchPlatforms } from '../../../lib/constants'
 import { NoSearchString } from '../../../lib/strings'
 import { SearchPlatformType } from '../../../types'
 import SelectOption from '../elements/SelectOption'
@@ -9,15 +10,6 @@ interface IProps {
   onSearch: (search: string, selectedPlatform: Array<SearchPlatformType>) => void
 }
 
-const platformOptions: Array<{ value: SearchPlatformType; label: React.ReactNode }> = [
-  {
-    value: 'youtube',
-    label: <SelectOption label="youtube" />,
-  },
-  { value: 'twitch', label: <SelectOption label="twitch" /> },
-  { value: 'dailymotion', label: <SelectOption label="dailymotion" /> },
-]
-
 function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
   const [search, setSearch] = useState('')
   const [selectedPlatform, setSelectedPlatform] = useState<Array<SearchPlatformType>>([
@@ -25,6 +17,15 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     'twitch',
     'dailymotion',
   ])
+  const [platformOptions, setPlatformOptions] = useState<Array<{ value: SearchPlatformType; label: React.ReactNode }>>([
+    {
+      value: 'youtube',
+      label: <SelectOption label="youtube" isChecked={true} />,
+    },
+    { value: 'twitch', label: <SelectOption label="twitch" isChecked={true} /> },
+    { value: 'dailymotion', label: <SelectOption label="dailymotion" isChecked={true} /> },
+  ])
+
   const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
@@ -56,6 +57,24 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
       }
     }
   }
+  const onMenuOpen = () => {
+    const newSetPlatformOptions: Array<{ value: SearchPlatformType; label: React.ReactNode }> = []
+
+    searchPlatforms.forEach(platform => {
+      if (!selectedPlatform.includes(platform)) {
+        newSetPlatformOptions.push({
+          value: platform,
+          label: <SelectOption label={platform} isChecked={false} />,
+        })
+      } else {
+        newSetPlatformOptions.push({
+          value: platform,
+          label: <SelectOption label={platform} isChecked={true} />,
+        })
+      }
+    })
+    setPlatformOptions(newSetPlatformOptions)
+  }
 
   return (
     <SearchbarView
@@ -64,6 +83,7 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
       platformOptions={platformOptions}
       onChangeSearchText={onChangeSearchText}
       onSearch={onSearch}
+      onMenuOpen={onMenuOpen}
       onSelectPlatform={onSelectPlatform}
     />
   )

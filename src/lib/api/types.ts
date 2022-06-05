@@ -1,4 +1,4 @@
-import { ICrawlResultItem, IPlaylist, IToken, IUserInfo, IVideoHasRange, IVideoInPlaylist } from '../../types'
+import { IPlaylist, IToken, IUserInfo, IVideo, IVideoHasRange, IVideoInPlaylist } from '../../types'
 
 // 요청 실패
 export interface IRequestFail {
@@ -59,9 +59,7 @@ export interface IUpdateProfileImgSuccess {
 
 // search 타입
 export interface ISearchSuccess {
-  data: {
-    items: ICrawlResultItem[]
-  }
+  data: IVideo[]
 }
 
 // 플레이리스트 get 반환 타입

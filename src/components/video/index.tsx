@@ -77,19 +77,17 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
      *  2. 이전과 같은 비디오로 변경되었을때.(이전에 ready 된 상태가 그대로 남음)
      */
     if (videoReady) {
+      console.log('seekto')
       seekTo(video.start)
     }
   }, [video, prevVideo, videoReady, seekTo])
 
-  const onVideoReady = useCallback(
-    (e: any) => {
-      if (playerProps !== undefined && playerProps.onReady !== undefined) {
-        playerProps.onReady(e)
-      }
-      setVideoReady(true)
-    },
-    [playerProps],
-  )
+  const onVideoStart = useCallback(() => {
+    if (playerProps !== undefined && playerProps.onStart !== undefined) {
+      playerProps.onStart()
+    }
+    setVideoReady(true)
+  }, [playerProps])
 
   const onVideoEnded = useCallback(() => {
     seekTo(video.start)
@@ -101,13 +99,15 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
   const playerPropsMemo = useMemo(
     () => ({
       ...playerProps,
-      onReady: onVideoReady,
       onEnded: onVideoEnded,
+      onStart: onVideoStart,
     }),
-    [playerProps, onVideoEnded, onVideoReady],
+    [playerProps, onVideoEnded, onVideoStart],
   )
 
-  return <VideoView playerRef={playerRef} playerProps={playerPropsMemo} videoId={video.videoId} />
+  return (
+    <VideoView playerRef={playerRef} playerProps={playerPropsMemo} videoId={video.videoId} platform={video.platform} />
+  )
 }
 
 export default VideoRender

@@ -6,7 +6,7 @@ import SelectOption from '../elements/SelectOption'
 import SearchbarView from '../view/SearchbarView'
 
 interface IProps {
-  onSearch: (search: string) => void
+  onSearch: (search: string, selectedPlatform: Array<SearchPlatformType>) => void
 }
 
 const platformOptions: Array<{ value: SearchPlatformType; label: React.ReactNode }> = [
@@ -15,18 +15,14 @@ const platformOptions: Array<{ value: SearchPlatformType; label: React.ReactNode
     label: <SelectOption label="youtube" />,
   },
   { value: 'twitch', label: <SelectOption label="twitch" /> },
-  { value: 'facebook', label: <SelectOption label="facebook" /> },
-  { value: 'vimeo', label: <SelectOption label="vimeo" /> },
   { value: 'dailymotion', label: <SelectOption label="dailymotion" /> },
 ]
 
 function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
   const [search, setSearch] = useState('')
-  const [platformSelected, setPlatformSelected] = useState<Array<SearchPlatformType>>([
+  const [selectedPlatform, setSelectedPlatform] = useState<Array<SearchPlatformType>>([
     'youtube',
     'twitch',
-    'facebook',
-    'vimeo',
     'dailymotion',
   ])
   const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +34,7 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     e.preventDefault()
     const trimedSearch = search.trim()
     if (trimedSearch.length !== 0) {
-      onSearchCallback(trimedSearch)
+      onSearchCallback(trimedSearch, selectedPlatform)
     } else {
       toast.error(NoSearchString)
     }
@@ -47,13 +43,13 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
   }
 
   const onSelectPlatform = (platform: SearchPlatformType) => {
-    const newPlatformSelected = platformSelected.includes(platform)
-      ? platformSelected.filter(p => p !== platform)
-      : [...platformSelected, platform]
+    const newPlatformSelected = selectedPlatform.includes(platform)
+      ? selectedPlatform.filter(p => p !== platform)
+      : [...selectedPlatform, platform]
     if (newPlatformSelected.length === 0) {
       toast.error('최소 하나의 플랫폼을 선택해주세요.')
     } else {
-      setPlatformSelected(newPlatformSelected)
+      setSelectedPlatform(newPlatformSelected)
       const input = searchBarViewRef.current?.querySelector('input#' + platform) as HTMLInputElement
       if (input !== null) {
         input.checked = !input.checked

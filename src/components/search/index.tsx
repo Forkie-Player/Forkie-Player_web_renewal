@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { RootModuleType } from '../../modules/moduleTypes'
 import { IVideo } from '../../types'
 import * as Constants from '../../lib/constants'
-import SearchView from './view/SearchView'
+import SearchContainer from './container/SearchContainer'
 
 function SearchComponent() {
   const searchResult = useSelector(({ searchResult }: RootModuleType) => searchResult)
@@ -18,7 +18,7 @@ function SearchComponent() {
     [navigate],
   )
 
-  return <SearchView searchResultItems={searchResult.items} pending={searchResult.pending} onClickItem={onClickItem} />
+  return <SearchContainer searchResultStore={searchResult} onClickItem={onClickItem} />
 }
 
 export default SearchComponent

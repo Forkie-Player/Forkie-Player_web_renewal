@@ -15,7 +15,7 @@ function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
     const response: IGetVideoListSuccess = yield call(getVideoList, action.payload)
     yield put(getVideoAsync.success({ playlistId: action.payload, items: response.data }))
   } catch (err) {
-    yield handleSagaError(err, deleteVideoAsync.failure)
+    yield handleSagaError(err, getVideoAsync.failure)
   }
 }
 

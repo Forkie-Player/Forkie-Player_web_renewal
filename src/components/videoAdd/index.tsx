@@ -5,11 +5,10 @@ import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addVideoAsync } from '../../modules/playlist/actions'
 import { clearIsFirst } from '../../modules/isFirst/actions'
-import { isFirstConstants } from '../../lib/constants'
+import { infiniteEndTime, isFirstConstants } from '../../lib/constants'
 import { RootModuleType } from '../../modules/moduleTypes'
 
 import './index.css'
-import ReactPlayer from 'react-player'
 import VideoAddView from './indexView'
 import { authModalActions } from '../../modules/authModal/actions'
 
@@ -18,7 +17,7 @@ interface IProps {
 }
 
 function VideoAdd({ video }: IProps) {
-  const [videoState, setVideoState] = useState<IVideoHasRange>({ ...video, start: 0, end: 0 })
+  const [videoState, setVideoState] = useState<IVideoHasRange>({ ...video, start: 0, end: infiniteEndTime })
   const { isSmScreen, playlist, isFirst, userInfo } = useSelector(
     ({ isSmScreen, playlist, isFirst, userInfo }: RootModuleType) => ({
       isSmScreen,
@@ -29,10 +28,9 @@ function VideoAdd({ video }: IProps) {
   )
   const dispatch = useDispatch()
 
-  const onPlayerReady = useCallback((player: ReactPlayer) => {
-    if (player) {
-      const endTime = player.getDuration()
-      setVideoState(prev => ({ ...prev, end: endTime }))
+  const onDuration = useCallback((duration: number) => {
+    if (duration) {
+      setVideoState(prev => ({ ...prev, end: Math.floor(duration) }))
     }
   }, [])
 
@@ -69,9 +67,9 @@ function VideoAdd({ video }: IProps) {
 
   const playerPropsMemo = useMemo(
     () => ({
-      onReady: onPlayerReady,
+      onDuration: onDuration,
     }),
-    [onPlayerReady],
+    [onDuration],
   )
   return (
     <VideoAddView

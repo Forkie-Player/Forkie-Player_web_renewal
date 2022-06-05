@@ -51,6 +51,9 @@ export const ErrorMessageFromServer = {
   STARTTIME_GRATER_THAN_ENDTIME: '시작시간이 종료시간보다 큽니다.',
   WRONG_PLAYLIST: '같은 영상 목록 내 영상들이 아닙니다.',
   WRONG_SEQUENCE: '영상의 순서에 오류가 있습니다.',
+  YOUTUBE_SEARCH_ERROR: 'youtube search error',
+  TWITCH_SEARCH_ERROR: 'twitch search error',
+  DATILYMOTION_SEARCH_ERROR: 'dailymotion search error',
 }
 
 export const ErrorMessageToUser = {
@@ -65,6 +68,9 @@ export const ErrorMessageToUser = {
   STARTTIME_GRATER_THAN_ENDTIME: '시작시간은 종료시간보다 작아야해요.',
   WRONG_PLAYLIST: '다른 플레이리스트의 영상이에요.',
   WRONG_SEQUENCE: '영상의 순서에 문제가 있어요.',
+  YOUTUBE_SEARCH_ERROR: '유튜브 검색에 실패했어요.',
+  TWITCH_SEARCH_ERROR: '트위치 검색에 실패했어요.',
+  DATILYMOTION_SEARCH_ERROR: 'Dailymotion 검색에 실패했어요.',
 }
 
 export const auth = {

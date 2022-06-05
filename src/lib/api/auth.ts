@@ -114,7 +114,6 @@ export const updateProfileImag = async (form: FormData) => {
 
 export const loginWithGoogle = async () => {
   const res = await axios.get(`${Address}/v1/oauth2/authorization/google`)
-  console.log(res)
   await setTokens(res.data.data)
 }
 export const loginWithKakao = async () => {

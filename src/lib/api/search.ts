@@ -1,8 +1,17 @@
 import axios from 'axios'
-import { CrawlAddress } from './constants'
+import { SearchPlatformType } from '../../types'
 import { ISearchSuccess } from './types'
 
-export const getSearchResultApi = async (search: string) => {
-  const res = await axios.get<ISearchSuccess>(`${CrawlAddress}${decodeURIComponent(search)}`)
-  return res.data
+const localhost = 'http://localhost:3001'
+export const getSearchResultByPlatform = async ({
+  search,
+  platform = 'youtube',
+}: {
+  search: string
+  platform: SearchPlatformType
+}) => {
+  const res = await axios.get<ISearchSuccess>(
+    `${localhost}/api/search/${platform}?search=${decodeURIComponent(search)}`,
+  )
+  return res
 }

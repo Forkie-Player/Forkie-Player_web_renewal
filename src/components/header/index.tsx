@@ -9,6 +9,7 @@ import HeaderView from './indexView'
 import { getSearchResult } from '../../modules/searchResult/actions'
 import { playlistActions } from '../../modules/playlist/actions'
 import { userInfoActions } from '../../modules/userInfo/actions'
+import { SearchPlatformType } from '../../types'
 
 function Header() {
   const { userInfo, playlistsLength, isSmScreen, isOpenAuthModal } = useSelector(
@@ -24,9 +25,9 @@ function Header() {
   const dispatch = useDispatch()
 
   const onSearch = useCallback(
-    (search: string) => {
+    (search: string, selectedPlatform: Array<SearchPlatformType>) => {
       navigate(NavAbsolutePathItems.SEARCH)
-      dispatch(getSearchResult.request(search))
+      dispatch(getSearchResult({ search: search, platforms: selectedPlatform }))
     },
     [dispatch, navigate],
   )

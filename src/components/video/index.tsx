@@ -77,7 +77,6 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
      *  2. 이전과 같은 비디오로 변경되었을때.(이전에 ready 된 상태가 그대로 남음)
      */
     if (videoReady) {
-      console.log('seekto')
       seekTo(video.start)
     }
   }, [video, prevVideo, videoReady, seekTo])

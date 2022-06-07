@@ -95,7 +95,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           onClick={onChangeFormMode}
           className="py-2"
         />
-        <OAuthView onOAuth={onOAuth} />
+        {false && <OAuthView onOAuth={onOAuth} />}
       </FormWrapper>
     </CustomModalWrapper>
   )

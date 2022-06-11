@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { authModalActions } from '../../modules/authModal/actions'
-import { IUserInfo } from '../../types'
+import { IUserInfo, SearchPlatformType } from '../../types'
 import AuthFormModal from '../authFormModal'
 import SearchbarContainer from './container/SearchbarContainer'
 import NavButtonView from './view/NavButtonView'
@@ -12,7 +12,7 @@ interface IProps {
   userInfo: IUserInfo
   playlistsLength: number
   isOpenAuthModal: boolean
-  onSearch: (search: string) => void
+  onSearch: (search: string, selectedPlatform: Array<SearchPlatformType>) => void
   onClickLogout: () => Promise<void>
   onClickProfile: () => void
   onClickNavOpen: () => void

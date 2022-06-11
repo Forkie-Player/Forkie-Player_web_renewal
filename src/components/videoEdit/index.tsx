@@ -18,6 +18,7 @@ import AdjustSecondsView from './view/AdjustSecondsView'
 import { useSelector } from 'react-redux'
 import { RootModuleType } from '../../modules/moduleTypes'
 import ButtonsContainer from './container/ButtonsContainer'
+import { infiniteEndTime } from '../../lib/constants'
 
 interface ITextButtonPropsWithOnClick extends Omit<ITextButtonProps, 'onClick'> {
   onClick?: (range: number[]) => void
@@ -44,19 +45,19 @@ function VideoEdit({ video, playerProps, applyButtonProps, completeButtonProps, 
   const playerRef = useRef<ReactPlayer>(null)
 
   // 비디오가 로드되었을때 실행.
-  const onPlayerReady = useCallback(
-    (player: ReactPlayer) => {
-      if (player) {
-        const endTime = player.getDuration()
-        setVideoDuration(endTime)
+  const onPlayerDuration = useCallback(
+    (duration: number) => {
+      if (duration) {
+        duration = Math.floor(duration)
+        setVideoDuration(duration)
 
-        if (video.end === undefined || video.end === null || video.end === 0) {
-          setRange([video.start, endTime])
-          setSelectedLapse([video.start, endTime])
+        if (video.end === undefined || video.end === null || video.end === infiniteEndTime) {
+          setRange([video.start, duration])
+          setSelectedLapse([video.start, duration])
         }
 
-        if (playerProps !== undefined && playerProps.onReady !== undefined) {
-          playerProps.onReady(player)
+        if (playerProps !== undefined && playerProps.onDuration !== undefined) {
+          playerProps.onDuration(duration)
         }
       }
       setVideoReady(true)
@@ -117,7 +118,10 @@ function VideoEdit({ video, playerProps, applyButtonProps, completeButtonProps, 
     })
   }, [applyButtonProps])
 
-  const playerPropsMemo = useMemo(() => ({ ...playerProps, onReady: onPlayerReady }), [playerProps, onPlayerReady])
+  const playerPropsMemo = useMemo(
+    () => ({ ...playerProps, onDuration: onPlayerDuration }),
+    [playerProps, onPlayerDuration],
+  )
   const applyButtonPropsMemo = useMemo(
     () => ({ ...applyButtonProps, onClick: onClickApply }),
     [applyButtonProps, onClickApply],

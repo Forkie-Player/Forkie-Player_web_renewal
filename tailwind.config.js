@@ -4,6 +4,8 @@ module.exports = {
     extend: {
       colors: {
         'primary-yellow': '#ffd169',
+        'primary-yellow-light': '#fad169aa',
+        'primary-yellow-lightest': '#fad16966',
         'primary-resrose': '#d50909',
         blackberry: '#1d1d1d',
         'blackberry-light': '#757575',

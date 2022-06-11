@@ -37,6 +37,17 @@ export function* createPlaylistSaga(action: ReturnType<typeof createPlaylistAsyn
 
 export function* addVideoSaga(action: ReturnType<typeof addVideoAsync.request>) {
   try {
+    if (
+      action.payload.video.channelImg === null ||
+      action.payload.video.channelImg === undefined ||
+      action.payload.video.channelImg === ''
+    ) {
+      action.payload.video = {
+        ...action.payload.video,
+        channelImg: 'default',
+      }
+    }
+
     const res: IAddVideoReturn = yield call(addVideo, action.payload)
     yield put(addVideoAsync.success(res))
     toast.success(Strings.addVideoSuccess)

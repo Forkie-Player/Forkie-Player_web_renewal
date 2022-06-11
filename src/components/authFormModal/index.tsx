@@ -4,7 +4,7 @@ import SignInFormContainer from './container/SignInFormContainer'
 import FormWrapper from './view/FormWrapper'
 
 import * as Strings from '../../lib/strings'
-import { login as loginApi } from '../../lib/api/auth'
+import { login as loginApi, loginWithGoogle, loginWithKakao } from '../../lib/api/auth'
 import { handleAuthApiError } from '../../lib/utils/handleAuthErr'
 import { SignUp as SignUpApi } from '../../lib/utils/auth'
 import { useDispatch } from 'react-redux'
@@ -13,6 +13,9 @@ import { getPlaylistAsync } from '../../modules/playlist/actions'
 import CustomModalWrapper from '../elements/CustomModalWrapper'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { NavAbsolutePathItems } from '../../lib/constants'
+import { OAuth2Type } from '../../types'
+import OAuthView from './view/OAuthView'
+import axios from 'axios'
 
 interface IProps {
   isOpen: boolean
@@ -60,6 +63,28 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
     }
   }
 
+  const onOAuth = async (type: OAuth2Type) => {
+    try {
+      switch (type) {
+        case 'kakao':
+          // await loginWithKakao()
+          const resKakao = window.open('https://forkie-api.com/v1/oauth2/authorization/kakao', '_blank', 'popup=true')
+          console.log(resKakao?.document?.body.innerHTML)
+          break
+        case 'google':
+          // await loginWithGoogle()
+          const resGoogle = window.open('https://forkie-api.com/v1/oauth2/authorization/google', '_blank', 'popup=true')
+          console.log(resGoogle?.document?.body.innerHTML)
+          break
+      }
+      // onSuccessAuth()
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log(err.response?.data)
+      }
+    }
+  }
+
   return (
     <CustomModalWrapper isOpen={isOpen} onRequestClose={onClose}>
       <FormWrapper mode={onSignInOrSignUp}>
@@ -70,6 +95,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           onClick={onChangeFormMode}
           className="py-2"
         />
+        {false && <OAuthView onOAuth={onOAuth} />}
       </FormWrapper>
     </CustomModalWrapper>
   )

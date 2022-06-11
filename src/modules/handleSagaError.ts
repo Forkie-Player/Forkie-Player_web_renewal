@@ -5,13 +5,17 @@ import { PayloadAction } from 'typesafe-actions'
 import * as Sentry from '@sentry/react'
 import * as Strings from '../lib/strings'
 
+type ErrorMessageFromServerKeys = keyof typeof Strings.ErrorMessageFromServer
+type ErrorMessageToUserKeys = keyof typeof Strings.ErrorMessageToUser
+
 export default function* handleSagaError(err: unknown, failure: (payload: string) => PayloadAction<string, string>) {
   let errorMessage = Strings.ErrorMessageToUser.UNKOWN_ERROR
   if (axios.isAxiosError(err)) {
-    switch (err.response?.data.message) {
-      case [Strings.ErrorMessageFromServer.EXCEED_NONMEMBER_MAX_PLAYLIST]:
-        errorMessage = Strings.ErrorMessageToUser.EXCEED_NONMEMBER_MAX_PLAYLIST
+    for (const errMsg in Strings.ErrorMessageFromServer) {
+      if (Strings.ErrorMessageFromServer[errMsg as ErrorMessageFromServerKeys] === err.response?.data.message) {
+        errorMessage = Strings.ErrorMessageToUser[errMsg as ErrorMessageToUserKeys]
         break
+      }
     }
   }
   Sentry.captureException(`Catched Error : ${err}`)

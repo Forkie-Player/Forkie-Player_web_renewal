@@ -22,7 +22,7 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
 
   return (
     <div className="flex gap-x-2 md:gap-x-4 md:basis-7/12 h-full justify-end">
-      {userInfo.loginId !== '' && (
+      {false && userInfo.loginId !== '' && (
         <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
           <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} />
           {!isSmScreen && (
@@ -40,17 +40,19 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
             <MdLogin />
           </div>
         ) : (
-          <MdLogout onClick={onClickLogout} />
+          <div className="flex gap-x-2 p-1" onClick={onClickLogout}>
+            <div className="text-base align-middle">{!isSmScreen ? Strings.Logout : ''}</div>
+            <MdLogout />
+          </div>
         )}
       </CustomButtonWrapper>
-      {userInfo.loginId !== '' ||
-        (isSmScreen && (
-          <PopperHoverWrapper referenceElement={referenceElement.current}>
-            <div className="p-1 bg-black text-white text-xs rounded-lg">
-              {userInfo.member === false ? Strings.Login : Strings.Logout}
-            </div>
-          </PopperHoverWrapper>
-        ))}
+      {((false && userInfo.loginId !== '') || (false && isSmScreen)) && (
+        <PopperHoverWrapper referenceElement={referenceElement.current}>
+          <div className="p-1 bg-black text-white text-xs rounded-lg">
+            {userInfo.member === false ? Strings.Login : Strings.Logout}
+          </div>
+        </PopperHoverWrapper>
+      )}
     </div>
   )
 }

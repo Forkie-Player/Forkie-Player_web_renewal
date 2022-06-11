@@ -44,6 +44,16 @@ export const ErrorMessageFromServer = {
   EXCEED_NONMEMBER_MAX_PLAYLIST: '비회원 playlist 제한을 초과하였습니다.',
   REMOVE_USER_FAIL: '회원 탈퇴 실패',
   NONMEMBER_LOGIN_FAIL: '비회원 로그인 실패',
+  NOT_EXIST_PLAYLIST: '존재하지 않는 영상 목록',
+  NOT_EXIST_VIDEO: '존재하지 않는 영상',
+  NOT_YOUR_PLAYLIST: '요청 대상(Member)과 Target의 소유자(Member)가 다릅니다.',
+  SHOULD_BE_POSITIVE: '음수일 수 없는 값입니다.',
+  STARTTIME_GRATER_THAN_ENDTIME: '시작시간이 종료시간보다 큽니다.',
+  WRONG_PLAYLIST: '같은 영상 목록 내 영상들이 아닙니다.',
+  WRONG_SEQUENCE: '영상의 순서에 오류가 있습니다.',
+  YOUTUBE_SEARCH_ERROR: 'youtube search error',
+  TWITCH_SEARCH_ERROR: 'twitch search error',
+  DATILYMOTION_SEARCH_ERROR: 'dailymotion search error',
 }
 
 export const ErrorMessageToUser = {
@@ -51,6 +61,16 @@ export const ErrorMessageToUser = {
   UNKOWN_ERROR: '알수없는 에러가 발생했어요',
   REMOVE_USER_FAIL: '회원 탈퇴에 실패했어요.\n잠시후 다시 시도해주세요.',
   UPDATE_PROFILE_IMG_FAIL: '프로필 사진 업데이트에 실패했어요.\n 잠시후 다시 시도해주세요.',
+  NOT_EXIST_PLAYLIST: '존재하지 않는 영상 목록이에요.',
+  NOT_EXIST_VIDEO: '존재하지 않는 영상이에요.',
+  NOT_YOUR_PLAYLIST: '다른 사람의 플레이리스트에요.',
+  SHOULD_BE_POSITIVE: '영상 시간은 양수여야만 해요.',
+  STARTTIME_GRATER_THAN_ENDTIME: '시작시간은 종료시간보다 작아야해요.',
+  WRONG_PLAYLIST: '다른 플레이리스트의 영상이에요.',
+  WRONG_SEQUENCE: '영상의 순서에 문제가 있어요.',
+  YOUTUBE_SEARCH_ERROR: '유튜브 검색에 실패했어요.',
+  TWITCH_SEARCH_ERROR: '트위치 검색에 실패했어요.',
+  DATILYMOTION_SEARCH_ERROR: 'Dailymotion 검색에 실패했어요.',
 }
 
 export const auth = {
@@ -74,6 +94,8 @@ export const auth = {
   USER_NOT_EXST: '존재하지 않는 유저에요',
   ID_ALREADY_EXST: '이미 존재하는 아이디에요',
   UNKNOWN_ERROR: '알수없는 에러가 발생했어요',
+  WRONG_ID: '이메일 혹은 아이디를 입력해주세요.',
+  WRONG_EMAIL: '이메일 형식이 아니에요',
 }
 
 export const THANKYOU = '감사합니다!!'
@@ -91,4 +113,12 @@ export const ButtonStrings = {
   NO: '아니오',
   COMPLETE: '완료',
   CANCEL: '취소',
+}
+
+export const PlatformSelectOptionLebels = {
+  youtube: '유튜브',
+  twitch: '트위치',
+  facebook: '페이스북',
+  vimeo: 'Vimeo',
+  dailymotion: 'Dailymotion',
 }

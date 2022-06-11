@@ -81,15 +81,12 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
     }
   }, [video, prevVideo, videoReady, seekTo])
 
-  const onVideoReady = useCallback(
-    e => {
-      if (playerProps !== undefined && playerProps.onReady !== undefined) {
-        playerProps.onReady(e)
-      }
-      setVideoReady(true)
-    },
-    [playerProps],
-  )
+  const onVideoStart = useCallback(() => {
+    if (playerProps !== undefined && playerProps.onStart !== undefined) {
+      playerProps.onStart()
+    }
+    setVideoReady(true)
+  }, [playerProps])
 
   const onVideoEnded = useCallback(() => {
     seekTo(video.start)
@@ -101,13 +98,15 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
   const playerPropsMemo = useMemo(
     () => ({
       ...playerProps,
-      onReady: onVideoReady,
       onEnded: onVideoEnded,
+      onStart: onVideoStart,
     }),
-    [playerProps, onVideoEnded, onVideoReady],
+    [playerProps, onVideoEnded, onVideoStart],
   )
 
-  return <VideoView playerRef={playerRef} playerProps={playerPropsMemo} videoId={video.videoId} />
+  return (
+    <VideoView playerRef={playerRef} playerProps={playerPropsMemo} videoId={video.videoId} platform={video.platform} />
+  )
 }
 
 export default VideoRender

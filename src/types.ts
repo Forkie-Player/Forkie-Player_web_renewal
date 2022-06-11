@@ -22,13 +22,14 @@ export interface ICrawlResultItem {
 
 // 비디오 아이템
 export interface IVideo {
+  platform: SearchPlatformType
   videoId: string
   title: string
   thumbnail: string
   channelTitle: string
   channelImage: string
   duration: string
-  views: number
+  views: string
   uploadedAt: string
 }
 
@@ -66,3 +67,9 @@ export interface IPlaylist {
   title: string
   thumbnail: string | null
 }
+
+// OAuth2 인증 타입
+export type OAuth2Type = 'google' | 'kakao'
+
+// 검색 타입
+export type SearchPlatformType = 'youtube' | 'twitch' | 'dailymotion'

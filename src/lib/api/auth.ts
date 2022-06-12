@@ -15,6 +15,8 @@ import {
   IUpdateUserSuccess,
 } from './types'
 
+import * as Sentry from '@sentry/react'
+
 /*
    모든 api는 token으로 이루어짐.
 
@@ -29,13 +31,17 @@ import {
 */
 
 export const login = async (id: string, pw: string) => {
-  const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/member`, {
-    loginId: id,
-    password: pw,
-    isPC: true,
-  })
-  logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
-  await setTokens(res.data.data)
+  try {
+    const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/members`, {
+      loginId: id,
+      password: pw,
+      isPC: true,
+    })
+    logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
+    await setTokens(res.data.data)
+  } catch (e) {
+    Sentry.captureException(e)
+  }
 }
 
 export const reissue = async (tokens: IToken) => {

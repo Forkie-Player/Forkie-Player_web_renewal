@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { CustomButton } from '../elements/CustomButton'
 import SignInFormContainer from './container/SignInFormContainer'
 import FormWrapper from './view/FormWrapper'
 
 import * as Strings from '../../lib/strings'
-import { login as loginApi, loginWithGoogle, loginWithKakao } from '../../lib/api/auth'
+import { login as loginApi } from '../../lib/api/auth'
 import { handleAuthApiError } from '../../lib/utils/handleAuthErr'
 import { SignUp as SignUpApi } from '../../lib/utils/auth'
 import { useDispatch } from 'react-redux'

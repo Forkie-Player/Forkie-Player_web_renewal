@@ -53,7 +53,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Sentry.ErrorBoundary onError={() => console.log('error!')}>
+        <Sentry.ErrorBoundary>
           <AppInit>
             <App />
           </AppInit>

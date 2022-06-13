@@ -1,3 +1,5 @@
+import { SearchPlatformType } from '../types'
+
 export const NavAbsolutePathItems = {
   HOME: '/',
   PROFILE: '/profile',
@@ -27,7 +29,9 @@ export const screenSizeWidth = {
   '3XL': 1920,
 }
 
-export const reactPlayerPrefixURL = {
+export const reactPlayerPrefixURL: {
+  [key in SearchPlatformType]: string
+} = {
   YOUTUBE: 'https://www.youtube.com/watch?v=',
   TWITCH: 'https://www.twitch.tv/videos/',
   DAILYMOTION: 'https://www.dailymotion.com/video/',
@@ -44,4 +48,4 @@ export const isFirstConstants = {
 export const videoAspectRatio = 1.777777
 export const infiniteEndTime = 1000000000000
 
-export const searchPlatforms = ['YOUTUBE', 'TWITCH', 'DAILYMOTION'] as const
+export const searchPlatforms: SearchPlatformType[] = ['YOUTUBE', 'TWITCH', 'DAILYMOTION']

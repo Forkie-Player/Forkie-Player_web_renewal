@@ -34,14 +34,14 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   },
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE]: state => ({
     ...state,
-    youtube: {
+    YOUTUBE: {
       ...state.YOUTUBE,
       pending: true,
     },
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE_SUCCESS]: (state, action) => ({
     ...state,
-    youtube: {
+    YOUTUBE: {
       ...state.YOUTUBE,
       success: true,
       pending: false,
@@ -50,7 +50,7 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE_FAILURE]: (state, action) => ({
     ...state,
-    youtube: {
+    YOUTUBE: {
       ...state.YOUTUBE,
       success: false,
       pending: false,
@@ -59,14 +59,14 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_TWITCH]: state => ({
     ...state,
-    twitch: {
+    TWITCH: {
       ...state.TWITCH,
       pending: true,
     },
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_TWITCH_SUCCESS]: (state, action) => ({
     ...state,
-    twitch: {
+    TWITCH: {
       ...state.TWITCH,
       success: true,
       pending: false,
@@ -75,7 +75,7 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_TWITCH_FAILURE]: (state, action) => ({
     ...state,
-    twitch: {
+    TWITCH: {
       ...state.TWITCH,
       success: false,
       pending: false,
@@ -84,14 +84,14 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_DAILYMOTION]: state => ({
     ...state,
-    dailymotion: {
+    DAILYMOTION: {
       ...state.DAILYMOTION,
       pending: true,
     },
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_DAILYMOTION_SUCCESS]: (state, action) => ({
     ...state,
-    dailymotion: {
+    DAILYMOTION: {
       ...state.DAILYMOTION,
       success: true,
       pending: false,
@@ -100,7 +100,7 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_DAILYMOTION_FAILURE]: (state, action) => ({
     ...state,
-    dailymotion: {
+    DAILYMOTION: {
       ...state.DAILYMOTION,
       success: false,
       pending: false,

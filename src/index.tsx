@@ -12,7 +12,7 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import * as Sentry from '@sentry/react'
-import { Integrations } from '@sentry/tracing'
+import { BrowserTracing } from '@sentry/tracing'
 
 /**
  * 리덕스 관련 초기화 작업들
@@ -30,13 +30,16 @@ sagaMiddleware.run(rootSaga)
 /**
  * Sentry 관련 초기화 작업들
  */
+
 Sentry.init({
   dsn: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_SENTRY_DSN,
-  integrations: [new Integrations.BrowserTracing()],
-  environment: process.env.NODE_ENV,
-  tracesSampleRate: 0.5,
-})
+  integrations: [new BrowserTracing()],
 
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+})
 /**
  * 렌더
  *
@@ -50,9 +53,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <AppInit>
-          <App />
-        </AppInit>
+        <Sentry.ErrorBoundary>
+          <AppInit>
+            <App />
+          </AppInit>
+        </Sentry.ErrorBoundary>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

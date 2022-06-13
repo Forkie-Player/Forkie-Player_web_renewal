@@ -16,7 +16,7 @@ import { setScreenSize } from './modules/screenSize/actions'
 import * as Constants from './lib/constants'
 import { setIsNotSmScreen, setIsSmScreen } from './modules/isSmScreen/actions'
 
-export default function AppInit({ children }: { children: React.ReactNode }) {
+function AppInit({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const screenSize = useScreenSize()
   const dispatch = useDispatch()
@@ -132,3 +132,4 @@ export default function AppInit({ children }: { children: React.ReactNode }) {
 
   return <>{children}</>
 }
+export default AppInit

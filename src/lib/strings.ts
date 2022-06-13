@@ -116,9 +116,9 @@ export const ButtonStrings = {
 }
 
 export const PlatformSelectOptionLebels = {
-  youtube: '유튜브',
-  twitch: '트위치',
-  facebook: '페이스북',
-  vimeo: 'Vimeo',
-  dailymotion: 'Dailymotion',
+  YOUTUBE: '유튜브',
+  TWITCH: '트위치',
+  FACEBOOK: '페이스북',
+  VIMEO: 'Vimeo',
+  DAILYMOTION: 'Dailymotion',
 }

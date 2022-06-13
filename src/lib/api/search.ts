@@ -5,7 +5,7 @@ import { ISearchSuccess } from './types'
 
 export const getSearchResultByPlatform = async ({
   search,
-  platform = 'youtube',
+  platform = 'YOUTUBE',
 }: {
   search: string
   platform: SearchPlatformType

@@ -28,9 +28,9 @@ export const screenSizeWidth = {
 }
 
 export const reactPlayerPrefixURL = {
-  youtube: 'https://www.youtube.com/watch?v=',
-  twitch: 'https://www.twitch.tv/videos/',
-  dailymotion: 'https://www.dailymotion.com/video/',
+  YOUTUBE: 'https://www.youtube.com/watch?v=',
+  TWITCH: 'https://www.twitch.tv/videos/',
+  DAILYMOTION: 'https://www.dailymotion.com/video/',
 }
 
 export const isFirstConstants = {
@@ -44,4 +44,4 @@ export const isFirstConstants = {
 export const videoAspectRatio = 1.777777
 export const infiniteEndTime = 1000000000000
 
-export const searchPlatforms = ['youtube', 'twitch', 'dailymotion'] as const
+export const searchPlatforms = ['YOUTUBE', 'TWITCH', 'DAILYMOTION'] as const

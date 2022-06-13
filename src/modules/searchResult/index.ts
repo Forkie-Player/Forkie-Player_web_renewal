@@ -4,19 +4,19 @@ import { searchResultActionTypes } from './actions'
 import { TSearchResultType, TSearchResult_Action } from './types'
 
 const initialState: TSearchResultType = {
-  youtube: {
+  YOUTUBE: {
     success: false,
     pending: false,
     error: null,
     items: [],
   },
-  twitch: {
+  TWITCH: {
     success: false,
     pending: false,
     error: null,
     items: [],
   },
-  dailymotion: {
+  DAILYMOTION: {
     success: false,
     pending: false,
     error: null,
@@ -35,14 +35,14 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE]: state => ({
     ...state,
     youtube: {
-      ...state.youtube,
+      ...state.YOUTUBE,
       pending: true,
     },
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE_SUCCESS]: (state, action) => ({
     ...state,
     youtube: {
-      ...state.youtube,
+      ...state.YOUTUBE,
       success: true,
       pending: false,
       items: action.payload,
@@ -51,7 +51,7 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   [searchResultActionTypes.GET_SEARCH_RESULT_YOUTUBE_FAILURE]: (state, action) => ({
     ...state,
     youtube: {
-      ...state.youtube,
+      ...state.YOUTUBE,
       success: false,
       pending: false,
       error: action.payload,
@@ -60,14 +60,14 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   [searchResultActionTypes.GET_SEARCH_RESULT_TWITCH]: state => ({
     ...state,
     twitch: {
-      ...state.twitch,
+      ...state.TWITCH,
       pending: true,
     },
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_TWITCH_SUCCESS]: (state, action) => ({
     ...state,
     twitch: {
-      ...state.twitch,
+      ...state.TWITCH,
       success: true,
       pending: false,
       items: action.payload,
@@ -76,7 +76,7 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   [searchResultActionTypes.GET_SEARCH_RESULT_TWITCH_FAILURE]: (state, action) => ({
     ...state,
     twitch: {
-      ...state.twitch,
+      ...state.TWITCH,
       success: false,
       pending: false,
       error: action.payload,
@@ -85,14 +85,14 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   [searchResultActionTypes.GET_SEARCH_RESULT_DAILYMOTION]: state => ({
     ...state,
     dailymotion: {
-      ...state.dailymotion,
+      ...state.DAILYMOTION,
       pending: true,
     },
   }),
   [searchResultActionTypes.GET_SEARCH_RESULT_DAILYMOTION_SUCCESS]: (state, action) => ({
     ...state,
     dailymotion: {
-      ...state.dailymotion,
+      ...state.DAILYMOTION,
       success: true,
       pending: false,
       items: action.payload,
@@ -101,7 +101,7 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
   [searchResultActionTypes.GET_SEARCH_RESULT_DAILYMOTION_FAILURE]: (state, action) => ({
     ...state,
     dailymotion: {
-      ...state.dailymotion,
+      ...state.DAILYMOTION,
       success: false,
       pending: false,
       error: action.payload,

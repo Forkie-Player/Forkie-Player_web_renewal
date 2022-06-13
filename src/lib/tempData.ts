@@ -29,7 +29,7 @@ export const temp_playlist: IPlaylist[] = [
 
 export const temp_videos: IVideo[] = [
   {
-    platform: 'youtube',
+    platform: 'YOUTUBE',
     videoId: 'videoId',
     title: 'title',
     thumbnail: 'thumbnail',
@@ -94,7 +94,7 @@ export const temp_popularVideo: IFBPopularVideo[] = [
 ]
 export const temp_popularVideo_parsed: IVideo[] = [
   {
-    platform: 'youtube',
+    platform: 'YOUTUBE',
     videoId: 'SQ-FAQZSV6w',
     title: 'Harry Kane MASTERCLASS! 🔥 Spurs beat Man City at the death! | HIGHLIGHTS | Man City 2-3 Spurs',
     thumbnail: 'https://i.ytimg.com/vi/SQ-FAQZSV6w/mqdefault.jpg',
@@ -106,7 +106,7 @@ export const temp_popularVideo_parsed: IVideo[] = [
     uploadedAt: '2022-02-19',
   },
   {
-    platform: 'youtube',
+    platform: 'YOUTUBE',
     videoId: '0R5YYHdFOAY',
     title: '[ENG] 꼴값 떨고 남 연애 참견하다가 이용진의 참한 犬 돼버린 주우재 편 | 터키즈온더블럭 EP.36',
     thumbnail: 'https://i.ytimg.com/vi/0R5YYHdFOAY/mqdefault.jpg',
@@ -139,7 +139,7 @@ export const temp_playlist_video: IVideoInPlaylist[] = [
     duration: '6:43:21',
     views: '4.9만',
     uploadedAt: '어제',
-    platform: 'twitch',
+    platform: 'TWITCH',
     start: 100,
     end: 1000,
     id: 1,
@@ -155,7 +155,7 @@ export const temp_playlist_video: IVideoInPlaylist[] = [
     duration: '57:47',
     views: '59만',
     uploadedAt: '5일 전',
-    platform: 'youtube',
+    platform: 'YOUTUBE',
     start: 100,
     end: 1000,
     id: 2,
@@ -171,7 +171,7 @@ export const temp_playlist_video: IVideoInPlaylist[] = [
     duration: '3:15:55',
     views: '1.6만',
     uploadedAt: '어제',
-    platform: 'twitch',
+    platform: 'TWITCH',
     start: 100,
     end: 1000,
     id: 3,
@@ -186,7 +186,7 @@ export const temp_playlist_video: IVideoInPlaylist[] = [
     duration: '16',
     views: '64',
     uploadedAt: '2019-02-22',
-    platform: 'dailymotion',
+    platform: 'DAILYMOTION',
     start: 5,
     end: 15,
     id: 4,
@@ -202,7 +202,7 @@ export const temp_playlist_video: IVideoInPlaylist[] = [
     duration: '5:06:19',
     views: '800만',
     uploadedAt: '1년 전',
-    platform: 'youtube',
+    platform: 'YOUTUBE',
     start: 100,
     end: 1000,
     id: 5,
@@ -217,7 +217,7 @@ export const temp_playlist_video: IVideoInPlaylist[] = [
     duration: '3:41',
     views: '72',
     uploadedAt: '2021-02-16',
-    platform: 'dailymotion',
+    platform: 'DAILYMOTION',
     start: 100,
     end: 200,
     id: 6,

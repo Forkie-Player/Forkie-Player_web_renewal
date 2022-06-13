@@ -13,17 +13,17 @@ interface IProps {
 function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
   const [search, setSearch] = useState('')
   const [selectedPlatform, setSelectedPlatform] = useState<Array<SearchPlatformType>>([
-    'youtube',
-    'twitch',
-    'dailymotion',
+    'YOUTUBE',
+    'TWITCH',
+    'DAILYMOTION',
   ])
   const [platformOptions, setPlatformOptions] = useState<Array<{ value: SearchPlatformType; label: React.ReactNode }>>([
     {
-      value: 'youtube',
-      label: <SelectOption label="youtube" isChecked={true} />,
+      value: 'YOUTUBE',
+      label: <SelectOption label="YOUTUBE" isChecked={true} />,
     },
-    { value: 'twitch', label: <SelectOption label="twitch" isChecked={true} /> },
-    { value: 'dailymotion', label: <SelectOption label="dailymotion" isChecked={true} /> },
+    { value: 'TWITCH', label: <SelectOption label="TWITCH" isChecked={true} /> },
+    { value: 'DAILYMOTION', label: <SelectOption label="DAILYMOTION" isChecked={true} /> },
   ])
 
   const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {

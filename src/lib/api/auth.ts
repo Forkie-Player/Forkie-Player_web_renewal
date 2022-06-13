@@ -32,7 +32,7 @@ import * as Sentry from '@sentry/react'
 
 export const login = async (id: string, pw: string) => {
   try {
-    const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/members`, {
+    const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/member`, {
       loginId: id,
       password: pw,
       isPC: true,

@@ -7,16 +7,12 @@ import { removeCookie } from '../utils/cookie'
 import { Address } from './constants'
 import {
   IChangeToMemberSuccess,
-  IGetUserInfoSuccess,
   IReissueSuccess,
   IRemoveUserSuccess,
   ISignUpSuccess,
   IUpdateProfileImgSuccess,
   IUpdateUserSuccess,
 } from './types'
-
-import * as Sentry from '@sentry/react'
-
 /*
    모든 api는 token으로 이루어짐.
 

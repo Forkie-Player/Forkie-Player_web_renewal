@@ -2,13 +2,13 @@ import { SearchPlatformType } from '../../types'
 
 const getPlatformFromThumbnail = (thumbnail: string): SearchPlatformType => {
   if (thumbnail.includes('ytimg')) {
-    return 'youtube'
+    return 'TWITCH'
   } else if (thumbnail.includes('dmcdn')) {
-    return 'dailymotion'
+    return 'DAILYMOTION'
   } else if (thumbnail.includes('jtvnw')) {
-    return 'twitch'
+    return 'TWITCH'
   } else {
-    return 'youtube'
+    return 'TWITCH'
   }
 }
 export default getPlatformFromThumbnail

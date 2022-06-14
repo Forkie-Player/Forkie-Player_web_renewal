@@ -11,7 +11,7 @@ export function* getPopularVideoSaga() {
   try {
     const res: IGetPopularVideoSuccess = yield call(getPopularVideosApi)
     const ans: IVideo[] = res.popular.map(item => ({
-      platform: 'youtube',
+      platform: 'YOUTUBE',
       videoId: item.id,
       title: item.snippet.title,
       thumbnail: item.snippet.thumbnails.medium.url,
@@ -24,6 +24,7 @@ export function* getPopularVideoSaga() {
 
     yield put(getPopularVideoAsync.success(ans))
   } catch (err) {
+    console.log(err)
     yield handleSagaError(err, getPopularVideoAsync.failure)
   }
 }

@@ -13,13 +13,13 @@ import {
 export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.request>) {
   for (const platform of action.payload.platforms) {
     switch (platform) {
-      case 'youtube':
+      case 'YOUTUBE':
         yield put(getSearchResultYoutube.request(action.payload.search))
         break
-      case 'twitch':
+      case 'TWITCH':
         yield put(getSearchResultTwitch.request(action.payload.search))
         break
-      case 'dailymotion':
+      case 'DAILYMOTION':
         yield put(getSearchResultDailymotion.request(action.payload.search))
         break
     }
@@ -29,7 +29,7 @@ export function* getSearchResultSaga(action: ReturnType<typeof getSearchResult.r
 
 export function* getYoutubeSearchResultSaga(action: ReturnType<typeof getSearchResultYoutube.request>) {
   try {
-    const res: ISearchSuccess = yield call(getSearchResultByPlatform, { search: action.payload, platform: 'youtube' })
+    const res: ISearchSuccess = yield call(getSearchResultByPlatform, { search: action.payload, platform: 'YOUTUBE' })
     yield put(getSearchResultYoutube.success(res.data))
   } catch (err) {
     yield handleSagaError(err, getSearchResultYoutube.failure)
@@ -38,7 +38,7 @@ export function* getYoutubeSearchResultSaga(action: ReturnType<typeof getSearchR
 
 export function* getTwitchSearchResultSaga(action: ReturnType<typeof getSearchResultTwitch.request>) {
   try {
-    const res: ISearchSuccess = yield call(getSearchResultByPlatform, { search: action.payload, platform: 'twitch' })
+    const res: ISearchSuccess = yield call(getSearchResultByPlatform, { search: action.payload, platform: 'TWITCH' })
     yield put(getSearchResultTwitch.success(res.data))
   } catch (err) {
     yield handleSagaError(err, getSearchResultTwitch.failure)
@@ -49,7 +49,7 @@ export function* getDailymotionSearchResultSaga(action: ReturnType<typeof getSea
   try {
     const res: ISearchSuccess = yield call(getSearchResultByPlatform, {
       search: action.payload,
-      platform: 'dailymotion',
+      platform: 'DAILYMOTION',
     })
     yield put(getSearchResultDailymotion.success(res.data))
   } catch (err) {

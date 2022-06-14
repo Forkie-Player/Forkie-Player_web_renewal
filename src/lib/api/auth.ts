@@ -7,16 +7,12 @@ import { removeCookie } from '../utils/cookie'
 import { Address } from './constants'
 import {
   IChangeToMemberSuccess,
-  IGetUserInfoSuccess,
   IReissueSuccess,
   IRemoveUserSuccess,
   ISignUpSuccess,
   IUpdateProfileImgSuccess,
   IUpdateUserSuccess,
 } from './types'
-
-import * as Sentry from '@sentry/react'
-
 /*
    모든 api는 token으로 이루어짐.
 
@@ -31,17 +27,13 @@ import * as Sentry from '@sentry/react'
 */
 
 export const login = async (id: string, pw: string) => {
-  try {
-    const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/member`, {
-      loginId: id,
-      password: pw,
-      isPC: true,
-    })
-    logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
-    await setTokens(res.data.data)
-  } catch (e) {
-    Sentry.captureException(e)
-  }
+  const res = await axios.post<IReissueSuccess>(`${Address}/api/user/auth/login/member`, {
+    loginId: id,
+    password: pw,
+    isPC: true,
+  })
+  logEvent(analytics, '로그인', { name: pw ? '회원 로그인' : '비회원 로그인', value: id })
+  await setTokens(res.data.data)
 }
 
 export const reissue = async (tokens: IToken) => {

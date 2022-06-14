@@ -7,18 +7,13 @@ import handleSagaError from '../handleSagaError'
 import { RootModuleType } from '../moduleTypes'
 import { TVideoStoreType } from './types'
 import { clearThumbnail, setThumbnail } from '../playlist/actions'
-import getPlatformFromThumbnail from '../../lib/utils/getPlatformFromThumbnail'
 
 const getState = (state: RootModuleType) => state.video
 
 function* getVideoSaga(action: ReturnType<typeof getVideoAsync.request>) {
   try {
     const response: IGetVideoListSuccess = yield call(getVideoList, action.payload)
-    const videos = response.data.map(item => ({
-      ...item,
-      platform: item.platform ? item.platform : getPlatformFromThumbnail(item.thumbnail),
-    }))
-    yield put(getVideoAsync.success({ playlistId: action.payload, items: videos }))
+    yield put(getVideoAsync.success({ playlistId: action.payload, items: response.data }))
   } catch (err) {
     yield handleSagaError(err, getVideoAsync.failure)
   }

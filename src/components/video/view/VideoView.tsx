@@ -10,7 +10,7 @@ interface IProps {
   playerProps?: ReactPlayerProps
 }
 
-function VideoView({ playerRef, playerProps, videoId, platform = 'youtube' }: IProps) {
+function VideoView({ playerRef, playerProps, videoId, platform = 'YOUTUBE' }: IProps) {
   return (
     <div id="player_wrapper" className={`max-w-full w-full h-full max-h-full`}>
       <ReactPlayer

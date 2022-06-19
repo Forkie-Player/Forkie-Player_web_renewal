@@ -16,6 +16,7 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     'YOUTUBE',
     'TWITCH',
     'DAILYMOTION',
+    'VIMEO',
   ])
   const [platformOptions, setPlatformOptions] = useState<Array<{ value: SearchPlatformType; label: React.ReactNode }>>([
     {
@@ -24,6 +25,7 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     },
     { value: 'TWITCH', label: <SelectOption label="TWITCH" isChecked={true} /> },
     { value: 'DAILYMOTION', label: <SelectOption label="DAILYMOTION" isChecked={true} /> },
+    { value: 'VIMEO', label: <SelectOption label="VIMEO" isChecked={true} /> },
   ])
 
   const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -22,6 +22,12 @@ const initialState: TSearchResultType = {
     error: null,
     items: [],
   },
+  VIMEO: {
+    success: false,
+    pending: false,
+    error: null,
+    items: [],
+  },
 }
 
 const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Action>(initialState, {
@@ -102,6 +108,31 @@ const searchResultReducer = createReducer<TSearchResultType, TSearchResult_Actio
     ...state,
     DAILYMOTION: {
       ...state.DAILYMOTION,
+      success: false,
+      pending: false,
+      error: action.payload,
+    },
+  }),
+  [searchResultActionTypes.GET_SEARCH_RESULT_VIMEO]: state => ({
+    ...state,
+    VIMEO: {
+      ...state.VIMEO,
+      pending: true,
+    },
+  }),
+  [searchResultActionTypes.GET_SEARCH_RESULT_VIMEO_SUCCESS]: (state, action) => ({
+    ...state,
+    VIMEO: {
+      ...state.VIMEO,
+      success: true,
+      pending: false,
+      items: action.payload,
+    },
+  }),
+  [searchResultActionTypes.GET_SEARCH_RESULT_VIMEO_FAILURE]: (state, action) => ({
+    ...state,
+    VIMEO: {
+      ...state.VIMEO,
       success: false,
       pending: false,
       error: action.payload,

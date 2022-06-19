@@ -72,4 +72,4 @@ export interface IPlaylist {
 export type OAuth2Type = 'google' | 'kakao'
 
 // 검색 타입
-export type SearchPlatformType = 'YOUTUBE' | 'TWITCH' | 'DAILYMOTION'
+export type SearchPlatformType = 'YOUTUBE' | 'TWITCH' | 'DAILYMOTION' | 'VIMEO'

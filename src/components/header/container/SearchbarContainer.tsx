@@ -49,10 +49,12 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     const newPlatformSelected = selectedPlatform.includes(platform)
       ? selectedPlatform.filter(p => p !== platform)
       : [...selectedPlatform, platform]
+
     if (newPlatformSelected.length === 0) {
       toast.error('최소 하나의 플랫폼을 선택해주세요.')
     } else {
       setSelectedPlatform(newPlatformSelected)
+      localStorage.setItem('selectedPlatform', JSON.stringify(newPlatformSelected))
       const input = searchBarViewRef.current?.querySelector('input#' + platform) as HTMLInputElement
       if (input !== null) {
         input.checked = !input.checked
@@ -62,18 +64,21 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
   const onMenuOpen = () => {
     const newSetPlatformOptions: Array<{ value: SearchPlatformType; label: React.ReactNode }> = []
 
+    let savedSelectedPlatform = localStorage.getItem('selectedPlatform')
+    let newSelectedPlatform: Array<SearchPlatformType> = []
+
+    if (savedSelectedPlatform === null) {
+      newSelectedPlatform = selectedPlatform
+    } else {
+      newSelectedPlatform = JSON.parse(savedSelectedPlatform) as Array<SearchPlatformType>
+      setSelectedPlatform(newSelectedPlatform)
+    }
+
     searchPlatforms.forEach(platform => {
-      if (!selectedPlatform.includes(platform)) {
-        newSetPlatformOptions.push({
-          value: platform,
-          label: <SelectOption label={platform} isChecked={false} />,
-        })
-      } else {
-        newSetPlatformOptions.push({
-          value: platform,
-          label: <SelectOption label={platform} isChecked={true} />,
-        })
-      }
+      newSetPlatformOptions.push({
+        value: platform,
+        label: <SelectOption label={platform} isChecked={newSelectedPlatform.includes(platform)} />,
+      })
     })
     setPlatformOptions(newSetPlatformOptions)
   }

@@ -63,7 +63,10 @@ export function* getDailymotionSearchResultSaga(action: ReturnType<typeof getSea
 
 export function* getVimeoSearchResultSaga(action: ReturnType<typeof getSearchResultVimeo.request>) {
   try {
-    const res: ISearchSuccess = yield call(getSearchResultByPlatform, { search: action.payload, platform: 'VIMEO' })
+    const res: ISearchSuccess = yield call(getSearchResultByPlatform, {
+      search: action.payload,
+      platform: 'DAILYMOTION',
+    })
     yield put(getSearchResultVimeo.success(res.data))
   } catch (err) {
     yield handleSagaError(err, getSearchResultVimeo.failure)

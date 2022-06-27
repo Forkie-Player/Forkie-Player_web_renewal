@@ -41,14 +41,14 @@ function AppInit({ children }: { children: React.ReactNode }) {
       res => res,
       async err => {
         const originalRequest = err.config
-        const isRefreshing = getCookie('isRefreshing') === 'false' ? false : true
+        const isRefreshing =
+          (!localStorage.getItem('isRefreshing') || localStorage.getItem('isRefreshing')) === 'false' ? false : true
         if (
           !originalRequest._retry &&
           ((err.response?.data.status === 400 && err.response?.data.message.includes('만료된 JWT')) ||
             (err.response?.data.status === 401 && err.response?.data.message.includes('잘못된 JWT')))
         ) {
           originalRequest._retry = true
-          console.log('reissue!!!')
           const retryOriginalRequest = new Promise(resolve => {
             addRefreshSubscriber((accessToken: string) => {
               originalRequest.headers.Authorization = 'Bearer ' + accessToken
@@ -60,7 +60,6 @@ function AppInit({ children }: { children: React.ReactNode }) {
             const tokensJson = getCookie('@tokens')
             try {
               const res = await reissue(tokensJson)
-              console.log(res)
               onTokenRefreshed(res.data.accessToken)
             } catch (e) {
               refreshSubscriber = []

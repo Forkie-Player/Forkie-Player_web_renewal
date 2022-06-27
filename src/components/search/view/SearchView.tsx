@@ -23,17 +23,17 @@ function SearchView({ searchResultItems, onClickItem, onClickSeeMore }: IProps) 
               {PlatformSelectOptionLebels[item.platform] + ' ' + SearchStrings.SEARCH_RESULT}
             </div>
             {!item.pending ? (
-              item.items.length > 0 ? (
+              item.items?.length > 0 ? (
                 item.seeMore ? (
                   <>
-                    {item.items.map(item => (
+                    {item.items?.map(item => (
                       <SearchItem key={item.videoId} data={item} onClick={onClickItem} />
                     ))}
                     <SeeMore isSeeMore={false} onClick={() => onClickSeeMore(item.platform)} />
                   </>
                 ) : (
                   <>
-                    {item.items.slice(0, 3).map(item => (
+                    {item.items?.slice(0, 3).map(item => (
                       <SearchItem key={item.videoId} data={item} onClick={onClickItem} />
                     ))}
                     <SeeMore isSeeMore={true} onClick={() => onClickSeeMore(item.platform)} />

@@ -8,6 +8,8 @@ export const NavAbsolutePathItems = {
   VIDEO_ADD: '/search/add',
   PLAY: '/list/play',
   VIDEO_EDIT: '/list/play/edit',
+  OAUTH: '/oauth',
+  OAUTH_VIMEO: '/oauth/vimeo',
 }
 
 export const screenSizeString = {

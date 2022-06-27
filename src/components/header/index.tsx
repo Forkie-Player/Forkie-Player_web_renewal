@@ -10,6 +10,7 @@ import { getSearchResult } from '../../modules/searchResult/actions'
 import { playlistActions } from '../../modules/playlist/actions'
 import { userInfoActions } from '../../modules/userInfo/actions'
 import { SearchPlatformType } from '../../types'
+import { getVimeoAccessToken } from '../../lib/api/search'
 
 function Header() {
   const { userInfo, playlistsLength, isSmScreen, isOpenAuthModal } = useSelector(
@@ -27,6 +28,9 @@ function Header() {
   const onSearch = useCallback(
     (search: string, selectedPlatform: Array<SearchPlatformType>) => {
       navigate(NavAbsolutePathItems.SEARCH)
+      if (selectedPlatform.includes('VIMEO')) {
+        getVimeoAccessToken()
+      }
       dispatch(getSearchResult.request({ search: search, platforms: selectedPlatform }))
     },
     [dispatch, navigate],

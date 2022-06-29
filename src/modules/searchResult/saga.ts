@@ -65,7 +65,7 @@ export function* getVimeoSearchResultSaga(action: ReturnType<typeof getSearchRes
   try {
     const res: ISearchSuccess = yield call(getSearchResultByPlatform, {
       search: action.payload,
-      platform: 'DAILYMOTION',
+      platform: 'VIMEO',
     })
     yield put(getSearchResultVimeo.success(res.data))
   } catch (err) {

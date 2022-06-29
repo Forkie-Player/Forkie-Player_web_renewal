@@ -7,9 +7,9 @@ function Vimeo() {
     const urlSearch = getQueryStringObject<{ code: string; state: string }>()
     if (urlSearch !== null) {
       if (urlSearch.code) {
-        localStorage.setItem('vimeoAccessToken', urlSearch.code)
+        localStorage.setItem('vimeoCode', urlSearch.code)
       } else {
-        localStorage.setItem('vimeoAccessToken', '')
+        localStorage.setItem('vimeoCode', '')
       }
       localStorage.setItem('vimeoState', urlSearch.state)
     }

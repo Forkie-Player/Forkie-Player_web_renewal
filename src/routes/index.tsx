@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import * as Constants from '../lib/constants'
 import Home from './Home'
 import List from './List'
+import Vimeo from './oauth/Vimeo'
 import Play from './Play'
 import ProfilePage from './Profile'
 import Search from './Search'
@@ -26,6 +27,9 @@ export default function MyRoutes() {
             <Route path={''} element={<Play />} />
             <Route path={Constants.NavAbsolutePathItems.VIDEO_EDIT} element={<VideoTimeChange />} />
           </Route>
+        </Route>
+        <Route path={Constants.NavAbsolutePathItems.OAUTH}>
+          <Route path={Constants.NavAbsolutePathItems.OAUTH_VIMEO} element={<Vimeo />} />
         </Route>
         <Route path="*" element={<Navigate to={Constants.NavAbsolutePathItems.HOME} />} />
       </Routes>

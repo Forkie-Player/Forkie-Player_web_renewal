@@ -8,6 +8,8 @@ export const NavAbsolutePathItems = {
   VIDEO_ADD: '/search/add',
   PLAY: '/list/play',
   VIDEO_EDIT: '/list/play/edit',
+  OAUTH: '/oauth',
+  OAUTH_VIMEO: '/oauth/vimeo',
 }
 
 export const screenSizeString = {
@@ -35,6 +37,7 @@ export const reactPlayerPrefixURL: {
   YOUTUBE: 'https://www.youtube.com/watch?v=',
   TWITCH: 'https://www.twitch.tv/videos/',
   DAILYMOTION: 'https://www.dailymotion.com/video/',
+  VIMEO: 'https://vimeo.com/',
 }
 
 export const isFirstConstants = {
@@ -48,4 +51,11 @@ export const isFirstConstants = {
 export const videoAspectRatio = 1.777777
 export const infiniteEndTime = 1000000000000
 
-export const searchPlatforms: SearchPlatformType[] = ['YOUTUBE', 'TWITCH', 'DAILYMOTION']
+export const searchPlatforms: SearchPlatformType[] = ['YOUTUBE', 'TWITCH', 'DAILYMOTION', 'VIMEO']
+
+export const localStorageKey = {
+  VIMEO_STATE: 'vimeoState',
+  VIMEO_CODE: 'vimeoCode',
+  VIMEO_TOKEN: 'vimeoToken',
+  SELECTED_PLATFORM: 'selectedPlatform',
+}

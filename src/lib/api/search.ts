@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { SearchPlatformType } from '../../types'
+import { localStorageKey } from '../constants'
+import { ErrorMessageFromServer } from '../strings'
 import { cloudfunctionAddress } from './constants'
 import { ISearchSuccess } from './types'
 
@@ -25,19 +27,28 @@ export const getSearchResultByPlatform = async ({
 }
 
 export const searchVimeo = async (search: string) => {
-  try {
-    const prevToken = localStorage.getItem('vimeoToken')
-    let token = prevToken
-    if (token === null) {
-      const res = await getVimeoCode()
-      token = await getVimeoAccessToken(res.code)
-      localStorage.setItem('vimeoToken', token)
-    }
-    const searchReult = await getVimeoSearchResult({ token, search })
+  const prevToken = localStorage.getItem(localStorageKey.VIMEO_TOKEN)
+  let token = prevToken
+  if (token === null) {
+    const searchReult = await searchVimeoWithOAuth(search)
     return searchReult
-  } catch (e) {
-    throw e
+  } else {
+    try {
+      const searchReult = await getVimeoSearchResult({ token, search })
+      return searchReult
+    } catch (e) {
+      const searchReult = await searchVimeoWithOAuth(search)
+      return searchReult
+    }
   }
+}
+
+export const searchVimeoWithOAuth = async (search: string) => {
+  const res = await getVimeoCode()
+  const token = await getVimeoAccessToken(res.code)
+  localStorage.setItem(localStorageKey.VIMEO_TOKEN, token)
+  const searchReult = await getVimeoSearchResult({ token, search })
+  return searchReult
 }
 
 export const getVimeoCode = async (): Promise<{ code: string }> => {
@@ -47,21 +58,21 @@ export const getVimeoCode = async (): Promise<{ code: string }> => {
     let state = res.data.state
 
     const localstorageEventCallback = (e: any) => {
-      if (e.key === 'vimeoState') {
+      if (e.key === localStorageKey.VIMEO_STATE) {
         window.removeEventListener('storage', localstorageEventCallback)
         if (e.newValue === state) {
-          const vimeoCode = localStorage.getItem('vimeoCode')
+          const vimeoCode = localStorage.getItem(localStorageKey.VIMEO_CODE)
           if (vimeoCode !== null) {
             resolve({ code: vimeoCode })
           } else {
-            reject('vimeo oauth fail')
+            reject(ErrorMessageFromServer.VIMEO_OAUTH_ERROR)
           }
         }
       }
     }
     window.addEventListener('storage', localstorageEventCallback)
 
-    window.open(res.data.url, '_blank', 'popup noopener noreferrer')
+    window.open(res.data.url, '_blank', 'popup,noopener,noreferrer')
   })
 }
 

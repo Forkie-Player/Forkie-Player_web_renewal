@@ -52,3 +52,10 @@ export const videoAspectRatio = 1.777777
 export const infiniteEndTime = 1000000000000
 
 export const searchPlatforms: SearchPlatformType[] = ['YOUTUBE', 'TWITCH', 'DAILYMOTION', 'VIMEO']
+
+export const localStorageKey = {
+  VIMEO_STATE: 'vimeoState',
+  VIMEO_CODE: 'vimeoCode',
+  VIMEO_TOKEN: 'vimeoToken',
+  SELECTED_PLATFORM: 'selectedPlatform',
+}

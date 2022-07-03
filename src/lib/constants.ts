@@ -58,4 +58,5 @@ export const localStorageKey = {
   VIMEO_CODE: 'vimeoCode',
   VIMEO_TOKEN: 'vimeoToken',
   SELECTED_PLATFORM: 'selectedPlatform',
+  ONCE_VIMEO_SEARCHED: 'onceVimeoSearched',
 }

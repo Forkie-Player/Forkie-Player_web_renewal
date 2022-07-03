@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { localStorageKey, searchPlatforms } from '../../../lib/constants'
-import { NoSearchString } from '../../../lib/strings'
+import { NoSearchString, PlatformSelectOptionLebels } from '../../../lib/strings'
 import { SearchPlatformType } from '../../../types'
 import SelectOption from '../elements/SelectOption'
 import SearchbarView from '../view/SearchbarView'
 import { FiInfo } from 'react-icons/fi'
 import CustomModalWrapper from '../../elements/CustomModalWrapper'
-import { CustomButton } from '../../elements/CustomButton'
 
 interface IProps {
   onSearch: (search: string, selectedPlatform: Array<SearchPlatformType>) => void
@@ -29,15 +28,23 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     { value: 'DAILYMOTION', label: <SelectOption label="DAILYMOTION" isChecked={true} /> },
     { value: 'VIMEO', label: <SelectOption label="VIMEO" isChecked={false} /> },
   ])
-  const [oauthNotiRequiredPlatform, setOauthNotiRequiredPlatform] = useState(false)
+  const [oauthNotiRequiredPlatform, setOauthNotiRequiredPlatform] = useState<SearchPlatformType[]>([])
   const [showNotiModal, setShowNotiModal] = useState(false)
+  const [notiPlatform, setNotiPlatform] = useState<string>()
 
   useEffect(() => {
     const savedSelectedPlatform = localStorage.getItem(localStorageKey.SELECTED_PLATFORM)
+    let isSaved: SearchPlatformType[] = []
     if (savedSelectedPlatform) {
-      setSelectedPlatform(JSON.parse(savedSelectedPlatform))
-    } else {
-      setOauthNotiRequiredPlatform(true)
+      const parsedJSON = JSON.parse(savedSelectedPlatform)
+      setSelectedPlatform(parsedJSON)
+      isSaved = parsedJSON.includes('VIMEO') ? ['VIMEO'] : isSaved
+    }
+
+    const onceVimeoSearched = localStorage.getItem(localStorageKey.ONCE_VIMEO_SEARCHED)
+    if (!onceVimeoSearched && !isSaved.includes('VIMEO')) {
+      setOauthNotiRequiredPlatform(prev => [...prev, 'VIMEO'])
+      localStorage.setItem(localStorageKey.ONCE_VIMEO_SEARCHED, 'true')
     }
   }, [])
 
@@ -66,9 +73,10 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
     if (newPlatformSelected.length === 0) {
       toast.error('최소 하나의 플랫폼을 선택해주세요.')
     } else {
-      if (oauthNotiRequiredPlatform && platform === 'VIMEO') {
-        setOauthNotiRequiredPlatform(false)
+      if (oauthNotiRequiredPlatform && oauthNotiRequiredPlatform.includes(platform)) {
+        setOauthNotiRequiredPlatform(prev => prev.filter(p => p !== platform))
         setShowNotiModal(true)
+        setNotiPlatform(PlatformSelectOptionLebels[platform])
       }
 
       setSelectedPlatform(newPlatformSelected)
@@ -121,7 +129,7 @@ function SearchbarContainer({ onSearch: onSearchCallback }: IProps) {
           <div className="p-4 px-8 w-120 bg-white rounded-md drop-shadow-lg">
             <FiInfo className="w-8 h-8 mb-4 text-primary-yellow rounded-full" />
             <div className="leading-8">
-              Vimeo 검색에는 실제 사용자분의 인증이 필요해요. <br />
+              {notiPlatform} 검색에는 실제 사용자분의 인증이 필요해요. <br />
               검색을 눌렀을 시 인증 페이지가 뜰텐데 인증을 마치시면 검색이 완료돼요. <br />
               한번 인증하면 긴 기간동안 재인증을 안해도 되니, 귀찮더라도 인증 부탁드려요.
             </div>

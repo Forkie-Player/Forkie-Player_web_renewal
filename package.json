@@ -110,7 +110,8 @@
     "force-resolutions": "^1.0.10",
     "jest": "^27.5.0",
     "postcss": "^8.4.5",
-    "prettier": "^2.5.1"
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.12"
   },
   "babelMacros": {
     "twin": {

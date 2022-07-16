@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoadingElement from './components/elements/loading'
 import { getCookie } from './lib/utils/cookie'
-import { getUserInfo } from './modules/userInfo/actions'
+import { clearUserInfo, getUserInfo } from './modules/userInfo/actions'
 import { getIsFirst } from './modules/isFirst/actions'
-import { getPlaylistAsync } from './modules/playlist/actions'
+import { getPlaylistAsync, initPlaylist } from './modules/playlist/actions'
 import { reissue } from './lib/api/auth'
 import { authInit } from './lib/utils/auth'
 import { setNavClose, setNavState } from './modules/navExpansion/actions'
@@ -15,6 +15,7 @@ import { setScreenSize } from './modules/screenSize/actions'
 
 import * as Constants from './lib/constants'
 import { setIsNotSmScreen, setIsSmScreen } from './modules/isSmScreen/actions'
+import { clearVideo } from './modules/video/actions'
 
 function AppInit({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
@@ -42,7 +43,8 @@ function AppInit({ children }: { children: React.ReactNode }) {
       async err => {
         const originalRequest = err.config
         const isRefreshing =
-          (!localStorage.getItem('isRefreshing') || localStorage.getItem('isRefreshing')) === 'false' ? false : true
+          !localStorage.getItem('isRefreshing') || localStorage.getItem('isRefreshing') === 'false' ? false : true
+
         if (
           !originalRequest._retry &&
           ((err.response?.data.status === 400 && err.response?.data.message.includes('만료된 JWT')) ||
@@ -58,6 +60,7 @@ function AppInit({ children }: { children: React.ReactNode }) {
           if (!isRefreshing) {
             localStorage.setItem('isRefreshing', 'true')
             const tokensJson = getCookie('@tokens')
+            axios.defaults.headers.common['Authorization'] = ''
             try {
               const res = await reissue(tokensJson)
               onTokenRefreshed(res.data.accessToken)
@@ -82,6 +85,10 @@ function AppInit({ children }: { children: React.ReactNode }) {
         // auth 작업 완료 후, auth가 필요해야 가져올 수 있는 데이터 fetch
         dispatch(getUserInfo.request())
         dispatch(getPlaylistAsync.request())
+      } else {
+        dispatch(clearUserInfo())
+        dispatch(initPlaylist())
+        dispatch(clearVideo())
       }
       // auth 작업만 끝나면, 일단 필수적인 초기화 작업은 끝난 것이기에, 로딩을 품
       setIsLoading(false)

@@ -37,25 +37,25 @@ function PlayContentView({
   onClickEdit,
 }: IProps) {
   return (
-    <div className="w-full h-full flex flex-col overflow-x-hidden overflow-y-auto">
-      <GobackLine className="px-1 mb-2" />
-      <div className="lg:flex-1 lg:overflow-hidden px-1 lg:pr-0">
+    <div className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden">
+      <GobackLine className="mb-2 px-1" />
+      <div className="px-1 lg:flex-1 lg:overflow-hidden lg:pr-0">
         <div
           ref={resizeDetectorRef}
           className={clsx(
-            'w-full h-full grid lg:grid-rows-[auto_10rem] grid-cols-[auto_20rem] 2xl:grid-cols-[auto_24rem] gap-2',
+            'grid h-full w-full grid-cols-[auto_20rem] gap-2 lg:grid-rows-[auto_10rem] 2xl:grid-cols-[auto_24rem]',
           )}
           style={{
             gridTemplateRows: containerGridRows,
           }}
         >
-          <div className="z-50 lg:z-0 sticky top-0 w-full h-full col-span-2 lg:col-span-1">
+          <div className="sticky top-0 z-50 col-span-2 h-full w-full lg:z-0 lg:col-span-1">
             <VideoRender playerRef={playerRef} video={currentVideo} playerProps={{ onEnded: onVideoEnd }} />
           </div>
-          <div className="h-fit row-start-2 col-span-2 pl-2 lg:col-start-1 lg:row-start-2 pb-4 2xl:pb-8">
+          <div className="col-span-2 row-start-2 h-fit pl-2 pb-4 lg:col-start-1 lg:row-start-2 2xl:pb-8">
             <VideoInfo data={currentVideo} />
           </div>
-          <div className="mr-2 lg:mr-0 row-start-3 col-span-2 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:row-span-2 overflow-y-auto mb-1">
+          <div className="col-span-2 row-start-3 mr-2 mb-1 overflow-y-auto lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mr-0">
             {isPendingChangeVideoOrder ? (
               <LoadingElement />
             ) : (

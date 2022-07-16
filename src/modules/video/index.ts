@@ -95,6 +95,7 @@ const videoReducer = createReducer<TVideoStoreType, TVideo_Action>(initialState,
     success: false,
     error: action.payload,
   }),
+  [videoActionTypes.CLEAR_VIDEO]: () => initialState,
 })
 
 export default videoReducer

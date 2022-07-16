@@ -18,28 +18,23 @@ function App() {
     navExpansion,
     isSmScreen,
   }))
-
-  const containerClassNameMemo = useMemo(
-    () =>
-      clsx(
-        'app flex h-screen max-h-screen transition-[translate]',
-        isSmScreen ? (navExpansion ? 'translate-x-0 w-fit' : '-translate-x-16 w-fit') : 'w-screen',
-      ),
-    [isSmScreen, navExpansion],
-  )
-  const contentClassNameMemo = useMemo(
-    () => clsx('app-content-container', isSmScreen ? 'app-content-container-sm' : 'app-content-container-md'),
-    [isSmScreen],
-  )
-  const navClassNameMemo = useMemo(() => clsx('w-fit h-full'), [])
-
   return (
-    <div className={containerClassNameMemo}>
+    <div
+      className={clsx(
+        'app flex h-screen max-h-screen transition-[translate]',
+        isSmScreen ? (navExpansion ? 'w-fit translate-x-0' : 'w-fit -translate-x-16') : 'w-screen',
+      )}
+    >
       <BrowserRouter>
-        <div className={navClassNameMemo}>
+        <div className={clsx('h-full w-fit')}>
           <Navigation />
         </div>
-        <div className={contentClassNameMemo}>
+        <div
+          className={clsx(
+            'app-content-container',
+            isSmScreen ? 'app-content-container-sm' : 'app-content-container-md',
+          )}
+        >
           <Header />
           <MyRoutes />
         </div>

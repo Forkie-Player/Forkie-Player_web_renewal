@@ -19,6 +19,8 @@ const CHANGE_VIDEO_ORDER = 'video/CHANGE_VIDEO_ORDER' as const
 const CHANGE_VIDEO_ORDER_SUCCESS = 'video/CHANGE_VIDEO_ORDER_SUCCESS' as const
 const CHANGE_VIDEO_ORDER_ERROR = 'video/CHANGE_VIDEO_ORDER_ERROR' as const
 
+const CLEAR_VIDEO = 'video/CLEAR_VIDEO' as const
+
 export const videoActionTypes = {
   GET_VIDEO,
   GET_VIDEO_SUCCESS,
@@ -33,6 +35,7 @@ export const videoActionTypes = {
   CHANGE_VIDEO_ORDER,
   CHANGE_VIDEO_ORDER_SUCCESS,
   CHANGE_VIDEO_ORDER_ERROR,
+  CLEAR_VIDEO,
 }
 
 // 액션 생성 함수
@@ -62,10 +65,13 @@ export const changeVideoOrderAsync = createAsyncAction(
   CHANGE_VIDEO_ORDER_ERROR,
 )<IChangeVideoOrderAsyncRequest, ISeqListItem[], string>()
 
+export const clearVideo = createAction(CLEAR_VIDEO)()
+
 export const videoActions = {
   getVideoAsync,
   deleteVideoAsync,
   editTimeRangeAsync,
   updateCurrentVideo,
   changeVideoOrderAsync,
+  clearVideo,
 }

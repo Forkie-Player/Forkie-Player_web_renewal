@@ -35,7 +35,7 @@ const HeaderView = ({
   const onClickCloseAuthForm = useCallback(() => dispatch(authModalActions.closeAuthModal()), [dispatch])
 
   return (
-    <header className="flex justify-between px-2 md:px-[5%] h-12 gap-x-4">
+    <header className="flex h-12 justify-between gap-x-4 px-2 md:px-[5%]">
       <NavButtonView isSmScreen={isSmScreen} onClickNavOpen={onClickNavOpen} />
       <SearchbarContainer onSearch={onSearch} />
       <ProfileView

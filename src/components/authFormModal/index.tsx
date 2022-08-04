@@ -6,13 +6,13 @@ import FormWrapper from './view/FormWrapper'
 import * as Strings from '../../lib/strings'
 import { login as loginApi } from '../../lib/api/auth'
 import { handleAuthApiError } from '../../lib/utils/handleAuthErr'
-import { SignUp as SignUpApi } from '../../lib/utils/auth'
+import { setTokens, SignUp as SignUpApi } from '../../lib/utils/auth'
 import { useDispatch } from 'react-redux'
 import { getUserInfo } from '../../modules/userInfo/actions'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
 import CustomModalWrapper from '../elements/CustomModalWrapper'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { NavAbsolutePathItems } from '../../lib/constants'
+import { localStorageKey, NavAbsolutePathItems } from '../../lib/constants'
 import { OAuth2Type } from '../../types'
 import OAuthView from './view/OAuthView'
 import axios from 'axios'
@@ -67,17 +67,25 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
     try {
       switch (type) {
         case 'kakao':
-          // await loginWithKakao()
-          const resKakao = window.open('https://forkie-api.com/v1/oauth2/authorization/kakao', '_blank', 'popup=true')
-          console.log(resKakao?.document?.body.innerHTML)
+          window.open('https://forkie-api.com/v1/oauth2/authorization/kakao', '_blank', 'popup=true')
           break
         case 'google':
-          // await loginWithGoogle()
-          const resGoogle = window.open('https://forkie-api.com/v1/oauth2/authorization/google', '_blank', 'popup=true')
-          console.log(resGoogle?.document?.body.innerHTML)
+          window.open('https://forkie-api.com/v1/oauth2/authorization/google', '_blank', 'popup=true')
           break
       }
-      // onSuccessAuth()
+
+      const localstorageEventCallback = async (e: any) => {
+        if (e.key === localStorageKey.TOKENS) {
+          window.removeEventListener('storage', localstorageEventCallback)
+          const tokens = localStorage.getItem(localStorageKey.TOKENS)
+          if (tokens !== null) {
+            await setTokens(JSON.parse(tokens))
+            onSuccessAuth()
+          } else {
+          }
+        }
+      }
+      window.addEventListener('storage', localstorageEventCallback)
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log(err.response?.data)
@@ -95,7 +103,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
           onClick={onChangeFormMode}
           className="py-2"
         />
-        {false && <OAuthView onOAuth={onOAuth} />}
+        <OAuthView onOAuth={onOAuth} />
       </FormWrapper>
     </CustomModalWrapper>
   )

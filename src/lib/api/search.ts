@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { SearchPlatformType } from '../../types'
 import { localStorageKey } from '../constants'
-import { ErrorMessageFromServer } from '../strings'
+import { ErrorMessageFromClient, ErrorMessageFromServer } from '../strings'
 import { oauth } from '../utils/auth'
 import { cloudfunctionAddress } from './constants'
 import { ISearchSuccess } from './types'
@@ -67,12 +67,12 @@ export const getVimeoCode = async (): Promise<{ code: string }> => {
           if (vimeoCode !== null) {
             resolve({ code: vimeoCode })
           } else {
-            reject(ErrorMessageFromServer.VIMEO_OAUTH_ERROR)
+            reject(ErrorMessageFromClient.VIMEO_OAUTH_ERROR)
           }
         }
       },
       clear: () => {
-        reject(ErrorMessageFromServer.VIMEO_OAUTH_CANCLE)
+        reject(ErrorMessageFromClient.VIMEO_OAUTH_CANCLE)
       },
     })
   })

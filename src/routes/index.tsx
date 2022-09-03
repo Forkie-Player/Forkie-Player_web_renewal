@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import * as Constants from '../lib/constants'
 import Home from './Home'
 import List from './List'
+import Forkie from './oauth/Forkie'
 import Vimeo from './oauth/Vimeo'
 import Play from './Play'
 import ProfilePage from './Profile'
@@ -11,7 +12,7 @@ import VideoTimeChange from './VideoTimeChange'
 
 export default function MyRoutes() {
   return (
-    <main className={'w-full h-full pt-4'}>
+    <main className={'h-full w-full pt-4'}>
       <Routes>
         <Route path={Constants.NavAbsolutePathItems.HOME}>
           <Route path={''} element={<Home />} />
@@ -29,6 +30,7 @@ export default function MyRoutes() {
           </Route>
         </Route>
         <Route path={Constants.NavAbsolutePathItems.OAUTH}>
+          <Route path={''} element={<Forkie />} />
           <Route path={Constants.NavAbsolutePathItems.OAUTH_VIMEO} element={<Vimeo />} />
         </Route>
         <Route path="*" element={<Navigate to={Constants.NavAbsolutePathItems.HOME} />} />

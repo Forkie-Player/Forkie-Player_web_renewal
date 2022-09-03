@@ -71,6 +71,9 @@ export const getVimeoCode = async (): Promise<{ code: string }> => {
           }
         }
       },
+      clear: () => {
+        reject(ErrorMessageFromServer.VIMEO_OAUTH_CANCLE)
+      },
     })
   })
 }

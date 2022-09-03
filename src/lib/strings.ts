@@ -54,9 +54,12 @@ export const ErrorMessageFromServer = {
   YOUTUBE_SEARCH_ERROR: 'youtube search error',
   TWITCH_SEARCH_ERROR: 'twitch search error',
   DATILYMOTION_SEARCH_ERROR: 'dailymotion search error',
-  VIMEO_OAUTH_ERROR: 'vimeo oauth error',
   VIMEO_SEARCH_ERROR: 'vimeo search error',
+}
+export const ErrorMessageFromClient = {
+  VIMEO_OAUTH_ERROR: 'vimeo oauth error',
   VIMEO_OAUTH_REJECTED: 'vimeo oauth rejected',
+  VIMEO_OAUTH_CANCLE: 'VIDEO OUT AUTH CANCEL',
 }
 
 export const ErrorMessageToUser = {
@@ -77,6 +80,7 @@ export const ErrorMessageToUser = {
   VIMEO_OAUTH_ERROR: 'vimeo 인증에 실패했어요.',
   VIMEO_SEARCH_ERROR: 'vimeo 검색에 실패했어요.',
   VIMEO_OAUTH_REJECTED: 'vimeo 인증이 거부되었어요.',
+  VIMEO_OAUTH_CANCLE: 'vimeo 인증을 취소했어요.',
 }
 
 export const auth = {

@@ -68,9 +68,13 @@ interface OAuthParam {
   storageKey: string
   url: string
   callbackOnStorageEvent: () => Promise<void> | void
+  clear?: () => void
 }
-export const oauth = ({ storageKey, url, callbackOnStorageEvent }: OAuthParam) => {
+export const oauth = ({ storageKey, url, callbackOnStorageEvent, clear }: OAuthParam) => {
   const popup = window.open(url, '_blank', 'popup')
+  if (popup !== null) {
+    popup.opener = null
+  }
   const localstorageEventCallback = async (e: StorageEvent) => {
     if (e.key === storageKey) {
       window.removeEventListener('storage', localstorageEventCallback)
@@ -83,6 +87,9 @@ export const oauth = ({ storageKey, url, callbackOnStorageEvent }: OAuthParam) =
     if (popup === null || popup?.closed) {
       clearInterval(intervalId)
       window.removeEventListener('storage', localstorageEventCallback)
+      if (clear !== undefined) {
+        clear()
+      }
     }
   }, 1000)
 }

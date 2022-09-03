@@ -60,8 +60,9 @@ export const getVimeoCode = async (): Promise<{ code: string }> => {
     oauth({
       storageKey: localStorageKey.VIMEO_STATE,
       url: res.data.url,
-      callbackOnStorageEvent: e => {
-        if (e.newValue === state) {
+      callbackOnStorageEvent: () => {
+        const newState = localStorage.getItem(localStorageKey.VIMEO_STATE)
+        if (newState === state) {
           const vimeoCode = localStorage.getItem(localStorageKey.VIMEO_CODE)
           if (vimeoCode !== null) {
             resolve({ code: vimeoCode })

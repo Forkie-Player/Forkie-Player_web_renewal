@@ -65,7 +65,7 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
 
   const onOAuth = async (type: OAuth2Type) => {
     try {
-      const callbackOnStorageEvent = async (e: StorageEvent) => {
+      const callbackOnStorageEvent = async () => {
         const tokens = localStorage.getItem(localStorageKey.TOKENS)
         if (tokens !== null) {
           await setTokens(JSON.parse(tokens))

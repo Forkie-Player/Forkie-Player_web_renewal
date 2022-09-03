@@ -6,7 +6,7 @@ import FormWrapper from './view/FormWrapper'
 import * as Strings from '../../lib/strings'
 import { login as loginApi } from '../../lib/api/auth'
 import { handleAuthApiError } from '../../lib/utils/handleAuthErr'
-import { setTokens, SignUp as SignUpApi } from '../../lib/utils/auth'
+import { oauth, setTokens, SignUp as SignUpApi } from '../../lib/utils/auth'
 import { useDispatch } from 'react-redux'
 import { getUserInfo } from '../../modules/userInfo/actions'
 import { getPlaylistAsync } from '../../modules/playlist/actions'
@@ -65,27 +65,29 @@ const AuthFormModal = ({ isOpen, onClose }: IProps) => {
 
   const onOAuth = async (type: OAuth2Type) => {
     try {
-      switch (type) {
-        case 'kakao':
-          window.open('https://forkie-api.com/v1/oauth2/authorization/kakao', '_blank', 'popup=true')
-          break
-        case 'google':
-          window.open('https://forkie-api.com/v1/oauth2/authorization/google', '_blank', 'popup=true')
-          break
-      }
-
-      const localstorageEventCallback = async (e: any) => {
-        if (e.key === localStorageKey.TOKENS) {
-          window.removeEventListener('storage', localstorageEventCallback)
-          const tokens = localStorage.getItem(localStorageKey.TOKENS)
-          if (tokens !== null) {
-            await setTokens(JSON.parse(tokens))
-            onSuccessAuth()
-          } else {
-          }
+      const callbackOnStorageEvent = async (e: StorageEvent) => {
+        const tokens = localStorage.getItem(localStorageKey.TOKENS)
+        if (tokens !== null) {
+          await setTokens(JSON.parse(tokens))
+          onSuccessAuth()
         }
       }
-      window.addEventListener('storage', localstorageEventCallback)
+      switch (type) {
+        case 'kakao':
+          oauth({
+            url: 'https://forkie-api.com/v1/oauth2/authorization/kakao',
+            storageKey: localStorageKey.TOKENS,
+            callbackOnStorageEvent,
+          })
+          break
+        case 'google':
+          oauth({
+            url: 'https://forkie-api.com/v1/oauth2/authorization/google',
+            storageKey: localStorageKey.TOKENS,
+            callbackOnStorageEvent,
+          })
+          break
+      }
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log(err.response?.data)

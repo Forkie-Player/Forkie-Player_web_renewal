@@ -63,3 +63,26 @@ export const withdrawlUser = async () => {
     throw ErrorMessageFromServer.NONMEMBER_LOGIN_FAIL
   }
 }
+
+interface OAuthParam {
+  storageKey: string
+  url: string
+  callbackOnStorageEvent: (e: StorageEvent) => Promise<void> | void
+}
+export const oauth = ({ storageKey, url, callbackOnStorageEvent }: OAuthParam) => {
+  const popup = window.open(url, '_blank', 'popup,noopener,noreferrer')
+  const localstorageEventCallback = async (e: StorageEvent) => {
+    if (e.key === storageKey) {
+      window.removeEventListener('storage', localstorageEventCallback)
+      callbackOnStorageEvent(e)
+    }
+  }
+
+  window.addEventListener('storage', localstorageEventCallback)
+  const intervalId = setInterval(() => {
+    if (popup === null || popup?.closed) {
+      clearInterval(intervalId)
+      window.removeEventListener('storage', localstorageEventCallback)
+    }
+  }, 1000)
+}

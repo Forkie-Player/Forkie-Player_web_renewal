@@ -2,6 +2,7 @@ import axios from 'axios'
 import { SearchPlatformType } from '../../types'
 import { localStorageKey } from '../constants'
 import { ErrorMessageFromServer } from '../strings'
+import { oauth } from '../utils/auth'
 import { cloudfunctionAddress } from './constants'
 import { ISearchSuccess } from './types'
 
@@ -56,10 +57,10 @@ export const getVimeoCode = async (): Promise<{ code: string }> => {
 
   return new Promise((resolve, reject) => {
     let state = res.data.state
-
-    const localstorageEventCallback = (e: any) => {
-      if (e.key === localStorageKey.VIMEO_STATE) {
-        window.removeEventListener('storage', localstorageEventCallback)
+    oauth({
+      storageKey: localStorageKey.VIMEO_STATE,
+      url: res.data.url,
+      callbackOnStorageEvent: e => {
         if (e.newValue === state) {
           const vimeoCode = localStorage.getItem(localStorageKey.VIMEO_CODE)
           if (vimeoCode !== null) {
@@ -68,11 +69,8 @@ export const getVimeoCode = async (): Promise<{ code: string }> => {
             reject(ErrorMessageFromServer.VIMEO_OAUTH_ERROR)
           }
         }
-      }
-    }
-    window.addEventListener('storage', localstorageEventCallback)
-
-    window.open(res.data.url, '_blank', 'popup,noopener,noreferrer')
+      },
+    })
   })
 }
 

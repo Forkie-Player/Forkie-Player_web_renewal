@@ -4,7 +4,6 @@ import getQueryStringObject from '../../lib/utils/parseURLSearch'
 function Forkie() {
   window.document.body.innerHTML = ''
   React.useEffect(() => {
-    console.log('asdasd')
     const urlSearch = getQueryStringObject<{ accessToken: string; refreshToken: string }>()
     if (urlSearch !== null) {
       if (urlSearch.accessToken && urlSearch.refreshToken) {
@@ -18,7 +17,7 @@ function Forkie() {
     }
     window.close()
   }, [])
-  return <>213123</>
+  return <></>
 }
 
 export default Forkie

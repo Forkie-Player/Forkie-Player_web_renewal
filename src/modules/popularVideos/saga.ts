@@ -11,6 +11,7 @@ export function* getPopularVideoSaga() {
   try {
     const res: IGetPopularVideoSuccess = yield call(getPopularVideosApi)
     const ans: IVideo[] = res.popular.map(item => ({
+      id: null,
       platform: 'YOUTUBE',
       videoId: item.id,
       title: item.snippet.title,

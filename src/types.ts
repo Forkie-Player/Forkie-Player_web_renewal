@@ -22,6 +22,7 @@ export interface ICrawlResultItem {
 
 // 비디오 아이템
 export interface IVideo {
+  id: number | null
   platform: SearchPlatformType
   videoId: string
   title: string

@@ -4,12 +4,11 @@ import { ITextButtonProps } from '../../elements/CustomButton'
 import ButtonsView from '../view/ButtonsView'
 
 interface IProps {
-  applyButtonProps?: ITextButtonProps
   completeButtonProps?: ITextButtonProps
   screenSize: string
 }
 
-function ButtonsContainer({ applyButtonProps, completeButtonProps, screenSize }: IProps) {
+function ButtonsContainer({ completeButtonProps, screenSize }: IProps) {
   const buttonSize = useMemo(() => {
     switch (screenSize) {
       case screenSizeString['3XL']:
@@ -25,13 +24,7 @@ function ButtonsContainer({ applyButtonProps, completeButtonProps, screenSize }:
     }
   }, [screenSize])
 
-  return (
-    <ButtonsView
-      applyButtonProps={applyButtonProps}
-      completeButtonProps={completeButtonProps}
-      buttonSize={buttonSize}
-    />
-  )
+  return <ButtonsView completeButtonProps={completeButtonProps} buttonSize={buttonSize} />
 }
 
 export default React.memo(ButtonsContainer)

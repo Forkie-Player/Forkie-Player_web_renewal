@@ -20,19 +20,14 @@ import { RootModuleType } from '../../modules/moduleTypes'
 import ButtonsContainer from './container/ButtonsContainer'
 import { infiniteEndTime } from '../../lib/constants'
 
-interface ITextButtonPropsWithOnClick extends Omit<ITextButtonProps, 'onClick'> {
-  onClick?: (range: number[]) => void
-}
-
 interface IProps {
   video: IVideoHasRange
   playerProps?: ReactPlayerProps
-  applyButtonProps?: ITextButtonPropsWithOnClick
   completeButtonProps?: ITextButtonProps
   onRangeChangeCallback?: (range: number[]) => void
 }
 
-function VideoEdit({ video, playerProps, applyButtonProps, completeButtonProps, onRangeChangeCallback }: IProps) {
+function VideoEdit({ video, playerProps, completeButtonProps, onRangeChangeCallback }: IProps) {
   const [videoReady, setVideoReady] = useState(false)
   // 비디오 전체 길이
   const [videoDuration, setVideoDuration] = useState(0)
@@ -76,6 +71,9 @@ function VideoEdit({ video, playerProps, applyButtonProps, completeButtonProps, 
         }
         return range
       })
+
+      setSelectedLapse(range)
+
       if (onRangeChangeCallback !== undefined) {
         onRangeChangeCallback(range)
       }
@@ -107,43 +105,29 @@ function VideoEdit({ video, playerProps, applyButtonProps, completeButtonProps, 
     [videoDuration],
   )
 
-  // 적용버튼 눌렀을때
-  const onClickApply = useCallback(() => {
-    setRange(prev => {
-      setSelectedLapse(prev)
-      if (applyButtonProps !== undefined && applyButtonProps.onClick !== undefined) {
-        applyButtonProps.onClick(prev)
-      }
-      return prev
-    })
-  }, [applyButtonProps])
-
   const playerPropsMemo = useMemo(
     () => ({ ...playerProps, onDuration: onPlayerDuration }),
     [playerProps, onPlayerDuration],
   )
-  const applyButtonPropsMemo = useMemo(
-    () => ({ ...applyButtonProps, onClick: onClickApply }),
-    [applyButtonProps, onClickApply],
-  )
 
   // 로딩의 길이를 15rem으로 두고, 로딩이 끝나면 controller를 보여주면서 정확한 높이로 맞춰짐
   return (
-    <div className="h-full flex flex-col pb-1">
+    <div className="mr-2 flex h-full flex-col pb-1">
       <div className="w-full flex-1">
-        <VideoContainer playerRef={playerRef} playerProps={playerPropsMemo} video={video} />
+        <VideoContainer
+          playerRef={playerRef}
+          playerProps={playerPropsMemo}
+          video={video}
+          intervalMs={videoDuration + 9999999}
+        />
       </div>
-      <div className="w-full max-h-fit pt-10 2xl:pt-12 space-y-1 px-[10%]">
+      <div className="max-h-fit w-full space-y-1 px-[10%] pt-10 2xl:pt-12">
         {videoReady ? (
           <>
             <RangeContainer range={range} max={videoDuration} selectedLapse={selectedLapse} onChange={onChangeRange} />
             <AdjustSecondsView onClickAdjustSeconds={onClickAdjustRangeByOneSecond} />
             <TimeLapseView range={range} />
-            <ButtonsContainer
-              applyButtonProps={applyButtonPropsMemo}
-              completeButtonProps={completeButtonProps}
-              screenSize={screenSize}
-            />
+            <ButtonsContainer completeButtonProps={completeButtonProps} screenSize={screenSize} />
           </>
         ) : (
           <LoadingElement className="py-10" />

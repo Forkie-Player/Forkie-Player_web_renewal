@@ -29,6 +29,7 @@ export const temp_playlist: IPlaylist[] = [
 
 export const temp_videos: IVideo[] = [
   {
+    id: 1,
     platform: 'YOUTUBE',
     videoId: 'videoId',
     title: 'title',
@@ -94,6 +95,7 @@ export const temp_popularVideo: IFBPopularVideo[] = [
 ]
 export const temp_popularVideo_parsed: IVideo[] = [
   {
+    id: 2,
     platform: 'YOUTUBE',
     videoId: 'SQ-FAQZSV6w',
     title: 'Harry Kane MASTERCLASS! 🔥 Spurs beat Man City at the death! | HIGHLIGHTS | Man City 2-3 Spurs',
@@ -106,6 +108,7 @@ export const temp_popularVideo_parsed: IVideo[] = [
     uploadedAt: '2022-02-19',
   },
   {
+    id: 3,
     platform: 'YOUTUBE',
     videoId: '0R5YYHdFOAY',
     title: '[ENG] 꼴값 떨고 남 연애 참견하다가 이용진의 참한 犬 돼버린 주우재 편 | 터키즈온더블럭 EP.36',

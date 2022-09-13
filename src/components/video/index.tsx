@@ -15,6 +15,12 @@ interface IProps {
   playerRef: React.RefObject<ReactPlayer>
   video: IVideoHasRange
   playerProps?: ReactPlayerProps
+  intervalMs?: number
+}
+
+interface IPrevVideo {
+  id: number | null
+  videoId: string | null
 }
 
 /**
@@ -22,8 +28,11 @@ interface IProps {
  * 같은 영상 -> 같은 영상 : onReady, onStart가 발생하지 않음
  */
 
-function VideoRender({ playerRef, video, playerProps }: IProps) {
-  const [prevVideo, setPrevVideo] = useState<string>(video.videoId)
+function VideoRender({ playerRef, video, playerProps, intervalMs = 700 }: IProps) {
+  const [prevVideo, setPrevVideo] = useState<IPrevVideo>({
+    videoId: null,
+    id: null,
+  })
   const [videoReady, setVideoReady] = useState(false)
 
   const seekTo = useCallback(
@@ -49,7 +58,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
             playerProps.onEnded()
           }
         }
-      }, 700)
+      }, intervalMs)
 
       return () => {
         if (intervalId !== undefined) {
@@ -57,7 +66,7 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
         }
       }
     }
-  }, [playerRef, video, playerProps, seekTo])
+  }, [playerRef, video, playerProps, intervalMs, seekTo])
 
   useEffect(() => {
     /**
@@ -65,19 +74,25 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
      * 따라서 prevVideo와 video.videoId를 비교하여 변경되었는지 확인하고,
      * 변경되었으면, ready 상태를 false로 바꾸어 줌.
      */
-    if (prevVideo !== video.videoId) {
+    if (prevVideo.videoId !== video.videoId) {
       setVideoReady(false)
-      setPrevVideo(video.videoId)
+      setPrevVideo({
+        videoId: video.videoId,
+        id: video.id,
+      })
       return
     }
     /**
      * 비디오가 ready이면 처음으로 이동.
      * 발생하는 경우
-     *  1. 새로운 비디오거나, 이전과 다른 비디오가 로드되었을 때
-     *  2. 이전과 같은 비디오로 변경되었을때.(이전에 ready 된 상태가 그대로 남음)
+     *  1. 이전과 같은 비디오로 변경되었을때.(이전에 ready 된 상태가 그대로 남음)
      */
-    if (videoReady) {
+    if (videoReady && video.id !== prevVideo.id) {
       seekTo(video.start)
+      setPrevVideo({
+        videoId: video.videoId,
+        id: video.id,
+      })
     }
   }, [video, prevVideo, videoReady, seekTo])
 
@@ -86,7 +101,8 @@ function VideoRender({ playerRef, video, playerProps }: IProps) {
       playerProps.onStart()
     }
     setVideoReady(true)
-  }, [playerProps])
+    seekTo(video.start)
+  }, [playerProps, video.start, seekTo])
 
   const onVideoEnded = useCallback(() => {
     seekTo(video.start)

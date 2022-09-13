@@ -70,21 +70,20 @@ function VideoAddView({
   }, [isSmScreen, showPlaylists])
 
   const completeButtonProps = useMemo(() => ({ onClick: onClickAdd }), [onClickAdd])
-  const applyButtonProps = useMemo(() => ({ onClick: onClickApply }), [onClickApply])
 
   return (
-    <div className="w-full h-full max-h-full space-y-2 pb-2 2xl:pb-4 flex flex-col">
+    <div className="flex h-full max-h-full w-full flex-col space-y-2 pb-2 2xl:pb-4">
       <GobackLine className="mx-2" />
-      <div className={'flex-1 flex relative w-full overflow-hidden'}>
+      <div className={'relative flex w-full flex-1 overflow-hidden'}>
         <div className={clsx('flex-1 px-2 lg:pr-0', isSmScreen && 'h-full', PlayerContainerClassName)}>
           <VideoEdit
             video={video}
             playerProps={playerProps}
             completeButtonProps={completeButtonProps}
-            applyButtonProps={applyButtonProps}
+            onRangeChangeCallback={onClickApply}
           />
         </div>
-        <div className={clsx(SelectPlaylistContainerClassName, 'transition-all h-full flex')}>
+        <div className={clsx(SelectPlaylistContainerClassName, 'flex h-full transition-all')}>
           {showPlaylists && (
             <SelectPlaylistView
               isSmScreen={isSmScreen}

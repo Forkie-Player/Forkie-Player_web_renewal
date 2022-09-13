@@ -46,15 +46,18 @@ function VideoTimeChange({ video }: IProps) {
     }
   }, [videoState, dispatch, videoModule])
 
-  const applyButtonProps = useMemo(() => ({ onClick: onClickApply }), [onClickApply])
   const completeButtonProps = useMemo(() => ({ onClick: onClickEdit, text: '수정' }), [onClickEdit])
 
   return (
-    <div className="w-full h-full px-2 md:px-[5%] flex flex-col">
+    <div className="flex h-full w-full flex-col px-2 md:px-[5%]">
       <GobackLine />
-      <div className="relative flex-1 w-full">
-        <div className="w-full h-full py-4">
-          <VideoEdit video={videoState} applyButtonProps={applyButtonProps} completeButtonProps={completeButtonProps} />
+      <div className="relative w-full flex-1">
+        <div className="h-full w-full py-4">
+          <VideoEdit
+            video={videoState}
+            completeButtonProps={completeButtonProps}
+            onRangeChangeCallback={onClickApply}
+          />
         </div>
       </div>
     </div>

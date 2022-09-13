@@ -73,7 +73,6 @@ function VideoEdit({ video, playerProps, completeButtonProps, onRangeChangeCallb
       })
 
       setSelectedLapse(range)
-
       if (onRangeChangeCallback !== undefined) {
         onRangeChangeCallback(range)
       }
@@ -86,23 +85,33 @@ function VideoEdit({ video, playerProps, completeButtonProps, onRangeChangeCallb
     (right: boolean, offset: number) => {
       if (right) {
         setRange(prev => {
+          let newRange = prev
           if (prev[1] + offset <= videoDuration) {
             playerRef.current?.seekTo(prev[1] + offset)
-            return [prev[0], prev[1] + offset]
+            newRange = [prev[0], prev[1] + offset]
           }
-          return prev
+          setSelectedLapse(newRange)
+          if (onRangeChangeCallback !== undefined) {
+            onRangeChangeCallback(newRange)
+          }
+          return newRange
         })
       } else {
         setRange(prev => {
+          let newRange = prev
           if (prev[0] + offset >= 0) {
             playerRef.current?.seekTo(prev[0] + offset)
-            return [prev[0] + offset, prev[1]]
+            newRange = [prev[0] + offset, prev[1]]
           }
-          return prev
+          setSelectedLapse(newRange)
+          if (onRangeChangeCallback !== undefined) {
+            onRangeChangeCallback(newRange)
+          }
+          return newRange
         })
       }
     },
-    [videoDuration],
+    [videoDuration, onRangeChangeCallback],
   )
 
   const playerPropsMemo = useMemo(

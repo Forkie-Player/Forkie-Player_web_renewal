@@ -2,7 +2,9 @@ import React, { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
 import { auth as AuthStrings, THANKYOU } from '../../../lib/strings'
 import { IUserInfo } from '../../../types'
+import CustomModalWrapper from '../../elements/CustomModalWrapper'
 import PopperWrapper from '../../elements/PopperWrapper'
+import NicknameChangeView from '../elements/NicknameChangeView'
 import HeaderPopperView from '../view/HeaderPopperView'
 import HeaderUserInfoView from '../view/HeaderUserInfoView'
 
@@ -23,10 +25,10 @@ function HeaderUserInfoContainer({
 }: IProps) {
   const [prevPassword, setPrevPassword] = useState('')
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
-  // 재인증 되었냐 아니냐
   const [isReauthenicated, setIsReauthenicated] = useState(false)
   const [showPopper, setShowPopper] = useState(false)
   const [popperMode, setPopperMode] = useState<'WITDRAWL' | 'PASSWORD_CHANGE'>('WITDRAWL')
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const [error, setError] = useState('')
 
   const onToggleShowPopper = useCallback(() => {
@@ -75,6 +77,18 @@ function HeaderUserInfoContainer({
     }
   }
 
+  const onClickChangeNickname = () => {
+    setIsOpenModal(true)
+  }
+
+  const onCompleteInputNewNickname = async (newNickname: string) => {
+    setIsOpenModal(false)
+  }
+
+  const onRequestCloseModal = () => {
+    setIsOpenModal(false)
+  }
+
   // 회원탈퇴 취소
   const onCancleWithdrawl = () => {
     setShowPopper(false)
@@ -89,6 +103,7 @@ function HeaderUserInfoContainer({
         onWithdrawl={onClickWithdrawlButton}
         onClickPasswordChangeButton={onClickPasswordChangeButton}
         onEditProfileImg={onEditProfileImg}
+        onClickChangeNickname={onClickChangeNickname}
       />
       {showPopper && referenceElement !== null && (
         <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onToggleShowPopper}>
@@ -103,6 +118,11 @@ function HeaderUserInfoContainer({
           />
         </PopperWrapper>
       )}
+      {
+        <CustomModalWrapper isOpen={isOpenModal} onRequestClose={onRequestCloseModal}>
+          <NicknameChangeView onClickComplete={onCompleteInputNewNickname} />
+        </CustomModalWrapper>
+      }
     </>
   )
 }

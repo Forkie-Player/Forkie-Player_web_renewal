@@ -21,34 +21,34 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
   const referenceElement = React.useRef<HTMLDivElement | null>(null)
 
   return (
-    <div className="flex gap-x-2 md:gap-x-4 md:basis-7/12 h-full justify-end">
+    <div className="flex h-full justify-end gap-x-2 md:basis-7/12 md:gap-x-4">
       {false && userInfo.loginId !== '' && (
         <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
           <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} />
           {!isSmScreen && (
-            <div className="text-sm align-middle py-1">
+            <div className="py-1 align-middle text-sm">
               <p>{userInfo.member === true ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
               <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
             </div>
           )}
         </div>
       )}
-      <CustomButtonWrapper ref={referenceElement} className="text-2xl my-auto">
+      <CustomButtonWrapper ref={referenceElement} className="my-auto text-2xl">
         {userInfo.member === false ? (
           <div className="flex gap-x-2 p-1" onClick={onClickLogin}>
-            <div className="text-base align-middle">{!isSmScreen ? Strings.Login + '/' + Strings.auth.SIGNUP : ''}</div>
+            <div className="align-middle text-base">{!isSmScreen ? Strings.Login + '/' + Strings.auth.SIGNUP : ''}</div>
             <MdLogin />
           </div>
         ) : (
           <div className="flex gap-x-2 p-1" onClick={onClickLogout}>
-            <div className="text-base align-middle">{!isSmScreen ? Strings.Logout : ''}</div>
+            <div className="align-middle text-base">{!isSmScreen ? Strings.Logout : ''}</div>
             <MdLogout />
           </div>
         )}
       </CustomButtonWrapper>
       {((false && userInfo.loginId !== '') || (false && isSmScreen)) && (
         <PopperHoverWrapper referenceElement={referenceElement.current}>
-          <div className="p-1 bg-black text-white text-xs rounded-lg">
+          <div className="rounded-lg bg-black p-1 text-xs text-white">
             {userInfo.member === false ? Strings.Login : Strings.Logout}
           </div>
         </PopperHoverWrapper>

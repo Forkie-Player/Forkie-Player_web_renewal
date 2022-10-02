@@ -8,9 +8,10 @@ import * as Strings from '../../../lib/strings'
 
 interface IProps {
   userInfo: IUserInfo
-  onWithdrawl: (e: React.MouseEvent<HTMLDivElement>) => any
-  onEditProfileImg: (e: React.ChangeEvent<HTMLInputElement>) => any
-  onClickPasswordChangeButton: (e: React.MouseEvent<HTMLDivElement>) => any
+  onWithdrawl: (e: React.MouseEvent<HTMLDivElement>) => void
+  onEditProfileImg: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onClickPasswordChangeButton: (e: React.MouseEvent<HTMLDivElement>) => void
+  onClickChangeNickname: () => void
 }
 
 /**
@@ -23,37 +24,42 @@ interface IProps {
  */
 
 const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
-  ({ userInfo, onWithdrawl, onEditProfileImg, onClickPasswordChangeButton }: IProps, ref) => {
+  ({ userInfo, onWithdrawl, onEditProfileImg, onClickPasswordChangeButton, onClickChangeNickname }: IProps, ref) => {
     return (
       <div ref={ref} className="pb-2">
-        <div className="h-full grid grid-rows-2 grid-cols-[max-content_auto_max-content] gap-x-4 ">
-          <div className="relative row-span-2 h-full aspect-[1.1] scale-110 sm:aspect-[5/4] sm:scale-125 origin-bottom-left">
-            <svg viewBox="0 0 50 50" className="h-full aspect-square"></svg>
+        <div className="grid h-full grid-cols-[max-content_auto_max-content] grid-rows-2 gap-x-4 ">
+          <div className="relative row-span-2 aspect-[1.1] h-full origin-bottom-left scale-110 sm:aspect-[5/4] sm:scale-125">
+            <svg viewBox="0 0 50 50" className="aspect-square h-full"></svg>
             <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} className="absolute top-0 left-0" />
             <div>
               <label htmlFor="imageInput">
                 <CustomIconButton
                   icon={<MdEdit />}
                   type="none"
-                  className=" absolute bottom-0 right-[10%] sm:right-[20%] z-50 bg-blackberry-lightest text-white p-2 rounded-full active:bg-blackberry-lightest"
+                  className=" absolute bottom-0 right-[10%] z-50 rounded-full bg-blackberry-lightest p-2 text-white active:bg-blackberry-lightest sm:right-[20%]"
                 />
               </label>
               <input id="imageInput" type="file" className="hidden" accept="image/*" onChange={onEditProfileImg} />
             </div>
           </div>
-          <div className="w-full row-span-1 md:row-span-2 col-span-2 md:col-span-1">
-            <div className="h-full flex flex-col justify-end">
-              <div className="text-lg md:text-2xl">{userInfo.loginId}</div>
-              <div className="text-blackberry-lightest line-clamp-1 text-sm sm:text-base">
-                가입일. {userInfo.createdAt.toString().slice(0, 10)}
+          <div className="col-span-2 row-span-1 w-full md:col-span-1 md:row-span-2">
+            <div className="flex h-full flex-col justify-end">
+              <div className="flex space-x-2 align-middle">
+                <div className="text-lg md:text-2xl">{userInfo.loginId}</div>
+                <div className="cursor-pointer self-center rounded-full" onClick={onClickChangeNickname}>
+                  <MdEdit />
+                </div>
+              </div>
+              <div className="text-sm text-blackberry-lightest line-clamp-1 sm:text-base">
+                {userInfo.createdAt.toString().slice(0, 10)} 가입
               </div>
             </div>
           </div>
-          <div className="unselectable col-span-2 md:col-span-1 md:row-span-2 flex md:flex-col justify-start sm:justify-end items-end md:items-start">
+          <div className="unselectable col-span-2 flex items-end justify-start sm:justify-end md:col-span-1 md:row-span-2 md:flex-col md:items-start">
             <CustomButtonWrapper onClick={onWithdrawl}>
               <div className="flex min-w-fit gap-2">
-                <MdDeleteForever className="text-lg sm:text-2xl text-error" />
-                <div className="min-w-fit text-error text-sm sm:text-base">{Strings.auth.WITHDRAWL}</div>
+                <MdDeleteForever className="text-lg text-error sm:text-2xl" />
+                <div className="min-w-fit text-sm text-error sm:text-base">{Strings.auth.WITHDRAWL}</div>
               </div>
             </CustomButtonWrapper>
             <CustomButtonWrapper onClick={onClickPasswordChangeButton}>

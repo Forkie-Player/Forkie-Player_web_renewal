@@ -77,7 +77,7 @@ const Profile = ({ userInfo }: IProps) => {
   )
 
   return (
-    <div className="w-full h-full px-2 md:px-[5%] grid grid-rows-6">
+    <div className="grid h-full w-full grid-rows-6 px-2 md:px-[5%]">
       <HeaderBackground />
       <HeaderUserInfoContainer
         userInfo={userInfo}

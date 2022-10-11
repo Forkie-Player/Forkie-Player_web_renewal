@@ -33,7 +33,7 @@ function AddPlaylistButton({ text = '추가' }: IProps) {
   }, [playlist.pending])
 
   const onClickToggleShowPopper = useCallback(() => {
-    if (playlist.items.length < 5 || userInfo.userInfo.member === true) {
+    if (playlist.items.length < 5 || userInfo.userInfo.signedin === true) {
       setShowPopper(prev => !prev)
     } else {
       toast.error(Strings.ErrorMessageToUser.EXCEED_NONMEMBER_MAX_PLAYLIST)
@@ -56,7 +56,7 @@ function AddPlaylistButton({ text = '추가' }: IProps) {
       <CustomClearButton ref={setReferenceElement} text={text} onClick={onClickToggleShowPopper} />
       {showPopper && (
         <PopperWrapper referenceElement={referenceElement} onToggleShowPopper={onClickToggleShowPopper}>
-          <div className={clsx('border-2 relative p-4 bg-white rounded-2xl shadow-outer')}>
+          <div className={clsx('relative rounded-2xl border-2 bg-white p-4 shadow-outer')}>
             {playlist.pending ? (
               <LoadingElement />
             ) : (

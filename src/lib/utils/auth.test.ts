@@ -49,36 +49,12 @@ describe('authInit 테스트', () => {
   })
 })
 
-describe('test nonMemberLogin', () => {
-  test("when there's no nonMemberId in cookie, create id and try nonMemberSignUp", async () => {
-    ;(cookie.getCookie as jest.Mock).mockReturnValueOnce(undefined)
-    ;(authApi.nonSignUp as jest.Mock).mockReturnValueOnce({ response: { loginId: 'tempuuid' } })
-
-    expect(authApi.nonSignUp).toBeCalledWith('tempuuid')
-    expect(cookie.setCookie).toBeCalledWith('@nomMemberId', 'tempuuid')
-    expect(authApi.login).toBeCalledWith('tempuuid', '')
-  })
-})
-
 describe('test SignUp', () => {
   test('when fail changeToMember, try userSignUp', async () => {
-    ;(authApi.changeToMember as jest.Mock).mockImplementationOnce(
-      jest.fn(() => {
-        throw Error()
-      }),
-    )
-    await authUtils.SignUp('id', 'password')
-
-    expect(authApi.changeToMember).toBeCalledWith('id', 'password')
     expect(authApi.userSignUp).toBeCalledWith('id', 'password')
   })
 
   test('when fail changeToMember and userSignUp, throw error', async () => {
-    ;(authApi.changeToMember as jest.Mock).mockImplementationOnce(
-      jest.fn(() => {
-        throw Error()
-      }),
-    )
     ;(authApi.userSignUp as jest.Mock).mockImplementationOnce(
       jest.fn(() => {
         throw Error()
@@ -87,18 +63,7 @@ describe('test SignUp', () => {
     await expect(authUtils.SignUp('id', 'password')).rejects.toThrow()
   })
 
-  test('when success changeToMember, try login', async () => {
-    await authUtils.SignUp('id', 'password')
-    expect(authApi.changeToMember).toBeCalledWith('id', 'password')
-    expect(authApi.login).toBeCalledWith('id', 'password')
-  })
-
   test('when success userSignUp, try login', async () => {
-    ;(authApi.changeToMember as jest.Mock).mockImplementationOnce(
-      jest.fn(() => {
-        throw Error()
-      }),
-    )
     await authUtils.SignUp('id', 'password')
     expect(authApi.userSignUp).toBeCalledWith('id', 'password')
     expect(authApi.login).toBeCalledWith('id', 'password')

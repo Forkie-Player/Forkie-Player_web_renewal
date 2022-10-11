@@ -122,12 +122,9 @@ export const temp_popularVideo_parsed: IVideo[] = [
 ]
 
 export const temp_userInfo: IUserInfo = {
-  id: 355,
   loginId: 'ac05254d-3ae8-4b41-9ab9-9bf73f7b5a2b',
-  profileImg: '',
-  authority: 'ROLE_USER',
-  pc: false,
-  member: false,
+  nickname: 'nickname',
+  provider: 'LOCAL',
   createdAt: new Date('2022-02-20T10:56:16.238263'),
 }
 

@@ -3,13 +3,11 @@ import { logEvent } from 'firebase/analytics'
 import { analytics } from '../../firebaseInit'
 import { IToken } from '../../types'
 import { setTokens } from '../utils/auth'
-import { removeCookie } from '../utils/cookie'
 import { Address } from './constants'
 import {
-  IChangeToMemberSuccess,
+  IGetUserInfoSuccess,
   IReissueSuccess,
   IRemoveUserSuccess,
-  ISignUpSuccess,
   IUpdateProfileImgSuccess,
   IUpdateUserSuccess,
 } from './types'
@@ -47,39 +45,8 @@ export const reissue = async (tokens: IToken) => {
 }
 
 export const getUserInfoApi = async () => {
-  //  const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/member`)
-  // return res.data
-
-  return {
-    success: true,
-    error: null,
-    response: {
-      id: 123,
-      loginId: 'test1234',
-      profileImg: '',
-      authority: 'ROLE_USER',
-      pc: true,
-      member: true,
-      createdAt: new Date(),
-    },
-  }
-}
-
-export const nonSignUp = async (newId: string) => {
-  const res = await axios.post<ISignUpSuccess>(`${Address}/api/member/signup/non`, {
-    deviceId: newId,
-    isPC: true,
-  })
-  logEvent(analytics, '비회원 회원가입')
+  const res = await axios.get<IGetUserInfoSuccess>(`${Address}/api/user`)
   return res.data
-}
-
-export const changeToMember = async (id: string, pw: string) => {
-  await axios.put<IChangeToMemberSuccess>(`${Address}/api/member/change`, {
-    loginId: id,
-    password: pw,
-  })
-  removeCookie('@nomMemberId')
 }
 
 export const removeUser = async () => {

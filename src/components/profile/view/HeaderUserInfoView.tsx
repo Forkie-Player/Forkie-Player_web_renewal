@@ -30,7 +30,7 @@ const HeaderUserInfoView = React.forwardRef<HTMLDivElement, IProps>(
         <div className="grid h-full grid-cols-[max-content_auto_max-content] grid-rows-2 gap-x-4 ">
           <div className="relative row-span-2 aspect-[1.1] h-full origin-bottom-left scale-110 sm:aspect-[5/4] sm:scale-125">
             <svg viewBox="0 0 50 50" className="aspect-square h-full"></svg>
-            <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} className="absolute top-0 left-0" />
+            <ProfileImage imgSrc={null} className="absolute top-0 left-0" />
             <div>
               <label htmlFor="imageInput">
                 <CustomIconButton

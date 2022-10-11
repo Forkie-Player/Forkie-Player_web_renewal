@@ -8,12 +8,9 @@ const initialState: TUserInfoType = {
   error: null,
   userInfo: {
     signedin: false,
-    id: 0,
     loginId: '',
-    profileImg: '',
-    authority: '',
-    pc: true,
-    member: false,
+    nickname: '',
+    provider: 'LOCAL',
     createdAt: new Date(),
   },
 }

@@ -53,12 +53,9 @@ export interface IToken {
 
 // 유저 정보 타입
 export interface IUserInfo {
-  id: number
   loginId: string
-  profileImg: string
-  authority: string
-  pc: boolean
-  member: boolean
+  nickname: string
+  provider: 'LOCAL'
   createdAt: Date
 }
 

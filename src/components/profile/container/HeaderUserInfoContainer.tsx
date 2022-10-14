@@ -14,6 +14,7 @@ interface IProps {
   changePassword: (prevPw: string, newPw: string) => Promise<void>
   onEditProfileImg: (e: React.ChangeEvent<HTMLInputElement>) => any
   onClickReauthenticate: (password: string) => Promise<void>
+  onUpdateNickname: (newNickname: string) => Promise<void>
 }
 
 function HeaderUserInfoContainer({
@@ -22,6 +23,7 @@ function HeaderUserInfoContainer({
   changePassword,
   onEditProfileImg,
   onClickReauthenticate: onClickReauthenticateCallback,
+  onUpdateNickname,
 }: IProps) {
   const [prevPassword, setPrevPassword] = useState('')
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
@@ -82,6 +84,11 @@ function HeaderUserInfoContainer({
   }
 
   const onCompleteInputNewNickname = async (newNickname: string) => {
+    try {
+      await onUpdateNickname(newNickname)
+    } catch (e) {
+      console.log(e)
+    }
     setIsOpenModal(false)
   }
 

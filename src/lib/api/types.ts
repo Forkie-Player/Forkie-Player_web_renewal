@@ -19,7 +19,7 @@ export interface IReissueSuccess {
 export interface IGetUserInfoSuccess {
   success: boolean
   error: string | null
-  response: IUserInfo
+  data: IUserInfo
 }
 
 //회원 삭제 반환타입

@@ -9,7 +9,7 @@ import { getUserInfo, updateProfileImgAsync } from './actions'
 function* getUserInfoSaga() {
   try {
     const res: IGetUserInfoSuccess = yield call(getUserInfoApi)
-    yield put(getUserInfo.success(res.response))
+    yield put(getUserInfo.success(res.data))
   } catch (err) {
     yield handleSagaError(err, getUserInfo.failure)
   }

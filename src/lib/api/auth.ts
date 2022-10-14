@@ -76,6 +76,10 @@ export const updateProfileImag = async (form: FormData) => {
   return res.data
 }
 
+export const updateNickname = async (newNickname: string) => {
+  await axios.patch(`${Address}/api/user?nickname=${newNickname}`)
+}
+
 export const loginWithGoogle = async () => {
   const res = await axios.get(`${Address}/v1/oauth2/authorization/google`)
   await setTokens(res.data.data)

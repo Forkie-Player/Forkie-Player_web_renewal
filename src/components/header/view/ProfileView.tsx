@@ -36,12 +36,10 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
       <CustomButtonWrapper ref={referenceElement} className="my-auto text-2xl">
         {userInfo.userInfo.signedin === false ? (
           <div className="flex gap-x-2 p-1" onClick={onClickLogin}>
-            <div className="align-middle text-base">{!isSmScreen ? Strings.Login + '/' + Strings.auth.SIGNUP : ''}</div>
             <MdLogin />
           </div>
         ) : (
           <div className="flex gap-x-2 p-1" onClick={onClickLogout}>
-            <div className="align-middle text-base">{!isSmScreen ? Strings.Logout : ''}</div>
             <MdLogout />
           </div>
         )}

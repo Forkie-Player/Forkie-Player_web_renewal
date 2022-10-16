@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { SearchPlatformType } from '../../types'
 import { localStorageKey } from '../constants'
-import { ErrorMessageFromClient, ErrorMessageFromServer } from '../strings'
+import { ErrorMessageFromClient } from '../strings'
 import { oauth } from '../utils/auth'
 import { cloudfunctionAddress } from './constants'
 import { ISearchSuccess } from './types'

@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { authModalActions } from '../../modules/authModal/actions'
-import { IUserInfo, SearchPlatformType } from '../../types'
+import { TUserInfoType } from '../../modules/userInfo/types'
+import { SearchPlatformType } from '../../types'
 import AuthFormModal from '../authFormModal'
 import SearchbarContainer from './container/SearchbarContainer'
 import NavButtonView from './view/NavButtonView'
@@ -9,7 +10,7 @@ import ProfileView from './view/ProfileView'
 
 interface IProps {
   isSmScreen: boolean
-  userInfo: IUserInfo
+  userInfo: TUserInfoType
   playlistsLength: number
   isOpenAuthModal: boolean
   onSearch: (search: string, selectedPlatform: Array<SearchPlatformType>) => void

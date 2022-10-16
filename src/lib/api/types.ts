@@ -19,21 +19,7 @@ export interface IReissueSuccess {
 export interface IGetUserInfoSuccess {
   success: boolean
   error: string | null
-  response: IUserInfo
-}
-
-// 회원 가입 반환 타입
-export interface ISignUpSuccess {
-  success: boolean
-  error: null
-  response: IUserInfo
-}
-
-// 비회원 -> 회원 전환 반환 타입
-export interface IChangeToMemberSuccess {
-  success: boolean
-  error: null
-  response: IUserInfo
+  data: IUserInfo
 }
 
 //회원 삭제 반환타입

@@ -1,16 +1,16 @@
 import clsx from 'clsx'
 import React from 'react'
 import { MdLogin, MdLogout } from 'react-icons/md'
-import { IUserInfo } from '../../../types'
 import * as Strings from '../../../lib/strings'
 import { CustomButtonWrapper } from '../../elements/CustomButton'
 import PopperHoverWrapper from '../../elements/PopperHoverWrapper'
 
 import ProfileImage from '../../elements/ProfileImage'
+import { TUserInfoType } from '../../../modules/userInfo/types'
 
 interface IProps {
   isSmScreen: boolean
-  userInfo: IUserInfo
+  userInfo: TUserInfoType
   playlistsLength: number
   onClickLogout: () => Promise<void>
   onClickLogin: () => void
@@ -21,35 +21,33 @@ function ProfileView({ isSmScreen, userInfo, playlistsLength, onClickLogin, onCl
   const referenceElement = React.useRef<HTMLDivElement | null>(null)
 
   return (
-    <div className="flex gap-x-2 md:gap-x-4 md:basis-7/12 h-full justify-end">
-      {false && userInfo.loginId !== '' && (
-        <div className={clsx(userInfo.member && 'cursor-pointer', 'flex h-full gap-x-2')} onClick={onClickProfile}>
-          <ProfileImage isMember={userInfo.member} imgSrc={userInfo.profileImg} />
+    <div className="flex h-full justify-end gap-x-2 md:basis-7/12 md:gap-x-4">
+      {userInfo.userInfo.loginId !== '' && (
+        <div className={clsx('flex h-full cursor-pointer gap-x-2')} onClick={onClickProfile}>
+          <ProfileImage imgSrc={null} />
           {!isSmScreen && (
-            <div className="text-sm align-middle py-1">
-              <p>{userInfo.member === true ? userInfo.loginId : Strings.Profile.NOTMEMBER}</p>
+            <div className="py-1 align-middle text-sm">
+              <p>{userInfo.userInfo.nickname}</p>
               <p className="text-blackberry-lightest">has {playlistsLength} lists</p>
             </div>
           )}
         </div>
       )}
-      <CustomButtonWrapper ref={referenceElement} className="text-2xl my-auto">
-        {userInfo.member === false ? (
+      <CustomButtonWrapper ref={referenceElement} className="my-auto text-2xl">
+        {userInfo.userInfo.signedin === false ? (
           <div className="flex gap-x-2 p-1" onClick={onClickLogin}>
-            <div className="text-base align-middle">{!isSmScreen ? Strings.Login + '/' + Strings.auth.SIGNUP : ''}</div>
             <MdLogin />
           </div>
         ) : (
           <div className="flex gap-x-2 p-1" onClick={onClickLogout}>
-            <div className="text-base align-middle">{!isSmScreen ? Strings.Logout : ''}</div>
             <MdLogout />
           </div>
         )}
       </CustomButtonWrapper>
-      {((false && userInfo.loginId !== '') || (false && isSmScreen)) && (
+      {(userInfo.userInfo.signedin === true || isSmScreen) && (
         <PopperHoverWrapper referenceElement={referenceElement.current}>
-          <div className="p-1 bg-black text-white text-xs rounded-lg">
-            {userInfo.member === false ? Strings.Login : Strings.Logout}
+          <div className="rounded-lg bg-black p-1 text-xs text-white">
+            {userInfo.userInfo.signedin === false ? Strings.Login : Strings.Logout}
           </div>
         </PopperHoverWrapper>
       )}

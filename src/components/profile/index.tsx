@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { login, pwUpdate } from '../../lib/api/auth'
+import { login, pwUpdate, updateNickname } from '../../lib/api/auth'
 import { auth as AuthStrings, ErrorMessageFromServer, ErrorMessageToUser } from '../../lib/strings'
 import { withdrawlUser } from '../../lib/utils/auth'
 import { checkPassword, handleAuthApiError } from '../../lib/utils/handleAuthErr'
@@ -76,8 +76,16 @@ const Profile = ({ userInfo }: IProps) => {
     [userInfo],
   )
 
+  const onUpdateNickname = useCallback(
+    async (newNickname: string) => {
+      await updateNickname(newNickname)
+      dispatch(getUserInfo.request())
+    },
+    [dispatch],
+  )
+
   return (
-    <div className="w-full h-full px-2 md:px-[5%] grid grid-rows-6">
+    <div className="grid h-full w-full grid-rows-6 px-2 md:px-[5%]">
       <HeaderBackground />
       <HeaderUserInfoContainer
         userInfo={userInfo}
@@ -85,6 +93,7 @@ const Profile = ({ userInfo }: IProps) => {
         changePassword={changePassword}
         onEditProfileImg={onEditProfileImg}
         onClickReauthenticate={onClickReauthenticate}
+        onUpdateNickname={onUpdateNickname}
       />
     </div>
   )

@@ -33,7 +33,7 @@ function Header() {
   )
 
   const onClickProfile = useCallback(() => {
-    if (userInfo.userInfo.member === true) {
+    if (userInfo.userInfo.signedin === true) {
       navigate(NavAbsolutePathItems.PROFILE)
     }
   }, [navigate, userInfo])
@@ -53,7 +53,7 @@ function Header() {
   return (
     <HeaderView
       isSmScreen={isSmScreen}
-      userInfo={userInfo.userInfo}
+      userInfo={userInfo}
       playlistsLength={playlistsLength}
       isOpenAuthModal={isOpenAuthModal}
       onSearch={onSearch}

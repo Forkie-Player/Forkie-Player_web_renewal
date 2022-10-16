@@ -12,11 +12,11 @@ const ProfilePage = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (userInfo.member === false) {
+    if (userInfo.signedin === false) {
       navigate('/')
     }
     setLoaded(true)
-  }, [navigate, userInfo.member])
+  }, [navigate, userInfo.signedin])
 
   useEffect(() => {
     document.title = `${AppName} - profile`
